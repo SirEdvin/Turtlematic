@@ -3,11 +3,11 @@ import site.siredvin.turtlematic.Turtlematic
 import java.util.function.Supplier
 
 
-open class TurtleItem(p: Settings): BaseItem(p){
+open class TurtleItem(p: Properties): BaseItem(p){
 //    private val turtleID: ResourceLocation? = null
     private val enabledSup: Supplier<Boolean>? = null
 
-    constructor(): this(Settings().group(Turtlematic.TAB))
+    constructor(): this(Properties().tab(Turtlematic.TAB))
 
 
     override fun isEnabled(): Boolean {

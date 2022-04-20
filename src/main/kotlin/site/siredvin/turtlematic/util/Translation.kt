@@ -14,10 +14,10 @@ fun itemTooltip(descriptionId: String): TranslatableComponent {
     )
 }
 
-fun turtle(name: String?): String? {
+fun turtleAdjective(name: String?): String? {
     return java.lang.String.format("turtle.%s.%s", Turtlematic.MOD_ID, name)
 }
 
-fun pocket(name: String?): String? {
+fun pocketAdjective(name: String?): String? {
     return java.lang.String.format("pocket.%s.%s", Turtlematic.MOD_ID, name)
 }

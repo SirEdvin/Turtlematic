@@ -1,34 +1,35 @@
 package site.siredvin.turtlematic.common.items.base
 
-import net.minecraft.client.item.TooltipContext
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.text.Text
-import net.minecraft.world.World
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.Level
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.util.itemTooltip
 
 
-abstract class BaseItem(properties: Item.Settings): Item(properties) {
-    private var description: Text? = null
+abstract class BaseItem(properties: Properties): Item(properties) {
+    private var _description: Component? = null
 
-    constructor(): this(Settings().group(Turtlematic.TAB))
+    private val extraDescription: Component
+        get() {
+            if (_description == null)
+                _description = itemTooltip(this.descriptionId)
+            return _description!!
+        }
 
-    override fun appendTooltip(
-        stack: ItemStack?,
-        world: World?,
-        tooltip: MutableList<Text>?,
-        context: TooltipContext?
-    ) {
-        super.appendTooltip(stack, world, tooltip, context)
-        tooltip?.add(getDescription())
-    }
-
-    open fun getDescription(): Text {
-        println(translationKey)
-        if (description == null) description = itemTooltip(translationKey)
-        return description!!
-    }
+    constructor(): this(Properties().tab(Turtlematic.TAB))
 
     abstract fun isEnabled(): Boolean
+
+//    override fun appendHoverText(
+//        itemStack: ItemStack,
+//        level: Level,
+//        list: MutableList<Component>,
+//        tooltipFlag: TooltipFlag
+//    ) {
+//        super.appendHoverText(itemStack, level, list, tooltipFlag)
+//        list.add(extraDescription)
+//    }
 }
