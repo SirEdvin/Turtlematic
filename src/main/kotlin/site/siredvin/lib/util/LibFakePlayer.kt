@@ -198,11 +198,13 @@ class LibFakePlayer(
         val simpleInteraction = interactOn(entity, InteractionHand.MAIN_HAND)
         if (simpleInteraction == InteractionResult.SUCCESS)
             return simpleInteraction
+        // TODO: Check
         return UseEntityCallback.EVENT.invoker().interact(this, level, InteractionHand.MAIN_HAND, entity, result as EntityHitResult)
     }
 
     fun use(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): InteractionResult {
         val hit = findHit(skipEntity, skipBlock, entityFilter);
+        // TODO: Add automatic drop consumer
         if (hit is BlockHitResult) {
             this.interactAt(this, hit.blockPos.toVec3(), InteractionHand.MAIN_HAND)
             level.destroyBlockProgress(id, hit.blockPos, -1)
@@ -257,6 +259,7 @@ class LibFakePlayer(
                 level.destroyBlockProgress(id, pos, i)
 
                 if (currentDamage > 9) {
+                    // TODO: Add automatic drop consumer
                     level.playSound(null, pos, state.soundType.breakSound, SoundSource.NEUTRAL, .25f, 1f)
                     gameMode.handleBlockBreakAction(pos, ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, direction.opposite, 1)
                     gameMode.destroyBlock(pos)

@@ -63,8 +63,7 @@ object FakePlayerProviderTurtle {
         // Add properties
         val activeStack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         if (!activeStack.isEmpty) {
-            player.getAttributes()
-                .addTransientAttributeModifiers(activeStack.getAttributeModifiers(EquipmentSlot.MAINHAND))
+            player.attributes.addTransientAttributeModifiers(activeStack.getAttributeModifiers(EquipmentSlot.MAINHAND))
         }
     }
 
@@ -75,7 +74,7 @@ object FakePlayerProviderTurtle {
         // Remove properties
         val activeStack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         if (!activeStack.isEmpty) {
-            player.getAttributes().removeAttributeModifiers(activeStack.getAttributeModifiers(EquipmentSlot.MAINHAND))
+            player.attributes.removeAttributeModifiers(activeStack.getAttributeModifiers(EquipmentSlot.MAINHAND))
         }
 
         // Copy primary items into turtle inventory and then insert/drop the rest

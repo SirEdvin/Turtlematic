@@ -9,7 +9,7 @@ import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.integrations.computercraft.peripheral.AutomataCorePeripheral
 
-class Automata(): ClockwiseAnimatedTurtleUpgrade<AutomataCorePeripheral>(
+class Automata: ClockwiseAnimatedTurtleUpgrade<AutomataCorePeripheral>(
     ID, ItemStack(Items.AUTOMATA_CORE)
 ) {
     companion object {
