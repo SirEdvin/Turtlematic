@@ -6,8 +6,11 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.animal.Animal
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.EntityHitResult
+import net.minecraft.world.phys.HitResult
 import site.siredvin.lib.operations.SingleOperation
 import site.siredvin.lib.operations.SingleOperationContext
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
@@ -28,17 +31,14 @@ class AutomataEntityHandPlugin(automataCore: BaseAutomataCorePeripheral, private
     fun useOnAnimal(): MethodResult {
         return automataCore!!.withOperation(
             SingleOperation.USE_ON_ANIMAL,
-            IPeripheralFunction<SingleOperationContext, MethodResult> { context: SingleOperationContext? ->
+            IPeripheralFunction<SingleOperationContext, MethodResult> {
                 val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
                 val selectedTool: ItemStack = owner.toolInMainHand
                 val previousDamageValue: Int = selectedTool.damageValue
-                // TODO: fix after user appear
-//                val result: InteractionResult =
-//                    owner.withPlayer { player -> player.useOnFilteredEntity(suitableEntity) }
-                val result = InteractionResult.SUCCESS
-                if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY)) selectedTool.setDamageValue(
-                    previousDamageValue
-                )
+                val result: InteractionResult =
+                    owner.withPlayer { player -> player.useOnFilteredEntity(suitableEntity) }
+                if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY))
+                    selectedTool.damageValue = previousDamageValue
                 MethodResult.of(true, result.toString())
             })
     }
@@ -47,15 +47,16 @@ class AutomataEntityHandPlugin(automataCore: BaseAutomataCorePeripheral, private
     fun inspectAnimal(): MethodResult {
         automataCore!!.addRotationCycle()
         val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-        // TODO: fix after user appear
-//        val entityHit: HitResult = owner.withPlayer { player -> player.findHit(false, true, suitableEntity) }
-//        if (entityHit.getType() == HitResult.Type.MISS) return MethodResult.of(null, "Nothing found")
-//        val entity: Entity = (entityHit as EntityHitResult).getEntity()
-//        return if (entity !is Animal) MethodResult.of(
-//            null,
-//            "Well, entity is not animal entity, but how?"
-//        ) else MethodResult.of(LuaConverter.animalToLua(entity as Animal, owner.getToolInMainHand()))
-        return MethodResult.of(null)
+        val entityHit = owner.withPlayer { player -> player.findHit(false,
+            skipBlock = true,
+            entityFilter = suitableEntity
+        ) }
+        if (entityHit.type == HitResult.Type.MISS) return MethodResult.of(null, "Nothing found")
+        val entity: Entity = (entityHit as EntityHitResult).entity
+        return if (entity !is Animal) MethodResult.of(
+            null,
+            "Well, entity is not animal entity, but how?"
+        ) else MethodResult.of(LuaConverter.animalToLua(entity as Animal, owner.toolInMainHand))
     }
 
     @LuaFunction(mainThread = true)

@@ -6,10 +6,11 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.ItemStack
 import site.siredvin.lib.operations.SingleOperation
-import site.siredvin.lib.operations.SingleOperationContext
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
 import site.siredvin.lib.peripherals.IPeripheralOperation
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
+import site.siredvin.lib.util.LibFakePlayer
+import site.siredvin.lib.util.Pair
 
 class AutomataBlockHandPlugin(automataCore: BaseAutomataCorePeripheral?) : AutomataCorePlugin(automataCore) {
     override val operations: Array<IPeripheralOperation<*>>
@@ -18,16 +19,15 @@ class AutomataBlockHandPlugin(automataCore: BaseAutomataCorePeripheral?) : Autom
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun digBlock(): MethodResult {
-        return automataCore!!.withOperation(SingleOperation.DIG) { context: SingleOperationContext? ->
+        return automataCore!!.withOperation(SingleOperation.DIG) {
             val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
             val selectedTool: ItemStack = owner.toolInMainHand
             val previousDamageValue = selectedTool.damageValue
-            // TODO: fix after user appear
-//            val result: Pair<Boolean, String> =
-//                owner.withPlayer { APFakePlayer -> APFakePlayer.digBlock(owner.getFacing().getOpposite()) }
-//            if (!result.getLeft()) {
-//                return@withOperation MethodResult.of(null, result.getRight())
-//            }
+            val result: Pair<Boolean, String> =
+                owner.withPlayer { player -> player.digBlock(owner.facing.opposite) }
+            if (!result.left) {
+                return@withOperation MethodResult.of(null, result.right)
+            }
             if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY)) selectedTool.damageValue =
                 previousDamageValue
             MethodResult.of(true)
@@ -37,13 +37,11 @@ class AutomataBlockHandPlugin(automataCore: BaseAutomataCorePeripheral?) : Autom
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun useOnBlock(): MethodResult {
-        return automataCore!!.withOperation(SingleOperation.USE_ON_BLOCK) { context: SingleOperationContext? ->
+        return automataCore!!.withOperation(SingleOperation.USE_ON_BLOCK) {
             val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
             val selectedTool: ItemStack = owner.toolInMainHand
             val previousDamageValue = selectedTool.damageValue
-            // TODO: fix after user appear
-//            val result: InteractionResult = owner.withPlayer(APFakePlayer::useOnBlock)
-            val result = InteractionResult.SUCCESS
+            val result: InteractionResult = owner.withPlayer(LibFakePlayer::useOnBlock)
             if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY)) selectedTool.damageValue =
                 previousDamageValue
             MethodResult.of(true, result.toString())

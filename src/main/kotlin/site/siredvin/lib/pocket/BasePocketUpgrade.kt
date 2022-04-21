@@ -30,6 +30,6 @@ abstract class BasePocketUpgrade<T : IBasePeripheral<*>> : AbstractPocketUpgrade
     protected abstract fun getPeripheral(access: IPocketAccess?): T
     override fun createPeripheral(access: IPocketAccess): IPeripheral? {
         peripheral = getPeripheral(access)
-        return if (!peripheral!!.isEnabled) DisabledPeripheral.INSTANCE else peripheral
+        return if (!peripheral!!.isEnabled) DisabledPeripheral else peripheral
     }
 }

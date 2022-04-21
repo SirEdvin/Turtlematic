@@ -10,8 +10,7 @@ interface IPeripheralPlugin {
         get() = PeripheralMethod.GENERATOR.getMethods(this.javaClass).stream()
             .map { named: NamedMethod<PeripheralMethod> -> BoundMethod(this, named) }
             .collect(Collectors.toList())
-    // TODO: consider something
-    open val operations: Array<IPeripheralOperation<*>>
+    val operations: Array<IPeripheralOperation<*>>
         get() = emptyArray()
 
     fun isSuitable(peripheral: IPeripheral): Boolean {

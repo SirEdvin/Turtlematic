@@ -8,6 +8,7 @@ import site.siredvin.apcode.plugins.AutomataLookPlugin
 import site.siredvin.apcode.plugins.AutomataSoulFeedingPlugin
 import site.siredvin.lib.operations.AutomataCoreTier
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 
 class AutomataCorePeripheral(
     turtle: ITurtleAccess,
@@ -23,9 +24,9 @@ class AutomataCorePeripheral(
     }
 
     companion object {
-        const val TYPE = "weakAutomata"
+        const val TYPE = "automata"
     }
 
     override val isEnabled: Boolean
-        get() = true
+        get() = TurtlematicConfig.enableAutomataCore
 }

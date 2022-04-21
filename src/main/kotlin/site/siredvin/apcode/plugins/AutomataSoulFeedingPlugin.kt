@@ -3,10 +3,10 @@ package site.siredvin.apcode.plugins
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.peripheral.IPeripheral
-import net.minecraft.world.InteractionResult
 import site.siredvin.lib.metaphysics.IFeedableAutomataCore
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
+import site.siredvin.lib.util.LibFakePlayer
 
 class AutomataSoulFeedingPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
     @LuaFunction(mainThread = true)
@@ -15,9 +15,7 @@ class AutomataSoulFeedingPlugin(automataCore: BaseAutomataCorePeripheral) : Auto
         if (owner.toolInMainHand.item !is IFeedableAutomataCore) {
             return MethodResult.of(null, "Well, you should feed correct mechanical soul!")
         }
-        // TODO: Fix
-//        val result: InteractionResult = owner.withPlayer(APFakePlayer::useOnEntity)
-        val result = InteractionResult.FAIL
+        val result = owner.withPlayer(LibFakePlayer::useOnEntity)
         automataCore.addRotationCycle(3)
         return MethodResult.of(true, result.toString())
     }

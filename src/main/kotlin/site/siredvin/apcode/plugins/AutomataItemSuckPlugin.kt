@@ -72,10 +72,10 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
     fun scanItems(): MethodResult {
         automataCore!!.addRotationCycle()
         val items: List<ItemEntity> = items
-        val data: MutableMap<Int, Map<String, Any>> = HashMap()
+        val data: MutableMap<Int, Map<String, Any?>> = HashMap()
         var index = 1
         for (item in items) {
-            val itemData: MutableMap<String, Any> = HashMap()
+            val itemData: MutableMap<String, Any?> = HashMap()
             itemData["entity_id"] = item.id
             itemData["name"] = item.item.displayName.string
             val itemName: ResourceLocation = Registry.ITEM.getKey(item.item.item)

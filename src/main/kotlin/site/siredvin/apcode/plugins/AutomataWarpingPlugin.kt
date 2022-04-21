@@ -18,6 +18,7 @@ import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 import site.siredvin.lib.util.NBTUtil.blockPosFromNBT
 import site.siredvin.lib.util.NBTUtil.toNBT
 import site.siredvin.lib.util.Pair
+import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.util.*
 
 class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
@@ -56,8 +57,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
             return pairData.left!!
         }
         val data: CompoundTag = pairData.right!!
-        // TODO: Update with configs
-        if (data.allKeys.size >= 100_000) return MethodResult.of(
+        if (data.allKeys.size >= TurtlematicConfig.endAutomataCoreWarpPointLimit) return MethodResult.of(
             null,
             "Cannot add new point, limit reached"
         )

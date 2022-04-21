@@ -10,6 +10,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import site.siredvin.lib.util.DataStorageUtil
+import site.siredvin.lib.util.FakePlayerProviderTurtle
+import site.siredvin.lib.util.LibFakePlayer
 
 class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide) : BasePeripheralOwner() {
 
@@ -31,10 +33,10 @@ class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide) : B
         turtle.updateUpgradeNBTData(side)
     }
 
-    //    @Override
-    //    public <T> T withPlayer(Function<APFakePlayer, T> function) {
-    //        return FakePlayerProviderTurtle.withPlayer(turtle, function);
-    //    }
+    override fun <T> withPlayer(function: (LibFakePlayer) -> T): T {
+        return FakePlayerProviderTurtle.withPlayer(turtle, function)
+    }
+
     override val toolInMainHand: ItemStack
         get() = turtle.inventory.getItem(turtle.selectedSlot)
 

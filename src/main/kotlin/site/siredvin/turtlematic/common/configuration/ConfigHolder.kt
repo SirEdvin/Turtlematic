@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.common.configuration
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.turtlematic.common.configuration.TurlematicConfig.CommonConfig
+import site.siredvin.turtlematic.common.configuration.TurtlematicConfig.CommonConfig
 
 object ConfigHolder {
     var COMMON_SPEC: ForgeConfigSpec

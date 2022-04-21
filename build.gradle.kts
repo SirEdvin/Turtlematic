@@ -38,7 +38,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion")
 
     modImplementation("com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.5-ccr")
-    modImplementation("curse.maven:forgeconfigapiport-fabric-547434:3671141")
+    modImplementation("curse.maven:forgeconfigapirt-fabric-547434:3671141")
 }
 tasks {
     val javaVersion = JavaVersion.VERSION_17

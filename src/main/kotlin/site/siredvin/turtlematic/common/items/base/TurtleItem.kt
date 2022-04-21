@@ -1,29 +1,27 @@
 package site.siredvin.turtlematic.common.items.base
+import net.minecraft.core.NonNullList
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.ItemStack
+import site.siredvin.lib.util.ItemUtil
 import site.siredvin.turtlematic.Turtlematic
 import java.util.function.Supplier
 
 
-open class TurtleItem(p: Properties): BaseItem(p){
-//    private val turtleID: ResourceLocation? = null
-    private val enabledSup: Supplier<Boolean>? = null
+open class TurtleItem(p: Properties, var turtleID: ResourceLocation, var enableSup: Supplier<Boolean>): BaseItem(p){
 
-    constructor(): this(Properties().tab(Turtlematic.TAB))
-
+    constructor(turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
+        Properties().tab(Turtlematic.TAB), turtleID, enableSup
+    )
 
     override fun isEnabled(): Boolean {
-        return true
+        return enableSup.get()
     }
 
-//    fun fillItemCategory(group: CreativeModeTab?, items: NonNullList<ItemStack?>) {
-//        super.fillItemCategory(group, items)
-//        if (!allowdedIn(group)) return
-//        if (turtleID != null) {
-//            items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_ADVANCED, turtleID.toString()))
-//            items.add(ItemUtil.makeTurtle(ItemUtil.TURTLE_NORMAL, turtleID.toString()))
-//        }
-//        if (pocketID != null) {
-//            items.add(ItemUtil.makePocket(ItemUtil.POCKET_ADVANCED, pocketID.toString()))
-//            items.add(ItemUtil.makePocket(ItemUtil.POCKET_NORMAL, pocketID.toString()))
-//        }
-//    }
+    override fun fillItemCategory(group: CreativeModeTab, items: NonNullList<ItemStack>) {
+        super.fillItemCategory(group, items)
+        if (!allowdedIn(group)) return
+        items.add(ItemUtil.makeTurtle(turtleID.toString()))
+        items.add(ItemUtil.makeAdvancedTurtle(turtleID.toString()))
+    }
 }

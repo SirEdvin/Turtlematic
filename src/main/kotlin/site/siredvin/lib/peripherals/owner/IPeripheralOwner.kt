@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.lib.util.LibFakePlayer
 
 interface IPeripheralOwner {
     val name: String?
@@ -20,7 +21,7 @@ interface IPeripheralOwner {
     val dataStorage: CompoundTag
     fun markDataStorageDirty()
 
-    //    <T> T withPlayer(Function<APFakePlayer, T> function);
+    fun <T> withPlayer(function: (LibFakePlayer) ->  T): T
     val toolInMainHand: ItemStack
     fun storeItem(stored: ItemStack): ItemStack
     fun destroyUpgrade()
