@@ -20,7 +20,7 @@ class AutomataLookPlugin(
 ) : AutomataCorePlugin(automataCore) {
 
     private fun lookImpl(arguments: IArguments, overwrittenDirection: Direction? = null): MethodResult {
-        val mode = InteractionMode.luaValueOf(arguments.optString(0, InteractionMode.BOTH.name))
+        val mode = InteractionMode.luaValueOf(arguments.getString(0))
         if (!allowedMods.contains(mode))
             return MethodResult.of(null, "Mode $mode are not allowed for this core")
         automataCore.addRotationCycle()

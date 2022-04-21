@@ -35,25 +35,24 @@ object LuaConverter {
         return data
     }
 
-    fun animalToLua(animal: Animal, itemInHand: ItemStack): MutableMap<String, Any> {
+    fun animalToLua(animal: Animal): MutableMap<String, Any> {
         val data = entityToLua(animal);
         data["baby"] = animal.isBaby
         data["inLove"] = animal.isInLove
         data["aggressive"] = animal.isAggressive
-        if (animal is Shearable && !itemInHand.isEmpty) {
+        if (animal is Shearable) {
             data["shareable"] = animal.readyForShearing();
         }
         return data;
     }
 
-    fun completeEntityToLua(entity: Entity, itemInHand: ItemStack): MutableMap<String, Any> {
-        return if (entity is Animal) animalToLua(entity, itemInHand) else entityToLua(entity)
+    fun completeEntityToLua(entity: Entity): MutableMap<String, Any> {
+        return if (entity is Animal) animalToLua(entity) else entityToLua(entity)
     }
 
-    fun completeEntityWithPositionToLua(entity: Entity, itemInHand: ItemStack, pos: BlockPos): Map<String, Any> {
+    fun completeEntityWithPositionToLua(entity: Entity, pos: BlockPos): Map<String, Any> {
         val data = completeEntityToLua(
-            entity,
-            itemInHand
+            entity
         )
         data["x"] = entity.x - pos.x
         data["y"] = entity.y - pos.y

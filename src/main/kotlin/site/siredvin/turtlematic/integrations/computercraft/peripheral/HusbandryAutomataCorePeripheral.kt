@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player
 import site.siredvin.apcode.plugins.*
 import site.siredvin.lib.operations.AutomataCoreTier
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
+import site.siredvin.lib.util.LuaConverter
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.util.function.Predicate
 
@@ -19,7 +20,7 @@ class HusbandryAutomataCorePeripheral(
 ){
     init {
         addPlugin(AutomataItemSuckPlugin(this))
-        addPlugin(AutomataLookPlugin(this))
+        addPlugin(AutomataLookPlugin(this, entityConverter = LuaConverter::completeEntityToLua))
         addPlugin(AutomataBlockHandPlugin(this))
         addPlugin(AutomataEntityHandPlugin(this, suitableEntity))
         addPlugin(AutomataEntityTransferPlugin(this, suitableEntity))
