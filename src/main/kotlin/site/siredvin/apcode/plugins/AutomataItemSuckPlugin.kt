@@ -26,7 +26,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
         val x: Int = pos.x
         val y: Int = pos.y
         val z: Int = pos.z
-        val interactionRadius = automataCore!!.interactionRadius
+        val interactionRadius = automataCore.interactionRadius
         return AABB(
             (x - interactionRadius).toDouble(), (y - interactionRadius).toDouble(), (z - interactionRadius).toDouble(),
             (x + interactionRadius).toDouble(), (y + interactionRadius).toDouble(), (z + interactionRadius).toDouble()
@@ -35,7 +35,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
 
     protected val items: List<ItemEntity>
         get() {
-            val owner: TurtlePeripheralOwner = automataCore!!.peripheralOwner
+            val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
             return owner.level!!.getEntitiesOfClass(ItemEntity::class.java, getBox(owner.pos))
         }
 
@@ -51,7 +51,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
             storeStack = stack
             leaveStack = ItemStack.EMPTY
         }
-        val remainder: ItemStack = automataCore!!.peripheralOwner.storeItem(storeStack)
+        val remainder: ItemStack = automataCore.peripheralOwner.storeItem(storeStack)
         if (remainder != storeStack) {
             if (remainder.isEmpty && leaveStack.isEmpty) {
                 entity.remove(Entity.RemovalReason.KILLED)
@@ -70,7 +70,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
 
     @LuaFunction(mainThread = true)
     fun scanItems(): MethodResult {
-        automataCore!!.addRotationCycle()
+        automataCore.addRotationCycle()
         val items: List<ItemEntity> = items
         val data: MutableMap<Int, Map<String, Any?>> = HashMap()
         var index = 1
@@ -93,7 +93,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
     fun collectSpecificItem(arguments: IArguments): MethodResult {
         val technicalName: String = arguments.getString(0)
         val requiredQuantityArg: Int = arguments.optInt(1, Int.MAX_VALUE)
-        return automataCore!!.withOperation(
+        return automataCore.withOperation(
             SingleOperation.SUCK
         ) {
             val items: List<ItemEntity> = items
@@ -113,7 +113,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
     @Throws(LuaException::class)
     fun collectItems(arguments: IArguments): MethodResult {
         val requiredQuantityArg: Int = arguments.optInt(0, Int.MAX_VALUE)
-        return automataCore!!.withOperation(
+        return automataCore.withOperation(
             SingleOperation.SUCK,
             IPeripheralFunction {
                 if (requiredQuantityArg == 0) {

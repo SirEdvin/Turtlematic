@@ -21,7 +21,7 @@ interface IPeripheralOwner {
     val dataStorage: CompoundTag
     fun markDataStorageDirty()
 
-    fun <T> withPlayer(function: (LibFakePlayer) ->  T): T
+    fun <T> withPlayer(function: (LibFakePlayer) ->  T, overwrittenDirection: Direction? = null): T
     val toolInMainHand: ItemStack
     fun storeItem(stored: ItemStack): ItemStack
     fun destroyUpgrade()

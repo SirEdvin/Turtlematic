@@ -38,7 +38,7 @@ class PocketPeripheralOwner(private val pocket: IPocketAccess?) : BasePeripheral
         pocket?.updateUpgradeNBTData()
     }
 
-    override fun <T> withPlayer(function: (LibFakePlayer) -> T): T {
+    override fun <T> withPlayer(function: (LibFakePlayer) -> T, overwrittenDirection: Direction?): T {
         throw RuntimeException("Not implemented yet")
     }
 

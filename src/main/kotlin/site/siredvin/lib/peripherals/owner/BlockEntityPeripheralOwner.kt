@@ -33,7 +33,7 @@ class BlockEntityPeripheralOwner<T>(val tileEntity: T) :
         tileEntity.setChanged()
     }
 
-    override fun <T> withPlayer(function: (LibFakePlayer) -> T): T {
+    override fun <T> withPlayer(function: (LibFakePlayer) -> T, overwrittenDirection: Direction?): T {
         throw RuntimeException("Not implemented yet")
     }
 

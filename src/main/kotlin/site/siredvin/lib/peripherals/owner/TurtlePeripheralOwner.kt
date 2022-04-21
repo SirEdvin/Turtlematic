@@ -33,8 +33,8 @@ class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide) : B
         turtle.updateUpgradeNBTData(side)
     }
 
-    override fun <T> withPlayer(function: (LibFakePlayer) -> T): T {
-        return FakePlayerProviderTurtle.withPlayer(turtle, function)
+    override fun <T> withPlayer(function: (LibFakePlayer) -> T, overwrittenDirection: Direction?): T {
+        return FakePlayerProviderTurtle.withPlayer(turtle, function, overwrittenDirection = overwrittenDirection)
     }
 
     override val toolInMainHand: ItemStack

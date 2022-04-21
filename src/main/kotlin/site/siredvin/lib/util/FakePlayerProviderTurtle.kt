@@ -20,7 +20,7 @@ object FakePlayerProviderTurtle {
     private val registeredPlayers: WeakHashMap<ITurtleAccess, LibFakePlayer> =
         WeakHashMap<ITurtleAccess, LibFakePlayer>()
 
-    fun getPlayer(turtle: ITurtleAccess, profile: GameProfile?): LibFakePlayer {
+    private fun getPlayer(turtle: ITurtleAccess, profile: GameProfile?): LibFakePlayer {
         var fake: LibFakePlayer? = registeredPlayers[turtle]
         if (fake == null) {
             fake = LibFakePlayer(turtle.level as ServerLevel, null, profile)
@@ -29,8 +29,8 @@ object FakePlayerProviderTurtle {
         return fake
     }
 
-    fun load(player: LibFakePlayer, turtle: ITurtleAccess) {
-        val direction = turtle.direction
+    private fun load(player: LibFakePlayer, turtle: ITurtleAccess, overwrittenDirection: Direction? = null) {
+        val direction = overwrittenDirection ?: turtle.direction
         player.setLevel(turtle.level as ServerLevel)
         val position = turtle.position
         // Player position
@@ -67,8 +67,8 @@ object FakePlayerProviderTurtle {
         }
     }
 
-    fun unload(player: LibFakePlayer, turtle: ITurtleAccess) {
-        val playerInventory: Inventory = player.getInventory()
+    private fun unload(player: LibFakePlayer, turtle: ITurtleAccess) {
+        val playerInventory: Inventory = player.inventory
         playerInventory.selected = 0
 
         // Remove properties
@@ -99,9 +99,9 @@ object FakePlayerProviderTurtle {
         }
     }
 
-    fun <T> withPlayer(turtle: ITurtleAccess, function: Function<LibFakePlayer, T>): T {
+    fun <T> withPlayer(turtle: ITurtleAccess, function: Function<LibFakePlayer, T>,  overwrittenDirection: Direction? = null): T {
         val player: LibFakePlayer = getPlayer(turtle, turtle.owningPlayer)
-        load(player, turtle)
+        load(player, turtle, overwrittenDirection = overwrittenDirection)
         val result = function.apply(player)
         unload(player, turtle)
         return result

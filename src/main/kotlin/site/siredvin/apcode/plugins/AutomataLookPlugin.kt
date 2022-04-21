@@ -1,40 +1,54 @@
 package site.siredvin.apcode.plugins
 
+import dan200.computercraft.api.lua.IArguments
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
+import net.minecraft.core.Direction
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
 import site.siredvin.lib.util.LuaConverter
 
-class AutomataLookPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
-    @LuaFunction(mainThread = true)
-    fun lookAtBlock(): MethodResult {
-        automataCore!!.addRotationCycle()
+class AutomataLookPlugin(
+    automataCore: BaseAutomataCorePeripheral,
+    private val blockStateConverter: (BlockState) -> (MutableMap<String, Any>) = LuaConverter::blockStateToLua,
+    private val entityConverter: (Entity) -> (MutableMap<String, Any>) = LuaConverter::entityToLua,
+    private val allowedMods: Set<InteractionMode> = InteractionMode.values().toSet()
+) : AutomataCorePlugin(automataCore) {
+
+    private fun lookImpl(arguments: IArguments, overwrittenDirection: Direction? = null): MethodResult {
+        val mode = InteractionMode.luaValueOf(arguments.optString(0, InteractionMode.BOTH.name))
+        if (!allowedMods.contains(mode))
+            return MethodResult.of(null, "Mode $mode are not allowed for this core")
+        automataCore.addRotationCycle()
         val owner = automataCore.peripheralOwner
-        val result = owner.withPlayer { APFakePlayer -> APFakePlayer.findHit(skipEntity = true, skipBlock = false) }
-        if (result.type == HitResult.Type.MISS) return MethodResult.of(null, "No block find")
-        val blockHit = result as BlockHitResult
-        val state = owner.level!!.getBlockState(blockHit.blockPos)
-        val data: MutableMap<String, Any?> = HashMap()
-        val blockName = state.block.builtInRegistryHolder().key().registry()
-        if (blockName != null) data["name"] = blockName.toString()
-        data["tags"] = LuaConverter.tagsToList(state.block.builtInRegistryHolder().tags())
-        return MethodResult.of(null)
+        val result = owner.withPlayer({
+                APFakePlayer -> APFakePlayer.findHit(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock)
+        }, overwrittenDirection=overwrittenDirection)
+        if (result.type == HitResult.Type.MISS)
+            return MethodResult.of(null, "Nothing found")
+        if (result is BlockHitResult)
+            return MethodResult.of(blockStateConverter(owner.level!!.getBlockState(result.blockPos)))
+        if (result is EntityHitResult)
+            return MethodResult.of(entityConverter(result.entity))
+        return MethodResult.of(null, "Nothing found")
     }
 
     @LuaFunction(mainThread = true)
-    fun lookAtEntity(): MethodResult {
-        automataCore!!.addRotationCycle()
-        val result = automataCore.peripheralOwner.withPlayer { APFakePlayer -> APFakePlayer.findHit(
-            skipEntity = false,
-            skipBlock = true
-        ) }
-        if (result.type == HitResult.Type.MISS) {
-            return MethodResult.of(null, "No entity find")
-        }
-        val entityHit = result as EntityHitResult
-        return MethodResult.of(LuaConverter.entityToLua(entityHit.getEntity()))
+    fun look(arguments: IArguments): MethodResult {
+        return lookImpl(arguments)
+    }
+
+    @LuaFunction(mainThread = true)
+    fun lookUp(arguments: IArguments): MethodResult {
+        return lookImpl(arguments, Direction.UP)
+    }
+
+    @LuaFunction(mainThread = true)
+    fun lookDown(arguments: IArguments): MethodResult {
+        return lookImpl(arguments, Direction.DOWN)
     }
 }

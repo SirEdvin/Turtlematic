@@ -26,57 +26,57 @@ class AutomataEntityHandPlugin(automataCore: BaseAutomataCorePeripheral, private
     override val operations: Array<IPeripheralOperation<*>>
         get() = arrayOf(SingleOperation.USE_ON_ANIMAL)
 
-    @LuaFunction(mainThread = true)
-    @Throws(LuaException::class)
-    fun useOnAnimal(): MethodResult {
-        return automataCore!!.withOperation(
-            SingleOperation.USE_ON_ANIMAL,
-            IPeripheralFunction<SingleOperationContext, MethodResult> {
-                val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-                val selectedTool: ItemStack = owner.toolInMainHand
-                val previousDamageValue: Int = selectedTool.damageValue
-                val result: InteractionResult =
-                    owner.withPlayer { player -> player.useOnFilteredEntity(suitableEntity) }
-                if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY))
-                    selectedTool.damageValue = previousDamageValue
-                MethodResult.of(true, result.toString())
-            })
-    }
-
-    @LuaFunction(mainThread = true)
-    fun inspectAnimal(): MethodResult {
-        automataCore!!.addRotationCycle()
-        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-        val entityHit = owner.withPlayer { player -> player.findHit(false,
-            skipBlock = true,
-            entityFilter = suitableEntity
-        ) }
-        if (entityHit.type == HitResult.Type.MISS) return MethodResult.of(null, "Nothing found")
-        val entity: Entity = (entityHit as EntityHitResult).entity
-        return if (entity !is Animal) MethodResult.of(
-            null,
-            "Well, entity is not animal entity, but how?"
-        ) else MethodResult.of(LuaConverter.animalToLua(entity as Animal, owner.toolInMainHand))
-    }
-
-    @LuaFunction(mainThread = true)
-    fun searchAnimals(): MethodResult {
-        automataCore!!.addRotationCycle()
-        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-        val currentPos: BlockPos = owner.pos
-        val box = AABB(currentPos)
-        val entities: MutableList<Map<String, Any>> = ArrayList()
-        val itemInHand: ItemStack = owner.toolInMainHand
-        owner.level!!.getEntities(null, box.inflate(automataCore.interactionRadius.toDouble()), suitableEntity)
-            .forEach { entity ->
-                entities.add(
-                    LuaConverter.completeEntityWithPositionToLua(
-                        entity,
-                        itemInHand,
-                        currentPos
-                    )
-                )
-            }
-        return MethodResult.of(entities)
-    }
+//    @LuaFunction(mainThread = true)
+//    @Throws(LuaException::class)
+//    fun useOnAnimal(): MethodResult {
+//        return automataCore!!.withOperation(
+//            SingleOperation.USE_ON_ANIMAL,
+//            IPeripheralFunction<SingleOperationContext, MethodResult> {
+//                val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
+//                val selectedTool: ItemStack = owner.toolInMainHand
+//                val previousDamageValue: Int = selectedTool.damageValue
+//                val result: InteractionResult =
+//                    owner.withPlayer { player -> player.useOnFilteredEntity(suitableEntity) }
+//                if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY))
+//                    selectedTool.damageValue = previousDamageValue
+//                MethodResult.of(true, result.toString())
+//            })
+//    }
+//
+//    @LuaFunction(mainThread = true)
+//    fun inspectAnimal(): MethodResult {
+//        automataCore!!.addRotationCycle()
+//        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
+//        val entityHit = owner.withPlayer { player -> player.findHit(false,
+//            skipBlock = true,
+//            entityFilter = suitableEntity
+//        ) }
+//        if (entityHit.type == HitResult.Type.MISS) return MethodResult.of(null, "Nothing found")
+//        val entity: Entity = (entityHit as EntityHitResult).entity
+//        return if (entity !is Animal) MethodResult.of(
+//            null,
+//            "Well, entity is not animal entity, but how?"
+//        ) else MethodResult.of(LuaConverter.animalToLua(entity as Animal, owner.toolInMainHand))
+//    }
+//
+//    @LuaFunction(mainThread = true)
+//    fun searchAnimals(): MethodResult {
+//        automataCore!!.addRotationCycle()
+//        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
+//        val currentPos: BlockPos = owner.pos
+//        val box = AABB(currentPos)
+//        val entities: MutableList<Map<String, Any>> = ArrayList()
+//        val itemInHand: ItemStack = owner.toolInMainHand
+//        owner.level!!.getEntities(null, box.inflate(automataCore.interactionRadius.toDouble()), suitableEntity)
+//            .forEach { entity ->
+//                entities.add(
+//                    LuaConverter.completeEntityWithPositionToLua(
+//                        entity,
+//                        itemInHand,
+//                        currentPos
+//                    )
+//                )
+//            }
+//        return MethodResult.of(entities)
+//    }
 }

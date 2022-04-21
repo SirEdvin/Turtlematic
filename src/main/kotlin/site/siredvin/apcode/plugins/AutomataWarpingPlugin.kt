@@ -27,7 +27,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
 
     protected val pointData: Pair<MethodResult?, CompoundTag?>
         get() {
-            val owner: TurtlePeripheralOwner = automataCore!!.peripheralOwner
+            val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
             val settings: CompoundTag = owner.dataStorage
             if (!settings.contains(WORLD_DATA_MARK)) {
                 settings.putString(WORLD_DATA_MARK, owner.level!!.dimension().location().toString())
@@ -44,14 +44,14 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         }
 
     private fun getWarpCost(context: SingleOperationContext): Int {
-        val fuelAbility: FuelAbility<*> = automataCore!!.peripheralOwner.getAbility(PeripheralOwnerAbility.FUEL)
+        val fuelAbility: FuelAbility<*> = automataCore.peripheralOwner.getAbility(PeripheralOwnerAbility.FUEL)
         Objects.requireNonNull<Any>(fuelAbility)
         return SingleOperation.WARP.getCost(context) * fuelAbility.fuelConsumptionMultiply
     }
 
     @LuaFunction(mainThread = true)
     fun savePoint(name: String): MethodResult {
-        automataCore!!.addRotationCycle()
+        automataCore.addRotationCycle()
         val pairData: Pair<MethodResult?, CompoundTag?> = pointData
         if (pairData.leftPresent()) {
             return pairData.left!!
@@ -67,7 +67,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
 
     @LuaFunction(mainThread = true)
     fun deletePoint(name: String): MethodResult {
-        automataCore!!.addRotationCycle()
+        automataCore.addRotationCycle()
         val pairData: Pair<MethodResult?, CompoundTag?> = pointData
         if (pairData.leftPresent()) {
             return pairData.left!!
@@ -95,7 +95,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         if (pairData.leftPresent()) {
             return pairData.left!!
         }
-        val owner: TurtlePeripheralOwner = automataCore!!.peripheralOwner
+        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
         val level: Level = owner.level!!
         val data: CompoundTag = pairData.right!!
         val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
@@ -124,7 +124,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         }
         val data: CompoundTag = pairData.right!!
         val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
-        return MethodResult.of(getWarpCost(automataCore!!.toDistance(newPosition)))
+        return MethodResult.of(getWarpCost(automataCore.toDistance(newPosition)))
     }
 
     @LuaFunction(mainThread = true)
@@ -135,7 +135,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         }
         val data: CompoundTag = pairData.right!!
         val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
-        return MethodResult.of(newPosition.distManhattan(automataCore!!.peripheralOwner.pos))
+        return MethodResult.of(newPosition.distManhattan(automataCore.peripheralOwner.pos))
     }
 
     companion object {

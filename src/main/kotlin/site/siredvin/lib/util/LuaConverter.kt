@@ -5,15 +5,27 @@ import dan200.computercraft.core.computer.ComputerSide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Registry
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Shearable
 import net.minecraft.world.entity.animal.Animal
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
 object LuaConverter {
+
+    fun blockStateToLua(state: BlockState): MutableMap<String, Any> {
+        val data: MutableMap<String, Any> = HashMap()
+        val blockName = state.block.builtInRegistryHolder().key().registry()
+        if (blockName != null) data["name"] = blockName.toString()
+        data["tags"] = tagsToList(state.tags)
+        return data
+    }
+
     fun entityToLua(entity: Entity): MutableMap<String, Any> {
         val data: MutableMap<String, Any> = HashMap()
         data["id"] = entity.id
@@ -58,23 +70,23 @@ object LuaConverter {
         return map
     }
 
-    fun stackToObject(stack: ItemStack): MutableMap<String, Any?> {
+    fun stackToObject(stack: ItemStack): MutableMap<String, Any> {
         val map = itemToObject(stack.item)
+        map["tags"] = tagsToList(stack.tags)
         map["count"] = stack.count
         map["displayName"] = stack.displayName
         map["maxStackSize"] = stack.maxStackSize
         return map
     }
 
-    fun itemToObject(item: Item): MutableMap<String, Any?> {
-        val map: MutableMap<String, Any?> = HashMap()
-        map["tags"] = tagsToList(item.builtInRegistryHolder().tags())
+    fun itemToObject(item: Item): MutableMap<String, Any> {
+        val map: MutableMap<String, Any> = HashMap()
         map["name"] = Registry.ITEM.getKey(item).toString()
         return map
     }
 
-    fun <T> tagsToList(tags: Stream<T>): List<String>? {
-        return if (tags.findAny().isEmpty) null else tags.map { obj: T -> obj.toString() }.collect(Collectors.toList())
+    fun <T> tagsToList(tags: Stream<TagKey<T>>): List<String> {
+        return tags.map { key -> key.location.toString() }.collect(Collectors.toList())
     }
 
     @Throws(LuaException::class)
