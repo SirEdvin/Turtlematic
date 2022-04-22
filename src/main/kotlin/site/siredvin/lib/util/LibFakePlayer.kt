@@ -64,6 +64,7 @@ class LibFakePlayer(
         } else {
             this.owner = null
         }
+        attackStrengthTicker = 100
     }
 
     override fun awardStat(stat: Stat<*>) {
@@ -72,10 +73,6 @@ class LibFakePlayer(
             val player: Player? = server.playerList.getPlayer(getUUID())
             player?.awardStat(stat)
         }
-    }
-
-    override fun canAttack(p_213336_1_: LivingEntity): Boolean {
-        return true
     }
 
     override fun openTextEdit(p_175141_1_: SignBlockEntity) {}
@@ -307,7 +304,6 @@ class LibFakePlayer(
         val entity = hit.entity
         if (entity !is LivingEntity)
             return Pair.of(false, "Incorrect entity hit")
-        cooldowns.addCooldown(tool.item, 1)
         if (!canAttack(entity))
             return Pair.of(false, "Can't swing this entity")
         withConsumer(entity) { attack(entity) }

@@ -45,7 +45,7 @@ object FakePlayerProviderTurtle {
         val z = if (a === Direction.Axis.Z && ad == Direction.AxisDirection.NEGATIVE) -.5 else .5 + sideVec.z / 1.9
         player.moveTo(position.x + x, position.y + y, position.z + z, yaw, pitch)
         // Player inventory
-        val playerInventory: Inventory = player.getInventory()
+        val playerInventory: Inventory = player.inventory
         playerInventory.selected = 0
 
         // Copy primary items into player inventory and empty the rest
