@@ -4,6 +4,9 @@ import com.mojang.authlib.GameProfile
 import dan200.computercraft.ComputerCraft
 import dan200.computercraft.api.turtle.FakePlayer
 import dan200.computercraft.shared.TurtlePermissions
+import dan200.computercraft.shared.util.DropConsumer
+import dan200.computercraft.shared.util.InventoryUtil
+import dan200.computercraft.shared.util.ItemStorage
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.minecraft.core.BlockPos
@@ -23,6 +26,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ClipContext
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.SignBlockEntity
@@ -109,6 +113,20 @@ class LibFakePlayer(
         if(!TurtlePermissions.isBlockEditable(level, pos, this ))
             return true
         return false
+    }
+
+    fun <T> withConsumer(entity: Entity, func: () -> (T)): T {
+        DropConsumer.set(entity) { stack -> InventoryUtil.storeItems(stack, ItemStorage.wrap(this.inventory)) }
+        val result = func()
+        DropConsumer.clear()
+        return result
+    }
+
+    fun <T> withConsumer(level: Level, pos: BlockPos, func: () -> (T)): T {
+        DropConsumer.set(level, pos) { stack -> InventoryUtil.storeItems(stack, ItemStorage.wrap(this.inventory)) }
+        val result = func()
+        DropConsumer.clear()
+        return result
     }
 
     fun findHit(skipEntity: Boolean, skipBlock: Boolean): HitResult {
@@ -198,20 +216,20 @@ class LibFakePlayer(
         val simpleInteraction = interactOn(entity, InteractionHand.MAIN_HAND)
         if (simpleInteraction == InteractionResult.SUCCESS)
             return simpleInteraction
-        // TODO: Check
         return UseEntityCallback.EVENT.invoker().interact(this, level, InteractionHand.MAIN_HAND, entity, result as EntityHitResult)
     }
 
     fun use(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): InteractionResult {
         val hit = findHit(skipEntity, skipBlock, entityFilter);
-        // TODO: Add automatic drop consumer
         if (hit is BlockHitResult) {
-            this.interactAt(this, hit.blockPos.toVec3(), InteractionHand.MAIN_HAND)
-            level.destroyBlockProgress(id, hit.blockPos, -1)
-            return gameMode.useItemOn(this, level, mainHandItem, InteractionHand.MAIN_HAND, hit)
+            return withConsumer(level, hit.blockPos) {
+                this.interactAt(this, hit.blockPos.toVec3(), InteractionHand.MAIN_HAND)
+                level.destroyBlockProgress(id, hit.blockPos, -1)
+                gameMode.useItemOn(this, level, mainHandItem, InteractionHand.MAIN_HAND, hit)
+            }
         }
         if (hit is EntityHitResult) {
-            return useOnSpecificEntity(hit.entity, hit);
+            return withConsumer(hit.entity) { useOnSpecificEntity(hit.entity, hit) }
         }
         return InteractionResult.FAIL;
     }
@@ -232,16 +250,24 @@ class LibFakePlayer(
         return use(false, skipBlock = true, entityFilter = filter)
     }
 
-    fun digBlock(direction: Direction): Pair<Boolean, String> {
-        val hit = findHit(skipEntity = true, skipBlock = false);
+    fun swing(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): Pair<Boolean, String> {
+        val hit = findHit(skipEntity = skipEntity, skipBlock = skipBlock, entityFilter = entityFilter);
         if (hit.type == HitResult.Type.MISS)
-            return Pair.of(false, "Nothing to break")
+            return Pair.of(false, "Nothing to swing")
+        if (hit is BlockHitResult)
+            return swingBlock(hit)
+        if (hit is EntityHitResult)
+            return swingEntity(hit)
+        return Pair.of(false, "Nothing found")
+    }
+
+    fun swingBlock(hit: BlockHitResult): Pair<Boolean, String> {
         val pos = BlockPos(hit.location.x, hit.location.y, hit.location.z)
         val state = level.getBlockState(pos)
         val block = state.block
         val tool = inventory.getSelected()
         if (tool.isEmpty)
-            return Pair.of(false, "Cannot dig without tool");
+            return Pair.of(false, "Cannot swing without tool");
         if (block != digBlock || pos != digPosition)
             setState(block, pos)
         if (!level.isEmptyBlock(pos) && !state.material.isLiquid) {
@@ -259,17 +285,33 @@ class LibFakePlayer(
                 level.destroyBlockProgress(id, pos, i)
 
                 if (currentDamage > 9) {
-                    // TODO: Add automatic drop consumer
-                    level.playSound(null, pos, state.soundType.breakSound, SoundSource.NEUTRAL, .25f, 1f)
-                    gameMode.handleBlockBreakAction(pos, ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, direction.opposite, 1)
-                    gameMode.destroyBlock(pos)
-                    level.destroyBlockProgress(id, pos, -1)
-                    setState(null, null)
+                    withConsumer(level, pos) {
+                        level.playSound(null, pos, state.soundType.breakSound, SoundSource.NEUTRAL, .25f, 1f)
+                        gameMode.handleBlockBreakAction(pos, ServerboundPlayerActionPacket.Action.STOP_DESTROY_BLOCK, direction.opposite, 1)
+                        gameMode.destroyBlock(pos)
+                        level.destroyBlockProgress(id, pos, -1)
+                        setState(null, null)
+                    }
                     break
                 }
             }
-            return Pair.of(true, "block");
+            return Pair.of(true, "");
         }
         return Pair.of(false, "Nothing to dig here");
+    }
+
+    fun swingEntity(hit: EntityHitResult): Pair<Boolean, String> {
+        val tool = inventory.getSelected()
+        if (tool.isEmpty)
+            return Pair.of(false, "Cannot swing without tool");
+        val entity = hit.entity
+        if (entity !is LivingEntity)
+            return Pair.of(false, "Incorrect entity hit")
+        cooldowns.addCooldown(tool.item, 1)
+        if (!canAttack(entity))
+            return Pair.of(false, "Can't swing this entity")
+        withConsumer(entity) { attack(entity) }
+        cooldowns.addCooldown(tool.item, 1)
+        return Pair.of(true, "")
     }
 }

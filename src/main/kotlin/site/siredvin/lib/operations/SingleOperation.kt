@@ -13,13 +13,13 @@ enum class SingleOperation(
     private val distanceCostPolicy: DistancePolicy,
     private val countCostPolicy: CountPolicy
 ) : IPeripheralOperation<SingleOperationContext> {
-    DIG(1000, 1), USE_ON_BLOCK(5000, 1), SUCK(1000, 1), USE_ON_ANIMAL(2500, 10), CAPTURE_ANIMAL(50000, 100), WARP(
-        1000,
-        DistancePolicy.IGNORED,
-        CountPolicy.MULTIPLY,
-        1,
-        DistancePolicy.SQRT,
-        CountPolicy.MULTIPLY
+    SWING(1000, 1),
+    USE(5000, 1),
+    SUCK(1000, 1),
+    CAPTURE_ANIMAL(50000, 100),
+    WARP(
+        1000, DistancePolicy.IGNORED, CountPolicy.MULTIPLY,
+        1, DistancePolicy.SQRT, CountPolicy.MULTIPLY
     );
 
     enum class DistancePolicy(private val factorFunction: Function<Int, Int>) {

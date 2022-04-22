@@ -2,7 +2,7 @@ package site.siredvin.turtlematic.integrations.computercraft.peripheral
 
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
-import site.siredvin.apcode.plugins.AutomataBlockHandPlugin
+import site.siredvin.apcode.plugins.AutomataHandPlugin
 import site.siredvin.apcode.plugins.AutomataItemSuckPlugin
 import site.siredvin.apcode.plugins.AutomataLookPlugin
 import site.siredvin.lib.operations.AutomataCoreTier
@@ -18,7 +18,7 @@ class AutomataCorePeripheral(
     init {
         addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this))
-        addPlugin(AutomataBlockHandPlugin(this))
+        addPlugin(AutomataHandPlugin(this))
     }
 
     companion object {

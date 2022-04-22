@@ -21,7 +21,10 @@ class HusbandryAutomataCorePeripheral(
     init {
         addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this, entityConverter = LuaConverter::completeEntityToLua))
-        addPlugin(AutomataBlockHandPlugin(this))
+        addPlugin(AutomataHandPlugin(
+            this, allowedMods = InteractionMode.values().toSet(),
+            suitableEntity = isAnimal
+        ))
         addPlugin(AutomataEntityHandPlugin(this, suitableEntity))
         addPlugin(AutomataEntityTransferPlugin(this, suitableEntity))
     }

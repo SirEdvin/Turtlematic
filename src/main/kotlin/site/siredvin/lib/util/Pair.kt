@@ -1,5 +1,6 @@
 package site.siredvin.lib.util
 
+import dan200.computercraft.api.lua.MethodResult
 import java.util.function.BiFunction
 import java.util.function.Function
 

@@ -23,8 +23,8 @@ import java.util.function.Predicate
 
 class AutomataEntityHandPlugin(automataCore: BaseAutomataCorePeripheral, private val suitableEntity: Predicate<Entity>) :
     AutomataCorePlugin(automataCore) {
-    override val operations: Array<IPeripheralOperation<*>>
-        get() = arrayOf(SingleOperation.USE_ON_ANIMAL)
+//    override val operations: Array<IPeripheralOperation<*>>
+//        get() = arrayOf(SingleOperation.USE_ON_ANIMAL)
 
 //    @LuaFunction(mainThread = true)
 //    @Throws(LuaException::class)

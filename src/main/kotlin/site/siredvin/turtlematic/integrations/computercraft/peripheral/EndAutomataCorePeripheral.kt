@@ -16,7 +16,7 @@ class EndAutomataCorePeripheral(
     init {
         addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this))
-        addPlugin(AutomataBlockHandPlugin(this))
+        addPlugin(AutomataHandPlugin(this))
         addPlugin(AutomataWarpingPlugin(this))
     }
 
