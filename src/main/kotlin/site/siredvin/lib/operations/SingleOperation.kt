@@ -16,7 +16,7 @@ enum class SingleOperation(
     SWING(1000, 1),
     USE(5000, 1),
     SUCK(1000, 1),
-    CAPTURE_ANIMAL(50000, 100),
+    CAPTURE(50000, 100),
     WARP(
         1000, DistancePolicy.IGNORED, CountPolicy.MULTIPLY,
         1, DistancePolicy.SQRT, CountPolicy.MULTIPLY

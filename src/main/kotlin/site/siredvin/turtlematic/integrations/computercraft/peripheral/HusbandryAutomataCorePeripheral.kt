@@ -28,7 +28,7 @@ class HusbandryAutomataCorePeripheral(
             this, suitableEntity = suitableEntity,
             allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY))
         )
-        addPlugin(AutomataEntityTransferPlugin(this, suitableEntity))
+        addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.ENTITY), suitableEntity))
     }
 
     companion object {

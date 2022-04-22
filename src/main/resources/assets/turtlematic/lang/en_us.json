@@ -1,0 +1,11 @@
+{
+  "item.turtlematic.automata_core": "Automata Core",
+  "item.turtlematic.husbandry_automata_core": "Husbandry automata Core",
+  "item.turtlematic.end_automata_core": "End automata Core",
+
+  "turtle.turtlematic.automata": "Automata",
+  "turtle.turtlematic.husbandry_automata": "Husbandry automata",
+  "turtle.turtlematic.end_automata": "End automata",
+
+  "itemGroup.turtlematic.main": "Turtlematic"
+}

@@ -1,7 +1,9 @@
 package site.siredvin.lib.peripherals.owner
 
+import dan200.computercraft.ComputerCraft
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
+import dan200.computercraft.shared.TurtlePermissions
 import dan200.computercraft.shared.util.InventoryUtil
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -49,19 +51,17 @@ class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide) : B
     }
 
     override fun isMovementPossible(level: Level, pos: BlockPos): Boolean {
-        return true
-        //        TODO: fix
-//        return FakePlayerProviderTurtle.withPlayer(turtle, player -> {
-//            if (level.isOutsideBuildHeight(pos))
-//                return false;
-//            if (!level.isInWorldBounds(pos))
-//                return false;
-//            if (ComputerCraft.turtlesObeyBlockProtection && !TurtlePermissions.isBlockEnterable(level, pos, player))
-//                return false;
-//            if (!level.isAreaLoaded(pos, 0))
-//                return false;
-//            return level.getWorldBorder().isWithinBounds(pos);
-//        });
+        return FakePlayerProviderTurtle.withPlayer(turtle, {player ->
+            if (level.isOutsideBuildHeight(pos))
+                return@withPlayer false;
+            if (!level.isInWorldBounds(pos))
+                return@withPlayer false;
+            if (ComputerCraft.turtlesObeyBlockProtection && !TurtlePermissions.isBlockEnterable(level, pos, player))
+                return@withPlayer false;
+            if (!level.isLoaded(pos))
+                return@withPlayer false;
+            return@withPlayer level.worldBorder.isWithinBounds(pos);
+        });
     }
 
     override fun move(level: Level, pos: BlockPos): Boolean {

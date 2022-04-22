@@ -18,6 +18,7 @@ class EndAutomataCorePeripheral(
         addPlugin(AutomataHandPlugin(this))
         addPlugin(AutomataWarpingPlugin(this))
         addPlugin(AutomataScanPlugin(this))
+        addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.BLOCK)))
     }
 
     companion object {
