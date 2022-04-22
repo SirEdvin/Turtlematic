@@ -14,10 +14,10 @@ class EndAutomataCorePeripheral(
     TYPE, turtle, side, AutomataCoreTier.TIER2
 ){
     init {
-        addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this))
         addPlugin(AutomataHandPlugin(this))
         addPlugin(AutomataWarpingPlugin(this))
+        addPlugin(AutomataScanPlugin(this))
     }
 
     companion object {

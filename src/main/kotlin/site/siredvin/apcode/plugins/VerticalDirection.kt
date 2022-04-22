@@ -1,26 +1,19 @@
 package site.siredvin.apcode.plugins
 
 import dan200.computercraft.api.lua.LuaException
+import net.minecraft.core.Direction
 import java.util.*
 import java.util.stream.Collectors
 
-enum class InteractionMode {
-    ANY, ENTITY, BLOCK;
-
-    val skipEntry: Boolean
-        get() = this == BLOCK
-
-    val skipBlock: Boolean
-        get() = this == ENTITY
+enum class VerticalDirection(val minecraftDirection: Direction) {
+    UP(Direction.UP), DOWN(Direction.DOWN);
 
     companion object {
-        fun luaValueOf(name: String, allowedMods: Set<InteractionMode>): InteractionMode {
-            if (name == "*")
-                return ANY
+        fun luaValueOf(name: String): VerticalDirection {
             try {
                 return valueOf(name.uppercase())
             } catch (exc: IllegalArgumentException) {
-                val allValues = allowedMods.stream().map { mode -> mode.name.lowercase() }.collect(
+                val allValues = Arrays.stream(values()).map { mode -> mode.name.lowercase() }.collect(
                     Collectors.toList()
                 ).joinToString(", ")
                 throw LuaException("Interaction mode should be one of: $allValues")
@@ -28,4 +21,3 @@ enum class InteractionMode {
         }
     }
 }
-

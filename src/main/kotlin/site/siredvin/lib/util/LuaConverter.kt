@@ -1,5 +1,7 @@
 package site.siredvin.lib.util
 
+import com.mojang.math.Matrix4f
+import com.mojang.math.Transformation
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.core.computer.ComputerSide
 import net.minecraft.core.BlockPos
@@ -11,8 +13,8 @@ import net.minecraft.world.entity.Shearable
 import net.minecraft.world.entity.animal.Animal
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import site.siredvin.lib.ext.toRelative
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -35,6 +37,18 @@ object LuaConverter {
         return data
     }
 
+    fun <T: Entity> withPos(entity: T, facing: Direction, center: BlockPos, converter: (T) -> (MutableMap<String, Any>)):  MutableMap<String, Any> {
+        val base = converter(entity)
+        base.putAll(posToObject(entity.blockPosition(), facing, center))
+        return base
+    }
+
+    fun <T> withPos(value: T, pos: BlockPos, facing: Direction, center: BlockPos, converter: (T) -> (MutableMap<String, Any>)):  MutableMap<String, Any> {
+        val base = converter(value)
+        base.putAll(posToObject(pos, facing, center))
+        return base
+    }
+
     fun animalToLua(animal: Animal): MutableMap<String, Any> {
         val data = entityToLua(animal);
         data["baby"] = animal.isBaby
@@ -50,22 +64,12 @@ object LuaConverter {
         return if (entity is Animal) animalToLua(entity) else entityToLua(entity)
     }
 
-    fun completeEntityWithPositionToLua(entity: Entity, pos: BlockPos): Map<String, Any> {
-        val data = completeEntityToLua(
-            entity
-        )
-        data["x"] = entity.x - pos.x
-        data["y"] = entity.y - pos.y
-        data["z"] = entity.z - pos.z
-        return data
-    }
-
-    fun posToObject(pos: BlockPos?): MutableMap<String, Any>? {
-        if (pos == null) return null
+    fun posToObject(pos: BlockPos, facing: Direction, center: BlockPos): MutableMap<String, Any> {
+        val transformedPos = pos.subtract(center).toRelative(facing)
         val map: MutableMap<String, Any> = HashMap()
-        map["x"] = pos.x
-        map["y"] = pos.y
-        map["z"] = pos.z
+        map["x"] = transformedPos.x
+        map["y"] = transformedPos.y
+        map["z"] = transformedPos.z
         return map
     }
 
@@ -73,14 +77,14 @@ object LuaConverter {
         val map = itemToObject(stack.item)
         map["tags"] = tagsToList(stack.tags)
         map["count"] = stack.count
-        map["displayName"] = stack.displayName
+        map["name"] = stack.displayName.toString()
         map["maxStackSize"] = stack.maxStackSize
         return map
     }
 
     fun itemToObject(item: Item): MutableMap<String, Any> {
         val map: MutableMap<String, Any> = HashMap()
-        map["name"] = Registry.ITEM.getKey(item).toString()
+        map["technicalName"] = Registry.ITEM.getKey(item).toString()
         return map
     }
 

@@ -5,6 +5,7 @@ import dan200.computercraft.api.turtle.TurtleSide
 import site.siredvin.apcode.plugins.AutomataHandPlugin
 import site.siredvin.apcode.plugins.AutomataItemSuckPlugin
 import site.siredvin.apcode.plugins.AutomataLookPlugin
+import site.siredvin.apcode.plugins.AutomataScanPlugin
 import site.siredvin.lib.operations.AutomataCoreTier
 import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
@@ -16,9 +17,9 @@ class AutomataCorePeripheral(
     TYPE, turtle, side, AutomataCoreTier.TIER1
 ){
     init {
-        addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this))
         addPlugin(AutomataHandPlugin(this))
+        addPlugin(AutomataScanPlugin(this))
     }
 
     companion object {

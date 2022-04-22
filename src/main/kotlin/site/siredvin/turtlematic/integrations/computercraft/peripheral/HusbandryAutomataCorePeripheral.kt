@@ -19,13 +19,15 @@ class HusbandryAutomataCorePeripheral(
     TYPE, turtle, side, AutomataCoreTier.TIER2
 ){
     init {
-        addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this, entityConverter = LuaConverter::completeEntityToLua))
         addPlugin(AutomataHandPlugin(
             this, allowedMods = InteractionMode.values().toSet(),
             suitableEntity = isAnimal
         ))
-        addPlugin(AutomataEntityHandPlugin(this, suitableEntity))
+        addPlugin(AutomataScanPlugin(
+            this, suitableEntity = suitableEntity,
+            allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY))
+        )
         addPlugin(AutomataEntityTransferPlugin(this, suitableEntity))
     }
 
