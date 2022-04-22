@@ -23,6 +23,8 @@ import site.siredvin.lib.peripherals.IPeripheralCheck
 import site.siredvin.lib.peripherals.IPeripheralFunction
 import site.siredvin.lib.peripherals.IPeripheralOperation
 import site.siredvin.lib.util.LuaConverter
+import site.siredvin.turtlematic.tags.BlockTags
+import site.siredvin.turtlematic.tags.EntityTags
 import java.util.function.Predicate
 
 class AutomataCapturePlugin(
@@ -70,10 +72,10 @@ class AutomataCapturePlugin(
             SingleOperation.CAPTURE,
             IPeripheralFunction {
                 val entity = hit.entity
-                if (entity is Player || !entity.isAlive) return@IPeripheralFunction MethodResult.of(
-                    null,
-                    "Unsuitable entity"
-                )
+                if (entity is Player || !entity.isAlive)
+                    return@IPeripheralFunction MethodResult.of(null, "Unsuitable entity")
+                if (entity.type.`is`(EntityTags.CAPTURE_BLACKLIST))
+                    return@IPeripheralFunction MethodResult.of(null, "Entity in blacklist")
                 val nbt = CompoundTag()
                 nbt.putString("entity", EntityType.getKey(entity.type).toString())
                 entity.saveWithoutId(nbt)
@@ -109,6 +111,8 @@ class AutomataCapturePlugin(
                 if (!isEditable)
                     return@withOperation MethodResult.of(null, "Block is protected")
                 val state = level.getBlockState(hit.blockPos)
+                if (!state.`is`(BlockTags.CAPTURE_BLACKLIST))
+                    return@withOperation MethodResult.of(null, "Block is in blacklist")
                 val serializedData = CompoundTag()
                 serializedData.put("state", NbtUtils.writeBlockState(state))
                 val entity = level.getBlockEntity(hit.blockPos)
