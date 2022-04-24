@@ -5,6 +5,7 @@
   "item.turtlematic.enormous_automata_core": "Enormous automata Core",
   "item.turtlematic.soul_vial": "Soul Vial",
   "item.turtlematic.filled_soul_vial": "Filled soul vial",
+  "item.turtlematic.soul_scrapper": "Soul scrapper",
 
   "turtle.turtlematic.automata": "Automata",
   "turtle.turtlematic.husbandry_automata": "Husbandry automata",
@@ -15,6 +16,9 @@
 
   "item.turtlematic.tooltip.soul_vial": "§7Storage for raw souls. Click on soul sand to fill it",
   "item.turtlematic.extra.soul_vial.progress": "§5Already %s from %s souls stored",
-  "item.turtlematic.tooltip.filled_soul_vial": "§5You can hear strange noises from this vial ..."
+  "item.turtlematic.tooltip.filled_soul_vial": "§5You can hear strange noises from this vial ...",
+  "item.turtlematic.tooltip.soul_scrapper": "§5Mysterious device, that somehow allow turtle to imprison souls into specific automata cores",
 
+  "text.turtlematic.automata_core_feed_by_player": "You will that automata core cannot be feed by human hand",
+  "text.turtlematic.consumed_entities": "Consumed:"
 }

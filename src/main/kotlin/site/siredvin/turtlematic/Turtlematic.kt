@@ -11,18 +11,17 @@ import net.minecraftforge.fml.config.ModConfig
 import site.siredvin.turtlematic.common.configuration.ConfigHandler
 import site.siredvin.turtlematic.common.configuration.ConfigHolder
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.integrations.computercraft.turtle.Automata
-import site.siredvin.turtlematic.integrations.computercraft.turtle.EndAutomata
-import site.siredvin.turtlematic.integrations.computercraft.turtle.EnormousAutomata
-import site.siredvin.turtlematic.integrations.computercraft.turtle.HusbandryAutomata
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger
+import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
+import site.siredvin.turtlematic.integrations.computercraft.turtle.*
 
 
 @Suppress("UNUSED")
 object Turtlematic: ModInitializer {
     const val MOD_ID = "turtlematic"
 
-    var LOGGER = LogManager.getLogger(MOD_ID)
+    var LOGGER: Logger = LogManager.getLogger(MOD_ID)
 
     @Suppress("MoveLambdaOutsideParentheses")
     val TAB: CreativeModeTab = FabricItemGroupBuilder.build(
@@ -34,10 +33,14 @@ object Turtlematic: ModInitializer {
         ModConfigEvent.LOADING.register(ConfigHandler::onLoad)
         ModConfigEvent.RELOADING.register(ConfigHandler::onLoad)
         ModLoadingContext.registerConfig(MOD_ID, ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC)
-        Items.register()
+        LOGGER.info(Items.AUTOMATA_CORE.descriptionId)
+
+        SoulHarvestRecipeRegistry.injectAutomataCoreRecipes()
+
         ComputerCraftAPI.registerTurtleUpgrade(Automata())
         ComputerCraftAPI.registerTurtleUpgrade(EndAutomata())
         ComputerCraftAPI.registerTurtleUpgrade(HusbandryAutomata())
         ComputerCraftAPI.registerTurtleUpgrade(EnormousAutomata())
+        ComputerCraftAPI.registerTurtleUpgrade(SoulScrapperTurtle())
     }
 }

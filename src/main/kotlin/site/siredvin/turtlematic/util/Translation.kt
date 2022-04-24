@@ -47,3 +47,11 @@ fun turtleAdjective(name: String?): String? {
 fun pocketAdjective(name: String?): String? {
     return java.lang.String.format("pocket.%s.%s", Turtlematic.MOD_ID, name)
 }
+
+fun text(name: String): Component {
+    return TranslatableComponent(String.format("text.%s.%s", Turtlematic.MOD_ID, name))
+}
+
+fun text(name: String, vararg args: Any): Component {
+    return TranslatableComponent(String.format("text.%s.%s", Turtlematic.MOD_ID, name), *args)
+}

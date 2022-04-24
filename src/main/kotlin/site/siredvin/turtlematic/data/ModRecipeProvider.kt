@@ -35,5 +35,13 @@ class ModRecipeProvider(dataGenerator: FabricDataGenerator) : FabricRecipeProvid
             .pattern("/I/")
             .group(Turtlematic.MOD_ID)
             .save(consumer)
+
+        TweakedShapedRecipeBuilder.shaped(Items.SOUL_SCRAPPER)
+            .define('/', net.minecraft.world.item.Items.STICK)
+            .define('S', net.minecraft.world.item.Items.SOUL_LANTERN)
+            .pattern(" S ")
+            .pattern("S/S")
+            .pattern("/  ")
+            .save(consumer)
     }
 }

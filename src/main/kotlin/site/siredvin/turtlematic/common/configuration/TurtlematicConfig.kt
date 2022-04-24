@@ -8,7 +8,6 @@ import site.siredvin.turtlematic.integrations.computercraft.operations.SingleOpe
 import site.siredvin.turtlematic.integrations.computercraft.operations.SphereOperation
 
 object TurtlematicConfig {
-
     // automata core toggles
     var enableAutomataCore = false
     var enableEndAutomataCore = false
@@ -19,7 +18,6 @@ object TurtlematicConfig {
     var endAutomataCoreWarpPointLimit = 0
 
     class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
-
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
