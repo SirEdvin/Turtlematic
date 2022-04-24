@@ -22,7 +22,7 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
     protected var initialized = false
     protected val pluggedMethods: MutableList<BoundMethod> = ArrayList()
     protected var plugins: MutableList<IPeripheralPlugin>? = null
-    protected var _methodNames = Array<String>(0) { "" }
+    protected var _methodNames = Array(0) { "" }
     protected fun buildPlugins() {
         if (!initialized) {
             initialized = true
@@ -32,7 +32,7 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
                     plugin.methods
                 )
             })
-            peripheralOwner!!.abilities!!.forEach(Consumer { ability: IOwnerAbility? ->
+            peripheralOwner!!.abilities.forEach(Consumer { ability: IOwnerAbility? ->
                 if (ability is IPeripheralPlugin) pluggedMethods.addAll(
                     (ability as IPeripheralPlugin).methods
                 )
@@ -48,10 +48,10 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
         if (plugins == null) plugins = LinkedList()
         plugins!!.add(plugin)
         val operations = plugin.operations
-        if (operations != null) {
+        if (operations.isNotEmpty()) {
             val operationAbility = peripheralOwner!!.getAbility(PeripheralOwnerAbility.OPERATION)
                 ?: throw IllegalArgumentException("This is not possible to attach plugin with operations to not operationable owner")
-            for (operation in operations) operationAbility.registerOperation(operation!!)
+            for (operation in operations) operationAbility.registerOperation(operation)
         }
     }
 
@@ -78,7 +78,7 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
     open val peripheralConfiguration: MutableMap<String?, Any?>?
         get() {
             val data: MutableMap<String?, Any?> = HashMap()
-            peripheralOwner!!.abilities!!.forEach(Consumer { ability: IOwnerAbility -> ability.collectConfiguration(data) })
+            peripheralOwner!!.abilities.forEach(Consumer { ability: IOwnerAbility -> ability.collectConfiguration(data) })
             return data
         }
 

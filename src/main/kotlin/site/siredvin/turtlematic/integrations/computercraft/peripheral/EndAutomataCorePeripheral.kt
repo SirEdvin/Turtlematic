@@ -2,10 +2,9 @@ package site.siredvin.turtlematic.integrations.computercraft.peripheral
 
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
-import site.siredvin.apcode.plugins.*
-import site.siredvin.lib.operations.AutomataCoreTier
-import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.turtlematic.integrations.computercraft.plugins.*
 
 class EndAutomataCorePeripheral(
     turtle: ITurtleAccess,
@@ -15,7 +14,7 @@ class EndAutomataCorePeripheral(
 ){
     init {
         addPlugin(AutomataLookPlugin(this))
-        addPlugin(AutomataHandPlugin(this))
+        addPlugin(AutomataInteractionPlugin(this))
         addPlugin(AutomataWarpingPlugin(this))
         addPlugin(AutomataScanPlugin(this))
         addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.BLOCK)))

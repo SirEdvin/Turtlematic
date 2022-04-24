@@ -36,7 +36,7 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
         return TransformedModel.of(if (turtleSide == TurtleSide.LEFT) leftModel!! else rightModel!!)
     }
 
-    // Optional callbacks for addons based on AP
+    // Optional callbacks for addons
     fun chargeConsumingCallback() {}
     override fun update(turtle: ITurtleAccess, side: TurtleSide) {
         super.update(turtle, side)

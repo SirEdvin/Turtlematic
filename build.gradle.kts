@@ -12,6 +12,23 @@ version = modVersion
 val mavenGroup: String by project
 group = mavenGroup
 
+loom {
+    runs {
+        create("datagen") {
+            client()
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.modid=turtlematic")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}")
+            vmArg("-Dfabric-api.datagen.strict-validation")
+        }
+    }
+}
+
+
+sourceSets.main.configure {
+    resources.srcDir("src/generated/resources")
+}
+
 repositories {
     maven {
         url = uri("https://squiddev.cc/maven")
@@ -25,6 +42,7 @@ repositories {
     }
     maven { url = uri("https://cursemaven.com") }
 }
+
 dependencies {
     val minecraftVersion: String by project
     minecraft("com.mojang:minecraft:$minecraftVersion")

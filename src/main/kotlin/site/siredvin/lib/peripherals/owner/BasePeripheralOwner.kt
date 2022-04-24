@@ -14,7 +14,7 @@ abstract class BasePeripheralOwner : IPeripheralOwner {
         _abilities[ability] = abilityImplementation
     }
 
-    override fun <T : IOwnerAbility> getAbility(ability: PeripheralOwnerAbility<T>): T {
+    override fun <T : IOwnerAbility> getAbility(ability: PeripheralOwnerAbility<T>): T? {
         return _abilities[ability] as T
     }
 }

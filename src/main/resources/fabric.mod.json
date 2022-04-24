@@ -21,6 +21,12 @@
         "adapter": "kotlin",
         "value": "site.siredvin.turtlematic.Turtlematic"
       }
+    ],
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.turtlematic.data.ModDataGenerationEntrypoint"
+      }
     ]
   },
   "mixins": [

@@ -2,10 +2,19 @@
   "item.turtlematic.automata_core": "Automata Core",
   "item.turtlematic.husbandry_automata_core": "Husbandry automata Core",
   "item.turtlematic.end_automata_core": "End automata Core",
+  "item.turtlematic.enormous_automata_core": "Enormous automata Core",
+  "item.turtlematic.soul_vial": "Soul Vial",
+  "item.turtlematic.filled_soul_vial": "Filled soul vial",
 
   "turtle.turtlematic.automata": "Automata",
   "turtle.turtlematic.husbandry_automata": "Husbandry automata",
   "turtle.turtlematic.end_automata": "End automata",
+  "turtle.turtlematic.enormous_automata": "Enormous automata",
 
-  "itemGroup.turtlematic.main": "Turtlematic"
+  "itemGroup.turtlematic.main": "Turtlematic",
+
+  "item.turtlematic.tooltip.soul_vial": "§7Storage for raw souls. Click on soul sand to fill it",
+  "item.turtlematic.extra.soul_vial.progress": "§5Already %s from %s souls stored",
+  "item.turtlematic.tooltip.filled_soul_vial": "§5You can hear strange noises from this vial ..."
+
 }

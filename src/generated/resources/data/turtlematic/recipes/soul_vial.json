@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "turtlematic",
+  "pattern": [
+    "R R",
+    "ESE",
+    "R R"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:soul_lantern"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "turtlematic:soul_vial"
+  }
+}

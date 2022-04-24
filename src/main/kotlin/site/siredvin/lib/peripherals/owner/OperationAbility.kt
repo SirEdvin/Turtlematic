@@ -16,7 +16,7 @@ import java.util.function.BiConsumer
 import java.util.function.Consumer
 
 class OperationAbility(private val owner: IPeripheralOwner) : IOwnerAbility, IPeripheralPlugin {
-    private val allowedOperations: MutableMap<String?, IPeripheralOperation<*>> = HashMap()
+    private val allowedOperations: MutableMap<String, IPeripheralOperation<*>> = HashMap()
 
     protected fun setCooldown(operation: IPeripheralOperation<*>, cooldown: Int) {
         if (cooldown > 0) {
@@ -72,7 +72,7 @@ class OperationAbility(private val owner: IPeripheralOwner) : IOwnerAbility, IPe
         var cooldown = operation.getCooldown(context)
         val fuelAbility: FuelAbility<*>?
         if (cost != 0) {
-            fuelAbility = owner.getAbility(PeripheralOwnerAbility.FUEL!!)
+            fuelAbility = owner.getAbility(PeripheralOwnerAbility.FUEL)
             if (fuelAbility == null) {
                 val result = MethodResult.of(null, "This peripheral has no fuel at all")
                 failCallback?.accept(result, FailReason.NOT_ENOUGH_FUEL)
@@ -105,10 +105,15 @@ class OperationAbility(private val owner: IPeripheralOwner) : IOwnerAbility, IPe
         }
     }
 
-    @LuaFunction(mainThread = true)
-    fun getOperationCooldown(name: String?): MethodResult {
+    @LuaFunction(mainThread = true, value = ["getCooldown"])
+    fun getCooldownLua(name: String): MethodResult {
         val op = allowedOperations[name] ?: return MethodResult.of(null, "Cannot find this operation")
         return MethodResult.of(getCurrentCooldown(op))
+    }
+
+    @LuaFunction
+    fun getOperations(): List<String> {
+        return allowedOperations.keys.toList()
     }
 
     enum class FailReason {

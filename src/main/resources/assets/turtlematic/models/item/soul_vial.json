@@ -1,0 +1,11 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "turtlematic:item/soul_vial/empty"
+  },
+  "overrides": [
+    {"predicate":  {"custom_model_data":  1}, "model":  "turtlematic:item/soul_vial_1"},
+    {"predicate":  {"custom_model_data":  2}, "model":  "turtlematic:item/soul_vial_2"},
+    {"predicate":  {"custom_model_data":  3}, "model":  "turtlematic:item/soul_vial_3"}
+  ]
+}

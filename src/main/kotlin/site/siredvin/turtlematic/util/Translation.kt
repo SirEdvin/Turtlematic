@@ -1,9 +1,12 @@
 package site.siredvin.turtlematic.util
 
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.TextComponent
 import net.minecraft.network.chat.TranslatableComponent
+import site.siredvin.lib.util.convertColors
 import site.siredvin.turtlematic.Turtlematic
 
-fun itemTooltip(descriptionId: String): TranslatableComponent {
+fun itemTooltip(descriptionId: String): Component {
     val lastIndex = descriptionId.lastIndexOf('.')
     return TranslatableComponent(
         String.format(
@@ -11,6 +14,29 @@ fun itemTooltip(descriptionId: String): TranslatableComponent {
             descriptionId.substring(0, lastIndex).replaceFirst("^block".toRegex(), "item"),
             descriptionId.substring(lastIndex + 1)
         )
+    )
+}
+
+fun itemExtra(descriptionId: String, extra: String): Component {
+    val lastIndex = descriptionId.lastIndexOf('.')
+    return TranslatableComponent(
+        String.format(
+            "%s.extra.%s.%s",
+            descriptionId.substring(0, lastIndex).replaceFirst("^block".toRegex(), "item"),
+            descriptionId.substring(lastIndex + 1), extra
+        )
+    )
+}
+
+fun itemExtra(descriptionId: String, extra: String, vararg args: Any): Component {
+    val lastIndex = descriptionId.lastIndexOf('.')
+    return TranslatableComponent(
+        String.format(
+            "%s.extra.%s.%s",
+            descriptionId.substring(0, lastIndex).replaceFirst("^block".toRegex(), "item"),
+            descriptionId.substring(lastIndex + 1), extra
+        ),
+        *args
     )
 }
 

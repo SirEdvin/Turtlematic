@@ -9,7 +9,7 @@ import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.util.itemTooltip
 
 
-abstract class BaseItem(properties: Properties): Item(properties) {
+open class BaseItem(properties: Properties): Item(properties) {
     private var _description: Component? = null
 
     private val extraDescription: Component
@@ -20,16 +20,4 @@ abstract class BaseItem(properties: Properties): Item(properties) {
         }
 
     constructor(): this(Properties().tab(Turtlematic.TAB))
-
-    abstract fun isEnabled(): Boolean
-
-//    override fun appendHoverText(
-//        itemStack: ItemStack,
-//        level: Level,
-//        list: MutableList<Component>,
-//        tooltipFlag: TooltipFlag
-//    ) {
-//        super.appendHoverText(itemStack, level, list, tooltipFlag)
-//        list.add(extraDescription)
-//    }
 }

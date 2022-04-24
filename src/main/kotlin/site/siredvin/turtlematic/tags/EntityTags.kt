@@ -7,4 +7,5 @@ import site.siredvin.turtlematic.Turtlematic
 
 object EntityTags {
     val CAPTURE_BLACKLIST = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, ResourceLocation(Turtlematic.MOD_ID, "capture_blacklist"))
+    val HUSBANDRY_EXTRA_ANIMAL = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, ResourceLocation(Turtlematic.MOD_ID, "husbandry_extra_animal"))
 }

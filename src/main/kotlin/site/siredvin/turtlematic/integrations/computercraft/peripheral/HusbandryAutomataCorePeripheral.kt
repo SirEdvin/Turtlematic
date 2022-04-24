@@ -5,11 +5,11 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import site.siredvin.apcode.plugins.*
-import site.siredvin.lib.operations.AutomataCoreTier
-import site.siredvin.lib.peripherals.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.lib.util.LuaConverter
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.turtlematic.integrations.computercraft.plugins.*
+import site.siredvin.turtlematic.tags.EntityTags
 import java.util.function.Predicate
 
 class HusbandryAutomataCorePeripheral(
@@ -20,11 +20,14 @@ class HusbandryAutomataCorePeripheral(
 ){
     init {
         addPlugin(AutomataLookPlugin(this, entityConverter = LuaConverter::completeEntityToLua))
-        addPlugin(AutomataHandPlugin(
+        addPlugin(
+            AutomataInteractionPlugin(
             this, allowedMods = InteractionMode.values().toSet(),
             suitableEntity = isAnimal
-        ))
-        addPlugin(AutomataScanPlugin(
+        )
+        )
+        addPlugin(
+            AutomataScanPlugin(
             this, suitableEntity = suitableEntity,
             allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY))
         )
@@ -35,7 +38,7 @@ class HusbandryAutomataCorePeripheral(
         const val TYPE = "husbandryAutomata"
         private val isAnimal =
             Predicate { entity1: Entity ->
-                entity1.type.category.isFriendly
+                entity1.type.category.isFriendly || entity1.type.`is`(EntityTags.HUSBANDRY_EXTRA_ANIMAL)
             }
         private val isLivingEntity =
             Predicate { entity1: Entity? -> entity1 is LivingEntity }

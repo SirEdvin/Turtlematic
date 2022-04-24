@@ -14,7 +14,7 @@ open class TurtleItem(p: Properties, var turtleID: ResourceLocation, var enableS
         Properties().tab(Turtlematic.TAB), turtleID, enableSup
     )
 
-    override fun isEnabled(): Boolean {
+    fun isEnabled(): Boolean {
         return enableSup.get()
     }
 

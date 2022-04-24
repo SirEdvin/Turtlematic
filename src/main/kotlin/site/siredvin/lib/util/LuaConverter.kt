@@ -22,8 +22,7 @@ object LuaConverter {
 
     fun blockStateToLua(state: BlockState): MutableMap<String, Any> {
         val data: MutableMap<String, Any> = HashMap()
-        val blockName = state.block.builtInRegistryHolder().key().registry()
-        if (blockName != null) data["name"] = blockName.toString()
+        data["name"] = state.block.name.string
         data["tags"] = tagsToList(state.tags)
         return data
     }
@@ -32,6 +31,8 @@ object LuaConverter {
         val data: MutableMap<String, Any> = HashMap()
         data["id"] = entity.id
         data["uuid"] = entity.stringUUID
+        data["category"] = entity.type.category.name
+        data["type"] = entity.type.description.string
         data["name"] = entity.name.string
         data["tags"] = entity.tags
         return data
@@ -77,7 +78,7 @@ object LuaConverter {
         val map = itemToObject(stack.item)
         map["tags"] = tagsToList(stack.tags)
         map["count"] = stack.count
-        map["name"] = stack.displayName.toString()
+        map["name"] = stack.displayName.string
         map["maxStackSize"] = stack.maxStackSize
         return map
     }

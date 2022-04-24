@@ -28,7 +28,7 @@ interface IPeripheralOwner {
     fun isMovementPossible(level: Level, pos: BlockPos): Boolean
     fun move(level: Level, pos: BlockPos): Boolean
     fun <T : IOwnerAbility> attachAbility(ability: PeripheralOwnerAbility<T>, abilityImplementation: T)
-    fun <T : IOwnerAbility> getAbility(ability: PeripheralOwnerAbility<T>): T
+    fun <T : IOwnerAbility> getAbility(ability: PeripheralOwnerAbility<T>): T?
     val abilities: Collection<IOwnerAbility>
     fun attachOperation(vararg operations: IPeripheralOperation<*>) {
         val operationAbility = OperationAbility(this)

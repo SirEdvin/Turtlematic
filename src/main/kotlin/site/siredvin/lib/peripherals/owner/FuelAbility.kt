@@ -17,8 +17,8 @@ abstract class FuelAbility<T : IPeripheralOwner>(protected var owner: T) : IOwne
         return rate
     }
 
-    protected fun _setFuelConsumptionRate(rate: Int) {
-        var rate = rate
+    protected fun _setFuelConsumptionRate(raw_rate: Int) {
+        var rate = raw_rate
         if (rate < DEFAULT_FUEL_CONSUMING_RATE) rate = DEFAULT_FUEL_CONSUMING_RATE
         val maxFuelRate = maxFuelConsumptionRate
         if (rate > maxFuelRate) rate = maxFuelRate
