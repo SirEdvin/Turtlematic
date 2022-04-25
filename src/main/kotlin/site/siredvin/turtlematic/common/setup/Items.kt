@@ -20,4 +20,5 @@ object Items {
     val FILLED_SOUL_VIAL = DescriptiveItem().register("filled_soul_vial")
     val SOUL_SCRAPPER = TurtleItem(SoulScrapperTurtle.ID) { true }.register("soul_scrapper")
     val TURTLE_CHATTER = TurtleItem(ChatterTurtle.ID) { TurtlematicConfig.enableTurtleChatter }.register("turtle_chatter")
+    val CREATIVE_CHEST = TurtleItem(CreativeChestTurtle.ID) { TurtlematicConfig.enableCreativeChest }.register("creative_chest")
 }

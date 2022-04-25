@@ -7,6 +7,7 @@
   "item.turtlematic.filled_soul_vial": "Filled soul vial",
   "item.turtlematic.soul_scrapper": "Soul scrapper",
   "item.turtlematic.turtle_chatter": "Turtle chatter",
+  "item.turtlematic.creative_chest": "Creative chest",
 
   "turtle.turtlematic.automata": "Automata",
   "turtle.turtlematic.husbandry_automata": "Husbandry automata",
@@ -14,6 +15,7 @@
   "turtle.turtlematic.enormous_automata": "Enormous automata",
   "turtle.turtlematic.soul_scrapper": "Soul scrapping",
   "turtle.turtlematic.chatter": "Chatting",
+  "turtle.turtlematic.creative_chest": "Creativity",
 
   "itemGroup.turtlematic.main": "Turtlematic",
 
@@ -22,6 +24,7 @@
   "item.turtlematic.tooltip.filled_soul_vial": "§5You can hear strange noises from this vial ...",
   "item.turtlematic.tooltip.soul_scrapper": "§5Mysterious device, that somehow allow turtle to imprison souls into specific automata cores",
   "item.turtlematic.tooltip.turtle_chatter": "§7Strange device that allows turtle to create crude chat bubbles",
+  "item.turtlematic.tooltip.creative_chest": "§7Creative item, that allows turtle to generate items",
 
   "text.turtlematic.automata_core_feed_by_player": "You will that automata core cannot be feed by human hand",
   "text.turtlematic.consumed_entities": "Consumed:"

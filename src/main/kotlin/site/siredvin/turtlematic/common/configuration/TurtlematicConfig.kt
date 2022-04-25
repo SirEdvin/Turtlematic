@@ -10,6 +10,7 @@ import site.siredvin.turtlematic.integrations.computercraft.operations.SphereOpe
 object TurtlematicConfig {
     // additonal turtle peripherals
     var enableTurtleChatter = false
+    var enableCreativeChest = false
     // automata core toggles
     var enableAutomataCore = false
     var enableEndAutomataCore = false
@@ -22,6 +23,7 @@ object TurtlematicConfig {
     class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
         // Extra turtle peripherals
         val ENABLE_TURTLE_CHATTER: ForgeConfigSpec.BooleanValue
+        val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -33,6 +35,7 @@ object TurtlematicConfig {
         init {
             builder.push("turtlePeripherals")
             ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
+            ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)

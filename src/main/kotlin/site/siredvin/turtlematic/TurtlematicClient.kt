@@ -15,6 +15,8 @@ object TurtlematicClient: ClientModInitializer {
     private val EXTRA_MODELS = arrayOf(
         "turtle_chatter_upgrade_left",
         "turtle_chatter_upgrade_right",
+        "turtle_creative_chest_upgrade_left",
+        "turtle_creative_chest_upgrade_right",
     )
 
     fun onModelBakeEvent(manager: ResourceManager, out: Consumer<ResourceLocation>) {
