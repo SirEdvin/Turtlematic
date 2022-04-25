@@ -14,6 +14,7 @@ import site.siredvin.turtlematic.integrations.computercraft.peripheral.BaseAutom
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 import site.siredvin.lib.util.LuaConverter
 import site.siredvin.lib.util.ScanUtils
+import site.siredvin.lib.util.assertBetween
 import java.util.function.Predicate
 import java.util.stream.Collectors
 import kotlin.math.min
@@ -73,7 +74,7 @@ class AutomataScanPlugin(
         automataCore.addRotationCycle()
         val mode = AreaInteractionMode.luaValueOf(arguments.getString(0), allowedMods)
         val radius = arguments.optInt(1, automataCore.interactionRadius)
-        // TODO: add radius validation
+        assertBetween(radius, 1, automataCore.interactionRadius, "radius")
         val center = turtle.position
         return when (mode) {
             AreaInteractionMode.ITEM -> MethodResult.of(
