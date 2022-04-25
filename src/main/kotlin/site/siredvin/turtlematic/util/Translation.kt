@@ -40,11 +40,11 @@ fun itemExtra(descriptionId: String, extra: String, vararg args: Any): Component
     )
 }
 
-fun turtleAdjective(name: String?): String? {
+fun turtleAdjective(name: String): String {
     return java.lang.String.format("turtle.%s.%s", Turtlematic.MOD_ID, name)
 }
 
-fun pocketAdjective(name: String?): String? {
+fun pocketAdjective(name: String): String {
     return java.lang.String.format("pocket.%s.%s", Turtlematic.MOD_ID, name)
 }
 

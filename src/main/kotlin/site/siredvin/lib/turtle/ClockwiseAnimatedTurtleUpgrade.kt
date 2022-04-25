@@ -12,8 +12,8 @@ import com.mojang.math.Vector3f
 import com.mojang.math.Transformation
 
 abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : PeripheralTurtleUpgrade<T> {
-    constructor(id: ResourceLocation, adjective: String?, item: ItemStack?) : super(id, adjective, item) {}
-    constructor(id: ResourceLocation, item: ItemStack?) : super(id, item) {}
+    constructor(id: ResourceLocation, adjective: String, item: ItemStack) : super(id, adjective, item)
+    constructor(id: ResourceLocation, item: ItemStack) : super(id, item)
 
     override fun getModel(turtleAccess: ITurtleAccess?, turtleSide: TurtleSide): TransformedModel {
         if (leftModel == null) {
@@ -38,8 +38,10 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
 
     // Optional callbacks for addons
     fun chargeConsumingCallback() {}
+
     override fun update(turtle: ITurtleAccess, side: TurtleSide) {
         super.update(turtle, side)
-        if (tick % 2 == 0) if (DataStorageUtil.RotationCharge.consume(turtle, side)) chargeConsumingCallback()
+        if (DataStorageUtil.RotationCharge.consume(turtle, side))
+            chargeConsumingCallback()
     }
 }

@@ -2,6 +2,8 @@ package site.siredvin.turtlematic.integrations.computercraft.peripheral
 
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
+import dan200.computercraft.api.turtle.TurtleAnimation
+import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.LivingEntity
@@ -22,6 +24,9 @@ class SoulScrapperPeripheral(peripheralOwner: TurtlePeripheralOwner) :
 
     @LuaFunction(mainThread = true)
     fun harvestSoul(): MethodResult {
+        peripheralOwner.turtle.playAnimation(
+            if (peripheralOwner.side == TurtleSide.LEFT) TurtleAnimation.SWING_LEFT_TOOL else TurtleAnimation.SWING_RIGHT_TOOL
+        )
         val toolInMainHand = peripheralOwner.toolInMainHand
         if (toolInMainHand.item !is ISoulFeedableItem) {
             return MethodResult.of(null, "Well, you should feed correct items!")
