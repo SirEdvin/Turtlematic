@@ -10,13 +10,10 @@ import dan200.computercraft.api.client.TransformedModel
 import dan200.computercraft.api.turtle.AbstractTurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleUpgradeType
 import net.minecraft.client.resources.model.ModelResourceLocation
-import com.mojang.math.Matrix4f
 import com.mojang.math.Transformation
 import com.mojang.math.Vector3f
-import java.nio.FloatBuffer
 import dan200.computercraft.api.peripheral.IPeripheral
 import site.siredvin.lib.peripherals.DisabledPeripheral
-import site.siredvin.lib.util.DataStorageUtil
 
 abstract class BaseTurtleUpgrade<T : IBasePeripheral<*>>(
     id: ResourceLocation,
@@ -25,10 +22,10 @@ abstract class BaseTurtleUpgrade<T : IBasePeripheral<*>>(
     stack: ItemStack
 ) : AbstractTurtleUpgrade(id, type, adjective, stack) {
 
-    protected val leftModel: ModelResourceLocation?
+    protected open val leftModel: ModelResourceLocation?
         get() = null
 
-    protected val rightModel: ModelResourceLocation?
+    protected open val rightModel: ModelResourceLocation?
         get() = null
 
     protected abstract fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T

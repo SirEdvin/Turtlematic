@@ -1,6 +1,7 @@
 package site.siredvin.turtlematic
 import dan200.computercraft.api.ComputerCraftAPI
 import dan200.computercraft.shared.turtle.upgrades.TurtleTool
+import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.minecraft.resources.ResourceLocation
@@ -43,9 +44,6 @@ object Turtlematic: ModInitializer {
         ComputerCraftAPI.registerTurtleUpgrade(HusbandryAutomata())
         ComputerCraftAPI.registerTurtleUpgrade(EnormousAutomata())
         ComputerCraftAPI.registerTurtleUpgrade(SoulScrapperTurtle())
-        ComputerCraftAPI.registerTurtleUpgrade(
-            TurtleTool(ResourceLocation("minecraft", "netherite_hoe"),
-            net.minecraft.world.item.Items.NETHERITE_HOE, 0.0f, null)
-        )
+        ComputerCraftAPI.registerTurtleUpgrade(ChatterTurtle())
     }
 }

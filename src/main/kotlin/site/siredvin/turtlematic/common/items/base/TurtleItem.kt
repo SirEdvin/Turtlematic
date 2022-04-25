@@ -8,7 +8,7 @@ import site.siredvin.turtlematic.Turtlematic
 import java.util.function.Supplier
 
 
-open class TurtleItem(p: Properties, var turtleID: ResourceLocation, var enableSup: Supplier<Boolean>): BaseItem(p){
+open class TurtleItem(p: Properties, var turtleID: ResourceLocation, var enableSup: Supplier<Boolean>): DescriptiveItem(p){
 
     constructor(turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
         Properties().tab(Turtlematic.TAB), turtleID, enableSup

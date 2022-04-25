@@ -1,5 +1,7 @@
 package site.siredvin.turtlematic.data
 
+import dan200.computercraft.api.ComputerCraftTags.Blocks
+import dan200.computercraft.shared.Registry
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.recipes.FinishedRecipe
@@ -42,6 +44,15 @@ class ModRecipeProvider(dataGenerator: FabricDataGenerator) : FabricRecipeProvid
             .pattern(" S ")
             .pattern("S/S")
             .pattern("/  ")
+            .save(consumer)
+
+        TweakedShapedRecipeBuilder.shaped(Items.TURTLE_CHATTER)
+            .define('S', Registry.ModBlocks.SPEAKER)
+            .define('R', net.minecraft.world.item.Items.REDSTONE)
+            .define('I', net.minecraft.world.item.Items.IRON_INGOT)
+            .pattern("RIR")
+            .pattern("ISI")
+            .pattern("RIR")
             .save(consumer)
     }
 }

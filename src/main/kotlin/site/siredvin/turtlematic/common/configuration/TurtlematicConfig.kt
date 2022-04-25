@@ -8,6 +8,8 @@ import site.siredvin.turtlematic.integrations.computercraft.operations.SingleOpe
 import site.siredvin.turtlematic.integrations.computercraft.operations.SphereOperation
 
 object TurtlematicConfig {
+    // additonal turtle peripherals
+    var enableTurtleChatter = false
     // automata core toggles
     var enableAutomataCore = false
     var enableEndAutomataCore = false
@@ -18,6 +20,8 @@ object TurtlematicConfig {
     var endAutomataCoreWarpPointLimit = 0
 
     class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
+        // Extra turtle peripherals
+        val ENABLE_TURTLE_CHATTER: ForgeConfigSpec.BooleanValue
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -27,6 +31,9 @@ object TurtlematicConfig {
         val END_AUTOMATA_CORE_WARP_POINT_LIMIT: ForgeConfigSpec.IntValue
 
         init {
+            builder.push("turtlePeripherals")
+            ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
+            builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)
             register(SphereOperation.values(), builder)

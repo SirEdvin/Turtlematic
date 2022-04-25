@@ -22,6 +22,12 @@
         "value": "site.siredvin.turtlematic.Turtlematic"
       }
     ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.turtlematic.TurtlematicClient"
+      }
+    ],
     "fabric-datagen": [
       {
         "adapter": "kotlin",
@@ -30,7 +36,7 @@
     ]
   },
   "mixins": [
-    "mod_id.mixins.json"
+    "turtlematic.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.13.3",
@@ -38,6 +44,7 @@
     "fabric-language-kotlin": ">=1.7.2+kotlin.1.6.20",
     "minecraft": "1.18.x",
     "java": ">=17",
-    "forgeconfigapiport": ">=3.1"
+    "forgeconfigapiport": ">=3.1",
+    "computercraft": ">=1.100.5"
   }
 }

@@ -12,6 +12,8 @@ object ConfigHandler {
     }
 
     private fun bakeCommon() {
+        // Turtle peripherals
+        TurtlematicConfig.enableTurtleChatter = ConfigHolder.COMMON_CONFIG.ENABLE_TURTLE_CHATTER.get()
         //Mechanical soul
         TurtlematicConfig.enableAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_AUTOMATA_CORE.get()
         TurtlematicConfig.enableEndAutomataCore = ConfigHolder.COMMON_CONFIG.ENABLE_END_AUTOMATA_CORE.get()

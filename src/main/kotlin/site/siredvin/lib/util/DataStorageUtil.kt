@@ -57,4 +57,32 @@ object DataStorageUtil {
             owner.markDataStorageDirty()
         }
     }
+
+    object TurtleChat {
+        private const val CHAT_MESSAGE = "chatMessage"
+
+        fun getMessage(access: ITurtleAccess, side: TurtleSide): String? {
+            val data = getDataStorage(access, side)
+            if (data.contains(CHAT_MESSAGE))
+                return data.getString(CHAT_MESSAGE)
+            return null
+        }
+
+        fun getMessage(owner: IPeripheralOwner): String? {
+            val data = owner.dataStorage
+            if (data.contains(CHAT_MESSAGE))
+                return data.getString(CHAT_MESSAGE)
+            return null
+        }
+
+        fun setMessage(owner: IPeripheralOwner, message: String?) {
+            val data = owner.dataStorage
+            if (message == null) {
+                data.remove(CHAT_MESSAGE)
+            } else {
+                data.putString(CHAT_MESSAGE, message)
+            }
+            owner.markDataStorageDirty()
+        }
+    }
 }

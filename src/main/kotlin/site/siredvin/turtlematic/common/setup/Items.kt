@@ -5,9 +5,7 @@ import site.siredvin.turtlematic.common.items.AutomataCore
 import site.siredvin.turtlematic.common.items.SoulVial
 import site.siredvin.turtlematic.common.items.base.DescriptiveItem
 import site.siredvin.turtlematic.common.items.base.TurtleItem
-import site.siredvin.turtlematic.integrations.computercraft.turtle.EndAutomata
-import site.siredvin.turtlematic.integrations.computercraft.turtle.EnormousAutomata
-import site.siredvin.turtlematic.integrations.computercraft.turtle.HusbandryAutomata
+import site.siredvin.turtlematic.integrations.computercraft.turtle.*
 import site.siredvin.turtlematic.util.register
 
 object Items {
@@ -20,5 +18,6 @@ object Items {
         TurtleItem(EnormousAutomata.ID) { TurtlematicConfig.enableEnormousAutomata }.register("enormous_automata_core")
     val SOUL_VIAL = SoulVial().register("soul_vial")
     val FILLED_SOUL_VIAL = DescriptiveItem().register("filled_soul_vial")
-    val SOUL_SCRAPPER = DescriptiveItem().register("soul_scrapper")
+    val SOUL_SCRAPPER = TurtleItem(SoulScrapperTurtle.ID) { true }.register("soul_scrapper")
+    val TURTLE_CHATTER = TurtleItem(ChatterTurtle.ID) { TurtlematicConfig.enableTurtleChatter }.register("turtle_chatter")
 }
