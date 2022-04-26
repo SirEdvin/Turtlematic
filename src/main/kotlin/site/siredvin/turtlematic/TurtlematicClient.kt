@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry
 import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.ResourceManager
-import site.siredvin.turtlematic.Turtlematic
 import java.util.function.Consumer
 
 

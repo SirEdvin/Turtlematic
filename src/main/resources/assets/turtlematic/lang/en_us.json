@@ -27,5 +27,17 @@
   "item.turtlematic.tooltip.creative_chest": "§7Creative item, that allows turtle to generate items",
 
   "text.turtlematic.automata_core_feed_by_player": "You will that automata core cannot be feed by human hand",
-  "text.turtlematic.consumed_entities": "Consumed:"
+  "text.turtlematic.consumed_entities": "Consumed:",
+  "text.turtlematic.press_for_description": "[§3Left shift§r] show description",
+  "text.turtlematic.core_configuration": "Core details:",
+  "text.turtlematic.interaction_radius": "  Interaction radius: %s",
+  "text.turtlematic.max_fuel_consumption_rate": "  Max fuel consumption rate: %s",
+  "text.turtlematic.press_for_recipe": "[§3Left ctrl§r] show recipe",
+  "text.turtlematic.recipe_missing": "§4Recipe missing for some reason",
+  "text.turtlematic.soul_upgrade_from": "  Upgrade from: %s",
+  "text.turtlematic.required_souls_for_consuming": "  Required souls: %s",
+
+  "keybind.turtlematic.description": "Show item description",
+  "keybind.turtlematic.recipe": "Show item recipe tips",
+  "keybind.turtlematic.category": "Turtlematic"
 }

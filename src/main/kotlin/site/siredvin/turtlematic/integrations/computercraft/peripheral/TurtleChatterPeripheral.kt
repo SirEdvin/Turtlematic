@@ -22,8 +22,8 @@ class TurtleChatterPeripheral(peripheralOwner: TurtlePeripheralOwner) :
     }
 
     @LuaFunction(mainThread = true)
-    fun setMessage(name: String) {
-        DataStorageUtil.TurtleChat.setMessage(peripheralOwner, name)
+    fun setMessage(text: String) {
+        DataStorageUtil.TurtleChat.setMessage(peripheralOwner, text)
     }
 
     @LuaFunction(mainThread = true)

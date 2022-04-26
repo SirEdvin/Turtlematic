@@ -78,7 +78,6 @@ object LuaConverter {
         val map = itemToObject(stack.item)
         map["tags"] = tagsToList(stack.tags)
         map["count"] = stack.count
-        map["name"] = stack.displayName.string
         map["maxStackSize"] = stack.maxStackSize
         return map
     }
@@ -86,6 +85,7 @@ object LuaConverter {
     fun itemToObject(item: Item): MutableMap<String, Any> {
         val map: MutableMap<String, Any> = HashMap()
         map["technicalName"] = Registry.ITEM.getKey(item).toString()
+        map["name"] = item.description.string
         return map
     }
 

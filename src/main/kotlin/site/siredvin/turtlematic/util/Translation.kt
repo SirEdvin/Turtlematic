@@ -1,12 +1,10 @@
 package site.siredvin.turtlematic.util
 
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.TextComponent
 import net.minecraft.network.chat.TranslatableComponent
-import site.siredvin.lib.util.convertColors
 import site.siredvin.turtlematic.Turtlematic
 
-fun itemTooltip(descriptionId: String): Component {
+fun itemTooltip(descriptionId: String): TranslatableComponent {
     val lastIndex = descriptionId.lastIndexOf('.')
     return TranslatableComponent(
         String.format(

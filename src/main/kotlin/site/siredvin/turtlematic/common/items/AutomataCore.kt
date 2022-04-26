@@ -14,9 +14,10 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
+import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
-import site.siredvin.turtlematic.common.items.base.TurtleItem
+import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
@@ -25,16 +26,16 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUME
 import site.siredvin.turtlematic.integrations.computercraft.turtle.Automata
 import site.siredvin.turtlematic.util.text
 
-class AutomataCore : TurtleItem(Automata.ID, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {
+class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, Automata.ID, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {
 
     override fun appendHoverText(
-        stack: ItemStack,
+        itemStack: ItemStack,
         level: Level?,
         list: MutableList<Component>,
         tooltipFlag: TooltipFlag
     ) {
-        super.appendHoverText(stack, level, list, tooltipFlag)
-        val tag: CompoundTag? = stack.tag
+        super.appendHoverText(itemStack, level, list, tooltipFlag)
+        val tag: CompoundTag? = itemStack.tag
         if (tag != null && !tag.isEmpty) {
             val consumedData = tag.getCompound(CONSUMER_ENTITY_COMPOUND)
             val record: SoulHarvestRecipe? = SoulHarvestRecipeRegistry.searchRecipe(this, consumedData.allKeys.first())

@@ -11,6 +11,7 @@ object SoulHarvestRecipeRegistry {
     val CONSUMER_ENTITY_COMPOUND = "consumed_entity_compound"
 
     private val RECIPE_REGISTRY: MutableMap<Item, MutableMap<String, SoulHarvestRecipe>> = hashMapOf()
+    private val REVERSE_RECIPE_REGISTRY: MutableMap<Item, SoulHarvestRecipe> = hashMapOf()
 
     fun addRecipe(targetItem: Item, recipe: SoulHarvestRecipe) {
         if (!RECIPE_REGISTRY.containsKey(targetItem))
@@ -20,6 +21,11 @@ object SoulHarvestRecipeRegistry {
                 throw IllegalArgumentException("Entity type collision for $targetItem")
             RECIPE_REGISTRY[targetItem]!![entityType] = recipe
         })
+        REVERSE_RECIPE_REGISTRY[recipe.resultSoul] = recipe
+    }
+
+    fun get(item: Item): SoulHarvestRecipe? {
+        return REVERSE_RECIPE_REGISTRY[item]
     }
 
     fun searchRecipe(targetItem: Item, entityType: String): SoulHarvestRecipe? {

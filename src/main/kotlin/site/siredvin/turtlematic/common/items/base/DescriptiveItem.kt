@@ -1,6 +1,7 @@
 package site.siredvin.turtlematic.common.items.base
 
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.TranslatableComponent
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
@@ -10,9 +11,9 @@ import site.siredvin.turtlematic.util.itemTooltip
 open class DescriptiveItem(properties: Properties) : BaseItem(properties) {
     constructor(): this(Properties().tab(Turtlematic.TAB))
 
-    private var _description: Component? = null
+    private var _description: TranslatableComponent? = null
 
-    private val extraDescription: Component
+    private val extraDescription: TranslatableComponent
         get() {
             if (_description == null)
                 _description = itemTooltip(this.descriptionId)
@@ -26,6 +27,7 @@ open class DescriptiveItem(properties: Properties) : BaseItem(properties) {
         tooltipFlag: TooltipFlag
     ) {
         super.appendHoverText(itemStack, level, list, tooltipFlag)
-        list.add(extraDescription)
+        if (extraDescription.key != extraDescription.string)
+            list.add(extraDescription)
     }
 }
