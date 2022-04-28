@@ -15,7 +15,7 @@ import java.util.function.Supplier
 open class BaseAutomataCore(private val coreTier: IAutomataCoreTier, p: Properties, turtleID: ResourceLocation, enableSup: Supplier<Boolean>) :
     TurtleItem(p, turtleID, enableSup) {
     constructor(coreTier: IAutomataCoreTier, turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
-        coreTier, Properties().tab(Turtlematic.TAB), turtleID, enableSup
+        coreTier, Properties().tab(Turtlematic.TAB).stacksTo(1), turtleID, enableSup
     )
 
     override fun appendHoverText(

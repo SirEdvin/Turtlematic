@@ -5,7 +5,6 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.TurtleAnimation
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.EntityHitResult
@@ -37,9 +36,29 @@ class SoulScrapperPeripheral(peripheralOwner: TurtlePeripheralOwner) :
             if (hit !is EntityHitResult)
                 return@withPlayer MethodResult.of(null, "Nothing to consume")
             val result = feedableItem.consumeEntitySoul(toolInMainHand, player, hit.entity as LivingEntity)
-            if (result.result == InteractionResult.SUCCESS)
-                player.setItemInHand(InteractionHand.MAIN_HAND, result.`object`)
-            return@withPlayer MethodResult.of(true, result.result.toString())
+            if (result.rightPresent())
+                return@withPlayer MethodResult.of(null, result.right)
+            player.setItemInHand(InteractionHand.MAIN_HAND, result.left!!)
+            return@withPlayer MethodResult.of(true)
         })
+    }
+
+    @LuaFunction(mainThread = true)
+    fun getLeftEntities(): MethodResult {
+        val toolInMainHand = peripheralOwner.toolInMainHand
+        if (toolInMainHand.item !is ISoulFeedableItem) {
+            return MethodResult.of(null, "Item cannot be used for soul harvesting")
+        }
+        val feedableItem = toolInMainHand.item as ISoulFeedableItem
+        val activeRecipe = feedableItem.getActiveRecipe(toolInMainHand)
+            ?: return MethodResult.of(null, "Item have no selected recipes yet")
+        val data = ArrayList<Map<String, Any>>()
+        feedableItem.getEntityRepresentation(toolInMainHand, activeRecipe).filter { it.leftCount > 0 }.forEach {
+            data.add(mapOf(
+                "name" to it.name,
+                "leftCount" to it.leftCount
+            ))
+        }
+        return MethodResult.of(data)
     }
 }

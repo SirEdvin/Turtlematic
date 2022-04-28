@@ -7,8 +7,6 @@ enum class AutomataCoreTier(private val defaultInteractionRadius: Int, private v
     IAutomataCoreTier {
     TIER1(2, 2),
     TIER2(4, 3),
-    OVERPOWERED_TIER1(4, 3),
-    OVERPOWERED_TIER2(6, 4),
     ENORMOUS_TIER(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     private var _interactionRadius: ForgeConfigSpec.IntValue? = null

@@ -11,7 +11,6 @@ import net.minecraft.world.level.Level
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
-import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.util.text
 import java.util.function.Supplier
@@ -23,7 +22,7 @@ class RecipeAutomataCore(
     enableSup: Supplier<Boolean>
 ) : BaseAutomataCore(coreTier, p, turtleID, enableSup) {
     constructor(coreTier: IAutomataCoreTier, turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
-        coreTier, Properties().tab(Turtlematic.TAB), turtleID, enableSup
+        coreTier, Properties().tab(Turtlematic.TAB).stacksTo(1), turtleID, enableSup
     )
 
     override fun appendHoverText(
