@@ -1,16 +1,48 @@
+import org.jetbrains.changelog.date
+import com.matthewprenger.cursegradle.CurseArtifact
+import com.matthewprenger.cursegradle.CurseProject
+import com.matthewprenger.cursegradle.CurseUploadTask
+import com.matthewprenger.cursegradle.CurseRelation
+import com.matthewprenger.cursegradle.Options
+
 plugins {
     id("fabric-loom")
+    id("com.matthewprenger.cursegradle") version "1.4.0"
+    id("org.jetbrains.changelog") version "1.3.1"
+
     val kotlinVersion: String by System.getProperties()
     kotlin("jvm").version(kotlinVersion)
 }
+
 base {
     val archivesBaseName: String by project
     archivesName.set(archivesBaseName)
 }
+
 val modVersion: String by project
 version = modVersion
 val mavenGroup: String by project
 group = mavenGroup
+
+fun getenv(path: String = ".env"): Map<String, String> {
+    val env = hashMapOf<String, String>()
+
+    val file = File(path)
+    if (file.exists()) {
+        file.readLines().forEach { line ->
+            val splitResult = line.split("=")
+            if (splitResult.size > 1) {
+                env[splitResult[0].trim()] = splitResult[1].trim()
+            }
+        }
+    }
+
+    return env
+}
+
+val secretEnv = getenv()
+val curseforgeKey = secretEnv["CURSEFORGE_KEY"] ?: System.getenv("CURSEFORGE_KEY") ?: ""
+val modrinthKey = secretEnv["MODRINTH_KEY"] ?: System.getenv("MODRINTH_KEY") ?: ""
 
 loom {
     runs {
@@ -63,6 +95,7 @@ dependencies {
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449")
     modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:8.1.449")
 }
+
 tasks {
     val javaVersion = JavaVersion.VERSION_17
     withType<JavaCompile> {
@@ -86,5 +119,44 @@ tasks {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
         withSourcesJar()
+    }
+}
+
+changelog {
+    version.set(modVersion)
+    path.set("${project.projectDir}/CHANGELOG.md")
+    header.set(provider { "[${version.get()}] - ${date()}" })
+    itemPrefix.set("-")
+    keepUnreleasedSection.set(true)
+    unreleasedTerm.set("[Unreleased]")
+    groups.set(listOf())
+}
+
+val CURSEFORGE_RELEASE_TYPE: String by project
+val CURSEFORGE_ID: String by project
+curseforge {
+    options(closureOf<Options> {
+        forgeGradleIntegration = false
+    })
+    apiKey = curseforgeKey
+    project(closureOf<CurseProject> {
+        id = CURSEFORGE_ID
+        releaseType = CURSEFORGE_RELEASE_TYPE
+        addGameVersion("Fabric")
+        addGameVersion("1.18.2")
+        changelog = "${project.changelog.get(project.version as String).withHeader(false).toText()}"
+        changelogType = "markdown"
+        mainArtifact(tasks.remapJar.get().archivePath, closureOf<CurseArtifact> {
+            displayName = "Turtlematic $version"
+            relations(closureOf<CurseRelation> {
+                requiredDependency("cc-restitched")
+                requiredDependency("forge-config-api-port-fabric")
+            })
+        })
+    })
+}
+project.afterEvaluate {
+    tasks.getByName<CurseUploadTask>("curseforge${CURSEFORGE_ID}") {
+        dependsOn(tasks.remapJar)
     }
 }
