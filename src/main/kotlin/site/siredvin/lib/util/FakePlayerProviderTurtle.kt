@@ -41,7 +41,7 @@ object FakePlayerProviderTurtle {
         val a = direction.axis
         val ad = direction.axisDirection
         val x = if (a === Direction.Axis.X && ad == Direction.AxisDirection.NEGATIVE) -.5 else .5 + sideVec.x / 1.9
-        val y = 0.5 + sideVec.y / 1.9
+        val y = 0.85 + sideVec.y / 1.9
         val z = if (a === Direction.Axis.Z && ad == Direction.AxisDirection.NEGATIVE) -.5 else .5 + sideVec.z / 1.9
         player.moveTo(position.x + x, position.y + y, position.z + z, yaw, pitch)
         // Player inventory
