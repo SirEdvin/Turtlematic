@@ -1,4 +1,4 @@
-package site.siredvin.lib.blocks.base
+package site.siredvin.lib.blocks
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

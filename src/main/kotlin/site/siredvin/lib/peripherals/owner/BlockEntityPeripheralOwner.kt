@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
-import site.siredvin.lib.blocks.base.LibTileEntityBlock
+import site.siredvin.lib.blocks.LibTileEntityBlock
 import site.siredvin.lib.peripherals.IPeripheralTileEntity
 import site.siredvin.lib.util.DataStorageUtil
 import site.siredvin.lib.util.LibFakePlayer

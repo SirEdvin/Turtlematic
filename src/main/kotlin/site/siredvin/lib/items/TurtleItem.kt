@@ -1,17 +1,16 @@
-package site.siredvin.turtlematic.common.items.base
+package site.siredvin.lib.items
 import net.minecraft.core.NonNullList
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import site.siredvin.lib.util.ItemUtil
-import site.siredvin.turtlematic.Turtlematic
 import java.util.function.Supplier
 
 
 open class TurtleItem(p: Properties, var turtleID: ResourceLocation, var enableSup: Supplier<Boolean>): DescriptiveItem(p){
 
-    constructor(turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
-        Properties().tab(Turtlematic.TAB), turtleID, enableSup
+    constructor(tab: CreativeModeTab, turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
+        Properties().tab(tab), turtleID, enableSup
     )
 
     fun isEnabled(): Boolean {

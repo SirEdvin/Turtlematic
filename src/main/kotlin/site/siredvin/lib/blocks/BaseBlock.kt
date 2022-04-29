@@ -1,4 +1,4 @@
-package site.siredvin.lib.blocks.base
+package site.siredvin.lib.blocks
 
 import net.minecraft.world.level.block.Block
 import kotlin.jvm.JvmOverloads

@@ -6,9 +6,9 @@ import site.siredvin.turtlematic.common.items.AutomataCore
 import site.siredvin.turtlematic.common.items.RecipeAutomataCore
 import site.siredvin.turtlematic.common.items.SoulVial
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
-import site.siredvin.turtlematic.common.items.base.DescriptiveItem
-import site.siredvin.turtlematic.common.items.base.TurtleItem
-import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
+import site.siredvin.lib.items.DescriptiveItem
+import site.siredvin.lib.items.TurtleItem
+import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.integrations.computercraft.turtle.*
 import site.siredvin.turtlematic.util.register
 
@@ -22,7 +22,7 @@ object Items {
         BaseAutomataCore(AutomataCoreTier.ENORMOUS_TIER, EnormousAutomata.ID) { TurtlematicConfig.enableEnormousAutomata }.register("enormous_automata_core")
     val SOUL_VIAL = SoulVial().register("soul_vial")
     val FILLED_SOUL_VIAL = DescriptiveItem().register("filled_soul_vial")
-    val SOUL_SCRAPPER = TurtleItem(SoulScrapperTurtle.ID) { true }.register("soul_scrapper")
-    val TURTLE_CHATTER = TurtleItem(ChatterTurtle.ID) { TurtlematicConfig.enableTurtleChatter }.register("turtle_chatter")
-    val CREATIVE_CHEST = TurtleItem(CreativeChestTurtle.ID) { TurtlematicConfig.enableCreativeChest }.register("creative_chest")
+    val SOUL_SCRAPPER = TurtleItem(Turtlematic.TAB, SoulScrapperTurtle.ID) { true }.register("soul_scrapper")
+    val TURTLE_CHATTER = TurtleItem(Turtlematic.TAB, ChatterTurtle.ID) { TurtlematicConfig.enableTurtleChatter }.register("turtle_chatter")
+    val CREATIVE_CHEST = TurtleItem(Turtlematic.TAB, CreativeChestTurtle.ID) { TurtlematicConfig.enableCreativeChest }.register("creative_chest")
 }
