@@ -37,11 +37,11 @@ class RecipeAutomataCore(
             if (recipe == null) {
                 list.add(text("recipe_missing"))
             } else {
-                list.add(text("soul_upgrade_from", recipe.resultSoul.description.string))
+                list.add(text("soul_upgrade_from", recipe.second.description.string))
                 list.add(
                     text(
                         "required_souls_for_consuming",
-                        recipe.ingredients.map { it.description }.joinToString()
+                        recipe.first.ingredients.joinToString { it.description }
                     )
                 )
             }

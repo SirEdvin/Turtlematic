@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import site.siredvin.lib.util.DataStorageUtil;
-import site.siredvin.turtlematic.integrations.computercraft.turtle.ChatterTurtle;
+import site.siredvin.turtlematic.util.DataStorageUtil;
+import site.siredvin.turtlematic.computercraft.turtle.ChatterTurtle;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

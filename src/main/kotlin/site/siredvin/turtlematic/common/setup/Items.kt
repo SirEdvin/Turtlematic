@@ -6,11 +6,11 @@ import site.siredvin.turtlematic.common.items.AutomataCore
 import site.siredvin.turtlematic.common.items.RecipeAutomataCore
 import site.siredvin.turtlematic.common.items.SoulVial
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
-import site.siredvin.lib.items.DescriptiveItem
-import site.siredvin.lib.items.TurtleItem
+import site.siredvin.lib.common.items.DescriptiveItem
+import site.siredvin.lib.common.items.TurtleItem
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.items.ForgedAutomataCore
-import site.siredvin.turtlematic.integrations.computercraft.turtle.*
+import site.siredvin.turtlematic.computercraft.turtle.*
 import site.siredvin.turtlematic.util.register
 
 object Items {
@@ -26,7 +26,10 @@ object Items {
     // Forged automata cores
 
     val FORGED_AUTOMATA_CORE = ForgedAutomataCore().register("forged_automata_core")
-    val BREWING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER3, BrewingAutomata.ID) { TurtlematicConfig.enableBrewingAutomataCore}.register("brewing_automata_core")
+    val BREWING_AUTOMATA_CORE = RecipeAutomataCore(AutomataCoreTier.TIER3, BrewingAutomata.ID) { TurtlematicConfig.enableBrewingAutomataCore}.register("brewing_automata_core")
+    val SMITHING_AUTOMATA_CORE = RecipeAutomataCore(AutomataCoreTier.TIER3, SmithingAutomata.ID) { TurtlematicConfig.enableSmithingAutomataCore}.register("smithing_automata_core")
+    val ENCHANTING_AUTOMATA_CORE = RecipeAutomataCore(AutomataCoreTier.TIER3, EnchantingAutomata.ID) { TurtlematicConfig.enableEnchantingAutomataCore}.register("enchanting_automata_core")
+    val MASON_AUTOMATA_CORE = RecipeAutomataCore(AutomataCoreTier.TIER3, MasonAutomata.ID) { TurtlematicConfig.enableMasonAutomataCore}.register("mason_automata_core")
 
     // Progression items
     val SOUL_VIAL = SoulVial().register("soul_vial")

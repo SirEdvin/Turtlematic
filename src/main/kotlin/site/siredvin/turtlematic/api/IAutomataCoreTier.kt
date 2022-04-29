@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.api
 
-import site.siredvin.lib.misc.IConfigHandler
+import site.siredvin.lib.api.IConfigHandler
 
 interface IAutomataCoreTier : IConfigHandler {
     val interactionRadius: Int

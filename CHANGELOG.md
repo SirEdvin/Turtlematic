@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Brewing automata
+- Smithing automata
+- Enchanting automata
+- Mason automata
+
+### Fixed
+
+- Single entity hit login (again)
+
 ## [0.1.3] - 28.04.22
 
 ### Changed

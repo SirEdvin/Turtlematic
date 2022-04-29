@@ -17,7 +17,7 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
-import site.siredvin.turtlematic.integrations.computercraft.turtle.Automata
+import site.siredvin.turtlematic.computercraft.turtle.Automata
 import site.siredvin.turtlematic.util.text
 
 class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, Automata.ID, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {

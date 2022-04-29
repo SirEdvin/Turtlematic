@@ -2,6 +2,7 @@ package site.siredvin.turtlematic.common.recipe
 
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.npc.VillagerProfession
 import net.minecraft.world.item.Item
 import site.siredvin.turtlematic.common.setup.Items
 import java.util.function.Consumer
@@ -12,16 +13,16 @@ object SoulHarvestRecipeRegistry {
     val CONSUMER_ENTITY_COMPOUND = "consumed_entity_compound"
 
     private val RECIPE_REGISTRY: MutableMap<Item, MutableList<SoulHarvestRecipe>> = hashMapOf()
-    private val REVERSE_RECIPE_REGISTRY: MutableMap<Item, SoulHarvestRecipe> = hashMapOf()
+    private val REVERSE_RECIPE_REGISTRY: MutableMap<Item, Pair<SoulHarvestRecipe, Item>> = hashMapOf()
 
     fun addRecipe(targetItem: Item, recipe: SoulHarvestRecipe) {
         if (!RECIPE_REGISTRY.containsKey(targetItem))
             RECIPE_REGISTRY[targetItem] = mutableListOf()
         RECIPE_REGISTRY[targetItem]!!.add(recipe)
-        REVERSE_RECIPE_REGISTRY[recipe.resultSoul] = recipe
+        REVERSE_RECIPE_REGISTRY[recipe.resultSoul] = Pair(recipe, targetItem)
     }
 
-    fun get(item: Item): SoulHarvestRecipe? {
+    fun get(item: Item): Pair<SoulHarvestRecipe, Item>? {
         return REVERSE_RECIPE_REGISTRY[item]
     }
 
@@ -59,5 +60,21 @@ object SoulHarvestRecipeRegistry {
             )
         addRecipe(Items.AUTOMATA_CORE, endSoulRecord)
         addRecipe(Items.AUTOMATA_CORE, husbandrySoulRecord)
+    }
+
+    fun injectForgedAutomataCoreRecipes() {
+        val brewingAutomataRecord = SoulHarvestRecipe(
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.CLERIC)), Items.BREWING_AUTOMATA_CORE
+        )
+        val enchantingAutomataRecord = SoulHarvestRecipe(
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.LIBRARIAN)), Items.ENCHANTING_AUTOMATA_CORE
+        )
+        val smithingAutomataRecord = SoulHarvestRecipe(
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.TOOLSMITH)), Items.SMITHING_AUTOMATA_CORE
+        )
+
+        addRecipe(Items.FORGED_AUTOMATA_CORE, brewingAutomataRecord)
+        addRecipe(Items.FORGED_AUTOMATA_CORE, enchantingAutomataRecord)
+        addRecipe(Items.FORGED_AUTOMATA_CORE, smithingAutomataRecord)
     }
 }
