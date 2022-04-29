@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 import site.siredvin.lib.util.LuaConverter
 import site.siredvin.lib.util.ScanUtils

@@ -1,4 +1,4 @@
-package site.siredvin.lib.peripherals
+package site.siredvin.lib.peripherals.api
 
 import dan200.computercraft.api.lua.MethodResult
 

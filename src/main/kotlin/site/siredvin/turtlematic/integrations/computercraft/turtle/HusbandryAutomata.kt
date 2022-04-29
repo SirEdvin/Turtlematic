@@ -7,8 +7,7 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.lib.turtle.ClockwiseAnimatedTurtleUpgrade
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.AutomataCorePeripheral
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.HusbandryAutomataCorePeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.HusbandryAutomataCorePeripheral
 
 class HusbandryAutomata: ClockwiseAnimatedTurtleUpgrade<HusbandryAutomataCorePeripheral>(
     ID, ItemStack(Items.HUSBANDRY_AUTOMATA_CORE)

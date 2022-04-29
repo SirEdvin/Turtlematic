@@ -1,6 +1,6 @@
 package site.siredvin.lib.pocket
 
-import site.siredvin.lib.peripherals.IBasePeripheral
+import site.siredvin.lib.peripherals.api.IBasePeripheral
 import dan200.computercraft.api.pocket.AbstractPocketUpgrade
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike

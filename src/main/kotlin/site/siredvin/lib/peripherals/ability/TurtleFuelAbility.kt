@@ -1,6 +1,7 @@
-package site.siredvin.lib.peripherals.owner
+package site.siredvin.lib.peripherals.ability
 
 import dan200.computercraft.ComputerCraft
+import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 
 class TurtleFuelAbility(owner: TurtlePeripheralOwner, override val maxFuelConsumptionRate: Int) :
     FuelAbility<TurtlePeripheralOwner>(owner) {

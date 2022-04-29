@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.integrations.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.lib.peripherals.api.IPeripheralOperation
 
 enum class SimpleFreeOperation(private val defaultCooldown: Int) : IPeripheralOperation<Any> {
     CHAT_MESSAGE(100);

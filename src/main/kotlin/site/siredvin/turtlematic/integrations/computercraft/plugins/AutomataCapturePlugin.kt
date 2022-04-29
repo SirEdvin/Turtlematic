@@ -17,10 +17,10 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.BaseAutomataCorePeripheral
-import site.siredvin.lib.peripherals.IPeripheralCheck
-import site.siredvin.lib.peripherals.IPeripheralFunction
-import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.lib.peripherals.api.IPeripheralCheck
+import site.siredvin.lib.peripherals.api.IPeripheralFunction
+import site.siredvin.lib.peripherals.api.IPeripheralOperation
 import site.siredvin.lib.util.LuaConverter
 import site.siredvin.turtlematic.integrations.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.tags.BlockTags

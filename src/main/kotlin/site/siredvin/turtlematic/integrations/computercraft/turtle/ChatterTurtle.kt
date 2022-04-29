@@ -10,7 +10,7 @@ import site.siredvin.lib.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.TurtlematicClient
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.TurtleChatterPeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.misc.TurtleChatterPeripheral
 
 class ChatterTurtle(
 ): PeripheralTurtleUpgrade<TurtleChatterPeripheral>(ID, ItemStack(Items.TURTLE_CHATTER)) {

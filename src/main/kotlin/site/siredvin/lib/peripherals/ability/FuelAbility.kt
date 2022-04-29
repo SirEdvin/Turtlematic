@@ -1,8 +1,10 @@
-package site.siredvin.lib.peripherals.owner
+package site.siredvin.lib.peripherals.ability
 
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
-import site.siredvin.lib.peripherals.IPeripheralPlugin
+import site.siredvin.lib.peripherals.api.IOwnerAbility
+import site.siredvin.lib.peripherals.api.IPeripheralPlugin
+import site.siredvin.lib.peripherals.api.IPeripheralOwner
 
 abstract class FuelAbility<T : IPeripheralOwner>(protected var owner: T) : IOwnerAbility, IPeripheralPlugin {
     protected abstract fun _consumeFuel(count: Int): Boolean

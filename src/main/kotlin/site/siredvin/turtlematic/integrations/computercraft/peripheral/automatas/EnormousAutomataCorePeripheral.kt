@@ -1,4 +1,4 @@
-package site.siredvin.turtlematic.integrations.computercraft.peripheral
+package site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas
 
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide

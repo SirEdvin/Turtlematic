@@ -1,8 +1,9 @@
-package site.siredvin.lib.peripherals
+package site.siredvin.lib.peripherals.api
 
 import dan200.computercraft.api.peripheral.IPeripheral
 import dan200.computercraft.core.asm.NamedMethod
 import dan200.computercraft.core.asm.PeripheralMethod
+import site.siredvin.lib.peripherals.BoundMethod
 import java.util.stream.Collectors
 
 interface IPeripheralPlugin {

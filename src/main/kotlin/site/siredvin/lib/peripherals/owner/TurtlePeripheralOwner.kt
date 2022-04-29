@@ -11,6 +11,8 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import site.siredvin.lib.peripherals.ability.PeripheralOwnerAbility
+import site.siredvin.lib.peripherals.ability.TurtleFuelAbility
 import site.siredvin.lib.util.DataStorageUtil
 import site.siredvin.lib.util.FakePlayerProviderTurtle
 import site.siredvin.lib.util.LibFakePlayer

@@ -41,15 +41,7 @@ class RecipeAutomataCore(
                 list.add(
                     text(
                         "required_souls_for_consuming",
-                        recipe.ingredients.map { entry ->
-                            "${entry.value}x${
-                                Registry.ENTITY_TYPE.get(
-                                    ResourceLocation(
-                                        entry.key
-                                    )
-                                ).description.string
-                            }"
-                        }.joinToString()
+                        recipe.ingredients.map { it.description }.joinToString()
                     )
                 )
             }

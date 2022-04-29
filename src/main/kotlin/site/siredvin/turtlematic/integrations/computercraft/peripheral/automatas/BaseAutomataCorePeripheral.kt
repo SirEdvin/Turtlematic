@@ -1,4 +1,4 @@
-package site.siredvin.turtlematic.integrations.computercraft.peripheral
+package site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas
 
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.MethodResult
@@ -7,9 +7,9 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.lib.peripherals.BasePeripheral
-import site.siredvin.lib.peripherals.IPeripheralCheck
-import site.siredvin.lib.peripherals.IPeripheralFunction
-import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.lib.peripherals.api.IPeripheralCheck
+import site.siredvin.lib.peripherals.api.IPeripheralFunction
+import site.siredvin.lib.peripherals.api.IPeripheralOperation
 import site.siredvin.turtlematic.integrations.computercraft.operations.SingleOperationContext
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 import site.siredvin.lib.util.DataStorageUtil
@@ -30,6 +30,7 @@ abstract class BaseAutomataCorePeripheral(
 
     init {
         peripheralOwner.attachFuel(tier.maxFuelConsumptionRate)
+        @Suppress("LeakingThis")
         peripheralOwner.attachOperation(possibleOperations())
         this.tier = tier
     }
@@ -39,7 +40,7 @@ abstract class BaseAutomataCorePeripheral(
         DataStorageUtil.RotationCharge.addCycles(peripheralOwner, count)
     }
 
-    fun possibleOperations(): List<IPeripheralOperation<*>> {
+    open fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
         return ArrayList()
     }
 

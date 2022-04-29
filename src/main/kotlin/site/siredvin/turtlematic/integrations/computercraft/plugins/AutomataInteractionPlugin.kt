@@ -4,11 +4,10 @@ import dan200.computercraft.api.lua.IArguments
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
-import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.BaseAutomataCorePeripheral
-import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.lib.peripherals.api.IPeripheralOperation
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.integrations.computercraft.operations.SingleOperation
 import java.util.function.Predicate

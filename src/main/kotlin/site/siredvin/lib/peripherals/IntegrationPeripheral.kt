@@ -7,6 +7,7 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IDynamicPeripheral
 import dan200.computercraft.api.peripheral.IPeripheral
+import site.siredvin.lib.peripherals.api.IPeripheralPlugin
 import java.util.*
 import java.util.function.Consumer
 
@@ -33,7 +34,7 @@ abstract class IntegrationPeripheral : IDynamicPeripheral {
         if (plugins == null) plugins = LinkedList()
         plugins!!.add(plugin)
         val operations = plugin.operations
-        require(operations == null) { "This is not possible to attach plugin with operations to not operationable owner" }
+        require(operations.isEmpty()) { "This is not possible to attach plugin with operations to not operationable owner" }
     }
 
     fun getConnectedComputers(): List<IComputerAccess> {

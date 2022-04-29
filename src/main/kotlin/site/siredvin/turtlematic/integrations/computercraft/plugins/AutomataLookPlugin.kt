@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.lib.util.LuaConverter
 
 class AutomataLookPlugin(

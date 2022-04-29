@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Material
-import site.siredvin.lib.peripherals.IPeripheralTileEntity
+import site.siredvin.lib.peripherals.api.IPeripheralTileEntity
 
 abstract class BaseTileEntityBlock(
     private val belongToTickingEntity: Boolean,

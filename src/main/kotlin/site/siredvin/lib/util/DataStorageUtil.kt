@@ -3,9 +3,9 @@ package site.siredvin.lib.util
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.CompoundTag
-import site.siredvin.lib.peripherals.IPeripheralTileEntity
+import site.siredvin.lib.peripherals.api.IPeripheralTileEntity
 import dan200.computercraft.api.pocket.IPocketAccess
-import site.siredvin.lib.peripherals.owner.IPeripheralOwner
+import site.siredvin.lib.peripherals.api.IPeripheralOwner
 import kotlin.math.max
 
 object DataStorageUtil {

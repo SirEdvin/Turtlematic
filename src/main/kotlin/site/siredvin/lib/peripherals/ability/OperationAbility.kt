@@ -1,14 +1,12 @@
-package site.siredvin.lib.peripherals.owner
+package site.siredvin.lib.peripherals.ability
 
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.nbt.CompoundTag
 import site.siredvin.lib.LibConfig
-import site.siredvin.lib.peripherals.IPeripheralCheck
-import site.siredvin.lib.peripherals.IPeripheralFunction
-import site.siredvin.lib.peripherals.IPeripheralOperation
-import site.siredvin.lib.peripherals.IPeripheralPlugin
+import site.siredvin.lib.peripherals.api.*
+import site.siredvin.lib.peripherals.api.IPeripheralOwner
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit

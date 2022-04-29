@@ -7,10 +7,11 @@ import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
-import site.siredvin.lib.peripherals.owner.IOwnerAbility
-import site.siredvin.lib.peripherals.owner.IPeripheralOwner
-import site.siredvin.lib.peripherals.owner.OperationAbility.FailReason
-import site.siredvin.lib.peripherals.owner.PeripheralOwnerAbility
+import site.siredvin.lib.peripherals.ability.OperationAbility
+import site.siredvin.lib.peripherals.api.IOwnerAbility
+import site.siredvin.lib.peripherals.api.IPeripheralOwner
+import site.siredvin.lib.peripherals.ability.PeripheralOwnerAbility
+import site.siredvin.lib.peripherals.api.*
 import site.siredvin.lib.util.LuaConverter
 import java.util.*
 import java.util.function.BiConsumer
@@ -130,7 +131,7 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
         check: IPeripheralCheck<T>?,
         method: IPeripheralFunction<T, MethodResult>,
         successCallback: Consumer<T>?,
-        failCallback: BiConsumer<MethodResult?, FailReason?>?
+        failCallback: BiConsumer<MethodResult?, OperationAbility.FailReason?>?
     ): MethodResult {
         val operationAbility = peripheralOwner!!.getAbility(PeripheralOwnerAbility.OPERATION)
             ?: throw IllegalArgumentException("This shouldn't happen at all")

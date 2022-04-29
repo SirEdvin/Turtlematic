@@ -11,9 +11,9 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.AABB
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.BaseAutomataCorePeripheral
-import site.siredvin.lib.peripherals.IPeripheralFunction
-import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.lib.peripherals.api.IPeripheralFunction
+import site.siredvin.lib.peripherals.api.IPeripheralOperation
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.integrations.computercraft.operations.SingleOperation
 

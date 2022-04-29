@@ -9,16 +9,32 @@ import site.siredvin.turtlematic.integrations.computercraft.operations.SphereOpe
 
 object TurtlematicConfig {
     // additonal turtle peripherals
-    var enableTurtleChatter = false
-    var enableCreativeChest = false
+    val enableTurtleChatter: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_TURTLE_CHATTER.get()
+
+    val enableCreativeChest: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_CREATIVE_CHEST.get()
+
     // automata core toggles
-    var enableAutomataCore = false
-    var enableEndAutomataCore = false
-    var enableHusbandryAutomataCore = false
-    var enableEnormousAutomata = false
+    val enableAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_AUTOMATA_CORE.get()
+    val enableEndAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_END_AUTOMATA_CORE.get()
+    val enableHusbandryAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_HUSBANDRY_AUTOMATA_CORE.get()
+    val enableEnormousAutomata: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENORMOUS_AUTOMATA.get()
+    // forged automata cores toggles
+    val enableBrewingAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_BREWING_AUTOMATA_CORE.get()
 
     // automata cores configuration
-    var endAutomataCoreWarpPointLimit = 0
+    val endAutomataCoreWarpPointLimit: Int
+        get() = ConfigHolder.COMMON_CONFIG.END_AUTOMATA_CORE_WARP_POINT_LIMIT.get()
+
+    // forged automata cores configuration
+    val brewingXPReward: Double
+        get() = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get()
 
     class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
         // Extra turtle peripherals
@@ -29,8 +45,11 @@ object TurtlematicConfig {
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_HUSBANDRY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENORMOUS_AUTOMATA: ForgeConfigSpec.BooleanValue
+        // Forged automata core
+        val ENABLE_BREWING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
 
         val END_AUTOMATA_CORE_WARP_POINT_LIMIT: ForgeConfigSpec.IntValue
+        val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
 
         init {
             builder.push("turtlePeripherals")
@@ -42,14 +61,18 @@ object TurtlematicConfig {
             register(SphereOperation.values(), builder)
             register(SimpleFreeOperation.values(), builder)
             builder.pop()
-            builder.push("metaphysics")
+            builder.push("automataCores")
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)
             ENABLE_END_AUTOMATA_CORE = builder.define("enableEndAutomataCore", true)
             ENABLE_HUSBANDRY_AUTOMATA_CORE = builder.define("enableHusbandryAutomataCore", true)
             ENABLE_ENORMOUS_AUTOMATA = builder.define("enableEnormousAutomata", true)
+
+            ENABLE_BREWING_AUTOMATA_CORE = builder.define("enableBrewingAutomataCore", true)
+
             END_AUTOMATA_CORE_WARP_POINT_LIMIT =
                 builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
                     .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
+            BREWING_XP_REWARD = builder.defineInRange("brewingXPReward", 0.8, 0.0, 64.0)
 
             // automata core tiers registration
             register(AutomataCoreTier.values(), builder)

@@ -5,11 +5,10 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import site.siredvin.lib.peripherals.owner.TurtlePeripheralOwner
-import site.siredvin.lib.turtle.PeripheralToolTurtleUpgrade
 import site.siredvin.lib.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.SoulScrapperPeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.misc.SoulScrapperPeripheral
 
 class SoulScrapperTurtle(
 ): PeripheralTurtleUpgrade<SoulScrapperPeripheral>(ID, ItemStack(Items.SOUL_SCRAPPER)) {

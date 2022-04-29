@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.integrations.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.lib.peripherals.IPeripheralOperation
+import site.siredvin.lib.peripherals.api.IPeripheralOperation
 import java.util.*
 import java.util.function.Function
 
@@ -16,6 +16,8 @@ enum class SingleOperation(
     SWING(1000, 1),
     USE(5000, 1),
     SUCK(1000, 1),
+    BREW(1_000, 5),
+    THROW_POTION(1_000, 10),
     CAPTURE(50000, 100),
     WARP(
         1000, DistancePolicy.IGNORED, CountPolicy.MULTIPLY,

@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.lib.turtle.ClockwiseAnimatedTurtleUpgrade
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.EndAutomataCorePeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.automatas.EndAutomataCorePeripheral
 
 class EndAutomata: ClockwiseAnimatedTurtleUpgrade<EndAutomataCorePeripheral>(
     ID, ItemStack(Items.END_AUTOMATA_CORE)
@@ -17,6 +17,6 @@ class EndAutomata: ClockwiseAnimatedTurtleUpgrade<EndAutomataCorePeripheral>(
     }
 
     override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): EndAutomataCorePeripheral {
-        return EndAutomataCorePeripheral(turtle,  side)
+        return EndAutomataCorePeripheral(turtle, side)
     }
 }

@@ -1,4 +1,4 @@
-package site.siredvin.turtlematic.integrations.computercraft.peripheral
+package site.siredvin.turtlematic.integrations.computercraft.peripheral.misc
 
 import dan200.computercraft.api.lua.LuaFunction
 import site.siredvin.lib.peripherals.BasePeripheral

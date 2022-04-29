@@ -1,5 +1,9 @@
 package site.siredvin.lib.peripherals.owner
 
+import site.siredvin.lib.peripherals.api.IOwnerAbility
+import site.siredvin.lib.peripherals.ability.PeripheralOwnerAbility
+import site.siredvin.lib.peripherals.api.IPeripheralOwner
+
 abstract class BasePeripheralOwner : IPeripheralOwner {
     private val _abilities: MutableMap<PeripheralOwnerAbility<*>, IOwnerAbility>
 

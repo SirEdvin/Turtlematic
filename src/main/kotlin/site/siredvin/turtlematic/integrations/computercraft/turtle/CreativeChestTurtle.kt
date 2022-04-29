@@ -10,7 +10,7 @@ import site.siredvin.lib.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.TurtlematicClient
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.integrations.computercraft.peripheral.CreativeChestPeripheral
+import site.siredvin.turtlematic.integrations.computercraft.peripheral.misc.CreativeChestPeripheral
 
 class CreativeChestTurtle(
 ): PeripheralTurtleUpgrade<CreativeChestPeripheral>(ID, ItemStack(Items.CREATIVE_CHEST)) {

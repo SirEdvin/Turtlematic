@@ -1,4 +1,4 @@
-package site.siredvin.lib.peripherals
+package site.siredvin.lib.peripherals.api
 
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.Level
