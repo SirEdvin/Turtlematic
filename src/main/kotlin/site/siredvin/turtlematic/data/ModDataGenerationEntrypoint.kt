@@ -8,5 +8,7 @@ import site.siredvin.turtlematic.common.setup.Items
 class ModDataGenerationEntrypoint: DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         fabricDataGenerator.addProvider(ModRecipeProvider(fabricDataGenerator))
+        fabricDataGenerator.addProvider(BlockTagsProvider(fabricDataGenerator))
+        fabricDataGenerator.addProvider(ItemTagsProvider(fabricDataGenerator))
     }
 }

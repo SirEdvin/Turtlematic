@@ -7,4 +7,5 @@ import site.siredvin.turtlematic.Turtlematic
 
 object BlockTags {
     val CAPTURE_BLACKLIST = TagKey.create(Registry.BLOCK_REGISTRY, ResourceLocation(Turtlematic.MOD_ID, "capture_blacklist"))
+    val ENCHANTMENT_POWER_PROVIDER = TagKey.create(Registry.BLOCK_REGISTRY, ResourceLocation(Turtlematic.MOD_ID, "enchantment_power_provider"))
 }

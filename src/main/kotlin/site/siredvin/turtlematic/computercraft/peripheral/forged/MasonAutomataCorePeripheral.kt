@@ -7,28 +7,22 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.shared.TurtlePermissions
-import dan200.computercraft.shared.util.InventoryUtil
-import dan200.computercraft.shared.util.ItemStorage
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.StringRepresentable
 import net.minecraft.world.Container
-import net.minecraft.world.Containers
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.Rotation
-import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.Half
 import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.lib.api.peripheral.IPeripheralOperation
 import site.siredvin.lib.util.FakeItemContainer
+import site.siredvin.lib.util.InsertionHelpers
 import site.siredvin.lib.util.LimitedInventory
 import site.siredvin.lib.util.representation.LuaInterpretation
 import site.siredvin.lib.util.Pair
@@ -58,7 +52,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     override fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
         val base = super.possibleOperations()
         base.add(CountOperation.CHISEL)
-        base.add(SingleOperation.ROTATE)
+        base.add(SingleOperation.TRANSFORM_BLOCK)
         return base
     }
 
@@ -77,7 +71,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
         val blockState = level!!.getBlockState(hit.blockPos)
         if (blockState.isAir)
-            return Pair.onlyRight(MethodResult.of(null, "Nothing to chisel"))
+            return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
         if (!isEditable(hit.blockPos))
             return Pair.onlyRight(MethodResult.of(null, "This block is protected"))
         return Pair.onlyLeft(Pair(hit, blockState))
@@ -101,12 +95,10 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             fakeContainer.getItem(0).shrink(1)
             output.grow(recipe.resultItem.count)
         }
-        val rest =
-            InventoryUtil.storeItems(output, ItemStorage.wrap(turtleInventory), peripheralOwner.turtle.selectedSlot)
-        if (!rest.isEmpty) {
-            val pos = pos.relative(peripheralOwner.facing)
-            Containers.dropItemStack(level, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), rest)
-        }
+        InsertionHelpers.toInventoryOrToWorld(
+            output, turtleInventory, peripheralOwner.turtle.selectedSlot,
+            pos.relative(peripheralOwner.facing), level
+        )
         return MethodResult.of(true)
     }
 
@@ -193,7 +185,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             directionArgument.get()
         )
         val level = level!!
-        return withOperation(SingleOperation.ROTATE) {
+        return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
             if (findBlockResult.rightPresent())
                 return@withOperation findBlockResult.right!!
@@ -211,7 +203,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             directionArgument.get()
         )
         val level = level!!
-        return withOperation(SingleOperation.ROTATE) {
+        return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
             if (findBlockResult.rightPresent())
                 return@withOperation findBlockResult.right!!
@@ -258,7 +250,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             directionArgument.get()
         )
         val level = level!!
-        return withOperation(SingleOperation.ROTATE) {
+        return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
             if (findBlockResult.rightPresent())
                 return@withOperation findBlockResult.right!!

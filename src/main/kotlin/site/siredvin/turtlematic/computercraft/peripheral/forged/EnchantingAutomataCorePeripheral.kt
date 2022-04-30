@@ -5,30 +5,50 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.world.Container
+import net.minecraft.world.inventory.EnchantmentMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import site.siredvin.lib.api.peripheral.IPeripheralOperation
 import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.lib.util.BlockUtil
+import site.siredvin.lib.util.ValueContainer
+import site.siredvin.lib.util.XPUtil
 import site.siredvin.lib.util.isCorrectSlot
+import site.siredvin.lib.util.world.ScanUtils
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.tags.BlockTags
+import java.util.Random
+import kotlin.math.max
 
 open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
     companion object {
         const val TYPE = "enchantingAutomataCore"
-        private const val MINECRAFT_ENCHANTING_LEVEL_LIMIT = 30
+        private const val MAX_ENCHANTMENT_LEVEL = 30
     }
+
+    var storedEnchantmentSeed: Long = -1
 
     override val isEnabled: Boolean
         get() = TurtlematicConfig.enableEnchantingAutomataCore
 
     open val allowTreasureEnchants: Boolean
         get() = false
+
+    var enchantmentSeed: Long
+        get() {
+            if (storedEnchantmentSeed == -1L)
+                storedEnchantmentSeed = peripheralOwner.level!!.random.nextLong()
+            return storedEnchantmentSeed
+        }
+        set(value) { storedEnchantmentSeed = value }
 
     override val peripheralConfiguration: MutableMap<String, Any>
         get() {
@@ -40,44 +60,93 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         }
 
     override fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
-        val base = possibleOperations()
+        val base = super.possibleOperations()
         base.add(SingleOperation.ENCHANTMENT)
         return base
     }
 
+    private val enchantmentPower: Int
+        get() {
+            val enchantmentPower = ValueContainer(0)
+            val level = level!!
+            ScanUtils.traverseBlocks(level, pos, 2, { blockState, blockPos ->
+                if (blockState.`is`(BlockTags.ENCHANTMENT_POWER_PROVIDER)) {
+                    enchantmentPower.value = enchantmentPower.value + 1
+                } else if (blockState.`is`(BlockUtil.TURTLE_ADVANCED) || blockState.`is`(BlockUtil.TURTLE_NORMAL)) {
+                    val itemStorage = ItemStorage.SIDED.find(level, blockPos, null)
+                    if (itemStorage != null) {
+                        Transaction.openOuter().use {
+                            itemStorage.iterable(it).forEach { view ->
+                                if (view.resource.toStack().`is`(Items.ENCHANTED_BOOK))
+                                    enchantmentPower.value = enchantmentPower.value + 1
+                            }
+                        }
+                    }
+                }
+            })
+            return max(enchantmentPower.value, MAX_ENCHANTMENT_LEVEL)
+        }
+
+    @LuaFunction(mainThread = true, value = ["getEnchantmentPower"])
+    fun getEnchantmentPowerLua(): Int {
+        return enchantmentPower
+    }
+
+    @LuaFunction(mainThread = true)
+    fun refreshEnchantments() {
+        enchantmentSeed += level!!.random.nextLong()
+    }
+
+    @LuaFunction(mainThread = true)
+    fun getPossibleEnchantments(): MethodResult {
+        val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
+        val turtleInventory: Container = peripheralOwner.turtle.inventory
+        val targetItem: ItemStack = turtleInventory.getItem(selectedSlot)
+        if (!targetItem.isEnchantable) return MethodResult.of(null, "Item is not enchantable")
+        if (targetItem.isEnchanted) return MethodResult.of(null, "Item already enchanted!")
+        val possibleEnchantments = mutableListOf<Map<String, Any>>()
+        intArrayOf(0, 1, 2).forEach {
+            val cost = EnchantmentHelper.getEnchantmentCost(Random(enchantmentSeed + it), it, enchantmentPower, targetItem)
+            val enchantments = EnchantmentHelper.selectEnchantment(Random(enchantmentSeed + it), targetItem, cost, allowTreasureEnchants)
+            if (enchantments != null && enchantments.isNotEmpty()) {
+                val enchantment = enchantments.first()
+                possibleEnchantments.add(mapOf(
+                    "name" to enchantment.enchantment.getFullname(enchantment.level).string,
+                    "cost" to cost
+                ))
+            }
+        }
+        return MethodResult.of(possibleEnchantments)
+    }
+
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
-    fun enchant(levels: Int): MethodResult {
+    fun enchant(luaSlot: Int): MethodResult {
+        val slot = luaSlot - 1
         return withOperation(SingleOperation.ENCHANTMENT) {
-            if (levels > MINECRAFT_ENCHANTING_LEVEL_LIMIT) return@withOperation MethodResult.of(
-                null,
-                String.format(
-                    "Enchanting levels cannot be bigger then %d",
-                    MINECRAFT_ENCHANTING_LEVEL_LIMIT
-                )
-            )
             val experienceAbility = peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
                 ?: return@withOperation MethodResult.of(null, "Internal error ...?")
             addRotationCycle()
-            val requiredXP: Int = levels * TurtlematicConfig.enchantLevelCost
-            if (requiredXP > experienceAbility.getStoredXP()) return@withOperation MethodResult.of(
-                null,
-                String.format("Not enough XP, %d required", requiredXP)
-            )
             val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val targetItem: ItemStack = turtleInventory.getItem(selectedSlot)
             if (!targetItem.isEnchantable) return@withOperation MethodResult.of(null, "Item is not enchantable")
             if (targetItem.isEnchanted) return@withOperation MethodResult.of(null, "Item already enchanted!")
+            val requiredXP: Double = XPUtil.levelReductionToXp(experienceAbility.getStoredXP(), luaSlot)
+            if (requiredXP > experienceAbility.getStoredXP()) return@withOperation MethodResult.of(
+                null,
+                String.format("Not enough XP, %d required", requiredXP)
+            )
             val enchantedItem: ItemStack =
                 EnchantmentHelper.enchantItem(
-                    level!!.random,
-                    peripheralOwner.toolInMainHand,
-                    levels,
+                    Random(enchantmentSeed + slot),
+                    targetItem,
+                    enchantmentPower,
                     allowTreasureEnchants
                 )
-            experienceAbility.adjustStoredXP(-requiredXP.toDouble())
+            experienceAbility.adjustStoredXP(-requiredXP)
             turtleInventory.setItem(selectedSlot, enchantedItem)
+            refreshEnchantments()
             MethodResult.of(true)
         }
     }

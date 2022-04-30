@@ -2,6 +2,7 @@ package site.siredvin.turtlematic.common.configuration
 
 import net.minecraftforge.common.ForgeConfigSpec
 import site.siredvin.lib.api.IConfigHandler
+import site.siredvin.lib.computercraft.peripheral.operation.UnconditionalOperations
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SimpleFreeOperation
@@ -82,6 +83,7 @@ object TurtlematicConfig {
             register(SphereOperation.values(), builder)
             register(SimpleFreeOperation.values(), builder)
             register(CountOperation.values(), builder)
+            register(UnconditionalOperations.values(), builder)
             builder.pop()
             builder.push("automataCores")
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)

@@ -14,7 +14,7 @@ enum class SingleOperation(
     private val countCostPolicy: CountPolicy
 ) : IPeripheralOperation<SingleOperationContext> {
     SWING(1000, 1),
-    ROTATE(500, 1),
+    TRANSFORM_BLOCK(500, 1),
     USE(5000, 1),
     SUCK(1000, 1),
     BREW(1_000, 5),
