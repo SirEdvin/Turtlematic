@@ -84,6 +84,11 @@ class LibFakePlayer(
         return true
     }
 
+    override fun getEyeY(): Double {
+        // Override this to make eye position correspond turtle eyes
+        return y + 0.2
+    }
+
     override fun playSound(soundIn: SoundEvent, volume: Float, pitch: Float) {}
 
     private fun setState(block: Block?, pos: BlockPos?) {
@@ -224,7 +229,10 @@ class LibFakePlayer(
             return withConsumer(level, hit.blockPos) {
                 this.interactAt(this, hit.blockPos.toVec3(), InteractionHand.MAIN_HAND)
                 level.destroyBlockProgress(id, hit.blockPos, -1)
-                gameMode.useItemOn(this, level, mainHandItem, InteractionHand.MAIN_HAND, hit)
+                val result = gameMode.useItemOn(this, level, mainHandItem, InteractionHand.MAIN_HAND, hit)
+                if (result != InteractionResult.PASS)
+                    return@withConsumer result
+                return@withConsumer gameMode.useItem(this, level, mainHandItem, InteractionHand.MAIN_HAND)
             }
         }
         if (hit is EntityHitResult) {

@@ -16,6 +16,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.UpgradeRecipe
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.lib.api.peripheral.IPeripheralOperation
@@ -110,15 +111,21 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         val optRecipe = level.recipeManager.getRecipeFor(RecipeType.SMELTING, fakeContainer, level)
         if (optRecipe.isEmpty)
             return MethodResult.of(null, "Cannot perform in-place smelting for this block")
-        val recipe = optRecipe.get()
-        if (recipe.resultItem.item !is BlockItem || recipe.resultItem.count != 1)
-            return MethodResult.of(
-                null,
-                "Cannot perform in-place transformation to $target, choose another target or transform it in inventory"
-            )
-        val targetBlockState = (recipe.resultItem.item as BlockItem).block.defaultBlockState()
-        level.setBlockAndUpdate(hit.blockPos, targetBlockState)
-        return MethodResult.of(true)
+        return withOperation(CountOperation.SMELT, 1, {
+            val recipe = optRecipe.get()
+            if (recipe.resultItem.item is BlockItem && recipe.resultItem.count == 1) {
+                val targetBlockState = (recipe.resultItem.item as BlockItem).block.defaultBlockState()
+                level.setBlockAndUpdate(hit.blockPos, targetBlockState)
+            } else {
+                level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
+                InsertionHelpers.toInventoryOrToWorld(
+                    recipe.resultItem.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
+                    peripheralOwner.pos.relative(peripheralOwner.facing), level
+                )
+            }
+            peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)?.adjustStoredXP(recipe.experience.toDouble())
+            return@withOperation MethodResult.of(true)
+        })
     }
 
     @LuaFunction(mainThread = true)
@@ -126,7 +133,6 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     fun smith(): MethodResult {
         return withOperation(SingleOperation.SMITH) {
             val turtleInventory: Container = peripheralOwner.turtle.inventory
-            addRotationCycle()
             val selectedSlot = peripheralOwner.turtle.selectedSlot
             if (selectedSlot + 1 == turtleInventory.containerSize)
                 return@withOperation MethodResult.of(null, "Cannot use last slot as first for smith operation")

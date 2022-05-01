@@ -41,7 +41,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
 
     companion object {
         const val TYPE = "brewingAutomataCore"
-        private val suitableEntity: Predicate<Entity> = Predicate<Entity> { entity: Entity? -> entity is ZombieVillager }
+        private val suitableEntity: Predicate<Entity> = Predicate<Entity> { entity: Entity -> entity is ZombieVillager }
     }
 
     init {
@@ -157,7 +157,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun throwPotion(arguments: IArguments): MethodResult {
-        val power = min(arguments.optFiniteDouble(0, 1.0), 16.0)
+        val power = min(arguments.optFiniteDouble(0, 1.0), 16.04)
         val uncertainty = min(arguments.optFiniteDouble(1, 1.0), 16.0)
         if (power == 0.0) throw LuaException("Power multiplicator cannot be 0")
         if (uncertainty == 0.0) throw LuaException("Uncertainty multiplicator cannot be 0")

@@ -15,10 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import site.siredvin.lib.api.peripheral.IPeripheralOperation
 import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.lib.util.BlockUtil
-import site.siredvin.lib.util.ValueContainer
-import site.siredvin.lib.util.XPUtil
-import site.siredvin.lib.util.isCorrectSlot
+import site.siredvin.lib.util.*
 import site.siredvin.lib.util.world.ScanUtils
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
@@ -84,7 +81,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                     }
                 }
             })
-            return max(enchantmentPower.value, MAX_ENCHANTMENT_LEVEL)
+            return max(enchantmentPower.value * 2, MAX_ENCHANTMENT_LEVEL)
         }
 
     @LuaFunction(mainThread = true, value = ["getEnchantmentPower"])
@@ -122,6 +119,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun enchant(luaSlot: Int): MethodResult {
+        assertBetween(luaSlot, 1, 3, "selected")
         val slot = luaSlot - 1
         return withOperation(SingleOperation.ENCHANTMENT) {
             val experienceAbility = peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)

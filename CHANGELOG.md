@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Single entity hit login (again)
+- `use` now will also perform general item use if use on block lead to nothing
 
 ## [0.1.3] - 28.04.22
 

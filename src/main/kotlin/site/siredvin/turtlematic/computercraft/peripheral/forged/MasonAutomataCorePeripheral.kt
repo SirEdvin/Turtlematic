@@ -14,6 +14,7 @@ import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.EnumProperty
@@ -77,8 +78,9 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         return Pair.onlyLeft(Pair(hit, blockState))
     }
 
-    private fun chiselItem(target: String): MethodResult {
+    private fun chiselItem(target: String, arguments: IArguments): MethodResult {
         val level = level!!
+        val limit = arguments.optInt(2, Int.MAX_VALUE)
         val targetItem = Registry.ITEM.get(ResourceLocation(target))
         if (targetItem == Items.AIR)
             return MethodResult.of(null, "Cannot find item with id $target")
@@ -91,8 +93,10 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         )
         val output = recipe.resultItem.copy()
         output.count = 0
-        while (recipe.matches(fakeContainer, level)) {
+        var consumedAmount = 0
+        while (recipe.matches(fakeContainer, level) && limit > consumedAmount) {
             fakeContainer.getItem(0).shrink(1)
+            consumedAmount++
             output.grow(recipe.resultItem.count)
         }
         InsertionHelpers.toInventoryOrToWorld(
@@ -102,7 +106,11 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         return MethodResult.of(true)
     }
 
-    private fun chiselBlock(target: String, overwrittenDirection: VerticalDirection?): MethodResult {
+    private fun chiselBlock(target: String, arguments: IArguments): MethodResult {
+        val directionArgument = arguments.optString(2)
+        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
+            directionArgument.get()
+        )
         val level = level!!
         val targetItem = Registry.ITEM.get(ResourceLocation(target))
         if (targetItem == Items.AIR)
@@ -118,13 +126,16 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             null,
             "Cannot transform selected item into $target"
         )
-        if (recipe.resultItem.item !is BlockItem || recipe.resultItem.count != 1)
-            return MethodResult.of(
-                null,
-                "Cannot perform in-place transformation to $target, choose another target or transform it in inventory"
+        if (recipe.resultItem.item is BlockItem && recipe.resultItem.count == 1) {
+            val targetBlockState = (recipe.resultItem.item as BlockItem).block.defaultBlockState()
+            level.setBlockAndUpdate(hit.blockPos, targetBlockState)
+        } else {
+            level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
+            InsertionHelpers.toInventoryOrToWorld(
+                recipe.resultItem.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
+                peripheralOwner.pos.relative(peripheralOwner.facing), level
             )
-        val targetBlockState = (recipe.resultItem.item as BlockItem).block.defaultBlockState()
-        level.setBlockAndUpdate(hit.blockPos, targetBlockState)
+        }
         return MethodResult.of(true)
     }
 
@@ -151,9 +162,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         if (fakeContainer == null)
             return MethodResult.of(null, "Cannot find target for alternative analysis")
 
-        var candidates = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level)
-        if (mode == TransformInteractionMode.BLOCK)
-            candidates = candidates.filter { it.resultItem.item is BlockItem && it.resultItem.count == 1 }
+        val candidates = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level)
         return MethodResult.of(candidates.map { Registry.ITEM.getKey(it.resultItem.item).toString() })
     }
 
@@ -161,19 +170,15 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     fun chisel(arguments: IArguments): MethodResult {
         val mode = TransformInteractionMode.luaValueOf(arguments.getString(0))
         val target = arguments.getString(1)
-        val directionArgument = arguments.optString(2)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
         return when (mode) {
             TransformInteractionMode.BLOCK -> withOperation(
                 CountOperation.CHISEL,
                 1,
-                { chiselBlock(target, overwrittenDirection) })
+                { chiselBlock(target, arguments) })
             TransformInteractionMode.INVENTORY -> withOperation(
                 CountOperation.CHISEL,
                 peripheralOwner.toolInMainHand.count,
-                { chiselItem(target) })
+                { chiselItem(target, arguments) })
         }
     }
 
