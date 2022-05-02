@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Chipped support for mason automata
+- Ability to harvest crops for husbandry automata
+- Extra information about crops for husbandry automata
+
+### Changed
+
+- Default cooldown for `use` now 1 second
+
 ## [0.2.0] - 01.05.22
 
 ### Added

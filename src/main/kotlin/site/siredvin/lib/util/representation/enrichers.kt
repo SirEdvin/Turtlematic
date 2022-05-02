@@ -4,10 +4,12 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.Shearable
 import net.minecraft.world.entity.animal.Animal
+import net.minecraft.world.level.block.SugarCaneBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 
 
-fun animalData(entity: Entity, data: MutableMap<String, Any>,) {
+fun animalData(entity: Entity, data: MutableMap<String, Any>) {
     if (entity is Animal) {
         data["baby"] = entity.isBaby
         data["inLove"] = entity.isInLove
@@ -42,4 +44,12 @@ fun stateProperties(state: BlockState, data: MutableMap<String, Any>) {
         properties[it.name] = state.getValue(it).toString()
     }
     data["properties"] = properties
+}
+
+fun cropAge(state: BlockState, data: MutableMap<String, Any>) {
+    val ageProperty = state.properties.find { it.name == "age" } as IntegerProperty?
+    if (ageProperty != null) {
+        data["age"] = state.getValue(ageProperty)
+        data["maxAge"] = ageProperty.possibleValues.maxOf { it }
+    }
 }

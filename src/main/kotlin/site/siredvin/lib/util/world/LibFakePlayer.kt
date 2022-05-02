@@ -24,6 +24,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.Pose
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DiggerItem
+import net.minecraft.world.item.HoeItem
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
@@ -227,9 +228,11 @@ class LibFakePlayer(
         val hit = findHit(skipEntity, skipBlock, entityFilter);
         if (hit is BlockHitResult) {
             return withConsumer(level, hit.blockPos) {
-                this.interactAt(this, hit.blockPos.toVec3(), InteractionHand.MAIN_HAND)
+                var result = this.interactAt(this, hit.blockPos.toVec3(), InteractionHand.MAIN_HAND)
+                if (result != InteractionResult.PASS)
+                    return@withConsumer result
                 level.destroyBlockProgress(id, hit.blockPos, -1)
-                val result = gameMode.useItemOn(this, level, mainHandItem, InteractionHand.MAIN_HAND, hit)
+                result = gameMode.useItemOn(this, level, mainHandItem, InteractionHand.MAIN_HAND, hit)
                 if (result != InteractionResult.PASS)
                     return@withConsumer result
                 return@withConsumer gameMode.useItem(this, level, mainHandItem, InteractionHand.MAIN_HAND)
@@ -243,18 +246,6 @@ class LibFakePlayer(
 
     fun use(skipEntity: Boolean, skipBlock: Boolean): InteractionResult {
         return use(skipEntity, skipBlock, null)
-    }
-
-    fun useOnBlock(): InteractionResult {
-        return use(true, skipBlock = false)
-    }
-
-    fun useOnEntity(): InteractionResult {
-        return use(false, skipBlock = true)
-    }
-
-    fun useOnFilteredEntity(filter: Predicate<Entity>?): InteractionResult {
-        return use(false, skipBlock = true, entityFilter = filter)
     }
 
     fun swing(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): Pair<Boolean, String> {
@@ -273,8 +264,8 @@ class LibFakePlayer(
         val state = level.getBlockState(pos)
         val block = state.block
         val tool = inventory.getSelected()
-        if (tool.isEmpty)
-            return Pair.of(false, "Cannot swing without tool");
+//        if (tool.isEmpty)
+//            return Pair.of(false, "Cannot swing without tool");
         if (block != digBlock || pos != digPosition)
             setState(block, pos)
         if (!level.isEmptyBlock(pos) && !state.material.isLiquid) {
@@ -282,10 +273,10 @@ class LibFakePlayer(
                 return Pair.of(false, "Cannot break protected block")
             if (block == Blocks.BEDROCK || state.getDestroySpeed(level, pos) <= -1f)
                 return Pair.of(false, "Unbreakable block detected")
-            if (tool.item !is DiggerItem)
-                return Pair.of(false, "Item should be digger tool")
-            if (!tool.item.isCorrectToolForDrops(state))
-                return Pair.of(false, "Tool cannot mine this block")
+//            if (tool.item !is DiggerItem)
+//                return Pair.of(false, "Item should be digger tool")
+//            if (!tool.item.isCorrectToolForDrops(state))
+//                return Pair.of(false, "Tool cannot mine this block")
             val breakSpeed = 0.5f * tool.getDestroySpeed(state) / state.getDestroySpeed(level, pos) - 0.1f
             for (i in 0..9) {
                 currentDamage += breakSpeed

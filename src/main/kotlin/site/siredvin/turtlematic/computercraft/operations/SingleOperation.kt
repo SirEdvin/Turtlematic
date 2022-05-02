@@ -15,7 +15,8 @@ enum class SingleOperation(
 ) : IPeripheralOperation<SingleOperationContext> {
     SWING(1000, 1),
     TRANSFORM_BLOCK(500, 1),
-    USE(5000, 1),
+    USE(1000, 1),
+    HARVEST(1000, 1),
     SUCK(1000, 1),
     BREW(1_000, 5),
     THROW_POTION(1_000, 10),

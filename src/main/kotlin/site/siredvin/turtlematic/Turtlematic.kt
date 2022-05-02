@@ -2,6 +2,7 @@ package site.siredvin.turtlematic
 import dan200.computercraft.api.ComputerCraftAPI
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.computercraft.turtle.*
+import site.siredvin.turtlematic.util.Platform
 
 
 @Suppress("UNUSED")
@@ -33,6 +35,8 @@ object Turtlematic: ModInitializer {
 
         SoulHarvestRecipeRegistry.injectAutomataCoreRecipes()
         SoulHarvestRecipeRegistry.injectForgedAutomataCoreRecipes()
+
+        Platform.maybeLoadIntegration("chipped").ifPresent { (it as Runnable).run() }
 
         ComputerCraftAPI.registerTurtleUpgrade(Automata())
         ComputerCraftAPI.registerTurtleUpgrade(EndAutomata())

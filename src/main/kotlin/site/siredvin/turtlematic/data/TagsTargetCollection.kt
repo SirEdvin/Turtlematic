@@ -13,4 +13,7 @@ object TagsTargetCollection {
         Blocks.PLAYER_HEAD, Blocks.PLAYER_WALL_HEAD,
         Blocks.CANDLE, Blocks.CANDLE_CAKE
     )
+    val HUSBANDRY_EXTRA_CROPS = arrayOf(
+        Blocks.NETHER_WART, Blocks.COCOA
+    )
 }

@@ -12,8 +12,13 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
@@ -39,8 +44,87 @@ import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
+    interface MasonRecipeHandler {
+        fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack>
+        fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>?
+        fun produce(level: Level, fakeContainer: Container, targetItem: Item, recipe: Recipe<Container>, limit: Int): ItemStack
+
+        val handlerID: String
+        val workWith: List<Class<*>>
+    }
+
+    class StonecutterRecipeHandler: MasonRecipeHandler {
+        override fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
+            return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).map { it.resultItem }
+        }
+
+        override fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? {
+            return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find { it.resultItem.`is`(targetItem) }
+        }
+
+        override fun produce(
+            level: Level,
+            fakeContainer: Container,
+            targetItem: Item,
+            recipe: Recipe<Container>,
+            limit: Int
+        ): ItemStack {
+            if (recipe !is StonecutterRecipe)
+                return ItemStack.EMPTY
+            var consumedAmount = 0
+            val output = recipe.resultItem.copy()
+            output.count = 0
+            while (recipe.matches(fakeContainer, level) && limit > consumedAmount) {
+                fakeContainer.getItem(0).shrink(1)
+                consumedAmount++
+                output.grow(recipe.resultItem.count)
+            }
+            return output
+        }
+
+        override val handlerID: String
+            get() = "stonecutter"
+
+        override val workWith: List<Class<*>>
+            get() = listOf(StonecutterRecipe::class.java)
+
+    }
+
     companion object {
         const val TYPE = "masonAutomataCore"
+
+        private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()
+        private val RECIPE_TO_ID = mutableMapOf<Class<*>, String>()
+
+        fun addRecipeHandler(handler: MasonRecipeHandler) {
+            HANDLERS[handler.handlerID] = handler
+            handler.workWith.forEach { RECIPE_TO_ID[it] = handler.handlerID }
+        }
+
+        init {
+            addRecipeHandler(StonecutterRecipeHandler())
+        }
+
+        fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
+            val alternatives = mutableListOf<ItemStack>()
+            HANDLERS.values.forEach { alternatives.addAll(it.getAlternatives(level, fakeContainer)) }
+            return alternatives
+        }
+
+        fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? {
+            HANDLERS.values.forEach {
+                val recipe = it.getRecipe(level, fakeContainer, targetItem)
+                if (recipe != null)
+                    return recipe
+            }
+            return null
+        }
+
+        fun produce(level: Level, fakeContainer: Container, targetItem: Item, recipe: Recipe<Container>, limit: Int): ItemStack {
+            val handlerID = RECIPE_TO_ID[recipe::class.java] ?: return ItemStack.EMPTY
+            val handler = HANDLERS[handlerID] ?: return ItemStack.EMPTY
+            return handler.produce(level, fakeContainer, targetItem, recipe, limit)
+        }
     }
 
     override val isEnabled: Boolean
@@ -86,19 +170,13 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             return MethodResult.of(null, "Cannot find item with id $target")
         val turtleInventory = peripheralOwner.turtle.inventory
         val fakeContainer = LimitedInventory(turtleInventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
-        val candidates = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level)
-        val recipe = candidates.find { it.resultItem.`is`(targetItem) } ?: return MethodResult.of(
+        val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
             "Cannot transform selected item into $target"
         )
-        val output = recipe.resultItem.copy()
-        output.count = 0
-        var consumedAmount = 0
-        while (recipe.matches(fakeContainer, level) && limit > consumedAmount) {
-            fakeContainer.getItem(0).shrink(1)
-            consumedAmount++
-            output.grow(recipe.resultItem.count)
-        }
+        val output = produce(level, fakeContainer, targetItem, recipe, limit)
+        if (output.isEmpty)
+            return MethodResult.of(null, "Strange internal error appear, cannot find useful recipe")
         InsertionHelpers.toInventoryOrToWorld(
             output, turtleInventory, peripheralOwner.turtle.selectedSlot,
             pos.relative(peripheralOwner.facing), level
@@ -121,18 +199,20 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         val hit = findBlockResult.left!!.left
         val blockState = findBlockResult.left!!.right
         val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
-        val candidates = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level)
-        val recipe = candidates.find { it.resultItem.`is`(targetItem) } ?: return MethodResult.of(
+        val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
             "Cannot transform selected item into $target"
         )
-        if (recipe.resultItem.item is BlockItem && recipe.resultItem.count == 1) {
-            val targetBlockState = (recipe.resultItem.item as BlockItem).block.defaultBlockState()
+        val output = produce(level, fakeContainer, targetItem, recipe, 1)
+        if (output.isEmpty)
+            return MethodResult.of(null, "Strange internal error appear, cannot find useful recipe")
+        if (output.item is BlockItem && output.count == 1) {
+            val targetBlockState = (output.item as BlockItem).block.defaultBlockState()
             level.setBlockAndUpdate(hit.blockPos, targetBlockState)
         } else {
             level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
             InsertionHelpers.toInventoryOrToWorld(
-                recipe.resultItem.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
+                output.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
                 peripheralOwner.pos.relative(peripheralOwner.facing), level
             )
         }
@@ -162,8 +242,8 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         if (fakeContainer == null)
             return MethodResult.of(null, "Cannot find target for alternative analysis")
 
-        val candidates = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level)
-        return MethodResult.of(candidates.map { Registry.ITEM.getKey(it.resultItem.item).toString() })
+        val alternatives = getAlternatives(level, fakeContainer)
+        return MethodResult.of(alternatives.map { Registry.ITEM.getKey(it.item).toString() })
     }
 
     @LuaFunction(mainThread = true)

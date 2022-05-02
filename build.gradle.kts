@@ -90,7 +90,12 @@ dependencies {
     modImplementation("com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.5-ccr")
     modImplementation("curse.maven:forgeconfigapirt-fabric-547434:3671141")
 
+    // Some mod integrations
+    // Chipped
+    modImplementation("curse.maven:chipped-456956:3748666")
+
     modRuntimeOnly("curse.maven:wthit-440979:3735869")
+    modRuntimeOnly("curse.maven:spark-361579:3644349")
 
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449")
     modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:8.1.449")
