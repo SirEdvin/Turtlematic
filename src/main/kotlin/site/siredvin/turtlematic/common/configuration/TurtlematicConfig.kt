@@ -17,6 +17,12 @@ object TurtlematicConfig {
     val enableCreativeChest: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_CREATIVE_CHEST.get()
 
+    val enablePistonTurtle: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_TURTLE_PISTON.get()
+
+    val enableStickyPistonTurtle: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_STICKY_TURTLE_PISTON.get()
+
     // automata core toggles
     val enableAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_AUTOMATA_CORE.get()
@@ -57,6 +63,8 @@ object TurtlematicConfig {
         // Extra turtle peripherals
         val ENABLE_TURTLE_CHATTER: ForgeConfigSpec.BooleanValue
         val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
+        val ENABLE_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
+        val ENABLE_STICKY_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -77,6 +85,8 @@ object TurtlematicConfig {
             builder.push("turtlePeripherals")
             ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
             ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
+            ENABLE_TURTLE_PISTON = builder.define("enablePistonTurtle", true)
+            ENABLE_STICKY_TURTLE_PISTON = builder.define("enableStickyPistonTurtle", true)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)

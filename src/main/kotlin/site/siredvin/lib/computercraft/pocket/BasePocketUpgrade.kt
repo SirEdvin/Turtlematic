@@ -7,7 +7,7 @@ import net.minecraft.world.level.ItemLike
 import dan200.computercraft.api.pocket.IPocketAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import site.siredvin.lib.computercraft.peripheral.DisabledPeripheral
-import site.siredvin.turtlematic.util.pocketAdjective
+import site.siredvin.lib.util.pocketAdjective
 import java.util.function.Supplier
 
 abstract class BasePocketUpgrade<T : IBasePeripheral<*>> : AbstractPocketUpgrade {
@@ -22,7 +22,7 @@ abstract class BasePocketUpgrade<T : IBasePeripheral<*>> : AbstractPocketUpgrade
 
     protected constructor(id: ResourceLocation, stack: Supplier<out ItemLike?>?) : super(
         id,
-        pocketAdjective(id.path),
+        pocketAdjective(id),
         stack
     ) {
     }

@@ -1,12 +1,9 @@
 package site.siredvin.turtlematic.common.items
 
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 import site.siredvin.lib.common.items.DescriptiveItem
 import site.siredvin.lib.util.Pair
 import site.siredvin.turtlematic.Turtlematic
@@ -14,7 +11,6 @@ import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
-import site.siredvin.turtlematic.util.text
 
 class ForgedAutomataCore: DescriptiveItem(Properties().tab(Turtlematic.TAB).stacksTo(1).fireResistant()), ISoulFeedableItem {
 

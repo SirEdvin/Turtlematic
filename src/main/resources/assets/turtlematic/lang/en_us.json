@@ -18,13 +18,16 @@
   "turtle.turtlematic.husbandry_automata": "Husbandry automata",
   "turtle.turtlematic.end_automata": "End automata",
   "turtle.turtlematic.enormous_automata": "Enormous automata",
-  "turtle.turtlematic.soul_scrapper": "Soul scrapping",
-  "turtle.turtlematic.chatter": "Chatting",
-  "turtle.turtlematic.creative_chest": "Creativity",
   "turtle.turtlematic.brewing_automata": "Brewing automata",
   "turtle.turtlematic.smithing_automata": "Smithing automata",
   "turtle.turtlematic.enchanting_automata": "Enchanting automata",
   "turtle.turtlematic.mason_automata": "Mason automata",
+
+  "turtle.turtlematic.soul_scrapper": "Soul scrapping",
+  "turtle.turtlematic.chatter": "Chatting",
+  "turtle.turtlematic.creative_chest": "Creativity",
+  "turtle.turtlematic.piston": "Piston",
+  "turtle.turtlematic.sticky_piston": "Sticky piston",
 
   "itemGroup.turtlematic.main": "Turtlematic",
 

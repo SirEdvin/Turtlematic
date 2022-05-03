@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import site.siredvin.lib.util.Pair
+import site.siredvin.lib.util.text
+import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
@@ -18,7 +20,6 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
 import site.siredvin.turtlematic.computercraft.turtle.Automata
-import site.siredvin.turtlematic.util.text
 
 class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, Automata.ID, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {
 
@@ -31,7 +32,7 @@ class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, Automata.ID, {Turt
         super.appendHoverText(itemStack, level, list, tooltipFlag)
         val record = getActiveRecipe(itemStack)
         if (record != null) {
-            list.add(text("consumed_entities"))
+            list.add(text(Turtlematic.MOD_ID, "consumed_entities"))
             getEntityRepresentation(itemStack, record).forEach { list.add(it.toComponent()) }
         }
     }

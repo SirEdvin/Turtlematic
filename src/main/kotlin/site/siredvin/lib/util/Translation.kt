@@ -1,8 +1,8 @@
-package site.siredvin.turtlematic.util
+package site.siredvin.lib.util
 
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.TranslatableComponent
-import site.siredvin.turtlematic.Turtlematic
+import net.minecraft.resources.ResourceLocation
 
 fun itemTooltip(descriptionId: String): TranslatableComponent {
     val lastIndex = descriptionId.lastIndexOf('.')
@@ -38,18 +38,18 @@ fun itemExtra(descriptionId: String, extra: String, vararg args: Any): Component
     )
 }
 
-fun turtleAdjective(name: String): String {
-    return java.lang.String.format("turtle.%s.%s", Turtlematic.MOD_ID, name)
+fun turtleAdjective(turtleID: ResourceLocation): String {
+    return java.lang.String.format("turtle.%s.%s", turtleID.namespace, turtleID.path)
 }
 
-fun pocketAdjective(name: String): String {
-    return java.lang.String.format("pocket.%s.%s", Turtlematic.MOD_ID, name)
+fun pocketAdjective(pocketID: ResourceLocation): String {
+    return java.lang.String.format("pocket.%s.%s", pocketID.namespace, pocketID.path)
 }
 
-fun text(name: String): Component {
-    return TranslatableComponent(String.format("text.%s.%s", Turtlematic.MOD_ID, name))
+fun text(modID: String, name: String): Component {
+    return TranslatableComponent(String.format("text.%s.%s", modID, name))
 }
 
-fun text(name: String, vararg args: Any): Component {
-    return TranslatableComponent(String.format("text.%s.%s", Turtlematic.MOD_ID, name), *args)
+fun text(modID: String, name: String, vararg args: Any): Component {
+    return TranslatableComponent(String.format("text.%s.%s", modID, name), *args)
 }

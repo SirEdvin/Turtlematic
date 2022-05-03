@@ -51,5 +51,7 @@ object Turtlematic: ModInitializer {
         ComputerCraftAPI.registerTurtleUpgrade(SoulScrapperTurtle())
         ComputerCraftAPI.registerTurtleUpgrade(ChatterTurtle())
         ComputerCraftAPI.registerTurtleUpgrade(CreativeChestTurtle())
+        ComputerCraftAPI.registerTurtleUpgrade(PistonTurtle())
+        ComputerCraftAPI.registerTurtleUpgrade(StickyPistonTurtle())
     }
 }

@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.phys.HitResult
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.lib.common.items.DescriptiveItem
+import site.siredvin.lib.util.itemExtra
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.util.itemExtra
 
 class SoulVial : DescriptiveItem(Properties().tab(Turtlematic.TAB).stacksTo(1).fireResistant()) {
 
