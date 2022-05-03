@@ -22,19 +22,30 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
     protected val pluggedMethods: MutableList<BoundMethod> = ArrayList()
     protected var plugins: MutableList<IPeripheralPlugin>? = null
     protected var _methodNames = Array(0) { "" }
+    protected var additionalTypeStorage: MutableSet<String>? = null
+
+    protected fun connectPlugin(plugin: IPeripheralPlugin) {
+        if (plugin.isSuitable(this)) {
+            pluggedMethods.addAll(plugin.methods)
+            val additionalType = plugin.additionalType
+            if (additionalType != null) {
+                if (additionalTypeStorage == null)
+                    additionalTypeStorage = mutableSetOf()
+                additionalTypeStorage!!.add(additionalType)
+            }
+        }
+    }
+
     protected fun buildPlugins() {
         if (!initialized) {
             initialized = true
             pluggedMethods.clear()
-            if (plugins != null) plugins!!.forEach(Consumer { plugin: IPeripheralPlugin ->
-                if (plugin.isSuitable(this)) pluggedMethods.addAll(
-                    plugin.methods
-                )
-            })
+            additionalTypeStorage?.clear()
+            if (plugins != null) plugins!!.forEach(this::connectPlugin)
             peripheralOwner!!.abilities.forEach(Consumer { ability: IOwnerAbility? ->
-                if (ability is IPeripheralPlugin) pluggedMethods.addAll(
-                    (ability as IPeripheralPlugin).methods
-                )
+                if (ability is IPeripheralPlugin) {
+                    this.connectPlugin(ability)
+                }
             })
             _methodNames = pluggedMethods.stream().map { obj: BoundMethod -> obj.name }.toArray { size -> Array(size) { "" } }
         }
@@ -42,6 +53,11 @@ abstract class BasePeripheral<O : IPeripheralOwner?>(protected val peripheralTyp
 
     override val connectedComputers: List<IComputerAccess>
         get() = _connectedComputers
+
+    override fun getAdditionalTypes(): MutableSet<String> {
+        if (!initialized) buildPlugins()
+        return additionalTypeStorage ?: Collections.emptySet()
+    }
 
     protected fun addPlugin(plugin: IPeripheralPlugin) {
         if (plugins == null) plugins = LinkedList()
