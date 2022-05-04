@@ -60,9 +60,7 @@ class ModRecipeProvider(dataGenerator: FabricDataGenerator) : FabricRecipeProvid
         TweakedUpgradeRecipeBuilder.smithing(
             Ingredient.of(Items.AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHERITE_INGOT),
             Items.FORGED_AUTOMATA_CORE
-        ).save(
-            consumer
-        )
+        ).save(consumer)
         TweakedUpgradeRecipeBuilder.smithing(
             Ingredient.of(Items.HUSBANDRY_AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHERITE_INGOT),
             Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE

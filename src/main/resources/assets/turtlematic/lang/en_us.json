@@ -61,6 +61,7 @@
   "text.turtlematic.required_souls_for_consuming": "  Required souls: %s",
   "text.turtlematic.durability_refund_chance": "  §6§nItem has chance to not loose durability on use",
   "text.turtlematic.durability_refund": "  §6§nItem will not loose durability on use",
+  "text.turtlematic.starbound_generation": "  §6§nPeriodically generate small amount of fuel points",
 
   "keybind.turtlematic.description": "Show item description",
   "keybind.turtlematic.recipe": "Show item recipe tips",

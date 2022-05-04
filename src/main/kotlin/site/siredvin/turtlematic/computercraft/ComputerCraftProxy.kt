@@ -22,6 +22,7 @@ import site.siredvin.turtlematic.computercraft.peripheral.forged.SmithingAutomat
 import site.siredvin.turtlematic.computercraft.peripheral.misc.*
 import site.siredvin.turtlematic.computercraft.turtle.BlockTurtleUpgrade
 import site.siredvin.turtlematic.computercraft.turtle.ClockwiseAnimatedTurtleUpgrade
+import site.siredvin.turtlematic.computercraft.turtle.StarboundTurtleUpgrade
 
 object ComputerCraftProxy {
 
@@ -38,8 +39,8 @@ object ComputerCraftProxy {
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE) { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.NETHERITE_END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE) { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) })
-        TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.STARBOUND_END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
-        TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.ENORMOUS_AUTOMATA_CORE) { turtle, side, tier -> EnormousAutomataCorePeripheral(turtle, side, tier) })
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.STARBOUND_END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.ENORMOUS_AUTOMATA_CORE) { turtle, side, tier -> EnormousAutomataCorePeripheral(turtle, side, tier) })
 
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.BREWING_AUTOMATA_CORE) { turtle, side, tier -> BrewingAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.MASON_AUTOMATA_CORE) { turtle, side, tier -> MasonAutomataCorePeripheral(turtle, side, tier) })

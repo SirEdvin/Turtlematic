@@ -50,7 +50,6 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
     override val peripheralConfiguration: MutableMap<String, Any>
         get() {
             val data: MutableMap<String, Any> = super.peripheralConfiguration
-            data["enchantLevelCost"] = TurtlematicConfig.enchantLevelCost
             data["treasureEnchantmentsAllowed"] = allowTreasureEnchants
             data["enchantmentWipeChance"] = TurtlematicConfig.enchantmentWipeChance
             return data

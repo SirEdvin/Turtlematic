@@ -49,12 +49,15 @@ object TurtlematicConfig {
     val endAutomataCoreWarpPointLimit: Int
         get() = ConfigHolder.COMMON_CONFIG.END_AUTOMATA_CORE_WARP_POINT_LIMIT.get()
 
+    val starboundAutomataFuelGenerationChance: Double
+        get() = ConfigHolder.COMMON_CONFIG.STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE.get()
+
+    val starboundAutomataFuelGenerationAmount: Int
+        get() = ConfigHolder.COMMON_CONFIG.STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT.get()
+
     // forged automata cores configuration
     val brewingXPReward: Double
         get() = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get()
-
-    val enchantLevelCost: Int
-        get() = ConfigHolder.COMMON_CONFIG.ENCHANT_LEVEL_COST.get()
 
     val enchantmentWipeChance: Double
         get() = ConfigHolder.COMMON_CONFIG.ENCHANTING_WIPE_CHANGE.get()
@@ -76,10 +79,11 @@ object TurtlematicConfig {
         val ENABLE_ENCHANTING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_MASON_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
 
+        val STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE: ForgeConfigSpec.DoubleValue
+        val STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT: ForgeConfigSpec.IntValue
         val END_AUTOMATA_CORE_WARP_POINT_LIMIT: ForgeConfigSpec.IntValue
         val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
-        val ENCHANT_LEVEL_COST: ForgeConfigSpec.IntValue
 
         init {
             builder.push("turtlePeripherals")
@@ -109,8 +113,11 @@ object TurtlematicConfig {
             END_AUTOMATA_CORE_WARP_POINT_LIMIT =
                 builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
                     .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
+            STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE = builder.comment("Defines chance for starbound automata to regenerate fuel points")
+                .defineInRange("starboundAutomataFuelGenerationChance", 0.15, 0.0, 1.0)
+            STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT = builder.comment("Defines amount for starbound automata that will be regenerated")
+                .defineInRange("starboundAutomataFuelGenerationAmount", 1, 0, Integer.MAX_VALUE)
             BREWING_XP_REWARD = builder.defineInRange("brewingXPReward", 0.8, 0.0, 64.0)
-            ENCHANT_LEVEL_COST = builder.defineInRange("enchantLevelCost", 30, 1, Int.MAX_VALUE)
             ENCHANTING_WIPE_CHANGE = builder.defineInRange("enchantmentWipeChance", 0.05, 0.1, 1.0)
 
             // automata core tiers registration
