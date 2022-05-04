@@ -77,6 +77,23 @@ class ModRecipeProvider(dataGenerator: FabricDataGenerator) : FabricRecipeProvid
             Ingredient.of(Items.NETHERITE_END_AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
             Items.STARBOUND_END_AUTOMATA_CORE
         ).save(consumer)
+
+        TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.BREWING_AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
+            Items.STARBOUND_BREWING_AUTOMATA_CORE
+        ).save(consumer)
+        TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.ENCHANTING_AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
+            Items.STARBOUND_ENCHANTING_AUTOMATA_CORE
+        ).save(consumer)
+        TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.SMITHING_AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
+            Items.STARBOUND_SMITHING_AUTOMATA_CORE
+        ).save(consumer)
+        TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.MASON_AUTOMATA_CORE), Ingredient.of(net.minecraft.world.item.Items.NETHER_STAR),
+            Items.STARBOUND_MASON_AUTOMATA_CORE
+        ).save(consumer)
     }
 
     override fun generateRecipes(consumer: Consumer<FinishedRecipe>) {

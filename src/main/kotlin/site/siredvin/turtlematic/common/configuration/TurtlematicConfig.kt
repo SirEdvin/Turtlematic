@@ -49,6 +49,9 @@ object TurtlematicConfig {
     val endAutomataCoreWarpPointLimit: Int
         get() = ConfigHolder.COMMON_CONFIG.END_AUTOMATA_CORE_WARP_POINT_LIMIT.get()
 
+    val durabilityRestoreChance: Double
+        get() = ConfigHolder.COMMON_CONFIG.DURABILITY_RESTORE_CHANCE.get()
+
     val starboundAutomataFuelGenerationChance: Double
         get() = ConfigHolder.COMMON_CONFIG.STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE.get()
 
@@ -82,6 +85,7 @@ object TurtlematicConfig {
         val STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE: ForgeConfigSpec.DoubleValue
         val STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT: ForgeConfigSpec.IntValue
         val END_AUTOMATA_CORE_WARP_POINT_LIMIT: ForgeConfigSpec.IntValue
+        val DURABILITY_RESTORE_CHANCE: ForgeConfigSpec.DoubleValue
         val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
 
@@ -110,9 +114,10 @@ object TurtlematicConfig {
             ENABLE_ENCHANTING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true)
             ENABLE_MASON_AUTOMATA_CORE = builder.define("enableMasonAutomataCore", true)
 
-            END_AUTOMATA_CORE_WARP_POINT_LIMIT =
-                builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
-                    .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
+            END_AUTOMATA_CORE_WARP_POINT_LIMIT = builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
+                .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
+            DURABILITY_RESTORE_CHANCE = builder.comment("Defined chance to not loose item durability for netherite cores")
+                .defineInRange("durabilityRestoreChance", 0.1, 0.0, 1.0)
             STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE = builder.comment("Defines chance for starbound automata to regenerate fuel points")
                 .defineInRange("starboundAutomataFuelGenerationChance", 0.15, 0.0, 1.0)
             STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT = builder.comment("Defines amount for starbound automata that will be regenerated")

@@ -35,11 +35,25 @@ object TooltipHandlerCollection {
             tooltipList.add(text(Turtlematic.MOD_ID, "starbound_generation"))
     }
 
+    fun enchantingStarboundTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+        if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND))
+            tooltipList.add(text(Turtlematic.MOD_ID, "durability_refund"))
+        if (coreTier.traits.contains(AutomataCoreTraits.STARBOUND_REGENERATION))
+            tooltipList.add(text(Turtlematic.MOD_ID, "starbound_generation"))
+    }
+
     fun registerDefaults() {
         registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::commonNetheriteTooltip)
         registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonNetheriteTooltip)
+
         registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonStarboundTooltip)
         registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::commonStarboundTooltip)
+
+        registerProvider(Items.STARBOUND_MASON_AUTOMATA_CORE, this::commonStarboundTooltip)
+        registerProvider(Items.STARBOUND_SMITHING_AUTOMATA_CORE, this::commonStarboundTooltip)
+        registerProvider(Items.STARBOUND_BREWING_AUTOMATA_CORE, this::commonStarboundTooltip)
+        registerProvider(Items.STARBOUND_ENCHANTING_AUTOMATA_CORE, this::enchantingStarboundTooltip)
+
         registerProvider(Items.ENORMOUS_AUTOMATA_CORE, this::commonStarboundTooltip)
     }
 }

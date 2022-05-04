@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "turtlematic:item/starbound_gear",
-    "layer1": "turtlematic:item/fire_green"
+    "layer1": "turtlematic:item/big_fire_green"
   }
 }

@@ -46,6 +46,10 @@ object ComputerCraftProxy {
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.MASON_AUTOMATA_CORE) { turtle, side, tier -> MasonAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.ENCHANTING_AUTOMATA_CORE) { turtle, side, tier -> EnchantingAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.SMITHING_AUTOMATA_CORE) { turtle, side, tier -> SmithingAutomataCorePeripheral(turtle, side, tier) })
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.STARBOUND_BREWING_AUTOMATA_CORE) { turtle, side, tier -> BrewingAutomataCorePeripheral(turtle, side, tier) })
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.STARBOUND_MASON_AUTOMATA_CORE) { turtle, side, tier -> MasonAutomataCorePeripheral(turtle, side, tier) })
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.STARBOUND_ENCHANTING_AUTOMATA_CORE) { turtle, side, tier -> EnchantingAutomataCorePeripheral(turtle, side, tier) })
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.STARBOUND_SMITHING_AUTOMATA_CORE) { turtle, side, tier -> SmithingAutomataCorePeripheral(turtle, side, tier) })
 
         TURTLE_UPGRADES.add(PeripheralTurtleUpgrade.dynamic(Items.SOUL_SCRAPPER) { turtle, side -> SoulScrapperPeripheral(TurtlePeripheralOwner(turtle, side)) })
         TURTLE_UPGRADES.add(CHATTER_TURTLE!!)

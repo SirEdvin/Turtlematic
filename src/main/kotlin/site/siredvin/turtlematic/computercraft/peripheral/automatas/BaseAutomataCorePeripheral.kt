@@ -25,7 +25,7 @@ abstract class BaseAutomataCorePeripheral(
         turtle, side
     )
 ) {
-    private val tier: IAutomataCoreTier
+    val tier: IAutomataCoreTier
     private val attributes: MutableMap<String, Boolean> = HashMap()
 
     init {
@@ -86,17 +86,5 @@ abstract class BaseAutomataCorePeripheral(
         check: IPeripheralCheck<SingleOperationContext>?
     ): MethodResult {
         return withOperation(operation, forUnknownDistance(), function, check)
-    }
-
-    fun hasAttribute(attribute: String): Boolean {
-        return attributes.getOrDefault(attribute, false)
-    }
-
-    fun setAttribute(attribute: String) {
-        attributes[attribute] = true
-    }
-
-    companion object {
-        const val ATTR_STORING_TOOL_DURABILITY = "storingToolDurability"
     }
 }

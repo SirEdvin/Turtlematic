@@ -47,8 +47,8 @@ class AutomataInteractionPlugin(
             val selectedTool: ItemStack = owner.toolInMainHand
             val previousDamageValue = selectedTool.damageValue
             val result = swingImplInner(arguments)
-            if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY)) selectedTool.damageValue =
-                previousDamageValue
+            if (automataCore.tier.needRestoreDurability())
+                selectedTool.damageValue = previousDamageValue
             result
         }
     }
@@ -75,8 +75,8 @@ class AutomataInteractionPlugin(
             val selectedTool: ItemStack = owner.toolInMainHand
             val previousDamageValue = selectedTool.damageValue
             val result = useImplInner(arguments)
-            if (automataCore.hasAttribute(BaseAutomataCorePeripheral.ATTR_STORING_TOOL_DURABILITY)) selectedTool.damageValue =
-                previousDamageValue
+            if (automataCore.tier.needRestoreDurability())
+                selectedTool.damageValue = previousDamageValue
             result
         }
     }
