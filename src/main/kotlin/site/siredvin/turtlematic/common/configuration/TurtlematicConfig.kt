@@ -1,5 +1,6 @@
 package site.siredvin.turtlematic.common.configuration
 
+import net.minecraft.client.gui.Font
 import net.minecraftforge.common.ForgeConfigSpec
 import site.siredvin.lib.LibConfig
 import site.siredvin.lib.api.IConfigHandler
@@ -23,6 +24,9 @@ object TurtlematicConfig {
 
     val enableStickyPistonTurtle: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_STICKY_TURTLE_PISTON.get()
+
+    val enableLavaBucket: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_LAVA_BUCKET.get()
 
     // automata core toggles
     val enableAutomataCore: Boolean
@@ -72,6 +76,7 @@ object TurtlematicConfig {
         val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
         val ENABLE_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
         val ENABLE_STICKY_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
+        val ENABLE_LAVA_BUCKET: ForgeConfigSpec.BooleanValue
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -97,6 +102,7 @@ object TurtlematicConfig {
             ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
             ENABLE_TURTLE_PISTON = builder.define("enablePistonTurtle", true)
             ENABLE_STICKY_TURTLE_PISTON = builder.define("enableStickyPistonTurtle", true)
+            ENABLE_LAVA_BUCKET = builder.define("enableLavaBucket", true)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)

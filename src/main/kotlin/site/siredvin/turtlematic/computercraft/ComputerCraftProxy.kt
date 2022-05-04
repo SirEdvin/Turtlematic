@@ -5,6 +5,7 @@ import dan200.computercraft.api.turtle.ITurtleUpgrade
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
+import site.siredvin.lib.api.TurtleIDBuildFunction
 import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.lib.computercraft.turtle.FacingBlockTurtle
 import site.siredvin.lib.computercraft.turtle.PeripheralTurtleUpgrade
@@ -27,6 +28,10 @@ import site.siredvin.turtlematic.computercraft.turtle.StarboundTurtleUpgrade
 object ComputerCraftProxy {
 
     private val TURTLE_UPGRADES = mutableListOf<ITurtleUpgrade>()
+    private val WITH_TURTLEMATIC_ID = TurtleIDBuildFunction {
+        val base = Registry.ITEM.getKey(it)
+        return@TurtleIDBuildFunction ResourceLocation(Turtlematic.MOD_ID, base.path)
+    }
 
     var CHATTER_TURTLE: ITurtleUpgrade? = null
 
@@ -58,6 +63,7 @@ object ComputerCraftProxy {
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.CREATIVE_SMITHING_AUTOMATA_CORE) { turtle, side, tier -> SmithingAutomataCorePeripheral(turtle, side, tier) })
 
         TURTLE_UPGRADES.add(PeripheralTurtleUpgrade.dynamic(Items.SOUL_SCRAPPER) { turtle, side -> SoulScrapperPeripheral(TurtlePeripheralOwner(turtle, side)) })
+        TURTLE_UPGRADES.add(PeripheralTurtleUpgrade.dynamic(net.minecraft.world.item.Items.LAVA_BUCKET, { turtle, side -> LavaBucketPeripheral(TurtlePeripheralOwner(turtle, side)) }, WITH_TURTLEMATIC_ID))
         TURTLE_UPGRADES.add(CHATTER_TURTLE!!)
         TURTLE_UPGRADES.add(BlockTurtleUpgrade.dynamic(Items.CREATIVE_CHEST) { turtle, side -> CreativeChestPeripheral(TurtlePeripheralOwner(turtle, side)) })
 
