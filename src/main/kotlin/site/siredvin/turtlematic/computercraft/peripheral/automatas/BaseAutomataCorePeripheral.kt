@@ -10,8 +10,10 @@ import site.siredvin.lib.api.peripheral.IPeripheralCheck
 import site.siredvin.lib.api.peripheral.IPeripheralFunction
 import site.siredvin.lib.api.peripheral.IPeripheralOperation
 import site.siredvin.lib.computercraft.peripheral.BasePeripheral
+import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
 import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.turtlematic.computercraft.AutomataCoreFuelAbility
 import site.siredvin.turtlematic.util.DataStorageUtil
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 
@@ -29,7 +31,7 @@ abstract class BaseAutomataCorePeripheral(
     private val attributes: MutableMap<String, Boolean> = HashMap()
 
     init {
-        peripheralOwner.attachFuel(tier.maxFuelConsumptionRate)
+        peripheralOwner.attachAbility(PeripheralOwnerAbility.FUEL, AutomataCoreFuelAbility(peripheralOwner, tier))
         @Suppress("LeakingThis")
         peripheralOwner.attachOperation(possibleOperations(), tier.cooldownReduceFactor)
         this.tier = tier

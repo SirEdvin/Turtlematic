@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "turtlematic:item/creative_gear",
-    "layer1": "turtlematic:item/enormous_fire"
+    "layer1": "turtlematic:item/big_fire_green"
   }
 }

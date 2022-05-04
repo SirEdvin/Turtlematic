@@ -3,7 +3,7 @@ package site.siredvin.lib.computercraft.peripheral.ability
 import dan200.computercraft.ComputerCraft
 import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
 
-class TurtleFuelAbility(owner: TurtlePeripheralOwner, override val maxFuelConsumptionRate: Int) :
+open class TurtleFuelAbility(owner: TurtlePeripheralOwner, override val maxFuelConsumptionRate: Int) :
     FuelAbility<TurtlePeripheralOwner>(owner) {
 
     override fun _consumeFuel(count: Int): Boolean {

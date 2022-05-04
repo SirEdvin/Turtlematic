@@ -23,12 +23,12 @@ object LibConfig {
     fun build(builder: ForgeConfigSpec.Builder) {
         builder.push("libconfig")
         IS_INITIAL_COOLDOWN_ENABLED = builder.comment("Enables initial cooldown on peripheral initialization")
-            .define("isInitialCooldownEnabled", isInitialCooldownEnabled)
+            .define("isInitialCooldownEnabled", true)
         INITIAL_COOLDOWN_SENSENTIVE_LEVEL = builder.comment("Determinates initial cooldown sensentive level, values lower then this value will not trigger initial cooldown")
-            .defineInRange("initialCooldownSensetiveLevel", initialCooldownSensetiveLevel, 0, Int.MAX_VALUE)
+            .defineInRange("initialCooldownSensetiveLevel", 6000, 0, Int.MAX_VALUE)
         COOLDOWN_TRASHOLD_LEVEL = builder.comment("Determinates trashold for cooldown to be stored")
-            .defineInRange("cooldownTrashholdLevel", cooldownTrasholdLevel, 0, Int.MAX_VALUE)
-        XP_TO_FUEL_RATE = builder.comment("Determinates amount xp to correspond one fuel point").defineInRange("xpToFuelRate", xpToFuelRate, 1, Int.MAX_VALUE)
+            .defineInRange("cooldownTrashholdLevel", 100, 0, Int.MAX_VALUE)
+        XP_TO_FUEL_RATE = builder.comment("Determinates amount xp to correspond one fuel point").defineInRange("xpToFuelRate", 10, 1, Int.MAX_VALUE)
         builder.pop()
     }
 }

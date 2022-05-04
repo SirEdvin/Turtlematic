@@ -17,6 +17,7 @@ import site.siredvin.lib.api.peripheral.IPeripheralOperation
 import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.lib.util.*
 import site.siredvin.lib.util.world.ScanUtils
+import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
@@ -165,9 +166,10 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             if (targetItem.count != 1)
                 return@withOperation MethodResult.of(null, "Target book should be 1 in stack")
             val enchants: MutableMap<Enchantment, Int> = EnchantmentHelper.getEnchantments(selectedItem)
-            if (level!!.random.nextInt(100) < TurtlematicConfig.enchantmentWipeChance * 100) {
-                enchants.keys.stream().findAny().ifPresent(enchants::remove)
-            }
+            if (!tier.traits.contains(AutomataCoreTraits.SKILLED))
+                if (level!!.random.nextInt(100) < TurtlematicConfig.enchantmentWipeChance * 100) {
+                    enchants.keys.stream().findAny().ifPresent(enchants::remove)
+                }
             val enchantedBook = ItemStack(Items.ENCHANTED_BOOK)
             EnchantmentHelper.setEnchantments(enchants, enchantedBook)
             EnchantmentHelper.setEnchantments(emptyMap(), selectedItem)

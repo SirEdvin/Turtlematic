@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Piston and sticky piston turtles
 - Traits description on automata cores
 - Base automata levels: netherite, starbound and creative
+- Villager automata levels: starbound and creative
 
 ### Changed
 

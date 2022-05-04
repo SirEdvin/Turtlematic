@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "turtlematic:item/forged_gear"
+    "layer0": "turtlematic:item/netherite_gear"
   }
 }

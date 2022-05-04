@@ -7,6 +7,7 @@ import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.TraitsTooltipProvider
+import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.setup.Items
 
 object TooltipHandlerCollection {
@@ -23,37 +24,50 @@ object TooltipHandlerCollection {
         return TOOLTIP_PROVIDERS_PER_ITEM[item]
     }
 
-    fun commonNetheriteTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+    fun commonTooltips(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+        if (coreTier.traits.contains(AutomataCoreTraits.STARBOUND_REGENERATION))
+            tooltipList.add(text(Turtlematic.MOD_ID, "starbound_generation"))
+    }
+
+    fun interactionAPITooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
         if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND_CHANCE))
             tooltipList.add(text(Turtlematic.MOD_ID, "durability_refund_chance"))
-    }
-
-    fun commonStarboundTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
         if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND))
             tooltipList.add(text(Turtlematic.MOD_ID, "durability_refund"))
-        if (coreTier.traits.contains(AutomataCoreTraits.STARBOUND_REGENERATION))
-            tooltipList.add(text(Turtlematic.MOD_ID, "starbound_generation"))
     }
 
-    fun enchantingStarboundTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
-        if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND))
-            tooltipList.add(text(Turtlematic.MOD_ID, "durability_refund"))
-        if (coreTier.traits.contains(AutomataCoreTraits.STARBOUND_REGENERATION))
-            tooltipList.add(text(Turtlematic.MOD_ID, "starbound_generation"))
+    fun enchantingTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+        if (!coreTier.traits.contains(AutomataCoreTraits.SKILLED))
+            tooltipList.add(text(Turtlematic.MOD_ID, "enchantment_wipe_chance", (TurtlematicConfig.enchantmentWipeChance * 100).toInt()))
+        if (coreTier.traits.contains(AutomataCoreTraits.SKILLED))
+            tooltipList.add(text(Turtlematic.MOD_ID, "enchantment_no_wipe"))
     }
 
     fun registerDefaults() {
-        registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::commonNetheriteTooltip)
-        registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonNetheriteTooltip)
+        registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
 
-        registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonStarboundTooltip)
-        registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::commonStarboundTooltip)
+        registerProvider(Items.MASON_AUTOMATA_CORE, this::commonTooltips)
+        registerProvider(Items.SMITHING_AUTOMATA_CORE, this::commonTooltips)
+        registerProvider(Items.BREWING_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
 
-        registerProvider(Items.STARBOUND_MASON_AUTOMATA_CORE, this::commonStarboundTooltip)
-        registerProvider(Items.STARBOUND_SMITHING_AUTOMATA_CORE, this::commonStarboundTooltip)
-        registerProvider(Items.STARBOUND_BREWING_AUTOMATA_CORE, this::commonStarboundTooltip)
-        registerProvider(Items.STARBOUND_ENCHANTING_AUTOMATA_CORE, this::enchantingStarboundTooltip)
+        registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
 
-        registerProvider(Items.ENORMOUS_AUTOMATA_CORE, this::commonStarboundTooltip)
+        registerProvider(Items.STARBOUND_MASON_AUTOMATA_CORE, this::commonTooltips)
+        registerProvider(Items.STARBOUND_SMITHING_AUTOMATA_CORE, this::commonTooltips)
+        registerProvider(Items.STARBOUND_BREWING_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.STARBOUND_ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
+
+        registerProvider(Items.CREATIVE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+
+        registerProvider(Items.CREATIVE_MASON_AUTOMATA_CORE, this::commonTooltips)
+        registerProvider(Items.CREATIVE_SMITHING_AUTOMATA_CORE, this::commonTooltips)
+        registerProvider(Items.CREATIVE_BREWING_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.CREATIVE_ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
+
+        registerProvider(Items.ENORMOUS_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
     }
 }

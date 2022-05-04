@@ -10,9 +10,15 @@ enum class AutomataCoreTier(
 ) : IAutomataCoreTier {
     TIER1(2, 2, 1.0),
     TIER2(4, 3, 1.0),
-    TIER3(8, 4, 0.8, setOf(AutomataCoreTraits.DURABILITY_REFUND_CHANCE)),
-    TIER4(16, 6, 0.5, setOf(AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.STARBOUND_REGENERATION)),
-    ENORMOUS_TIER(Integer.MAX_VALUE, Integer.MAX_VALUE, 0.0, setOf(AutomataCoreTraits.DURABILITY_REFUND));
+    TIER3(8, 4, 0.8, setOf(
+        AutomataCoreTraits.DURABILITY_REFUND_CHANCE
+    )),
+    TIER4(16, 6, 0.5, setOf(
+        AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.STARBOUND_REGENERATION, AutomataCoreTraits.SKILLED
+    )),
+    CREATIVE(Int.MAX_VALUE, Int.MAX_VALUE, 0.0, setOf(
+        AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.FUEL_CONSUMPTION_DISABLED, AutomataCoreTraits.SKILLED
+    ));
 
     private var _interactionRadius: ForgeConfigSpec.IntValue? = null
     private var _maxFuelConsumptionRate: ForgeConfigSpec.IntValue? = null
