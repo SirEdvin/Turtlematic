@@ -22,6 +22,7 @@ import site.siredvin.lib.util.InsertionHelpers
 import site.siredvin.lib.util.representation.animalData
 import site.siredvin.lib.util.representation.cropAge
 import site.siredvin.turtlematic.api.AutomataCoreTier
+import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.datatypes.AreaInteractionMode
 import site.siredvin.turtlematic.computercraft.datatypes.InteractionMode
@@ -35,8 +36,9 @@ import java.util.function.Predicate
 class HusbandryAutomataCorePeripheral(
     turtle: ITurtleAccess,
     side: TurtleSide,
+    tier: IAutomataCoreTier
 ): BaseAutomataCorePeripheral(
-    TYPE, turtle, side, AutomataCoreTier.TIER2
+    TYPE, turtle, side, tier
 ){
     init {
         addPlugin(AutomataLookPlugin(

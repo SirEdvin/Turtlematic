@@ -3,7 +3,6 @@ package site.siredvin.turtlematic.common.items
 import com.mojang.blaze3d.platform.InputConstants
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
@@ -17,11 +16,10 @@ import java.util.function.Supplier
 class RecipeAutomataCore(
     coreTier: IAutomataCoreTier,
     p: Properties,
-    turtleID: ResourceLocation,
     enableSup: Supplier<Boolean>
-) : BaseAutomataCore(coreTier, p, turtleID, enableSup) {
-    constructor(coreTier: IAutomataCoreTier, turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
-        coreTier, Properties().tab(Turtlematic.TAB).stacksTo(1), turtleID, enableSup
+) : BaseAutomataCore(coreTier, p, enableSup) {
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>): this(
+        coreTier, Properties().tab(Turtlematic.TAB).stacksTo(1), enableSup
     )
 
     override fun appendHoverText(

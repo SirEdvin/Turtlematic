@@ -13,8 +13,11 @@ import site.siredvin.turtlematic.common.setup.Items
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
+import site.siredvin.turtlematic.computercraft.ComputerCraftProxy
 import site.siredvin.turtlematic.computercraft.turtle.*
 import site.siredvin.turtlematic.util.Platform
+import site.siredvin.turtlematic.util.TooltipHandlerCollection
+import java.util.function.Consumer
 
 
 @Suppress("UNUSED")
@@ -24,10 +27,12 @@ object Turtlematic: ModInitializer {
     var LOGGER: Logger = LogManager.getLogger(MOD_ID)
 
     @Suppress("MoveLambdaOutsideParentheses")
-    val TAB: CreativeModeTab = FabricItemGroupBuilder.build(
-        ResourceLocation(MOD_ID, "main"),
-        { ItemStack(Items.AUTOMATA_CORE) }
-    )
+    val TAB: CreativeModeTab = FabricItemGroupBuilder.create(ResourceLocation(MOD_ID, "main"))
+        .appendItems(Consumer {
+            Items.ITEMS.forEach {item -> it.add(item.defaultInstance)}
+            ComputerCraftProxy.fillCreativeTab(it)
+        })
+        .icon({ ItemStack(Items.AUTOMATA_CORE) }).build()
 
     override fun onInitialize() {
         ModLoadingContext.registerConfig(MOD_ID, ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC)
@@ -38,20 +43,8 @@ object Turtlematic: ModInitializer {
 
         Platform.maybeLoadIntegration("chipped").ifPresent { (it as Runnable).run() }
 
-        ComputerCraftAPI.registerTurtleUpgrade(Automata())
-        ComputerCraftAPI.registerTurtleUpgrade(EndAutomata())
-        ComputerCraftAPI.registerTurtleUpgrade(HusbandryAutomata())
-        ComputerCraftAPI.registerTurtleUpgrade(EnormousAutomata())
+        ComputerCraftProxy.initialize()
 
-        ComputerCraftAPI.registerTurtleUpgrade(BrewingAutomata())
-        ComputerCraftAPI.registerTurtleUpgrade(EnchantingAutomata())
-        ComputerCraftAPI.registerTurtleUpgrade(SmithingAutomata())
-        ComputerCraftAPI.registerTurtleUpgrade(MasonAutomata())
-
-        ComputerCraftAPI.registerTurtleUpgrade(SoulScrapperTurtle())
-        ComputerCraftAPI.registerTurtleUpgrade(ChatterTurtle())
-        ComputerCraftAPI.registerTurtleUpgrade(CreativeChestTurtle())
-        ComputerCraftAPI.registerTurtleUpgrade(PistonTurtle())
-        ComputerCraftAPI.registerTurtleUpgrade(StickyPistonTurtle())
+        TooltipHandlerCollection.registerDefaults()
     }
 }

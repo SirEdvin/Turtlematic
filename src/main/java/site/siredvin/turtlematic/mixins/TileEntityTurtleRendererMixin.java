@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import site.siredvin.turtlematic.util.DataStorageUtil;
-import site.siredvin.turtlematic.computercraft.turtle.ChatterTurtle;
+import site.siredvin.turtlematic.computercraft.ComputerCraftProxy;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -35,10 +35,10 @@ public class TileEntityTurtleRendererMixin{
         @Nonnull MultiBufferSource buffers, int lightmapCoord, int overlayLight, CallbackInfo info) {
         var side = TurtleSide.LEFT;
         var update = turtle.getUpgrade(side);
-        if (!(update instanceof ChatterTurtle)) {
+        if (update != ComputerCraftProxy.INSTANCE.getCHATTER_TURTLE()) {
             side = TurtleSide.RIGHT;
             update =  turtle.getUpgrade(side);
-            if (!(update instanceof ChatterTurtle))
+            if (update != ComputerCraftProxy.INSTANCE.getCHATTER_TURTLE())
                 return;
         }
 

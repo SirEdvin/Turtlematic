@@ -46,6 +46,7 @@
   "text.turtlematic.core_configuration": "Core details:",
   "text.turtlematic.interaction_radius": "  Interaction radius: %s",
   "text.turtlematic.max_fuel_consumption_rate": "  Max fuel consumption rate: %s",
+  "text.turtlematic.cooldown_reduce_factor": "  Cooldown reduce factor: %s",
   "text.turtlematic.press_for_recipe": "[§3Left ctrl§r] show recipe",
   "text.turtlematic.recipe_missing": "§4Recipe missing for some reason",
   "text.turtlematic.soul_upgrade_from": "  Upgrade from: %s",

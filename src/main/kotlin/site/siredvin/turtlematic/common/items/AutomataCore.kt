@@ -19,21 +19,20 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
-import site.siredvin.turtlematic.computercraft.turtle.Automata
 
-class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, Automata.ID, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {
+class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {
 
     override fun appendHoverText(
         itemStack: ItemStack,
         level: Level?,
-        list: MutableList<Component>,
+        tooltipList: MutableList<Component>,
         tooltipFlag: TooltipFlag
     ) {
-        super.appendHoverText(itemStack, level, list, tooltipFlag)
+        super.appendHoverText(itemStack, level, tooltipList, tooltipFlag)
         val record = getActiveRecipe(itemStack)
         if (record != null) {
-            list.add(text(Turtlematic.MOD_ID, "consumed_entities"))
-            getEntityRepresentation(itemStack, record).forEach { list.add(it.toComponent()) }
+            tooltipList.add(text(Turtlematic.MOD_ID, "consumed_entities"))
+            getEntityRepresentation(itemStack, record).forEach { tooltipList.add(it.toComponent()) }
         }
     }
 

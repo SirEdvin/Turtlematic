@@ -1,26 +1,19 @@
 package site.siredvin.lib.common.items
-import net.minecraft.core.NonNullList
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.ItemStack
-import site.siredvin.lib.util.ItemUtil
+import site.siredvin.lib.api.TurtleIDBuildFunction
 import java.util.function.Supplier
 
 
-open class TurtleItem(p: Properties, var turtleID: ResourceLocation, var enableSup: Supplier<Boolean>): DescriptiveItem(p){
+open class TurtleItem(p: Properties, var enableSup: Supplier<Boolean>, private val turtleIDSup: TurtleIDBuildFunction = TurtleIDBuildFunction.IDENTIC): DescriptiveItem(p){
 
-    constructor(tab: CreativeModeTab, turtleID: ResourceLocation, enableSup: Supplier<Boolean>): this(
-        Properties().tab(tab), turtleID, enableSup
-    )
+    constructor(tab: CreativeModeTab, enableSup: Supplier<Boolean>,
+                turtleIDSup: TurtleIDBuildFunction = TurtleIDBuildFunction.IDENTIC): this(Properties().tab(tab), enableSup, turtleIDSup)
+
+    open val turtleID: ResourceLocation
+        get() = turtleIDSup.get(this)
 
     fun isEnabled(): Boolean {
         return enableSup.get()
-    }
-
-    override fun fillItemCategory(group: CreativeModeTab, items: NonNullList<ItemStack>) {
-        super.fillItemCategory(group, items)
-        if (!allowdedIn(group)) return
-        items.add(ItemUtil.makeTurtle(turtleID.toString()))
-        items.add(ItemUtil.makeAdvancedTurtle(turtleID.toString()))
     }
 }
