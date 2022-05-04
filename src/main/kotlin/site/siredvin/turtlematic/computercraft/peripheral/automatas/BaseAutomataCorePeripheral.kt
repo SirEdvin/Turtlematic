@@ -31,7 +31,7 @@ abstract class BaseAutomataCorePeripheral(
     init {
         peripheralOwner.attachFuel(tier.maxFuelConsumptionRate)
         @Suppress("LeakingThis")
-        peripheralOwner.attachOperation(possibleOperations())
+        peripheralOwner.attachOperation(possibleOperations(), tier.cooldownReduceFactor)
         this.tier = tier
     }
 

@@ -11,8 +11,9 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import java.util.function.BiConsumer
 import java.util.function.Consumer
+import kotlin.math.max
 
-class OperationAbility(private val owner: IPeripheralOwner) : IOwnerAbility, IPeripheralPlugin {
+class OperationAbility(private val owner: IPeripheralOwner, private val reduceRate: Double = 1.0) : IOwnerAbility, IPeripheralPlugin {
     private val allowedOperations: MutableMap<String, IPeripheralOperation<*>> = HashMap()
 
     protected fun setCooldown(operation: IPeripheralOperation<*>, cooldown: Int) {
@@ -33,7 +34,7 @@ class OperationAbility(private val owner: IPeripheralOwner) : IOwnerAbility, IPe
         val operationName = operation.settingsName()
         if (!cooldowns.contains(operationName)) return 0
         val currentTime = Timestamp.valueOf(LocalDateTime.now()).time
-        return Math.max(0, cooldowns.getLong(operationName) - currentTime).toInt()
+        return max(0, cooldowns.getLong(operationName) - currentTime).toInt()
     }
 
     fun registerOperation(operation: IPeripheralOperation<*>) {
@@ -66,7 +67,7 @@ class OperationAbility(private val owner: IPeripheralOwner) : IOwnerAbility, IPe
             }
         }
         val cost = operation.getCost(context)
-        var cooldown = operation.getCooldown(context)
+        var cooldown = (operation.getCooldown(context) * reduceRate).toInt()
         val fuelAbility: FuelAbility<*>?
         if (cost != 0) {
             fuelAbility = owner.getAbility(PeripheralOwnerAbility.FUEL)
