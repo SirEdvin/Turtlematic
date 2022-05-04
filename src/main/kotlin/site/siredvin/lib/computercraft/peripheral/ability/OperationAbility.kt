@@ -85,7 +85,8 @@ class OperationAbility(private val owner: IPeripheralOwner, private val reduceRa
         }
         val result = method.apply(context)
         successCallback?.accept(context)
-        setCooldown(operation, cooldown)
+        if (cooldown > LibConfig.cooldownTrasholdLevel)
+            setCooldown(operation, cooldown)
         return result
     }
 

@@ -6,43 +6,29 @@ import net.minecraftforge.common.ForgeConfigSpec
  * Configuration class for tweaks of library
  */
 object LibConfig {
-    private var testMode = false
-
-    var isInitialCooldownEnabled = true
-    var initialCooldownSensetiveLevel = 6000
-    var xpToFuelRate = 10
+    val isInitialCooldownEnabled: Boolean
+        get() = IS_INITIAL_COOLDOWN_ENABLED?.get() ?: true
+    val initialCooldownSensetiveLevel: Int
+        get() = INITIAL_COOLDOWN_SENSENTIVE_LEVEL?.get() ?: 6000
+    val cooldownTrasholdLevel: Int
+        get() = INITIAL_COOLDOWN_SENSENTIVE_LEVEL?.get() ?: 100
+    val xpToFuelRate: Int
+        get() = XP_TO_FUEL_RATE?.get() ?: 10
 
     private var IS_INITIAL_COOLDOWN_ENABLED: ForgeConfigSpec.BooleanValue? = null
     private var INITIAL_COOLDOWN_SENSENTIVE_LEVEL: ForgeConfigSpec.IntValue? = null
+    private var COOLDOWN_TRASHOLD_LEVEL: ForgeConfigSpec.IntValue? = null
     private var XP_TO_FUEL_RATE: ForgeConfigSpec.IntValue? = null
 
-    fun setTestMode(mode: Boolean) {
-        testMode = mode
-        if (mode) {
-            isInitialCooldownEnabled = false
-        } else {
-            if (IS_INITIAL_COOLDOWN_ENABLED != null) {
-                reloadConfig()
-            } else {
-                isInitialCooldownEnabled = true
-            }
-        }
-    }
-
     fun build(builder: ForgeConfigSpec.Builder) {
+        builder.push("libconfig")
         IS_INITIAL_COOLDOWN_ENABLED = builder.comment("Enables initial cooldown on peripheral initialization")
-            .define("isInitialCooldownEnabled", true)
-        INITIAL_COOLDOWN_SENSENTIVE_LEVEL =
-            builder.comment("Determinates initial cooldown sensentive level, values lower then this value will not trigger initial cooldown")
-                .defineInRange("initialCooldownSensetiveLevel", 6000, 0, Int.MAX_VALUE)
-        XP_TO_FUEL_RATE = builder.defineInRange("xpToFuelRate", 10, 1, Int.MAX_VALUE)
-    }
-
-    fun reloadConfig() {
-        if (!testMode) {
-            isInitialCooldownEnabled = IS_INITIAL_COOLDOWN_ENABLED!!.get()
-            initialCooldownSensetiveLevel = INITIAL_COOLDOWN_SENSENTIVE_LEVEL!!.get()
-            xpToFuelRate = XP_TO_FUEL_RATE!!.get()
-        }
+            .define("isInitialCooldownEnabled", isInitialCooldownEnabled)
+        INITIAL_COOLDOWN_SENSENTIVE_LEVEL = builder.comment("Determinates initial cooldown sensentive level, values lower then this value will not trigger initial cooldown")
+            .defineInRange("initialCooldownSensetiveLevel", initialCooldownSensetiveLevel, 0, Int.MAX_VALUE)
+        COOLDOWN_TRASHOLD_LEVEL = builder.comment("Determinates trashold for cooldown to be stored")
+            .defineInRange("cooldownTrashholdLevel", cooldownTrasholdLevel, 0, Int.MAX_VALUE)
+        XP_TO_FUEL_RATE = builder.comment("Determinates amount xp to correspond one fuel point").defineInRange("xpToFuelRate", xpToFuelRate, 1, Int.MAX_VALUE)
+        builder.pop()
     }
 }

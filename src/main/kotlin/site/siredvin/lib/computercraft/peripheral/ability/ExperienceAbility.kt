@@ -83,7 +83,7 @@ class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadi
             ?: throw LuaException("Unsupported operation")
         val burnAmount = min(limit, getStoredXP())
         adjustStoredXP(-burnAmount)
-        fuelAbility.addFuel((burnAmount * LibConfig.xpToFuelRate).toInt())
+        fuelAbility.addFuel((burnAmount / LibConfig.xpToFuelRate).toInt())
         return burnAmount
     }
 

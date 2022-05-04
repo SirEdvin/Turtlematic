@@ -1,6 +1,7 @@
 package site.siredvin.turtlematic.common.configuration
 
 import net.minecraftforge.common.ForgeConfigSpec
+import site.siredvin.lib.LibConfig
 import site.siredvin.lib.api.IConfigHandler
 import site.siredvin.lib.computercraft.peripheral.operation.UnconditionalOperations
 import site.siredvin.turtlematic.api.AutomataCoreTier
@@ -90,6 +91,7 @@ object TurtlematicConfig {
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
 
         init {
+            LibConfig.build(builder)
             builder.push("turtlePeripherals")
             ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
             ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
