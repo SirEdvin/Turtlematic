@@ -25,6 +25,14 @@ object Items {
         RecipeAutomataCore(AutomataCoreTier.TIER2) { TurtlematicConfig.enableHusbandryAutomataCore }.register("husbandry_automata_core")
     val END_AUTOMATA_CORE =
         RecipeAutomataCore(AutomataCoreTier.TIER2) { TurtlematicConfig.enableEndAutomataCore }.register("end_automata_core")
+    val NETHERITE_HUSBANDRY_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.TIER3, { TurtlematicConfig.enableHusbandryAutomataCore }).register("netherite_husbandry_automata_core")
+    val NETHERITE_END_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.TIER3, { TurtlematicConfig.enableEndAutomataCore }).register("netherite_end_automata_core")
+    val STARBOUND_HUSBANDRY_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableHusbandryAutomataCore }).register("starbound_husbandry_automata_core")
+    val STARBOUND_END_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableEndAutomataCore }).register("starbound_end_automata_core")
     val ENORMOUS_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.ENORMOUS_TIER, { TurtlematicConfig.enableEnormousAutomata }).register("enormous_automata_core")
 

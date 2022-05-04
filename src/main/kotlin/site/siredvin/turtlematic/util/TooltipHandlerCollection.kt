@@ -3,6 +3,8 @@ package site.siredvin.turtlematic.util
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.TextComponent
 import net.minecraft.world.item.Item
+import site.siredvin.lib.util.text
+import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.TraitsTooltipProvider
@@ -24,16 +26,19 @@ object TooltipHandlerCollection {
 
     fun durabilityRefundChanceTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
         if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND_CHANCE))
-            tooltipList.add(TextComponent("Item has chance to not loose durability on use"))
+            tooltipList.add(text(Turtlematic.MOD_ID, "durability_refund_chance"))
     }
 
     fun durabilityRefundTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
-        if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND_CHANCE))
-            tooltipList.add(TextComponent("Item will not loose durability on use"))
+        if (coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND))
+            tooltipList.add(text(Turtlematic.MOD_ID, "durability_refund"))
     }
 
     fun registerDefaults() {
-        registerProvider(Items.AUTOMATA_CORE, this::durabilityRefundChanceTooltip)
+        registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::durabilityRefundChanceTooltip)
+        registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::durabilityRefundChanceTooltip)
+        registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::durabilityRefundTooltip)
+        registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::durabilityRefundTooltip)
         registerProvider(Items.ENORMOUS_AUTOMATA_CORE, this::durabilityRefundTooltip)
     }
 }
