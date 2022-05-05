@@ -16,7 +16,7 @@ class LavaBucketPeripheral(peripheralOwner: TurtlePeripheralOwner):
         get() = TurtlematicConfig.enableLavaBucket
 
     @LuaFunction(mainThread = true)
-    fun wipe() {
+    fun void() {
         peripheralOwner.turtle.inventory.setItem(peripheralOwner.turtle.selectedSlot, ItemStack.EMPTY)
     }
 }

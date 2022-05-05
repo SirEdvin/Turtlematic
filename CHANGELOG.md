@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Chipped support for mason automata
 - Ability to harvest crops for husbandry automata
 - Extra information about crops for husbandry automata
+- Extra information about beehives for husbandry automata
 - Piston and sticky piston turtles
 - Traits description on automata cores
 - Base automata levels: netherite, starbound and creative

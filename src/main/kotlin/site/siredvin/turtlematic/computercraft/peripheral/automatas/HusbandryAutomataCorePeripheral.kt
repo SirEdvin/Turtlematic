@@ -20,7 +20,9 @@ import net.minecraft.world.phys.HitResult
 import site.siredvin.lib.api.peripheral.IPeripheralOperation
 import site.siredvin.lib.util.InsertionHelpers
 import site.siredvin.lib.util.representation.animalData
+import site.siredvin.lib.util.representation.beeNestAnalyze
 import site.siredvin.lib.util.representation.cropAge
+import site.siredvin.lib.util.representation.honeyLevel
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
@@ -43,7 +45,8 @@ class HusbandryAutomataCorePeripheral(
     init {
         addPlugin(AutomataLookPlugin(
             this, entityEnriches = listOf(::animalData),
-            blockStateEnriches = listOf(::cropAge)
+            blockStateEnriches = listOf(::cropAge, ::honeyLevel),
+            blockEntityEnriches = listOf(::beeNestAnalyze)
         ))
         addPlugin(
             AutomataInteractionPlugin(
