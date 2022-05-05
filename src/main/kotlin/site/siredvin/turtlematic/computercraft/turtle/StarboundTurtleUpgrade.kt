@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import site.siredvin.lib.api.peripheral.IBasePeripheral
 import site.siredvin.turtlematic.api.AutomataPeripheralBuildFunction
+import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 
@@ -17,13 +18,27 @@ abstract class StarboundTurtleUpgrade<T : IBasePeripheral<*>>: ClockwiseAnimated
         fun <T : IBasePeripheral<*>> dynamic(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): StarboundTurtleUpgrade<T> {
             return Dynamic(item.turtleID, item, constructor)
         }
+
+        fun <T : IBasePeripheral<*>> ticker(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): StarboundTurtleUpgrade<T> {
+            return Ticker(item.turtleID, item, constructor, ticker)
+        }
     }
 
-    private class Dynamic<T : IBasePeripheral<*>>(
-        id: ResourceLocation, private val item: BaseAutomataCore, private val constructor: AutomataPeripheralBuildFunction<T>
+    private open class Dynamic<T : IBasePeripheral<*>>(
+        id: ResourceLocation, protected val item: BaseAutomataCore, private val constructor: AutomataPeripheralBuildFunction<T>
     ): StarboundTurtleUpgrade<T>(id, item.defaultInstance) {
         override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T {
             return constructor.build(turtle, side, item.coreTier)
+        }
+    }
+
+    private class Ticker<T : IBasePeripheral<*>>(
+        id: ResourceLocation, item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, private val ticker: AutomataTickerFunction
+    ): Dynamic<T>(id, item, constructor) {
+        override fun update(turtle: ITurtleAccess, side: TurtleSide) {
+            super.update(turtle, side)
+            if (!turtle.level.isClientSide)
+                ticker.tick(turtle, side, item.coreTier, tickCounter)
         }
     }
 

@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import site.siredvin.lib.util.text
 import site.siredvin.turtlematic.Turtlematic
+import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.TraitsTooltipProvider
@@ -27,6 +28,8 @@ object TooltipHandlerCollection {
     fun commonTooltips(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
         if (coreTier.traits.contains(AutomataCoreTraits.STARBOUND_REGENERATION))
             tooltipList.add(text(Turtlematic.MOD_ID, "starbound_generation"))
+        if (coreTier.traits.contains(AutomataCoreTraits.FUEL_CONSUMPTION_DISABLED))
+            tooltipList.add(text(Turtlematic.MOD_ID, "fuel_consumption_disabled"))
     }
 
     fun interactionAPITooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
@@ -43,16 +46,23 @@ object TooltipHandlerCollection {
             tooltipList.add(text(Turtlematic.MOD_ID, "enchantment_no_wipe"))
     }
 
+    fun husbandryTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+        if (coreTier == AutomataCoreTier.TIER3 || coreTier == AutomataCoreTier.TIER4)
+            tooltipList.add(text(Turtlematic.MOD_ID, "periodical_single_grown_accelerator"))
+        if (coreTier == AutomataCoreTier.CREATIVE)
+            tooltipList.add(text(Turtlematic.MOD_ID, "periodical_area_grown_accelerator"))
+    }
+
     fun registerDefaults() {
         registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
-        registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
 
         registerProvider(Items.MASON_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.SMITHING_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.BREWING_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
         registerProvider(Items.ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
 
-        registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
         registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
 
         registerProvider(Items.STARBOUND_MASON_AUTOMATA_CORE, this::commonTooltips)
@@ -61,7 +71,7 @@ object TooltipHandlerCollection {
         registerProvider(Items.STARBOUND_ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
 
         registerProvider(Items.CREATIVE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
-        registerProvider(Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
+        registerProvider(Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
 
         registerProvider(Items.CREATIVE_MASON_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.CREATIVE_SMITHING_AUTOMATA_CORE, this::commonTooltips)

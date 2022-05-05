@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.common.configuration
 
-import net.minecraft.client.gui.Font
 import net.minecraftforge.common.ForgeConfigSpec
 import site.siredvin.lib.LibConfig
 import site.siredvin.lib.api.IConfigHandler
@@ -54,6 +53,18 @@ object TurtlematicConfig {
     val endAutomataCoreWarpPointLimit: Int
         get() = ConfigHolder.COMMON_CONFIG.END_AUTOMATA_CORE_WARP_POINT_LIMIT.get()
 
+    val husbandryAutomataRandomTicksEnabled: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.HUSBANDRY_AUTOMATA_RANDOM_TICKS_ENABLED.get()
+
+    val netheriteHusbandryAutomataGrownPeriod: Int
+        get() = ConfigHolder.COMMON_CONFIG.NETHERITE_HUSBANDRY_AUTOMATA_GROWN_PERIOD.get()
+
+    val starboundeHusbandryAutomataGrownPeriod: Int
+        get() = ConfigHolder.COMMON_CONFIG.STARBOUND_HUSBANDRY_AUTOMATA_GROWN_PERIOD.get()
+
+    val creativeHusbandryAutomataGrownPeriod: Int
+        get() = ConfigHolder.COMMON_CONFIG.CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD.get()
+
     val durabilityRestoreChance: Double
         get() = ConfigHolder.COMMON_CONFIG.DURABILITY_RESTORE_CHANCE.get()
 
@@ -91,6 +102,10 @@ object TurtlematicConfig {
         val STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE: ForgeConfigSpec.DoubleValue
         val STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT: ForgeConfigSpec.IntValue
         val END_AUTOMATA_CORE_WARP_POINT_LIMIT: ForgeConfigSpec.IntValue
+        val HUSBANDRY_AUTOMATA_RANDOM_TICKS_ENABLED: ForgeConfigSpec.BooleanValue
+        val NETHERITE_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
+        val STARBOUND_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
+        val CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
         val DURABILITY_RESTORE_CHANCE: ForgeConfigSpec.DoubleValue
         val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
@@ -124,6 +139,14 @@ object TurtlematicConfig {
 
             END_AUTOMATA_CORE_WARP_POINT_LIMIT = builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
                 .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
+            HUSBANDRY_AUTOMATA_RANDOM_TICKS_ENABLED = builder.comment("Enables random ticks for starbound and netherite husbandry automata core")
+                .define("husbandryAutomataRandomTicksEnabled", true)
+            NETHERITE_HUSBANDRY_AUTOMATA_GROWN_PERIOD = builder.comment("Amount of ticks that separate single random tick for one of surrounding crops for netherite husbandry automata")
+                .defineInRange("netheriteHusbandryAutomataGrownPeriod", 10, 1, Int.MAX_VALUE)
+            STARBOUND_HUSBANDRY_AUTOMATA_GROWN_PERIOD = builder.comment("Amount of ticks that separate single random tick for one of surrounding crops for starbound husbandry automata")
+                .defineInRange("starboundHusbandryAutomataGrownPeriod", 2, 1, Int.MAX_VALUE)
+            CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD = builder.comment("Amount of ticks that separate single random tick for all of surrounding crops for creative husbandry automata")
+                .defineInRange("creativeHusbandryAutomataGrownPeriod", 40, 1, Int.MAX_VALUE)
             DURABILITY_RESTORE_CHANCE = builder.comment("Defined chance to not loose item durability for netherite cores")
                 .defineInRange("durabilityRestoreChance", 0.1, 0.0, 1.0)
             STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE = builder.comment("Defines chance for starbound automata to regenerate fuel points")

@@ -12,6 +12,7 @@ import com.mojang.math.Vector3f
 import com.mojang.math.Transformation
 import site.siredvin.lib.computercraft.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.api.AutomataPeripheralBuildFunction
+import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 
 abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : PeripheralTurtleUpgrade<T> {
@@ -22,15 +23,36 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
         fun <T : IBasePeripheral<*>> dynamic(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): ClockwiseAnimatedTurtleUpgrade<T> {
             return Dynamic(item.turtleID, item, constructor)
         }
+
+        fun <T : IBasePeripheral<*>> ticker(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): ClockwiseAnimatedTurtleUpgrade<T> {
+            return Ticker(item.turtleID, item, constructor, ticker)
+        }
     }
 
-    private class Dynamic<T : IBasePeripheral<*>>(
-        id: ResourceLocation, private val item: BaseAutomataCore, private val constructor: AutomataPeripheralBuildFunction<T>
+    protected var tickCounterStorage = 0L
+
+    protected var tickCounter: Long
+        get() = tickCounterStorage
+        set(value) {
+            tickCounterStorage = value
+        }
+
+    private open class Dynamic<T : IBasePeripheral<*>>(
+        id: ResourceLocation, protected val item: BaseAutomataCore, private val constructor: AutomataPeripheralBuildFunction<T>
         ): ClockwiseAnimatedTurtleUpgrade<T>(id, item.defaultInstance) {
         override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T {
             return constructor.build(turtle, side, item.coreTier)
         }
+    }
 
+    private class Ticker<T : IBasePeripheral<*>>(
+        id: ResourceLocation, item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, private val ticker: AutomataTickerFunction
+    ): Dynamic<T>(id, item, constructor) {
+        override fun update(turtle: ITurtleAccess, side: TurtleSide) {
+            super.update(turtle, side)
+            if (!turtle.level.isClientSide)
+                ticker.tick(turtle, side, item.coreTier, tickCounter)
+        }
     }
 
     override fun getModel(turtleAccess: ITurtleAccess?, turtleSide: TurtleSide): TransformedModel {
@@ -59,6 +81,7 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
 
     override fun update(turtle: ITurtleAccess, side: TurtleSide) {
         super.update(turtle, side)
+        tickCounter++
         if (DataStorageUtil.RotationCharge.consume(turtle, side))
             chargeConsumingCallback()
     }

@@ -53,10 +53,10 @@ object Items {
     val STARBOUND_ENCHANTING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableEnchantingAutomataCore}).register("starbound_enchanting_automata_core")
     val STARBOUND_MASON_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableMasonAutomataCore}).register("starbound_mason_automata_core")
 
-    val CREATIVE_BREWING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableBrewingAutomataCore}).register("creative_brewing_automata_core")
-    val CREATIVE_SMITHING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableSmithingAutomataCore}).register("creative_smithing_automata_core")
-    val CREATIVE_ENCHANTING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableEnchantingAutomataCore}).register("creative_enchanting_automata_core")
-    val CREATIVE_MASON_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableMasonAutomataCore}).register("creative_mason_automata_core")
+    val CREATIVE_BREWING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableBrewingAutomataCore}).register("creative_brewing_automata_core")
+    val CREATIVE_SMITHING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableSmithingAutomataCore}).register("creative_smithing_automata_core")
+    val CREATIVE_ENCHANTING_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableEnchantingAutomataCore}).register("creative_enchanting_automata_core")
+    val CREATIVE_MASON_AUTOMATA_CORE = BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableMasonAutomataCore}).register("creative_mason_automata_core")
 
     // Progression items
     val SOUL_VIAL = SoulVial().register("soul_vial")
