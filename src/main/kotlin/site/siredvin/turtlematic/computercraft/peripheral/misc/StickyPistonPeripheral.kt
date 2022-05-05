@@ -1,5 +1,6 @@
 package site.siredvin.turtlematic.computercraft.peripheral.misc
 
+import dan200.computercraft.api.lua.IArguments
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.sounds.SoundEvents
@@ -9,6 +10,7 @@ import site.siredvin.lib.computercraft.peripheral.BasePeripheral
 import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.lib.util.world.PistonSimulation
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 
 class StickyPistonPeripheral(peripheralOwner: TurtlePeripheralOwner) :
     BasePeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
@@ -21,8 +23,9 @@ class StickyPistonPeripheral(peripheralOwner: TurtlePeripheralOwner) :
         get() = TurtlematicConfig.enableStickyPistonTurtle
 
     @LuaFunction(mainThread = true)
-    fun push(): MethodResult {
-        val direction = peripheralOwner.facing
+    fun push(arguments: IArguments): MethodResult {
+        val directionArgument = arguments.optString(0)
+        val direction = if (directionArgument.isEmpty) peripheralOwner.facing else VerticalDirection.luaValueOf(directionArgument.get()).minecraftDirection
         val level = level!!
         val resolver = PistonStructureResolver(level, pos, direction, true)
         return if (!resolver.resolve()) {
@@ -35,8 +38,9 @@ class StickyPistonPeripheral(peripheralOwner: TurtlePeripheralOwner) :
     }
 
     @LuaFunction(mainThread = true)
-    fun pull(): MethodResult {
-        val direction = peripheralOwner.facing
+    fun pull(arguments: IArguments): MethodResult {
+        val directionArgument = arguments.optString(0)
+        val direction = if (directionArgument.isEmpty) peripheralOwner.facing else VerticalDirection.luaValueOf(directionArgument.get()).minecraftDirection
         val level = level!!
         val resolver = PistonStructureResolver(level, pos.relative(direction), direction, false)
         return if (!resolver.resolve()) {
