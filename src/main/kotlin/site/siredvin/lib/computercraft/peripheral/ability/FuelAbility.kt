@@ -66,6 +66,7 @@ abstract class FuelAbility<T : IPeripheralOwner>(protected var owner: T) : IOwne
 
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         data["maxFuelConsumptionRate"] = maxFuelConsumptionRate
+        data["isFuelConsumptionDisable"] = isFuelConsumptionDisable
     }
 
     companion object {
