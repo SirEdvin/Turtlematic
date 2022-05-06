@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 06.05.22
+
 ### Added
 
 - Support for `up` and `down` direction for piston methods
