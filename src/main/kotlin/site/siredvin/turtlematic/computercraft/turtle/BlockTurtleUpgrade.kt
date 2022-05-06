@@ -3,10 +3,10 @@ package site.siredvin.turtlematic.computercraft.turtle
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.client.resources.model.ModelResourceLocation
-import site.siredvin.lib.api.TurtlePeripheralBuildFunction
-import site.siredvin.lib.api.peripheral.IBasePeripheral
-import site.siredvin.lib.common.items.TurtleItem
-import site.siredvin.lib.computercraft.turtle.PeripheralTurtleUpgrade
+import site.siredvin.peripheralium.api.TurtlePeripheralBuildFunction
+import site.siredvin.peripheralium.api.peripheral.IBasePeripheral
+import site.siredvin.peripheralium.common.items.TurtleItem
+import site.siredvin.peripheralium.computercraft.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.TurtlematicClient
 
 abstract class BlockTurtleUpgrade<T : IBasePeripheral<*>>(item: TurtleItem): PeripheralTurtleUpgrade<T>(item.turtleID, item.defaultInstance) {

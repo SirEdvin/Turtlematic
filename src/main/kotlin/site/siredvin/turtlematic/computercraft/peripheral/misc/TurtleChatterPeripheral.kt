@@ -1,9 +1,9 @@
 package site.siredvin.turtlematic.computercraft.peripheral.misc
 
 import dan200.computercraft.api.lua.LuaFunction
-import site.siredvin.lib.computercraft.peripheral.BasePeripheral
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.turtlematic.util.DataStorageUtil
+import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 
 class TurtleChatterPeripheral(peripheralOwner: TurtlePeripheralOwner) :
@@ -18,16 +18,16 @@ class TurtleChatterPeripheral(peripheralOwner: TurtlePeripheralOwner) :
 
     @LuaFunction(mainThread = true)
     fun getMessage(): String? {
-       return DataStorageUtil.TurtleChat.getMessage(peripheralOwner)
+       return DataStorageObjects.TurtleChat.getMessage(peripheralOwner)
     }
 
     @LuaFunction(mainThread = true)
     fun setMessage(text: String) {
-        DataStorageUtil.TurtleChat.setMessage(peripheralOwner, text)
+        DataStorageObjects.TurtleChat.setMessage(peripheralOwner, text)
     }
 
     @LuaFunction(mainThread = true)
     fun clearMessage() {
-        DataStorageUtil.TurtleChat.setMessage(peripheralOwner, null)
+        DataStorageObjects.TurtleChat.setMessage(peripheralOwner, null)
     }
 }

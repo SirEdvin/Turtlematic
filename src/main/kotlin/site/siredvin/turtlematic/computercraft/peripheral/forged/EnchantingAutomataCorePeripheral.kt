@@ -13,10 +13,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.lib.util.*
-import site.siredvin.lib.util.world.ScanUtils
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.util.*
+import site.siredvin.peripheralium.util.world.ScanUtils
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig

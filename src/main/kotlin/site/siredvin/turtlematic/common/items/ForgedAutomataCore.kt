@@ -4,8 +4,8 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import site.siredvin.lib.common.items.DescriptiveItem
-import site.siredvin.lib.util.Pair
+import site.siredvin.peripheralium.common.items.DescriptiveItem
+import site.siredvin.peripheralium.util.Pair
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation

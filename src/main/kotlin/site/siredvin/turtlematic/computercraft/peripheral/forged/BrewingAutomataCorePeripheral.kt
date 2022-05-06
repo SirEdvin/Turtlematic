@@ -24,9 +24,9 @@ import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.alchemy.PotionUtils
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.Level
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.lib.util.representation.effectsData
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.util.representation.effectsData
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.datatypes.AreaInteractionMode

@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.IntegerProperty
-import site.siredvin.lib.util.world.ScanUtils
+import site.siredvin.peripheralium.util.world.ScanUtils
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.tags.BlockTags

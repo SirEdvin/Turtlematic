@@ -6,9 +6,9 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.piston.PistonStructureResolver
-import site.siredvin.lib.computercraft.peripheral.BasePeripheral
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.lib.util.world.PistonSimulation
+import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.util.world.PistonSimulation
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 

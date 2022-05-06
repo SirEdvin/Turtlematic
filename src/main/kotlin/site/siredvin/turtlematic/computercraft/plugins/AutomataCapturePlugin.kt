@@ -18,10 +18,10 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
-import site.siredvin.lib.api.peripheral.IPeripheralCheck
-import site.siredvin.lib.api.peripheral.IPeripheralFunction
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.util.representation.LuaRepresentation
+import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
+import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.turtlematic.computercraft.datatypes.InteractionMode
 import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation

@@ -1,15 +1,15 @@
 package site.siredvin.turtlematic.common.setup
 
 import net.minecraft.world.item.Item
-import site.siredvin.lib.api.TurtleIDBuildFunction
+import site.siredvin.peripheralium.api.TurtleIDBuildFunction
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.AutomataCore
 import site.siredvin.turtlematic.common.items.RecipeAutomataCore
 import site.siredvin.turtlematic.common.items.SoulVial
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
-import site.siredvin.lib.common.items.DescriptiveItem
-import site.siredvin.lib.common.items.TurtleItem
+import site.siredvin.peripheralium.common.items.DescriptiveItem
+import site.siredvin.peripheralium.common.items.TurtleItem
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.items.ForgedAutomataCore
 import site.siredvin.turtlematic.computercraft.ComputerCraftProxy
@@ -60,7 +60,7 @@ object Items {
 
     // Progression items
     val SOUL_VIAL = SoulVial().register("soul_vial")
-    val FILLED_SOUL_VIAL = DescriptiveItem().register("filled_soul_vial")
+    val FILLED_SOUL_VIAL = DescriptiveItem(Item.Properties().tab(Turtlematic.TAB)).register("filled_soul_vial")
     val SOUL_SCRAPPER = TurtleItem(Turtlematic.TAB, { true }).register("soul_scrapper")
 
     // miscellaneous

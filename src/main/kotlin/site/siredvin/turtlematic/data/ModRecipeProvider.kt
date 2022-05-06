@@ -7,8 +7,8 @@ import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.data.recipes.UpgradeRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
-import site.siredvin.lib.data.TweakedShapedRecipeBuilder
-import site.siredvin.lib.data.TweakedUpgradeRecipeBuilder
+import site.siredvin.peripheralium.data.TweakedShapedRecipeBuilder
+import site.siredvin.peripheralium.data.TweakedUpgradeRecipeBuilder
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.setup.Items
 import java.util.*

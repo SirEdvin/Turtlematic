@@ -1,9 +1,7 @@
 package site.siredvin.turtlematic.common.configuration
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.lib.LibConfig
-import site.siredvin.lib.api.IConfigHandler
-import site.siredvin.lib.computercraft.peripheral.operation.UnconditionalOperations
+import site.siredvin.peripheralium.api.IConfigHandler
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SimpleFreeOperation
@@ -111,7 +109,6 @@ object TurtlematicConfig {
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
 
         init {
-            LibConfig.build(builder)
             builder.push("turtlePeripherals")
             ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
             ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
@@ -124,7 +121,6 @@ object TurtlematicConfig {
             register(SphereOperation.values(), builder)
             register(SimpleFreeOperation.values(), builder)
             register(CountOperation.values(), builder)
-            register(UnconditionalOperations.values(), builder)
             builder.pop()
             builder.push("automataCores")
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)

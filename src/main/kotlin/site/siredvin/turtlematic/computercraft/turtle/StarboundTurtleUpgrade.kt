@@ -4,7 +4,7 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import site.siredvin.lib.api.peripheral.IBasePeripheral
+import site.siredvin.peripheralium.api.peripheral.IBasePeripheral
 import site.siredvin.turtlematic.api.AutomataPeripheralBuildFunction
 import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig

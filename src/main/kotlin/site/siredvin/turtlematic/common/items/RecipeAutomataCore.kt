@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import site.siredvin.lib.util.text
+import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore

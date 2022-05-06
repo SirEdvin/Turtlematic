@@ -11,10 +11,10 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.lib.util.world.ScanUtils
-import site.siredvin.lib.util.assertBetween
-import site.siredvin.lib.util.representation.LuaRepresentation
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.util.world.ScanUtils
+import site.siredvin.peripheralium.util.assertBetween
+import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.turtlematic.computercraft.datatypes.AreaInteractionMode
 import java.util.function.Predicate
 import java.util.stream.Collectors

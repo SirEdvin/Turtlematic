@@ -7,8 +7,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import site.siredvin.lib.util.Pair
-import site.siredvin.lib.util.text
+import site.siredvin.peripheralium.util.Pair
+import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem

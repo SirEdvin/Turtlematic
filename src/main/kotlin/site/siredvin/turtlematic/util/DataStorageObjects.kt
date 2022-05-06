@@ -2,24 +2,11 @@ package site.siredvin.turtlematic.util
 
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
-import net.minecraft.nbt.CompoundTag
-import site.siredvin.lib.api.peripheral.IPeripheralTileEntity
-import dan200.computercraft.api.pocket.IPocketAccess
-import site.siredvin.lib.api.peripheral.IPeripheralOwner
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
+import site.siredvin.peripheralium.util.DataStorageUtil
 import kotlin.math.max
 
-object DataStorageUtil {
-    fun getDataStorage(access: ITurtleAccess, side: TurtleSide?): CompoundTag {
-        return access.getUpgradeNBTData(side)
-    }
-
-    fun getDataStorage(tileEntity: IPeripheralTileEntity): CompoundTag {
-        return tileEntity.peripheralSettings
-    }
-
-    fun getDataStorage(pocket: IPocketAccess): CompoundTag {
-        return pocket.upgradeNBTData
-    }
+object DataStorageObjects {
 
     /**
      * This class is for persistent data sharing between peripherals and another part of systems
@@ -35,11 +22,11 @@ object DataStorageUtil {
          */
         private const val ROTATION_CHARGE_SETTING = "rotationCharge"
         operator fun get(access: ITurtleAccess, side: TurtleSide): Int {
-            return getDataStorage(access, side).getInt(ROTATION_CHARGE_SETTING)
+            return DataStorageUtil.getDataStorage(access, side).getInt(ROTATION_CHARGE_SETTING)
         }
 
         fun consume(access: ITurtleAccess, side: TurtleSide): Boolean {
-            val data = getDataStorage(access, side)
+            val data = DataStorageUtil.getDataStorage(access, side)
             val currentCharge = data.getInt(ROTATION_CHARGE_SETTING)
             if (currentCharge > 0) {
                 data.putInt(ROTATION_CHARGE_SETTING, max(0, data.getInt(ROTATION_CHARGE_SETTING) - 1))
@@ -66,7 +53,7 @@ object DataStorageUtil {
         private const val CHAT_MESSAGE = "chatMessage"
 
         fun getMessage(access: ITurtleAccess, side: TurtleSide): String? {
-            val data = getDataStorage(access, side)
+            val data = DataStorageUtil.getDataStorage(access, side)
             if (data.contains(CHAT_MESSAGE))
                 return data.getString(CHAT_MESSAGE)
             return null

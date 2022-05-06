@@ -8,8 +8,8 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.EntityHitResult
-import site.siredvin.lib.computercraft.peripheral.BasePeripheral
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 
 class SoulScrapperPeripheral(peripheralOwner: TurtlePeripheralOwner) :

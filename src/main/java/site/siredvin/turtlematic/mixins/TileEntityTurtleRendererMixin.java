@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import site.siredvin.turtlematic.util.DataStorageUtil;
+import site.siredvin.turtlematic.util.DataStorageObjects;
 import site.siredvin.turtlematic.computercraft.ComputerCraftProxy;
 
 import javax.annotation.Nonnull;
@@ -42,7 +42,7 @@ public class TileEntityTurtleRendererMixin{
                 return;
         }
 
-        String text = DataStorageUtil.TurtleChat.INSTANCE.getMessage(turtle.getAccess(), side);
+        String text = DataStorageObjects.TurtleChat.INSTANCE.getMessage(turtle.getAccess(), side);
 
         if (text == null || text.isBlank())
             return;

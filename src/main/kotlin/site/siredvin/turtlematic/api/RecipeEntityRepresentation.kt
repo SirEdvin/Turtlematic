@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.api
 
 import net.minecraft.network.chat.Component
-import site.siredvin.lib.util.text
+import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.Turtlematic
 
 data class RecipeEntityRepresentation(val consumedCount: Int, val requiredCount: Int, val name: String) {

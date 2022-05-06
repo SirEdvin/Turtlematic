@@ -8,14 +8,14 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.Level
 import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
-import site.siredvin.lib.api.peripheral.IPeripheralCheck
-import site.siredvin.lib.api.peripheral.IPeripheralFunction
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.computercraft.peripheral.ability.FuelAbility
-import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.lib.util.NBTUtil.blockPosFromNBT
-import site.siredvin.lib.util.NBTUtil.toNBT
+import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
+import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.computercraft.peripheral.ability.FuelAbility
+import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.util.NBTUtil.blockPosFromNBT
+import site.siredvin.peripheralium.util.NBTUtil.toNBT
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 

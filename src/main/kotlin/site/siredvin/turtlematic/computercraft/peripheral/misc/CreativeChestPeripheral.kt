@@ -7,8 +7,8 @@ import net.minecraft.core.Registry
 import net.minecraft.nbt.TagParser
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
-import site.siredvin.lib.computercraft.peripheral.BasePeripheral
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.util.Optional
 

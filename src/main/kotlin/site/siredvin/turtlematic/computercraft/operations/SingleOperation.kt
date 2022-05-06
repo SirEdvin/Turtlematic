@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import java.util.*
 import java.util.function.Function
 

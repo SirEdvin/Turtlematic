@@ -7,9 +7,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import site.siredvin.lib.api.TurtleIDBuildFunction
-import site.siredvin.lib.common.items.TurtleItem
-import site.siredvin.lib.util.text
+import site.siredvin.peripheralium.api.TurtleIDBuildFunction
+import site.siredvin.peripheralium.common.items.TurtleItem
+import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.TraitsTooltipProvider

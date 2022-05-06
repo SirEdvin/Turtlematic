@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.computercraft
 
-import site.siredvin.lib.computercraft.peripheral.ability.TurtleFuelAbility
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.computercraft.peripheral.ability.TurtleFuelAbility
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 

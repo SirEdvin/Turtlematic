@@ -19,9 +19,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.lib.util.*
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.util.*
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.datatypes.TransformInteractionMode

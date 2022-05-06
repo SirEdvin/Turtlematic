@@ -1,9 +1,9 @@
 package site.siredvin.turtlematic.computercraft.peripheral.forged
 
-import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility.Companion.EXPERIENCE
+import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility.Companion.EXPERIENCE
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
-import site.siredvin.lib.computercraft.peripheral.ability.ExperienceAbility
+import site.siredvin.peripheralium.computercraft.peripheral.ability.ExperienceAbility
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 

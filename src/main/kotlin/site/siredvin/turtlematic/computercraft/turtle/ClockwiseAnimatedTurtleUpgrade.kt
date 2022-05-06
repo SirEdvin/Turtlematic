@@ -1,16 +1,16 @@
 package site.siredvin.turtlematic.computercraft.turtle
 
-import site.siredvin.lib.api.peripheral.IBasePeripheral
+import site.siredvin.peripheralium.api.peripheral.IBasePeripheral
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.api.client.TransformedModel
 import com.mojang.blaze3d.vertex.PoseStack
-import site.siredvin.turtlematic.util.DataStorageUtil
+import site.siredvin.turtlematic.util.DataStorageObjects
 import com.mojang.math.Vector3f
 import com.mojang.math.Transformation
-import site.siredvin.lib.computercraft.turtle.PeripheralTurtleUpgrade
+import site.siredvin.peripheralium.computercraft.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.api.AutomataPeripheralBuildFunction
 import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
@@ -61,7 +61,7 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
             stack.pushPose()
             stack.translate(0.0, 0.5, 0.5)
             if (turtleAccess != null) {
-                val rotationStep = DataStorageUtil.RotationCharge[turtleAccess, turtleSide]
+                val rotationStep = DataStorageObjects.RotationCharge[turtleAccess, turtleSide]
                 stack.mulPose(Vector3f.XN.rotationDegrees((-10 * rotationStep).toFloat()))
             }
             stack.translate(0.0, -0.5, -0.5)
@@ -82,7 +82,7 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
     override fun update(turtle: ITurtleAccess, side: TurtleSide) {
         super.update(turtle, side)
         tickCounter++
-        if (DataStorageUtil.RotationCharge.consume(turtle, side))
+        if (DataStorageObjects.RotationCharge.consume(turtle, side))
             chargeConsumingCallback()
     }
 }

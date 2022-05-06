@@ -6,15 +6,15 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
 import site.siredvin.turtlematic.api.IAutomataCoreTier
-import site.siredvin.lib.api.peripheral.IPeripheralCheck
-import site.siredvin.lib.api.peripheral.IPeripheralFunction
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.computercraft.peripheral.BasePeripheral
-import site.siredvin.lib.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
+import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.computercraft.AutomataCoreFuelAbility
-import site.siredvin.turtlematic.util.DataStorageUtil
+import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 
 abstract class BaseAutomataCorePeripheral(
@@ -39,7 +39,7 @@ abstract class BaseAutomataCorePeripheral(
 
     @JvmOverloads
     fun addRotationCycle(count: Int = 1) {
-        DataStorageUtil.RotationCharge.addCycles(peripheralOwner, count)
+        DataStorageObjects.RotationCharge.addCycles(peripheralOwner, count)
     }
 
     open fun possibleOperations(): MutableList<IPeripheralOperation<*>> {

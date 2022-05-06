@@ -4,17 +4,10 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import site.siredvin.lib.util.Pair
+import site.siredvin.peripheralium.util.Pair
 import java.util.function.Predicate
 
 data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val resultSoul: Item) {
-//    fun getRequiredCount(entityType: String): Int {
-//        return this.ingredients.getOrDefault(entityType, 0)
-//    }
-//
-//    fun getRequiredEntities(): Set<String> {
-//        return ingredients.keys
-//    }
 
     fun isSuitable(entity: Entity): Boolean {
         for (ingredient in ingredients) {

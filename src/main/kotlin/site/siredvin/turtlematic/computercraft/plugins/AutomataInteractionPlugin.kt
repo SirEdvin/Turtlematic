@@ -7,8 +7,8 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.computercraft.datatypes.InteractionMode
 import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation

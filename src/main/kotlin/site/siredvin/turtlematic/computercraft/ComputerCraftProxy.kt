@@ -5,11 +5,11 @@ import dan200.computercraft.api.turtle.ITurtleUpgrade
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import site.siredvin.lib.api.TurtleIDBuildFunction
-import site.siredvin.lib.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.lib.computercraft.turtle.FacingBlockTurtle
-import site.siredvin.lib.computercraft.turtle.PeripheralTurtleUpgrade
-import site.siredvin.lib.util.ItemUtil
+import site.siredvin.peripheralium.api.TurtleIDBuildFunction
+import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.computercraft.turtle.FacingBlockTurtle
+import site.siredvin.peripheralium.computercraft.turtle.PeripheralTurtleUpgrade
+import site.siredvin.peripheralium.util.ItemUtil
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.AutomataCorePeripheral

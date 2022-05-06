@@ -2,7 +2,7 @@ package site.siredvin.turtlematic.util
 
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
-import site.siredvin.lib.util.text
+import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.AutomataCoreTraits

@@ -2,7 +2,7 @@ package site.siredvin.turtlematic.computercraft.operations
 
 import com.google.common.math.IntMath
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.lib.api.peripheral.IPeripheralOperation
+import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 
 enum class SphereOperation(
     private val defaultCooldown: Int,
