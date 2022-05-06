@@ -9,7 +9,7 @@ import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
@@ -22,7 +22,7 @@ abstract class BaseAutomataCorePeripheral(
     turtle: ITurtleAccess,
     side: TurtleSide,
     tier: IAutomataCoreTier
-) : BasePeripheral<TurtlePeripheralOwner>(
+) : OwnedPeripheral<TurtlePeripheralOwner>(
     type, TurtlePeripheralOwner(
         turtle, side
     )

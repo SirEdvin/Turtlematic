@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.computercraft.turtle
 
-import site.siredvin.peripheralium.api.peripheral.IBasePeripheral
+import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import dan200.computercraft.api.turtle.ITurtleAccess
@@ -15,16 +15,16 @@ import site.siredvin.turtlematic.api.AutomataPeripheralBuildFunction
 import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 
-abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : PeripheralTurtleUpgrade<T> {
+abstract class ClockwiseAnimatedTurtleUpgrade<T : IOwnedPeripheral<*>> : PeripheralTurtleUpgrade<T> {
     constructor(id: ResourceLocation, adjective: String, item: ItemStack) : super(id, adjective, item)
     constructor(id: ResourceLocation, item: ItemStack) : super(id, item)
 
     companion object {
-        fun <T : IBasePeripheral<*>> dynamic(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): ClockwiseAnimatedTurtleUpgrade<T> {
+        fun <T : IOwnedPeripheral<*>> dynamic(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): ClockwiseAnimatedTurtleUpgrade<T> {
             return Dynamic(item.turtleID, item, constructor)
         }
 
-        fun <T : IBasePeripheral<*>> ticker(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): ClockwiseAnimatedTurtleUpgrade<T> {
+        fun <T : IOwnedPeripheral<*>> ticker(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): ClockwiseAnimatedTurtleUpgrade<T> {
             return Ticker(item.turtleID, item, constructor, ticker)
         }
     }
@@ -37,7 +37,7 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
             tickCounterStorage = value
         }
 
-    private open class Dynamic<T : IBasePeripheral<*>>(
+    private open class Dynamic<T : IOwnedPeripheral<*>>(
         id: ResourceLocation, protected val item: BaseAutomataCore, private val constructor: AutomataPeripheralBuildFunction<T>
         ): ClockwiseAnimatedTurtleUpgrade<T>(id, item.defaultInstance) {
         override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T {
@@ -45,7 +45,7 @@ abstract class ClockwiseAnimatedTurtleUpgrade<T : IBasePeripheral<*>> : Peripher
         }
     }
 
-    private class Ticker<T : IBasePeripheral<*>>(
+    private class Ticker<T : IOwnedPeripheral<*>>(
         id: ResourceLocation, item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, private val ticker: AutomataTickerFunction
     ): Dynamic<T>(id, item, constructor) {
         override fun update(turtle: ITurtleAccess, side: TurtleSide) {

@@ -1,13 +1,13 @@
 package site.siredvin.turtlematic.computercraft.peripheral.misc
 
 import dan200.computercraft.api.lua.LuaFunction
-import site.siredvin.peripheralium.computercraft.peripheral.BasePeripheral
+import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 
 class TurtleChatterPeripheral(peripheralOwner: TurtlePeripheralOwner) :
-    BasePeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
+    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
 
     companion object {
         const val TYPE = "chatter"
