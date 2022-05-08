@@ -164,6 +164,8 @@ curseforge {
             relations(closureOf<CurseRelation> {
                 requiredDependency("cc-restitched")
                 requiredDependency("forge-config-api-port-fabric")
+                requiredDependency("peripheralium")
+                requiredDependency("fabric-language-kotlin")
             })
         })
     })
