@@ -73,7 +73,9 @@ repositories {
         url = uri("https://maven.terraformersmc.com/")
     }
     maven { url = uri("https://cursemaven.com") }
-    mavenLocal()
+    maven {
+        url = uri("https://repo.repsy.io/mvn/siredvin/default")
+    }
 }
 
 dependencies {
@@ -90,11 +92,15 @@ dependencies {
 
     modImplementation("com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.5-ccr")
     modImplementation("curse.maven:forgeconfigapirt-fabric-547434:3671141")
-    modImplementation("siredvin.site:Peripheralium:0.1.0-SNAPSHOT")
+    modImplementation("siredvin.site:Peripheralium:0.1.1") {
+        exclude(group="net.fabricmc.fabric-api")
+    }
 
     // Some mod integrations
     // Chipped
-    modImplementation("curse.maven:chipped-456956:3748666")
+    modImplementation("curse.maven:chipped-456956:3748666") {
+        exclude(group="net.fabricmc.fabric-api")
+    }
 
     modRuntimeOnly("curse.maven:wthit-440979:3735869")
     modRuntimeOnly("curse.maven:spark-361579:3644349")

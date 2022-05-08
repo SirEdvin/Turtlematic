@@ -3,7 +3,7 @@
   "id": "turtlematic",
   "version": "${version}",
   "name": "Turtlematic",
-  "description": "Mod Description",
+  "description": "CC:R addon, that makes turtles great again!",
   "authors": [
     "SirEdvin"
   ],
@@ -46,6 +46,6 @@
     "java": ">=17",
     "forgeconfigapiport": ">=3.1",
     "computercraft": ">=1.100.5",
-    "peripheralium": "*"
+    "peripheralium": ">=0.1.1"
   }
 }
