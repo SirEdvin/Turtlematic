@@ -42,8 +42,10 @@ object TooltipHandlerCollection {
     fun enchantingTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
         if (!coreTier.traits.contains(AutomataCoreTraits.SKILLED))
             tooltipList.add(text(Turtlematic.MOD_ID, "enchantment_wipe_chance", (TurtlematicConfig.enchantmentWipeChance * 100).toInt()))
-        if (coreTier.traits.contains(AutomataCoreTraits.SKILLED))
+        if (coreTier.traits.contains(AutomataCoreTraits.SKILLED)) {
             tooltipList.add(text(Turtlematic.MOD_ID, "enchantment_no_wipe"))
+            tooltipList.add(text(Turtlematic.MOD_ID, "enchantment_treasure_allowed"))
+        }
     }
 
     fun husbandryTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {

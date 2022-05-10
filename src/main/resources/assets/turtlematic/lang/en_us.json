@@ -85,6 +85,7 @@
   "text.turtlematic.starbound_generation": "  §6§nPeriodically generate small amount of fuel points",
   "text.turtlematic.enchantment_wipe_chance": "  §6§nChance %d%%§6§n to lost one enchantment on extract",
   "text.turtlematic.enchantment_no_wipe": "  §6§nEnchantment extracting always perfect",
+  "text.turtlematic.enchantment_treasure_allowed": "  §6§nTreasure enchantment can be applied too",
   "text.turtlematic.fuel_consumption_disabled": "  §6§nFuel consumption disabled",
   "text.turtlematic.periodical_single_grown_accelerator": "  §6§nPeriodically accelerate grown of random crop in interaction radius",
   "text.turtlematic.periodical_area_grown_accelerator": "  §6§nPeriodically accelerate grown of all crops in interaction radius",

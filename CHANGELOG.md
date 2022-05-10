@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Turtlematic now requires [Peripheralium](https://www.curseforge.com/minecraft/mc-mods/peripheralium/) as basic library
 
+### Added
+
+- Treasure enchantments for starbound enchanting automata
+
 ## [0.3.1] - 06.05.22
 
 ### Added

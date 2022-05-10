@@ -38,7 +38,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         get() = TurtlematicConfig.enableEnchantingAutomataCore
 
     open val allowTreasureEnchants: Boolean
-        get() = false
+        get() = tier.traits.contains(AutomataCoreTraits.SKILLED)
 
     var enchantmentSeed: Long
         get() {
