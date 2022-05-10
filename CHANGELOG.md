@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.0] - 09.05.22
 
-**BREAKING CHANCE**
+**BREAKING CHANGE**
 
 Turtlematic now requires [Peripheralium](https://www.curseforge.com/minecraft/mc-mods/peripheralium/) as basic library
 
