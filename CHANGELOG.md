@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 11.05.22
+
+### Changed
+
+- Mason automata now can change rail shape to any possible shape
+
 ## [0.4.0] - 09.05.22
 
 **BREAKING CHANGE**

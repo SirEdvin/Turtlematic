@@ -8,8 +8,10 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.shared.TurtlePermissions
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.BlockTags
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -19,12 +21,12 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.Half
 import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.world.level.block.state.properties.RailShape
 import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.util.FakeItemContainer
@@ -40,6 +42,8 @@ import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
+import site.siredvin.turtlematic.util.GlobalFlags
+import java.util.function.Predicate
 
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
@@ -51,6 +55,10 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
 
         val handlerID: String
         val workWith: List<Class<*>>
+    }
+
+    interface MasonShapeChangeStrategy {
+        fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult
     }
 
     class StonecutterRecipeHandler: MasonRecipeHandler {
@@ -87,6 +95,51 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
 
         override val workWith: List<Class<*>>
             get() = listOf(StonecutterRecipe::class.java)
+    }
+
+    class RailShapeChangeStrategy: MasonShapeChangeStrategy {
+        override fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult {
+            val previousShape = oldState.getValue((oldState.block as BaseRailBlock).shapeProperty)
+            if (previousShape.isAscending)
+                return MethodResult.of(null, "Cannot change shape from ascending")
+            val nextShape = newState.getValue((oldState.block as BaseRailBlock).shapeProperty)
+            if (nextShape.isAscending)
+                return MethodResult.of(null, "Cannot change shape to ascending")
+            val positionToCheck = mutableListOf<BlockPos>()
+            when (nextShape) {
+                RailShape.NORTH_SOUTH -> {
+                    positionToCheck.add(pos.relative(Direction.NORTH))
+                    positionToCheck.add(pos.relative(Direction.SOUTH))
+                }
+                RailShape.EAST_WEST -> {
+                    positionToCheck.add(pos.relative(Direction.EAST))
+                    positionToCheck.add(pos.relative(Direction.WEST))
+                }
+                RailShape.SOUTH_EAST -> {
+                    positionToCheck.add(pos.relative(Direction.EAST))
+                    positionToCheck.add(pos.relative(Direction.SOUTH))
+                }
+                RailShape.SOUTH_WEST -> {
+                    positionToCheck.add(pos.relative(Direction.WEST))
+                    positionToCheck.add(pos.relative(Direction.SOUTH))
+                }
+                RailShape.NORTH_WEST -> {
+                    positionToCheck.add(pos.relative(Direction.NORTH))
+                    positionToCheck.add(pos.relative(Direction.WEST))
+                }
+                RailShape.NORTH_EAST -> {
+                    positionToCheck.add(pos.relative(Direction.NORTH))
+                    positionToCheck.add(pos.relative(Direction.EAST))
+                }
+                else -> return MethodResult.of(null, "This should be possible at all, but still")
+            }
+            if (positionToCheck.any { !level.getBlockState(it).`is`(BlockTags.RAILS) })
+                return MethodResult.of(null, "Incorrect shape for rail, cannot apply it")
+            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.set(true)
+            level.setBlockAndUpdate(pos, newState)
+            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.set(false)
+            return MethodResult.of(true)
+        }
 
     }
 
@@ -95,14 +148,20 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
 
         private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()
         private val RECIPE_TO_ID = mutableMapOf<Class<*>, String>()
+        private val SHAPE_STRATEGY = mutableListOf<kotlin.Pair<Predicate<Block>, MasonShapeChangeStrategy>>()
 
         fun addRecipeHandler(handler: MasonRecipeHandler) {
             HANDLERS[handler.handlerID] = handler
             handler.workWith.forEach { RECIPE_TO_ID[it] = handler.handlerID }
         }
 
+        fun addShapeStrategy(predicate: Predicate<Block>, handler: MasonShapeChangeStrategy) {
+            SHAPE_STRATEGY.add(kotlin.Pair(predicate, handler))
+        }
+
         init {
             addRecipeHandler(StonecutterRecipeHandler())
+            addShapeStrategy({ it is BaseRailBlock }, RailShapeChangeStrategy())
         }
 
         fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
@@ -118,6 +177,15 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                     return recipe
             }
             return null
+        }
+
+        fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult {
+            SHAPE_STRATEGY.forEach {
+                if (it.first.test(oldState.block))
+                    return it.second.changeShape(level, pos, oldState, newState)
+            }
+            level.setBlockAndUpdate(pos, newState)
+            return MethodResult.of(true)
         }
 
         fun produce(level: Level, fakeContainer: Container, targetItem: Item, recipe: Recipe<Container>, limit: Int): ItemStack {
@@ -327,8 +395,8 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         return MethodResult.of(property.possibleValues.filter { it != currentShape }.map { it.name.lowercase() })
     }
 
-    @LuaFunction(mainThread = true)
-    fun <V: Comparable<V>> changeShape(arguments: IArguments): MethodResult {
+    @LuaFunction(mainThread = true, value = ["changeShape"])
+    fun <V: Comparable<V>> changeShapeLua(arguments: IArguments): MethodResult {
         val targetShape: String = arguments.getString(0)
         val directionArgument = arguments.optString(1)
         val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
@@ -348,8 +416,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             val newValue = property.possibleValues.find { it.name.lowercase() == targetShape }
                 ?: return@withOperation MethodResult.of(null, "This block cannot change shape to $targetShape")
             val fixedProperty = propertyCandidate.get() as Property<V>
-            level.setBlockAndUpdate(hit.blockPos, blockState.setValue(fixedProperty, newValue as V))
-            return@withOperation MethodResult.of(true)
+            return@withOperation changeShape(level, hit.blockPos, blockState, blockState.setValue(fixedProperty, newValue as V))
         }
     }
 }
