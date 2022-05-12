@@ -1,5 +1,7 @@
 package site.siredvin.turtlematic.util
 
+import java.util.concurrent.atomic.AtomicInteger
+
 object GlobalFlags {
-    val RAIL_SHAPE_CORRECTION_SUPPRESSION: ThreadLocal<Boolean> = ThreadLocal()
+    var RAIL_SHAPE_CORRECTION_SUPPRESSION = AtomicInteger(0)
 }

@@ -99,14 +99,25 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
 
     class RailShapeChangeStrategy: MasonShapeChangeStrategy {
         override fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult {
-            val previousShape = oldState.getValue((oldState.block as BaseRailBlock).shapeProperty)
-            if (previousShape.isAscending)
-                return MethodResult.of(null, "Cannot change shape from ascending")
             val nextShape = newState.getValue((oldState.block as BaseRailBlock).shapeProperty)
-            if (nextShape.isAscending)
-                return MethodResult.of(null, "Cannot change shape to ascending")
             val positionToCheck = mutableListOf<BlockPos>()
             when (nextShape) {
+                RailShape.ASCENDING_EAST -> {
+                    positionToCheck.add(pos.relative(Direction.EAST).above())
+                    positionToCheck.add(pos.relative(Direction.WEST))
+                }
+                RailShape.ASCENDING_WEST -> {
+                    positionToCheck.add(pos.relative(Direction.EAST))
+                    positionToCheck.add(pos.relative(Direction.WEST).above())
+                }
+                RailShape.ASCENDING_NORTH -> {
+                    positionToCheck.add(pos.relative(Direction.NORTH).above())
+                    positionToCheck.add(pos.relative(Direction.SOUTH))
+                }
+                RailShape.ASCENDING_SOUTH -> {
+                    positionToCheck.add(pos.relative(Direction.NORTH))
+                    positionToCheck.add(pos.relative(Direction.SOUTH).above())
+                }
                 RailShape.NORTH_SOUTH -> {
                     positionToCheck.add(pos.relative(Direction.NORTH))
                     positionToCheck.add(pos.relative(Direction.SOUTH))
@@ -135,9 +146,10 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             }
             if (positionToCheck.any { !level.getBlockState(it).`is`(BlockTags.RAILS) })
                 return MethodResult.of(null, "Incorrect shape for rail, cannot apply it")
-            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.set(true)
+            // Why two times? I have no real idea :)
+            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.incrementAndGet()
+            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.incrementAndGet()
             level.setBlockAndUpdate(pos, newState)
-            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.set(false)
             return MethodResult.of(true)
         }
 

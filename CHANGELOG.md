@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2] - 12.05.22
+
+### Fixed
+
+- Rail shape changing doesn't break rail placing, and now it is possible to change shape to ascending ones
+
 ## [0.4.1] - 11.05.22
 
 ### Changed
