@@ -8,16 +8,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import site.siredvin.turtlematic.util.GlobalFlags;
+import site.siredvin.turtlematic.common.blocks.BlockStateProperties;
 
 @Mixin(BaseRailBlock.class)
-public class RailStateMixin {
+public class BaseRailBlockMixin {
+
     @Inject(at = @At("HEAD"), method="updateDir", cancellable = true)
     protected void updateDir(Level level, BlockPos blockPos, BlockState blockState, boolean bl, CallbackInfoReturnable<BlockState> cir) {
         if (!level.isClientSide)
-            if (GlobalFlags.INSTANCE.getRAIL_SHAPE_CORRECTION_SUPPRESSION().get() > 0) {
-                GlobalFlags.INSTANCE.getRAIL_SHAPE_CORRECTION_SUPPRESSION().decrementAndGet();
+            if (blockState.hasProperty(BlockStateProperties.INSTANCE.getBONKED()) && blockState.getValue(BlockStateProperties.INSTANCE.getBONKED()))
                 cir.setReturnValue(blockState);
-            }
     }
 }

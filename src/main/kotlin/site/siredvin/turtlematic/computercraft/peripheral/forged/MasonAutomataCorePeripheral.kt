@@ -36,13 +36,13 @@ import site.siredvin.peripheralium.util.representation.LuaInterpretation
 import site.siredvin.peripheralium.util.Pair
 import site.siredvin.peripheralium.util.representation.stateProperties
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.common.blocks.BlockStateProperties
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.datatypes.TransformInteractionMode
 import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
-import site.siredvin.turtlematic.util.GlobalFlags
 import java.util.function.Predicate
 
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
@@ -146,10 +146,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             }
             if (positionToCheck.any { !level.getBlockState(it).`is`(BlockTags.RAILS) })
                 return MethodResult.of(null, "Incorrect shape for rail, cannot apply it")
-            // Why two times? I have no real idea :)
-            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.incrementAndGet()
-            GlobalFlags.RAIL_SHAPE_CORRECTION_SUPPRESSION.incrementAndGet()
-            level.setBlockAndUpdate(pos, newState)
+            level.setBlockAndUpdate(pos, newState.setValue(BlockStateProperties.BONKED, true))
             return MethodResult.of(true)
         }
 
@@ -173,7 +170,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
 
         init {
             addRecipeHandler(StonecutterRecipeHandler())
-            addShapeStrategy({ it is BaseRailBlock }, RailShapeChangeStrategy())
+            addShapeStrategy({ it is RailBlock }, RailShapeChangeStrategy())
         }
 
         fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
