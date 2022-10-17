@@ -76,6 +76,7 @@ repositories {
     maven {
         url = uri("https://repo.repsy.io/mvn/siredvin/default")
     }
+    maven { url = uri("https://nexus.resourcefulbees.com/repository/maven-public/")}
 }
 
 dependencies {
@@ -98,12 +99,14 @@ dependencies {
 
     // Some mod integrations
     // Chipped
-    modImplementation("curse.maven:chipped-456956:3748666") {
+
+    modImplementation("curse.maven:chipped-456956:4020978") {
         exclude(group="net.fabricmc.fabric-api")
     }
 
     modRuntimeOnly("curse.maven:wthit-440979:3735869")
     modRuntimeOnly("curse.maven:spark-361579:3644349")
+    modRuntimeOnly("me.codexadrian:ctm-refabricated:1.0.0+1.18")
 
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449")
     modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:8.1.449")
@@ -119,8 +122,8 @@ tasks {
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions { jvmTarget = javaVersion.toString() }
-        sourceCompatibility = javaVersion.toString()
-        targetCompatibility = javaVersion.toString()
+//        sourceCompatibility = javaVersion.toString()
+//        targetCompatibility = javaVersion.toString()
     }
     jar { from("LICENSE") { rename { "${it}_${base.archivesName}" } } }
     processResources {
