@@ -7,6 +7,7 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.minecraft.util.RandomSource
 import net.minecraft.world.Container
 import net.minecraft.world.inventory.EnchantmentMenu
 import net.minecraft.world.item.ItemStack
@@ -73,7 +74,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                     val itemStorage = ItemStorage.SIDED.find(level, blockPos, null)
                     if (itemStorage != null) {
                         Transaction.openOuter().use {
-                            itemStorage.iterable(it).forEach { view ->
+                            itemStorage.iterator().forEach { view ->
                                 if (view.resource.toStack().`is`(Items.ENCHANTED_BOOK))
                                     enchantmentPower.value = enchantmentPower.value + 1
                             }
@@ -103,8 +104,8 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         if (targetItem.isEnchanted) return MethodResult.of(null, "Item already enchanted!")
         val possibleEnchantments = mutableListOf<Map<String, Any>>()
         intArrayOf(0, 1, 2).forEach {
-            val cost = EnchantmentHelper.getEnchantmentCost(Random(enchantmentSeed + it), it, enchantmentPower, targetItem)
-            val enchantments = EnchantmentHelper.selectEnchantment(Random(enchantmentSeed + it), targetItem, cost, allowTreasureEnchants)
+            val cost = EnchantmentHelper.getEnchantmentCost(RandomSource.create(enchantmentSeed + it), it, enchantmentPower, targetItem)
+            val enchantments = EnchantmentHelper.selectEnchantment(RandomSource.create(enchantmentSeed + it), targetItem, cost, allowTreasureEnchants)
             if (enchantments != null && enchantments.isNotEmpty()) {
                 val enchantment = enchantments.first()
                 possibleEnchantments.add(mapOf(
@@ -137,7 +138,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             )
             val enchantedItem: ItemStack =
                 EnchantmentHelper.enchantItem(
-                    Random(enchantmentSeed + slot),
+                    RandomSource.create(enchantmentSeed + slot),
                     targetItem,
                     enchantmentPower,
                     allowTreasureEnchants

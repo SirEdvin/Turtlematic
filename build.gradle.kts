@@ -59,6 +59,7 @@ loom {
 
 sourceSets.main.configure {
     resources.srcDir("src/generated/resources")
+    kotlin.exclude("**/integrations/chipped/**")
 }
 
 repositories {
@@ -77,6 +78,7 @@ repositories {
         url = uri("https://repo.repsy.io/mvn/siredvin/default")
     }
     maven { url = uri("https://nexus.resourcefulbees.com/repository/maven-public/")}
+    mavenLocal()
 }
 
 dependencies {
@@ -91,25 +93,25 @@ dependencies {
     val fabricKotlinVersion: String by project
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion")
 
-    modImplementation("com.github.cc-tweaked:cc-restitched:v1.18.2-1.100.5-ccr")
-    modImplementation("curse.maven:forgeconfigapirt-fabric-547434:3671141")
-    modImplementation("siredvin.site:Peripheralium:0.1.1") {
+    modImplementation("com.github.cc-tweaked:cc-restitched:v1.19.1-1.101.2-ccr")
+    modImplementation("curse.maven:forgeconfigapirt-fabric-547434:3960064")
+    modImplementation("siredvin.site:Peripheralium:0.2.1") {
         exclude(group="net.fabricmc.fabric-api")
     }
 
     // Some mod integrations
     // Chipped
 
-    modImplementation("curse.maven:chipped-456956:4020978") {
-        exclude(group="net.fabricmc.fabric-api")
-    }
+//    modImplementation("curse.maven:chipped-456956:4020978") {
+//        exclude(group="net.fabricmc.fabric-api")
+//    }
 
-    modRuntimeOnly("curse.maven:wthit-440979:3735869")
-    modRuntimeOnly("curse.maven:spark-361579:3644349")
-    modRuntimeOnly("me.codexadrian:ctm-refabricated:1.0.0+1.18")
+//    modRuntimeOnly("curse.maven:wthit-440979:3735869")
+//    modRuntimeOnly("curse.maven:spark-361579:3644349")
+//    modRuntimeOnly("me.codexadrian:ctm-refabricated:1.0.0+1.18")
 
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449")
-    modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:8.1.449")
+//    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:8.1.449")
+//    modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:8.1.449")
 }
 
 tasks {
