@@ -5,7 +5,6 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
@@ -13,17 +12,14 @@ import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CropBlock
-import net.minecraft.world.level.block.NetherWartBlock
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.HitResult
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.util.InsertionHelpers
+import site.siredvin.peripheralium.util.ContainerHelpers
 import site.siredvin.peripheralium.util.representation.animalData
 import site.siredvin.peripheralium.util.representation.beeNestAnalyze
 import site.siredvin.peripheralium.util.representation.cropAge
 import site.siredvin.peripheralium.util.representation.honeyLevel
-import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.datatypes.AreaInteractionMode
@@ -114,7 +110,7 @@ class HusbandryAutomataCorePeripheral(
             stacks.forEach {
                 if (it.`is`(targetItemToReduce))
                     it.shrink(1)
-                InsertionHelpers.toInventoryOrToWorld(
+                ContainerHelpers.toInventoryOrToWorld(
                     it,
                     peripheralOwner.turtle.inventory,
                     peripheralOwner.turtle.selectedSlot,
