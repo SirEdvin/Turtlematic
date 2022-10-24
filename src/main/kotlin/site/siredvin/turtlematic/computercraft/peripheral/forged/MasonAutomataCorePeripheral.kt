@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.properties.RailShape
 import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.util.FakeItemContainer
-import site.siredvin.peripheralium.util.InsertionHelpers
+import site.siredvin.peripheralium.util.ContainerHelpers
 import site.siredvin.peripheralium.util.LimitedInventory
 import site.siredvin.peripheralium.util.representation.LuaInterpretation
 import site.siredvin.peripheralium.util.Pair
@@ -254,7 +254,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         val output = produce(level, fakeContainer, targetItem, recipe, limit)
         if (output.isEmpty)
             return MethodResult.of(null, "Strange internal error appear, cannot find useful recipe")
-        InsertionHelpers.toInventoryOrToWorld(
+        ContainerHelpers.toInventoryOrToWorld(
             output, turtleInventory, peripheralOwner.turtle.selectedSlot,
             pos.relative(peripheralOwner.facing), level
         )
@@ -288,7 +288,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             level.setBlockAndUpdate(hit.blockPos, targetBlockState)
         } else {
             level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
-            InsertionHelpers.toInventoryOrToWorld(
+            ContainerHelpers.toInventoryOrToWorld(
                 output.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
                 peripheralOwner.pos.relative(peripheralOwner.facing), level
             )

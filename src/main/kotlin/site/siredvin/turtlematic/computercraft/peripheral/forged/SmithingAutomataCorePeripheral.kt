@@ -86,7 +86,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             val result: ItemStack = recipe.assemble(limitedInventory)
             result.count = result.count * smeltCount
             limitedInventory.reduceCount(0, smeltCount)
-            InsertionHelpers.toInventoryOrToWorld(
+            ContainerHelpers.toInventoryOrToWorld(
                 result, turtleInventory, peripheralOwner.turtle.selectedSlot,
                 pos.relative(peripheralOwner.facing), level
             )
@@ -118,7 +118,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                 level.setBlockAndUpdate(hit.blockPos, targetBlockState)
             } else {
                 level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
-                InsertionHelpers.toInventoryOrToWorld(
+                ContainerHelpers.toInventoryOrToWorld(
                     recipe.resultItem.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
                     peripheralOwner.pos.relative(peripheralOwner.facing), level
                 )
@@ -146,7 +146,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             val result: ItemStack = recipe.assemble(limitedInventory)
             limitedInventory.reduceCount(0)
             limitedInventory.reduceCount(1)
-            InsertionHelpers.toInventoryOrToWorld(
+            ContainerHelpers.toInventoryOrToWorld(
                 result, turtleInventory, peripheralOwner.turtle.selectedSlot,
                 pos.relative(peripheralOwner.facing), level
             )
