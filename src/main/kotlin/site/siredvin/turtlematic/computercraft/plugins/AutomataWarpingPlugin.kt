@@ -79,6 +79,8 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
         val level: Level = owner.level!!
         val data: CompoundTag = pointData
+        if (!data.contains(name))
+            return MethodResult.of(null, "Cannot find point to warp to")
         val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
         return automataCore.withOperation(
             SingleOperation.WARP,
