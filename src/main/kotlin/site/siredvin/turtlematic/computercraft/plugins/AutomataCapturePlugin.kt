@@ -113,7 +113,7 @@ class AutomataCapturePlugin(
                 if (!isEditable)
                     return@withOperation MethodResult.of(null, "Block is protected")
                 val state = level.getBlockState(hit.blockPos)
-                if (!state.`is`(BlockTags.CAPTURE_BLACKLIST))
+                if (state.`is`(BlockTags.CAPTURE_BLACKLIST))
                     return@withOperation MethodResult.of(null, "Block is in blacklist")
                 val serializedData = CompoundTag()
                 serializedData.put("state", NbtUtils.writeBlockState(state))
