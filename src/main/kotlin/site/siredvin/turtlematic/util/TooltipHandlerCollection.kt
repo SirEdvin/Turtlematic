@@ -55,9 +55,14 @@ object TooltipHandlerCollection {
             tooltipList.add(text(Turtlematic.MOD_ID, "periodical_area_grown_accelerator"))
     }
 
+    fun tradingTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+        tooltipList.add(text(Turtlematic.MOD_ID, "has_trade_abilities"))
+    }
+
     fun registerDefaults() {
         registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
         registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
+        registerProvider(Items.NETHERITE_MERCANTILE_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::tradingTooltip)
 
         registerProvider(Items.MASON_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.SMITHING_AUTOMATA_CORE, this::commonTooltips)
@@ -65,6 +70,7 @@ object TooltipHandlerCollection {
         registerProvider(Items.ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
 
         registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
+        registerProvider(Items.STARBOUND_MERCANTILE_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::tradingTooltip)
         registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
 
         registerProvider(Items.STARBOUND_MASON_AUTOMATA_CORE, this::commonTooltips)
@@ -74,6 +80,7 @@ object TooltipHandlerCollection {
 
         registerProvider(Items.CREATIVE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
         registerProvider(Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
+        registerProvider(Items.CREATIVE_MERCANTILE_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::tradingTooltip)
 
         registerProvider(Items.CREATIVE_MASON_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.CREATIVE_SMITHING_AUTOMATA_CORE, this::commonTooltips)
