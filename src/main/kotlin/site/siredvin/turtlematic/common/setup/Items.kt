@@ -23,18 +23,26 @@ object Items {
     val AUTOMATA_CORE = AutomataCore().register("automata_core")
     val HUSBANDRY_AUTOMATA_CORE =
         RecipeAutomataCore(AutomataCoreTier.TIER2) { TurtlematicConfig.enableHusbandryAutomataCore }.register("husbandry_automata_core")
+    val MERCANTILE_AUTOMATA_CORE =
+        RecipeAutomataCore(AutomataCoreTier.TIER2) { TurtlematicConfig.enableMercantileAutomataCore }.register("mercantile_automata_core")
     val END_AUTOMATA_CORE =
         RecipeAutomataCore(AutomataCoreTier.TIER2) { TurtlematicConfig.enableEndAutomataCore }.register("end_automata_core")
     val NETHERITE_HUSBANDRY_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.TIER3, { TurtlematicConfig.enableHusbandryAutomataCore }).register("netherite_husbandry_automata_core")
+    val NETHERITE_MERCANTILE_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.TIER3, { TurtlematicConfig.enableMercantileAutomataCore }).register("netherite_mercantile_automata_core")
     val NETHERITE_END_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.TIER3, { TurtlematicConfig.enableEndAutomataCore }).register("netherite_end_automata_core")
     val STARBOUND_HUSBANDRY_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableHusbandryAutomataCore }).register("starbound_husbandry_automata_core")
+    val STARBOUND_MERCANTILE_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableMercantileAutomataCore }).register("starbound_mercantile_automata_core")
     val STARBOUND_END_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.TIER4, { TurtlematicConfig.enableEndAutomataCore }).register("starbound_end_automata_core")
     val CREATIVE_HUSBANDRY_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableHusbandryAutomataCore }).register("creative_husbandry_automata_core")
+    val CREATIVE_MERCANTILE_AUTOMATA_CORE =
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableMercantileAutomataCore }).register("creative_mercantile_automata_core")
     val CREATIVE_END_AUTOMATA_CORE =
         BaseAutomataCore(AutomataCoreTier.CREATIVE, { TurtlematicConfig.enableEndAutomataCore }).register("creative_end_automata_core")
     val ENORMOUS_AUTOMATA_CORE =

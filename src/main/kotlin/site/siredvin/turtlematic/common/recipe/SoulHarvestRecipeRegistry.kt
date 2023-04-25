@@ -58,8 +58,15 @@ object SoulHarvestRecipeRegistry {
                     SimpleSoulHarvestIngredient(EntityType.CHICKEN, 1),
                 ), Items.HUSBANDRY_AUTOMATA_CORE
             )
+        val mercantileSoulRecord =
+            SoulHarvestRecipe(
+                listOf(
+                    SimpleSoulHarvestIngredient(EntityType.IRON_GOLEM, 1),
+                ), Items.MERCANTILE_AUTOMATA_CORE
+            )
         addRecipe(Items.AUTOMATA_CORE, endSoulRecord)
         addRecipe(Items.AUTOMATA_CORE, husbandrySoulRecord)
+        addRecipe(Items.AUTOMATA_CORE, mercantileSoulRecord)
     }
 
     fun injectForgedAutomataCoreRecipes() {
