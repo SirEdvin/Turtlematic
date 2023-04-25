@@ -32,6 +32,8 @@ object TurtlematicConfig {
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_END_AUTOMATA_CORE.get()
     val enableHusbandryAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_HUSBANDRY_AUTOMATA_CORE.get()
+    val enableMercantileAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
     val enableEnormousAutomata: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENORMOUS_AUTOMATA.get()
     // forged automata cores toggles
@@ -90,6 +92,7 @@ object TurtlematicConfig {
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_HUSBANDRY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
+        val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENORMOUS_AUTOMATA: ForgeConfigSpec.BooleanValue
         // Forged automata core
         val ENABLE_BREWING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -126,6 +129,7 @@ object TurtlematicConfig {
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)
             ENABLE_END_AUTOMATA_CORE = builder.define("enableEndAutomataCore", true)
             ENABLE_HUSBANDRY_AUTOMATA_CORE = builder.define("enableHusbandryAutomataCore", true)
+            ENABLE_MERCANTILE_AUTOMATA_CORE = builder.define("enableMercantileAutomataCore", true)
             ENABLE_ENORMOUS_AUTOMATA = builder.define("enableEnormousAutomata", true)
 
             ENABLE_BREWING_AUTOMATA_CORE = builder.define("enableBrewingAutomataCore", true)

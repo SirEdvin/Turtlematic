@@ -11,13 +11,14 @@ enum class AutomataCoreTier(
     TIER1(2, 2, 1.0),
     TIER2(4, 3, 1.0),
     TIER3(8, 4, 0.8, setOf(
-        AutomataCoreTraits.DURABILITY_REFUND_CHANCE
+        AutomataCoreTraits.DURABILITY_REFUND_CHANCE, AutomataCoreTraits.APPRENTICE
     )),
     TIER4(16, 6, 0.5, setOf(
-        AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.STARBOUND_REGENERATION, AutomataCoreTraits.SKILLED
+        AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.STARBOUND_REGENERATION, AutomataCoreTraits.SKILLED, AutomataCoreTraits.APPRENTICE
     )),
     CREATIVE(Int.MAX_VALUE, Int.MAX_VALUE, 0.0, setOf(
-        AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.FUEL_CONSUMPTION_DISABLED, AutomataCoreTraits.SKILLED
+        AutomataCoreTraits.DURABILITY_REFUND, AutomataCoreTraits.FUEL_CONSUMPTION_DISABLED, AutomataCoreTraits.SKILLED, AutomataCoreTraits.APPRENTICE,
+        AutomataCoreTraits.MASTERPIECE
     ));
 
     private var _interactionRadius: ForgeConfigSpec.IntValue? = null

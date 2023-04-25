@@ -18,6 +18,8 @@ enum class SingleOperation(
     USE(1000, 1),
     HARVEST(1000, 1),
     SUCK(1000, 1),
+    TRADE(1000, 5),
+    RESTOCK(60_000, 500),
     BREW(1_000, 5),
     THROW_POTION(1_000, 10),
     SMITH(1_000, 1),

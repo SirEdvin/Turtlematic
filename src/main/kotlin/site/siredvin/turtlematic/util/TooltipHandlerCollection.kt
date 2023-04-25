@@ -49,10 +49,18 @@ object TooltipHandlerCollection {
     }
 
     fun husbandryTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
-        if (coreTier == AutomataCoreTier.TIER3 || coreTier == AutomataCoreTier.TIER4)
-            tooltipList.add(text(Turtlematic.MOD_ID, "periodical_single_grown_accelerator"))
-        if (coreTier == AutomataCoreTier.CREATIVE)
-            tooltipList.add(text(Turtlematic.MOD_ID, "periodical_area_grown_accelerator"))
+        if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled) {
+            if (coreTier.traits.contains(AutomataCoreTraits.MASTERPIECE))
+                tooltipList.add(text(Turtlematic.MOD_ID, "periodical_area_grown_accelerator"))
+            else if (coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+                tooltipList.add(text(Turtlematic.MOD_ID, "periodical_single_grown_accelerator"))
+        }
+    }
+
+    fun tradingTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
+        tooltipList.add(text(Turtlematic.MOD_ID, "has_trade_abilities"))
+        if (coreTier.traits.contains(AutomataCoreTraits.SKILLED))
+            tooltipList.add(text(Turtlematic.MOD_ID, "can_restock_traders"))
     }
 
     fun registerDefaults() {
@@ -65,6 +73,7 @@ object TooltipHandlerCollection {
         registerProvider(Items.ENCHANTING_AUTOMATA_CORE, this::commonTooltips, this::enchantingTooltip)
 
         registerProvider(Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
+        registerProvider(Items.STARBOUND_MERCANTILE_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::tradingTooltip)
         registerProvider(Items.STARBOUND_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
 
         registerProvider(Items.STARBOUND_MASON_AUTOMATA_CORE, this::commonTooltips)
@@ -74,6 +83,7 @@ object TooltipHandlerCollection {
 
         registerProvider(Items.CREATIVE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
         registerProvider(Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
+        registerProvider(Items.CREATIVE_MERCANTILE_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::tradingTooltip)
 
         registerProvider(Items.CREATIVE_MASON_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.CREATIVE_SMITHING_AUTOMATA_CORE, this::commonTooltips)

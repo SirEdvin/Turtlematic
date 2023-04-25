@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.3] - 2023-04-25
+
+### Added
+- Mercantile automata for trading with villagers and traders
+- Starbound Mercantile automata, that can restock villagers!
+
+### Changed
+
+- Brewing automata effects IDs will now me "minecraft:something"
+- Enchanting automata enchantment data now enriched with correct cost information
+
 ## [0.5.2] - 2022-12-28
 ### Fixed
 - Blocklist check for capture end automata logic #3
