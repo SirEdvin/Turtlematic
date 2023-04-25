@@ -61,12 +61,12 @@ object SoulHarvestRecipeRegistry {
         val mercantileSoulRecord =
             SoulHarvestRecipe(
                 listOf(
-                    SimpleSoulHarvestIngredient(EntityType.IRON_GOLEM, 1),
+                    SimpleSoulHarvestIngredient(EntityType.WANDERING_TRADER, 1),
                 ), Items.MERCANTILE_AUTOMATA_CORE
             )
         addRecipe(Items.AUTOMATA_CORE, endSoulRecord)
         addRecipe(Items.AUTOMATA_CORE, husbandrySoulRecord)
-        addRecipe(Items.AUTOMATA_CORE, mercantileSoulRecord)
+        addRecipe(Items.FORGED_AUTOMATA_CORE, mercantileSoulRecord)
     }
 
     fun injectForgedAutomataCoreRecipes() {

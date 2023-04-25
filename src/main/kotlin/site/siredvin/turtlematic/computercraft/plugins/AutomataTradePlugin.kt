@@ -6,94 +6,99 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.npc.Villager
-import net.minecraft.world.entity.npc.VillagerProfession
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.trading.Merchant
 import net.minecraft.world.item.trading.MerchantOffer
-import net.minecraft.world.item.trading.MerchantOffers
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.util.ContainerHelpers
-import site.siredvin.turtlematic.computercraft.datatypes.InteractionMode
 import site.siredvin.turtlematic.computercraft.datatypes.VerticalDirection
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.computercraft.peripheral.forged.ExperienceAutomataCorePeripheral
 import java.util.*
 import java.util.function.Predicate
 
 class AutomataTradePlugin(
-    automataCore: BaseAutomataCorePeripheral,
-    private val allowedMods: Set<InteractionMode>,
+    automataCore: ExperienceAutomataCorePeripheral,
     private val suitableEntity: Predicate<Entity> = Predicate { false }
 ) : AutomataCorePlugin(automataCore) {
+
     override val operations: Array<IPeripheralOperation<*>>
         get() = arrayOf(SingleOperation.TRADE)
 
-    private fun tradeImpl(villager: Villager, firstCostSlot: Int, secondCostSlot: Optional<Int>): MethodResult {
-        if(villager.villagerData.profession == VillagerProfession.NONE) return MethodResult.of(null, "no matching trades found")
-        if(villager.isTrading) return MethodResult.of(null, "this villager is busy with another trade")
-        val offers: MerchantOffers = villager.offers
+    private fun tradeImpl(merchant: Merchant, indexHint: Int?): MethodResult {
+        if (merchant.offers.isEmpty()) return MethodResult.of(null, "There is no trade offers right now")
+        if (merchant.tradingPlayer != null) return MethodResult.of(null, "This merchant is busy with another trade")
         val turtleInventory: Container = automataCore.peripheralOwner.turtle.inventory
-        val firstCostSlotItemStack: ItemStack = turtleInventory.getItem(firstCostSlot)
-        val secondCostSlotItemStack: ItemStack = if(secondCostSlot.isEmpty) ItemStack.EMPTY else turtleInventory.getItem(secondCostSlot.get())
-        var matchingOffer: MerchantOffer? = null
-        for(offer: MerchantOffer in villager.offers)
-            if(offer.costA.sameItem(firstCostSlotItemStack) && (offer.costB.isEmpty || offer.costB.sameItem(secondCostSlotItemStack))) {
-                matchingOffer = offer
-                break
+        val firstItem = automataCore.peripheralOwner.toolInMainHand
+        var secondItem = ItemStack.EMPTY
+        // So, not the latest slot selected
+        val selectedSlot = automataCore.peripheralOwner.turtle.selectedSlot
+        if (selectedSlot != 15)
+            secondItem = turtleInventory.getItem(selectedSlot + 1)
+        val matchingOffers = mutableMapOf<Int, MerchantOffer>()
+        merchant.offers.onEachIndexed { index, offer ->
+            if (!offer.isOutOfStock && offer.costA.sameItem(firstItem) && (offer.costB.isEmpty || offer.costB.sameItem(secondItem)))
+                matchingOffers[index] = offer
         }
-        if(matchingOffer==null) return MethodResult.of(null, "no matching trades found")
+        if (matchingOffers.isEmpty())
+            return MethodResult.of(null, "No matching trades found")
+        var matchingOffer: MerchantOffer? = null
+        if (matchingOffers.size > 1)
+            if (indexHint == null)
+                return MethodResult.of(null, "Several overlapping offers found, please, provide index hint")
+            if (matchingOffers[indexHint] == null)
+                return MethodResult.of(null, "Incorrect index hint, there is no matching order for this index hint")
+            matchingOffer = matchingOffers[indexHint]
+        if (matchingOffers.size == 1)
+            matchingOffer = matchingOffers.values.first()
+        if (matchingOffer == null)
+            return MethodResult.of(null, "Some random error in mod code, thats, well, should not happen")
         val costB: ItemStack = matchingOffer.costB
         val hasCostB = !costB.isEmpty
-        if(firstCostSlotItemStack.count < matchingOffer.costA.count || (hasCostB && secondCostSlotItemStack.count < matchingOffer.costB.count))
-            return MethodResult.of(null, "not enough items to complete trade")
+        if(firstItem.count < matchingOffer.costA.count || (hasCostB && secondItem.count < matchingOffer.costB.count))
+            return MethodResult.of(null, "Not enough items to complete trade")
 
-        turtleInventory.removeItem(firstCostSlot, matchingOffer.costA.count)
-        if(hasCostB) turtleInventory.removeItem(secondCostSlot.get(), costB.count)
-        ContainerHelpers.toInventoryOrToWorld(
-            matchingOffer.result,
-            turtleInventory,
-            automataCore.peripheralOwner.turtle.selectedSlot,
-            automataCore.peripheralOwner.pos.above(),
-            automataCore.peripheralOwner.level!!
-        )
-        villager.notifyTrade(matchingOffer)
-        villager.playSound(villager.notifyTradeSound, 1F, villager.voicePitch)
+        return automataCore.withOperation(SingleOperation.TRADE) {
+            turtleInventory.removeItem(selectedSlot, matchingOffer.costA.count)
+            if (hasCostB) turtleInventory.removeItem(selectedSlot + 1, costB.count)
+            ContainerHelpers.toInventoryOrToWorld(
+                matchingOffer.result,
+                turtleInventory,
+                selectedSlot,
+                automataCore.peripheralOwner.pos.above(),
+                automataCore.peripheralOwner.level!!
+            )
+            merchant.notifyTrade(matchingOffer)
+            if (merchant is LivingEntity)
+                merchant.playSound(merchant.notifyTradeSound, 1F, merchant.voicePitch)
 
-        return MethodResult.of(matchingOffer.result.count)
+            return@withOperation MethodResult.of(matchingOffer.result.count)
+        }
     }
 
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun trade(arguments: IArguments): MethodResult {
-        var directionArgument: Optional<String>
-        try {
-            directionArgument = arguments.optString(1)
-        } catch(e: LuaException){
-            directionArgument = Optional.empty()
-        }
-        val directionProvided = !directionArgument.isEmpty
-        val overwrittenDirection = if (!directionProvided) null else VerticalDirection.luaValueOf(
+        val indexHintArgument = arguments.optInt(0)
+        val indexHint = if (indexHintArgument.isEmpty) null else indexHintArgument.get() - 1
+        val directionArgument = arguments.optString(1)
+        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
             directionArgument.get()
         )
-        val firstCostSlot = (if(directionProvided) arguments.getInt(1) else arguments.getInt(0)) - 1
-        val secondCostSlot = run{
-            val tempSecondCostSlot = if(directionProvided) arguments.optInt(2) else arguments.optInt(1)
-            if(tempSecondCostSlot.isPresent) Optional.of(tempSecondCostSlot.get()-1) else tempSecondCostSlot
-        }
-
         val hit = automataCore.peripheralOwner.withPlayer({ player -> player.findHit(
             skipEntity = false,
-            skipBlock = false,
+            skipBlock = true,
             entityFilter = suitableEntity
         ) }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         return when (hit.type) {
-            HitResult.Type.MISS -> MethodResult.of(null, "no villager found")
-            HitResult.Type.BLOCK -> MethodResult.of(null, "no villager found")
+            HitResult.Type.MISS -> MethodResult.of(null, "No merchant found")
+            HitResult.Type.BLOCK -> MethodResult.of(null, "No merchant found")
             HitResult.Type.ENTITY -> {
                 val hitEntity: Entity = (hit as EntityHitResult).entity
-                return if(hitEntity is Villager) tradeImpl(hitEntity, firstCostSlot, secondCostSlot) else MethodResult.of(null, "no villager found")
+                return if(hitEntity is Merchant) tradeImpl(hitEntity, indexHint) else MethodResult.of(null, "No merchant found")
             }
             null -> throw LuaException("This should never, never happen at all")
         }

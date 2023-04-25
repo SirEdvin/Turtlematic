@@ -49,20 +49,23 @@ object TooltipHandlerCollection {
     }
 
     fun husbandryTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
-        if (coreTier == AutomataCoreTier.TIER3 || coreTier == AutomataCoreTier.TIER4)
-            tooltipList.add(text(Turtlematic.MOD_ID, "periodical_single_grown_accelerator"))
-        if (coreTier == AutomataCoreTier.CREATIVE)
-            tooltipList.add(text(Turtlematic.MOD_ID, "periodical_area_grown_accelerator"))
+        if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled) {
+            if (coreTier.traits.contains(AutomataCoreTraits.MASTERPIECE))
+                tooltipList.add(text(Turtlematic.MOD_ID, "periodical_area_grown_accelerator"))
+            else if (coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+                tooltipList.add(text(Turtlematic.MOD_ID, "periodical_single_grown_accelerator"))
+        }
     }
 
     fun tradingTooltip(coreTier: IAutomataCoreTier, tooltipList: MutableList<Component>) {
         tooltipList.add(text(Turtlematic.MOD_ID, "has_trade_abilities"))
+        if (coreTier.traits.contains(AutomataCoreTraits.SKILLED))
+            tooltipList.add(text(Turtlematic.MOD_ID, "can_restock_traders"))
     }
 
     fun registerDefaults() {
         registerProvider(Items.NETHERITE_END_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip)
         registerProvider(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::husbandryTooltip)
-        registerProvider(Items.NETHERITE_MERCANTILE_AUTOMATA_CORE, this::commonTooltips, this::interactionAPITooltip, this::tradingTooltip)
 
         registerProvider(Items.MASON_AUTOMATA_CORE, this::commonTooltips)
         registerProvider(Items.SMITHING_AUTOMATA_CORE, this::commonTooltips)

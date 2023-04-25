@@ -8,7 +8,6 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.world.Container
-import net.minecraft.world.inventory.EnchantmentMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
@@ -16,6 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.peripheralium.util.*
+import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.peripheralium.util.world.ScanUtils
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
@@ -102,15 +102,19 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         if (!targetItem.isEnchantable) return MethodResult.of(null, "Item is not enchantable")
         if (targetItem.isEnchanted) return MethodResult.of(null, "Item already enchanted!")
         val possibleEnchantments = mutableListOf<Map<String, Any>>()
+        val experienceAbility = peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
+            ?: return MethodResult.of(null, "Internal error ...?")
         intArrayOf(0, 1, 2).forEach {
             val cost = EnchantmentHelper.getEnchantmentCost(Random(enchantmentSeed + it), it, enchantmentPower, targetItem)
             val enchantments = EnchantmentHelper.selectEnchantment(Random(enchantmentSeed + it), targetItem, cost, allowTreasureEnchants)
             if (enchantments != null && enchantments.isNotEmpty()) {
                 val enchantment = enchantments.first()
-                possibleEnchantments.add(mapOf(
-                    "name" to enchantment.enchantment.getFullname(enchantment.level).string,
-                    "cost" to cost
-                ))
+                val baseInformation = LuaRepresentation.forEnchantment(enchantment.enchantment, enchantment.level)
+                val requiredCost = XPUtil.levelsToXP(cost)
+                baseInformation["requiredXP"] = requiredCost
+                baseInformation["cost"] = XPUtil.levelReductionToXp(
+                    experienceAbility.getStoredXP().coerceAtLeast(requiredCost), it + 1)
+                possibleEnchantments.add(baseInformation)
             }
         }
         return MethodResult.of(possibleEnchantments)

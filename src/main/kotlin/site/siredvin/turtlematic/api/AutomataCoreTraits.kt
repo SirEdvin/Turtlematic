@@ -9,4 +9,6 @@ object AutomataCoreTraits {
     val STARBOUND_REGENERATION = ResourceLocation(Turtlematic.MOD_ID, "starbound_regeneration")
     val FUEL_CONSUMPTION_DISABLED = ResourceLocation(Turtlematic.MOD_ID, "fuel_consumption_disabled")
     val SKILLED = ResourceLocation(Turtlematic.MOD_ID, "skilled")
+    val APPRENTICE = ResourceLocation(Turtlematic.MOD_ID, "apprentice")
+    val MASTERPIECE = ResourceLocation(Turtlematic.MOD_ID, "masterpiece")
 }

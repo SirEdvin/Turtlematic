@@ -97,7 +97,8 @@
   "text.turtlematic.fuel_consumption_disabled": "  §6§nFuel consumption disabled",
   "text.turtlematic.periodical_single_grown_accelerator": "  §6§nPeriodically accelerate grown of random crop in interaction radius",
   "text.turtlematic.periodical_area_grown_accelerator": "  §6§nPeriodically accelerate grown of all crops in interaction radius",
-  "text.turtlematic.has_trade_abilities": "  §6§nCan see and perform villager trades",
+  "text.turtlematic.has_trade_abilities": "  §6§nCan see and perform merchant trades",
+  "text.turtlematic.can_restock_traders": "  §6§nCan restock villager trades",
 
   "keybind.turtlematic.description": "Show item description",
   "keybind.turtlematic.recipe": "Show item recipe tips",
