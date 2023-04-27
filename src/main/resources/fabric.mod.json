@@ -12,7 +12,7 @@
     "issues": "https://example.com/",
     "sources": "https://example.com/"
   },
-  "license": "GNU Lesser General Public License version 3 (LGPLv3)",
+  "license": "MIT",
   "icon": "assets/turtlematic/icon.png",
   "environment": "*",
   "entrypoints": {
