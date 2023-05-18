@@ -12,8 +12,6 @@ import site.siredvin.peripheralium.common.items.DescriptiveItem
 import site.siredvin.peripheralium.common.items.TurtleItem
 import site.siredvin.turtlematic.Turtlematic
 import site.siredvin.turtlematic.common.items.ForgedAutomataCore
-import site.siredvin.turtlematic.computercraft.ComputerCraftProxy
-import site.siredvin.turtlematic.computercraft.turtle.*
 import site.siredvin.turtlematic.util.register
 
 object Items {
@@ -72,4 +70,5 @@ object Items {
     // miscellaneous
     val TURTLE_CHATTER = TurtleItem(Turtlematic.TAB, { TurtlematicConfig.enableTurtleChatter }, TurtleIDBuildFunction.WITHOUT_TURTLE).register("turtle_chatter")
     val CREATIVE_CHEST = TurtleItem(Turtlematic.TAB, { TurtlematicConfig.enableCreativeChest }) .register("creative_chest")
+    val CHUNK_VIAL = TurtleItem(Turtlematic.TAB, { TurtlematicConfig.enableChunkVial }) .register("chunk_vial")
 }

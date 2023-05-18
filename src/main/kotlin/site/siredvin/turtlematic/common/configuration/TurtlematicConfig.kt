@@ -25,6 +25,12 @@ object TurtlematicConfig {
     val enableLavaBucket: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_LAVA_BUCKET.get()
 
+    val enableChunkVial: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_CHUNK_VIAL.get()
+
+    val chunkLoadedTimeLimit: Long
+        get() = ConfigHolder.COMMON_CONFIG.CHUNK_VIAL_TIME_LIMIT.get()
+
     // automata core toggles
     val enableAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_AUTOMATA_CORE.get()
@@ -88,6 +94,8 @@ object TurtlematicConfig {
         val ENABLE_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
         val ENABLE_STICKY_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
         val ENABLE_LAVA_BUCKET: ForgeConfigSpec.BooleanValue
+        val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
+        val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -117,7 +125,10 @@ object TurtlematicConfig {
             ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
             ENABLE_TURTLE_PISTON = builder.define("enablePistonTurtle", true)
             ENABLE_STICKY_TURTLE_PISTON = builder.define("enableStickyPistonTurtle", true)
-            ENABLE_LAVA_BUCKET = builder.define("enableLavaBucket", true)
+            ENABLE_LAVA_BUCKET = builder.define("enableLaaBucket", true)
+            ENABLE_CHUNK_VIAL = builder.define("enableChunkVial", true)
+            CHUNK_VIAL_TIME_LIMIT = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
+                .defineInRange("chunkVialTimeLimit", 5_000, 1, Long.MAX_VALUE)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)

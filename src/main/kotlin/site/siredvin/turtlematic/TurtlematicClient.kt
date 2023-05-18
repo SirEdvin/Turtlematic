@@ -16,6 +16,8 @@ object TurtlematicClient: ClientModInitializer {
         "turtle_chatter_upgrade_right",
         "turtle_creative_chest_upgrade_left",
         "turtle_creative_chest_upgrade_right",
+        "chunk_vial_upgrade_left",
+        "chunk_vial_upgrade_right",
     )
 
     private val turtleLeftUpgradeCache: MutableMap<ResourceLocation, ModelResourceLocation> = hashMapOf()

@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.4] - 2023-05-18
+
+### Added
+
+- Chunk loading turtle! You can use chunk vial to make sure that turtle will be always loaded
+
+### Changed
+
+- Mod recipes now supports fabric tags
+
 ## [0.5.3] - 2023-04-25
 
 ### Added

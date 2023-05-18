@@ -11,10 +11,10 @@
       "item": "minecraft:soul_lantern"
     },
     "E": {
-      "item": "minecraft:emerald"
+      "tag": "c:emeralds"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "tag": "c:redstone_dusts"
     }
   },
   "result": {

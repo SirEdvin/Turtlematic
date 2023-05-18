@@ -12,4 +12,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "Turtlematic"
+val minecraftVersion: String by settings
+rootProject.name = "Turtlematic $minecraftVersion"

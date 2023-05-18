@@ -31,6 +31,7 @@
   "item.turtlematic.soul_scrapper": "Soul scrapper",
   "item.turtlematic.turtle_chatter": "Turtle chatter",
   "item.turtlematic.creative_chest": "Creative chest",
+  "item.turtlematic.chunk_vial": "Chunk vial",
 
   "turtle.turtlematic.automata": "Automata",
   "turtle.turtlematic.husbandry_automata": "Husbandry automata",
@@ -65,6 +66,7 @@
   "turtle.turtlematic.piston": "Piston",
   "turtle.turtlematic.sticky_piston": "Sticky piston",
   "turtle.turtlematic.lava_bucket": "Trashing",
+  "turtle.turtlematic.chunk_vial": "Loading",
 
   "itemGroup.turtlematic.main": "Turtlematic",
 
@@ -75,6 +77,7 @@
   "item.turtlematic.tooltip.turtle_chatter": "§7Strange device that allows turtle to create crude chat bubbles",
   "item.turtlematic.tooltip.creative_chest": "§7Creative item, that allows turtle to generate items",
   "item.turtlematic.tooltip.forged_automata_core": "§5It seems too empty for use it now. Feed it with villager soul first",
+  "item.turtlematic.tooltip.chunk_vial": "§7With this vial, turtle will always load its chunk",
 
   "text.turtlematic.automata_core_feed_by_player": "You will that automata core cannot be feed by human hand",
   "text.turtlematic.consumed_entities": "Consumed:",
