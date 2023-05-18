@@ -1,0 +1,109 @@
+[versions]
+# Base libraries
+kotlin = "1.8.21"
+kotlin-coroutines = "1.6.4"
+kotlin-atomicfu = "0.20.2"
+# Gradle plugins
+sponge = "0.2.1-SNAPSHOT"
+loom = "1.1.9"
+mixinGradle = "0.7.+"
+forgegradle = "5.1.+"
+# Core mod dependencies
+cc-tweaked = "1.104.0"
+peripheralium = "0.5.2"
+mixin = "0.8.5"
+# Fabric dependencies
+fabric-api = "0.79.0+1.19.4"
+fabric-loader = "0.14.9"
+fabric-kotlin = "1.9.4+kotlin.1.8.21"
+forgeconfigapirt-fabric = "6.0.2"
+# Forge dependencies
+forge = "45.0.57"
+forge-kotlin = "4.2.0"
+parchment = "2023.03.12"
+parchmentMc = "1.19.3"
+# Extra mod dependencies
+cloth-config = "10.0.96"
+architectury = "8.1.80"
+
+# Dev mod dependenceis
+jei = "13.1.0.9"
+rei = "11.0.597"
+
+# Shared integration mod dependency
+
+[libraries]
+# Base libraries
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-atomicfu = {module = "org.jetbrains.kotlinx:atomicfu-jvm", version.ref = "kotlin-atomicfu"}
+
+# Core mod dependencies
+cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.19.4-common-api", version.ref = "cc-tweaked"}
+cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.19.4-core", version.ref = "cc-tweaked"}
+common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt-fabric"}
+peripheralium-core = {module = "site.siredvin:peripheralium-common-1.19.4", version.ref = "peripheralium"}
+mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
+
+# Fabric mod dependencies
+fabric-loader = {module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader"}
+fabric-api = {module = "net.fabricmc.fabric-api:fabric-api", version.ref="fabric-api"}
+fabric-kotlin = {module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-kotlin"}
+fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt-fabric"}
+cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.19.4-fabric-api", version.ref = "cc-tweaked"}
+cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.19.4-fabric", version.ref = "cc-tweaked"}
+peripheralium-fabric = {module = "site.siredvin:peripheralium-fabric-1.19.4", version.ref = "peripheralium"}
+
+# Forge mod dependencies
+cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.19.4-forge", version.ref="cc-tweaked"}
+forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
+peripheralium-forge = {module = "site.siredvin:peripheralium-forge-1.19.4", version.ref = "peripheralium"}
+
+# Dev mod dependencies
+jei-fabric = { module = "mezz.jei:jei-1.19.4-fabric", version.ref = "jei" }
+jei-forge = { module = "mezz.jei:jei-1.19.4-forge", version.ref = "jei" }
+rei-fabric = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei"}
+
+# Extra mod dependency
+cloth-config-forge = {module = "me.shedaniel.cloth:cloth-config-forge", version.ref = "cloth-config"}
+cloth-config-fabric = {module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config"}
+
+architectury-forge = {module = "dev.architectury:architectury-forge", version.ref="architectury"}
+architectury-fabric = {module = "dev.architectury:architectury-fabric", version.ref="architectury"}
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+vanillaGradle = { id = "org.spongepowered.gradle.vanilla", version.ref = "sponge"}
+loom = {id = "fabric-loom", version.ref = "loom"}
+mixinGradle = { id = "org.spongepowered.mixin", version.ref = "mixinGradle" }
+
+[bundles]
+kotlin = ["kotlin-stdlib", "kotlin-coroutines", "kotlin-atomicfu"]
+cccommon = ["cc-tweaked-common", "cc-tweaked-core", "peripheralium-core"]
+apicommon = ["common-config"]
+ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core", "peripheralium-fabric"]
+fabric-core = ["fabric-loader"]
+fabric = ["fabric-api", "fabric-kotlin", "fabric-config"]
+forge-raw = ["forge-kotlin"]
+forge-base = ["cc-tweaked-forge", "peripheralium-forge"]
+
+# Minecraft
+externalMods-forge-runtime = ["jei-forge", "architectury-forge", "cloth-config-forge"]
+externalMods-fabric-runtime = ["rei-fabric", "architectury-fabric", "cloth-config-fabric"]
+
+# Integration dependencies
+externalMods-fabric-integrations-api = []
+
+externalMods-fabric-integrations-full = [
+]
+externalMods-fabric-integrations-active = [
+]
+externalMods-fabric-integrations-activedep = [
+]
+
+externalMods-forge-integrations-full = [
+]
+externalMods-forge-integrations-active = [
+]
+externalMods-forge-integrations-activedep = [
+]
