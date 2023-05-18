@@ -204,3 +204,7 @@ modrinth {
         required.project("peripheralium")
     }
 }
+
+tasks.create("uploadMod") {
+    dependsOn(tasks.modrinth, tasks.curseforge)
+}
