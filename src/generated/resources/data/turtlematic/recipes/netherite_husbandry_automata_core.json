@@ -4,7 +4,7 @@
     "item": "turtlematic:husbandry_automata_core"
   },
   "addition": {
-    "item": "minecraft:netherite_ingot"
+    "tag": "c:netherite_ingots"
   },
   "result": {
     "item": "turtlematic:netherite_husbandry_automata_core"

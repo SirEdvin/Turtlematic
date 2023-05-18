@@ -1,0 +1,6 @@
+{
+  "parent": "turtlematic:base/turtle_upgrade_left",
+  "textures": {
+    "texture": "turtlematic:item/chunk_vial"
+  }
+}

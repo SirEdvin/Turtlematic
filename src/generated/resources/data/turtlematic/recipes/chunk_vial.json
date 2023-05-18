@@ -1,26 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
-  "group": "turtlematic",
   "pattern": [
-    "/I/",
-    "DSD",
-    "/I/"
+    "GDG",
+    "GSG",
+    "GEG"
   ],
   "key": {
-    "/": {
-      "item": "minecraft:stick"
-    },
     "S": {
       "item": "turtlematic:filled_soul_vial"
+    },
+    "G": {
+      "tag": "c:gold_ingots"
     },
     "D": {
       "tag": "c:diamonds"
     },
-    "I": {
-      "tag": "c:iron_ingots"
+    "E": {
+      "tag": "c:emeralds"
     }
   },
   "result": {
-    "item": "turtlematic:automata_core"
+    "item": "turtlematic:chunk_vial"
   }
 }

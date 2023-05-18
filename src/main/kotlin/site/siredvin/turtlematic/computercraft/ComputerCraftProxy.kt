@@ -15,10 +15,7 @@ import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.*
 import site.siredvin.turtlematic.computercraft.peripheral.forged.*
 import site.siredvin.turtlematic.computercraft.peripheral.misc.*
-import site.siredvin.turtlematic.computercraft.turtle.BlockTurtleUpgrade
-import site.siredvin.turtlematic.computercraft.turtle.ClockwiseAnimatedTurtleUpgrade
-import site.siredvin.turtlematic.computercraft.turtle.StarboundTurtleUpgrade
-import site.siredvin.turtlematic.computercraft.turtle.TickerFunctions
+import site.siredvin.turtlematic.computercraft.turtle.*
 
 object ComputerCraftProxy {
 
@@ -76,6 +73,7 @@ object ComputerCraftProxy {
         TURTLE_UPGRADES.add(PeripheralTurtleUpgrade.dynamic(net.minecraft.world.item.Items.LAVA_BUCKET, { turtle, side -> LavaBucketPeripheral(TurtlePeripheralOwner(turtle, side)) }, WITH_TURTLEMATIC_ID))
         TURTLE_UPGRADES.add(CHATTER_TURTLE!!)
         TURTLE_UPGRADES.add(BlockTurtleUpgrade.dynamic(Items.CREATIVE_CHEST) { turtle, side -> CreativeChestPeripheral(TurtlePeripheralOwner(turtle, side)) })
+        TURTLE_UPGRADES.add(ChunkVialTurtle(Items.CHUNK_VIAL))
 
         TURTLE_UPGRADES.add(
             FacingBlockTurtle.dynamic(

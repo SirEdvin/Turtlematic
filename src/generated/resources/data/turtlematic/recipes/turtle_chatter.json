@@ -10,10 +10,10 @@
       "item": "computercraft:speaker"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "tag": "c:redstone_dusts"
     },
     "I": {
-      "item": "minecraft:iron_ingot"
+      "tag": "c:iron_ingots"
     }
   },
   "result": {

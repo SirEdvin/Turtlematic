@@ -12,6 +12,7 @@ import site.siredvin.turtlematic.common.configuration.ConfigHolder
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.computercraft.ComputerCraftProxy
+import site.siredvin.turtlematic.util.ChunkManager
 import site.siredvin.turtlematic.util.Platform
 import site.siredvin.turtlematic.util.TooltipHandlerCollection
 import java.util.function.Consumer
@@ -43,5 +44,6 @@ object Turtlematic: ModInitializer {
         ComputerCraftProxy.initialize()
 
         TooltipHandlerCollection.registerDefaults()
+        ChunkManager.registerHooks()
     }
 }

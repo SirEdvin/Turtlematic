@@ -48,7 +48,7 @@ val modrinthKey = secretEnv["MODRINTH_KEY"] ?: System.getenv("MODRINTH_KEY") ?: 
 
 loom {
     runs {
-        create("datagen") {
+        create("data") {
             client()
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.modid=turtlematic")
@@ -97,7 +97,7 @@ dependencies {
 
     modImplementation("com.github.cc-tweaked:cc-restitched:v1.19.1-1.101.2-ccr")
     modImplementation("curse.maven:forgeconfigapirt-fabric-547434:3960064")
-    modImplementation("siredvin.site:Peripheralium:${peripheraliumVersion}-${minecraftVersion}") {
+    modImplementation("siredvin.site:peripheralium:${peripheraliumVersion}-${minecraftVersion}") {
         exclude(group="net.fabricmc.fabric-api")
     }
 
