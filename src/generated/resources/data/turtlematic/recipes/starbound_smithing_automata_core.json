@@ -1,10 +1,10 @@
 {
   "type": "minecraft:smithing",
-  "base": {
-    "item": "turtlematic:smithing_automata_core"
-  },
   "addition": {
     "item": "minecraft:nether_star"
+  },
+  "base": {
+    "item": "turtlematic:smithing_automata_core"
   },
   "result": {
     "item": "turtlematic:starbound_smithing_automata_core"

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " S ",
-    "S/S",
-    "/  "
-  ],
   "key": {
     "/": {
       "item": "minecraft:stick"
@@ -13,6 +8,11 @@
       "item": "minecraft:soul_lantern"
     }
   },
+  "pattern": [
+    " S ",
+    "S/S",
+    "/  "
+  ],
   "result": {
     "item": "turtlematic:soul_scrapper"
   }
