@@ -6,20 +6,23 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
+import site.siredvin.peripheralium.common.items.PeripheralItem
 import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
+import java.util.function.Function
 import java.util.function.Supplier
 
 class RecipeAutomataCore(
     coreTier: IAutomataCoreTier,
     p: Properties,
-    enableSup: Supplier<Boolean>
-) : BaseAutomataCore(coreTier, p, enableSup) {
-    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>): this(
-        coreTier, Properties().stacksTo(1), enableSup
+    enableSup: Supplier<Boolean>,
+    vararg tooltipHook: Function<PeripheralItem, List<Component>>
+) : BaseAutomataCore(coreTier, p, enableSup, *tooltipHook) {
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<PeripheralItem, List<Component>>): this(
+        coreTier, Properties().stacksTo(1), enableSup, *tooltipHook
     )
 
     override fun appendHoverText(

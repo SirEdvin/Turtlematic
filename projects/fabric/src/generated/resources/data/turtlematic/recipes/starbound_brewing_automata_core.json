@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:nether_star"
+  },
+  "base": {
+    "item": "turtlematic:brewing_automata_core"
+  },
+  "result": {
+    "item": "turtlematic:starbound_brewing_automata_core"
+  }
+}

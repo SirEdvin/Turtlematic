@@ -49,6 +49,22 @@ object DataStorageObjects {
         }
     }
 
+    object Angle {
+
+        private const val ANGLE_SETTINGS = "angle"
+        operator fun get(access: ITurtleAccess, side: TurtleSide): Double {
+            return DataStorageUtil.getDataStorage(access, side).getDouble(ANGLE_SETTINGS)
+        }
+
+        operator fun get(owner: IPeripheralOwner): Double {
+            return owner.dataStorage.getDouble(ANGLE_SETTINGS)
+        }
+
+        operator fun set(owner: IPeripheralOwner, value: Double) {
+            owner.dataStorage.putDouble(ANGLE_SETTINGS, value)
+        }
+    }
+
     object TurtleChat {
         private const val CHAT_MESSAGE = "chatMessage"
 

@@ -55,7 +55,7 @@ class SoulVial : DescriptiveItem(Properties().stacksTo(1).fireResistant()) {
                         itemStack.orCreateTag.putInt(NBT_KEY, fillLevel)
                         InteractionResultHolder.success(itemStack)
                     } else {
-                        InteractionResultHolder.consume(Items.FILLED_SOUL_VIAL.defaultInstance)
+                        InteractionResultHolder.consume(Items.FILLED_SOUL_VIAL.get().defaultInstance)
                     }
                 }
                 return InteractionResultHolder.pass(itemStack)

@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.util.ChunkManager
 import java.util.*
@@ -12,8 +13,8 @@ import java.util.*
 
 class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
     OwnedPeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
-    companion object {
-        const val TYPE = "chunk_vial"
+    companion object: PeripheralConfiguration {
+        override val TYPE = "chunk_vial"
         private const val UUID_TAG = "uuid"
     }
 

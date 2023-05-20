@@ -27,6 +27,7 @@ import site.siredvin.peripheralium.util.representation.honeyLevel
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataCapturePlugin
@@ -49,9 +50,9 @@ class HusbandryAutomataCorePeripheral(
 ){
     init {
         addPlugin(AutomataLookPlugin(
-            this, entityEnriches = listOf(::animalData),
-            blockStateEnriches = listOf(::cropAge, ::honeyLevel),
-            blockEntityEnriches = listOf(::beeNestAnalyze)
+            this, entityEnriches = listOf(animalData),
+            blockStateEnriches = listOf(cropAge, honeyLevel),
+            blockEntityEnriches = listOf(beeNestAnalyze)
         ))
         addPlugin(
             AutomataInteractionPlugin(
@@ -61,18 +62,14 @@ class HusbandryAutomataCorePeripheral(
         )
         addPlugin(
             AutomataScanPlugin(
-            this, suitableEntity = suitableEntity, entityEnriches = listOf(::animalData),
+            this, suitableEntity = suitableEntity, entityEnriches = listOf(animalData),
             allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY))
         )
         addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.ENTITY), suitableEntity))
     }
 
-    companion object {
-        const val TYPE = "husbandryAutomata"
-        val UPGRADE_ID = ResourceLocation(TurtlematicCore.MOD_ID, TYPE)
-        val NETHERITE_UPGRADE_ID = UPGRADE_ID.toNetherite()
-        val STARBOUND_UPGRADE_ID = UPGRADE_ID.toStarbound()
-        val CREATIVE_UPGRADE_ID = UPGRADE_ID.toCreative()
+    companion object: PeripheralConfiguration {
+        override val TYPE = "husbandryAutomata"
         private val isAnimal =
             Predicate { entity1: Entity ->
                 entity1.type.category.isFriendly || entity1.type.category == MobCategory.CREATURE || entity1.type.`is`(EntityTags.ANIMAL)

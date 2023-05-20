@@ -33,12 +33,17 @@ import site.siredvin.peripheralium.util.Pair
 import site.siredvin.peripheralium.util.representation.LuaInterpretation
 import site.siredvin.peripheralium.util.representation.stateProperties
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
+import site.siredvin.turtlematic.util.toCreative
+import site.siredvin.turtlematic.util.toStarbound
 import java.util.function.Predicate
 
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
@@ -94,8 +99,9 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             get() = listOf(StonecutterRecipe::class.java)
     }
 
-    companion object {
-        const val TYPE = "masonAutomataCore"
+    companion object: PeripheralConfiguration {
+        override val TYPE = "masonAutomataCore"
+
 
         private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()
         private val RECIPE_TO_ID = mutableMapOf<Class<*>, String>()
@@ -149,7 +155,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         get() = TurtlematicConfig.enableMasonAutomataCore
 
     init {
-        addPlugin(AutomataLookPlugin(this, blockStateEnriches = listOf(::stateProperties)))
+        addPlugin(AutomataLookPlugin(this, blockStateEnriches = listOf(stateProperties)))
     }
 
     override fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
@@ -160,11 +166,9 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     }
 
     private fun isEditable(pos: BlockPos): Boolean {
-//        return peripheralOwner.withPlayer({
-//            ComputerCraft.turtlesObeyBlockProtection && TurtlePermissions.isBlockEditable(level, pos, it)
-//        })
-        // TODO: find a way to add some protection?
-        return true
+        return peripheralOwner.withPlayer({
+            PeripheraliumPlatform.isBlockProtected(pos, it.level.getBlockState(pos), it)
+        })
     }
 
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {

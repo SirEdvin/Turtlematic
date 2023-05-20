@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "tag": "c:emeralds"
+    },
+    "R": {
+      "tag": "c:redstone_dusts"
+    },
+    "S": {
+      "item": "minecraft:soul_lantern"
+    }
+  },
+  "pattern": [
+    "R R",
+    "ESE",
+    "R R"
+  ],
+  "result": {
+    "item": "turtlematic:soul_vial"
+  }
+}

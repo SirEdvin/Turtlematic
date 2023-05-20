@@ -1,15 +1,18 @@
 package site.siredvin.turtlematic.computercraft.peripheral.misc
 
 import dan200.computercraft.api.lua.LuaFunction
+import dan200.computercraft.api.turtle.ITurtleAccess
+import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.world.item.ItemStack
 import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 
-class LavaBucketPeripheral(peripheralOwner: TurtlePeripheralOwner):
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
-    companion object {
-        const val TYPE = "lava_bucket"
+class LavaBucketPeripheral(turtle: ITurtleAccess, side: TurtleSide):
+    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    companion object: PeripheralConfiguration {
+        override val TYPE = "lava_bucket"
     }
 
     override val isEnabled: Boolean

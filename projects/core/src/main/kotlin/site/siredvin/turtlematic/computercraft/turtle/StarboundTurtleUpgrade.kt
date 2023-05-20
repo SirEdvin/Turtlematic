@@ -10,17 +10,17 @@ import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 
-abstract class StarboundTurtleUpgrade<T : IOwnedPeripheral<*>>: ClockwiseAnimatedTurtleUpgrade<T> {
+abstract class StarboundTurtleUpgrade<T : IOwnedPeripheral<*>>: ClockwiseTurtleUpgrade<T> {
     constructor(id: ResourceLocation, adjective: String, item: ItemStack) : super(id, adjective, item)
     constructor(id: ResourceLocation, item: ItemStack) : super(id, item)
 
     companion object {
-        fun <T : IOwnedPeripheral<*>> dynamic(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): StarboundTurtleUpgrade<T> {
-            return Dynamic(item.turtleID, item, constructor)
+        fun <T : IOwnedPeripheral<*>> dynamic(id: ResourceLocation, item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): StarboundTurtleUpgrade<T> {
+            return Dynamic(id, item, constructor)
         }
 
-        fun <T : IOwnedPeripheral<*>> ticker(item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): StarboundTurtleUpgrade<T> {
-            return Ticker(item.turtleID, item, constructor, ticker)
+        fun <T : IOwnedPeripheral<*>> ticker(id: ResourceLocation,item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): StarboundTurtleUpgrade<T> {
+            return Ticker(id, item, constructor, ticker)
         }
     }
 

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:nether_star"
+  },
+  "base": {
+    "item": "turtlematic:netherite_husbandry_automata_core"
+  },
+  "result": {
+    "item": "turtlematic:starbound_husbandry_automata_core"
+  }
+}

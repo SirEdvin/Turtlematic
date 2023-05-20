@@ -16,4 +16,16 @@ interface ModRecipeIngredients {
             return _IMPL!!
         }
     }
+
+    val soulLantern: Ingredient
+    val emerald: Ingredient
+    val redstoneDust: Ingredient
+    val diamond: Ingredient
+    val stick: Ingredient
+    val ironIngot: Ingredient
+    val goldIngot: Ingredient
+    val netheriteIngot: Ingredient
+    val netherStar: Ingredient
+
+    val computerSpeaker: Ingredient
 }

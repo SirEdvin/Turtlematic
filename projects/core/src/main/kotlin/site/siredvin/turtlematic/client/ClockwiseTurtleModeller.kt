@@ -6,11 +6,11 @@ import com.mojang.math.Transformation
 import dan200.computercraft.api.client.TransformedModel
 import dan200.computercraft.api.client.turtle.TurtleUpgradeModeller
 import dan200.computercraft.api.turtle.ITurtleAccess
+import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
-import site.siredvin.turtlematic.computercraft.turtle.ClockwiseAnimatedTurtleUpgrade
 import site.siredvin.turtlematic.util.DataStorageObjects
 
-class ClockwiseTurtleModeller<T: ClockwiseAnimatedTurtleUpgrade<*>>: TurtleUpgradeModeller<T> {
+class ClockwiseTurtleModeller<T: ITurtleUpgrade>: TurtleUpgradeModeller<T> {
     override fun getModel(upgrade: T, turtle: ITurtleAccess?, side: TurtleSide): TransformedModel {
         val stack = PoseStack()
         stack.pushPose()

@@ -2,6 +2,7 @@ package site.siredvin.turtlematic.computercraft.peripheral.misc
 
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
+import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleAnimation
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.world.InteractionHand
@@ -12,11 +13,12 @@ import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.api.ISoulFeedableItem
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 
-class SoulScrapperPeripheral(peripheralOwner: TurtlePeripheralOwner) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
-    companion object {
-        const val TYPE = "soul_scrapper"
+class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
+    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    companion object: PeripheralConfiguration {
+        override val TYPE = "soul_scrapper"
     }
 
     override val isEnabled: Boolean

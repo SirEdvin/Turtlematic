@@ -8,6 +8,8 @@ import dan200.computercraft.api.turtle.TurtleUpgradeDataProvider
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
 import dan200.computercraft.api.upgrades.UpgradeDataProvider
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -21,39 +23,30 @@ import java.util.function.Supplier
 interface TurtlematicPlatform {
     companion object {
         private var _IMPL: TurtlematicPlatform? = null
+        val ITEMS: MutableList<Supplier<Item>> = mutableListOf()
 
         fun configure(impl: TurtlematicPlatform) {
             _IMPL = impl
         }
 
-        fun get(): TurtlematicPlatform {
+        private fun get(): TurtlematicPlatform {
             if (_IMPL == null)
                 throw IllegalStateException("You should init Turtlematic Platform first")
             return _IMPL!!
         }
 
         fun <T: Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T> {
-            return get().registerItem(key, item)
+            val registeredItem = get().registerItem(key, item)
+            ITEMS.add(registeredItem as Supplier<Item>)
+            return registeredItem
         }
 
         fun <T: Item> registerItem(name: String, item: Supplier<T>): Supplier<T> {
             return registerItem(ResourceLocation(TurtlematicCore.MOD_ID, name), item)
         }
 
-        fun <T: Block> registerBlock(key: ResourceLocation, block: Supplier<T>, itemFactory: (T) -> (Item)): Supplier<T> {
-            return get().registerBlock(key, block, itemFactory)
-        }
-
-        fun <T: Block> registerBlock(name: String, block: Supplier<T>, itemFactory: (T) -> (Item) = { block -> DescriptiveBlockItem(block, Item.Properties()) }): Supplier<T> {
-            return get()
-                .registerBlock(ResourceLocation(TurtlematicCore.MOD_ID, name), block, itemFactory)
-        }
-
-        fun <V : BlockEntity, T : BlockEntityType<V>> registerBlockEntity(
-            key: ResourceLocation,
-            blockEntityTypeSup: Supplier<T>
-        ): Supplier<T> {
-            return get().registerBlockEntity(key, blockEntityTypeSup)
+        fun <V: Entity, T: EntityType<V>> registerEntity(key: ResourceLocation, entityTypeSup: Supplier<T>): Supplier<T> {
+            return get().registerEntity(key, entityTypeSup)
         }
 
         fun <V: ITurtleUpgrade> registerTurtleUpgrade(
@@ -64,33 +57,16 @@ interface TurtlematicPlatform {
         ) {
             get().registerTurtleUpgrade(key, serializer, dataGenerator, postRegistrationHooks)
         }
-        fun <V: IPocketUpgrade> registerPocketUpgrade(
-            key: ResourceLocation,
-            serializer: PocketUpgradeSerialiser<V>,
-            dataGenerator: BiFunction<PocketUpgradeDataProvider, PocketUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<PocketUpgradeSerialiser<*>>>
-        ) {
-            get().registerPocketUpgrade(key, serializer, dataGenerator)
-        }
     }
 
     fun <T: Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T>
 
-    fun <T: Block> registerBlock(key: ResourceLocation, block: Supplier<T>, itemFactory: (T) -> (Item)): Supplier<T>
-
-    fun <V : BlockEntity, T : BlockEntityType<V>> registerBlockEntity(
-        key: ResourceLocation,
-        blockEntityTypeSup: Supplier<T>
-    ): Supplier<T>
+    fun <V: Entity, T: EntityType<V>> registerEntity(key: ResourceLocation, entityTypeSup: Supplier<T>): Supplier<T>
 
     fun <V: ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
         serializer: TurtleUpgradeSerialiser<V>,
         dataGenerator: BiFunction<TurtleUpgradeDataProvider, TurtleUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<TurtleUpgradeSerialiser<*>>>,
         postRegistrationHooks: List<Consumer<Supplier<TurtleUpgradeSerialiser<V>>>>
-    )
-    fun <V: IPocketUpgrade> registerPocketUpgrade(
-        key: ResourceLocation,
-        serializer: PocketUpgradeSerialiser<V>,
-        dataGenerator: BiFunction<PocketUpgradeDataProvider, PocketUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<PocketUpgradeSerialiser<*>>>
     )
 }

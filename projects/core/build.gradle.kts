@@ -20,6 +20,9 @@ sourceSets.main.configure {
 
 minecraft {
     version(minecraftVersion)
+    accessWideners(
+        "src/main/resources/turtlematic-common.accesswidener"
+    )
 }
 
 repositories {

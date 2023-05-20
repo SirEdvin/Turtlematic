@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "D": {
+      "tag": "c:diamonds"
+    },
+    "I": {
+      "tag": "c:iron_ingots"
+    },
+    "S": {
+      "item": "turtlematic:filled_soul_vial"
+    }
+  },
+  "pattern": [
+    "/I/",
+    "DSD",
+    "/I/"
+  ],
+  "result": {
+    "item": "turtlematic:automata_core"
+  }
+}

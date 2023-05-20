@@ -48,7 +48,7 @@ abstract class BaseAutomataCorePeripheral(
     }
 
     open fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
-        return ArrayList()
+        return mutableListOf()
     }
 
     override val peripheralConfiguration: MutableMap<String, Any>

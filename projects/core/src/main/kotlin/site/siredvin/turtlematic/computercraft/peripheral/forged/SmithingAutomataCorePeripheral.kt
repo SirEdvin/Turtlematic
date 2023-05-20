@@ -8,6 +8,7 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
@@ -25,18 +26,23 @@ import site.siredvin.peripheralium.api.storage.ContainerUtils
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.peripheralium.util.*
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.util.toCreative
+import site.siredvin.turtlematic.util.toStarbound
 import java.util.*
 import kotlin.math.min
 
 class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
-    companion object {
-        const val TYPE = "smithingAutomataCore"
+    companion object: PeripheralConfiguration {
+        override val TYPE = "smithingAutomataCore"
     }
 
     override val isEnabled: Boolean
@@ -50,11 +56,9 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     }
 
     private fun isEditable(pos: BlockPos): Boolean {
-//        return peripheralOwner.withPlayer({
-//            ComputerCraft.turtlesObeyBlockProtection && TurtlePermissions.isBlockEditable(level, pos, it)
-//        })
-        // TODO: find a way to restore correct block protection handling
-        return true
+        return peripheralOwner.withPlayer({
+            PeripheraliumPlatform.isBlockProtected(pos, it.level.getBlockState(pos), it)
+        })
     }
 
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {

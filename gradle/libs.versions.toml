@@ -3,6 +3,7 @@
 kotlin = "1.8.21"
 kotlin-coroutines = "1.6.4"
 kotlin-atomicfu = "0.20.2"
+kotlin-datetime = "0.4.0"
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
 loom = "1.1.9"
@@ -10,7 +11,7 @@ mixinGradle = "0.7.+"
 forgegradle = "5.1.+"
 # Core mod dependencies
 cc-tweaked = "1.104.0"
-peripheralium = "0.5.2"
+peripheralium = "0.5.3-10"
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.79.0+1.19.4"
@@ -37,6 +38,7 @@ rei = "11.0.597"
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlin-atomicfu = {module = "org.jetbrains.kotlinx:atomicfu-jvm", version.ref = "kotlin-atomicfu"}
+kotlin-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime"}
 
 # Core mod dependencies
 cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.19.4-common-api", version.ref = "cc-tweaked"}
@@ -78,7 +80,7 @@ loom = {id = "fabric-loom", version.ref = "loom"}
 mixinGradle = { id = "org.spongepowered.mixin", version.ref = "mixinGradle" }
 
 [bundles]
-kotlin = ["kotlin-stdlib", "kotlin-coroutines", "kotlin-atomicfu"]
+kotlin = ["kotlin-stdlib", "kotlin-coroutines", "kotlin-atomicfu", "kotlin-datetime"]
 cccommon = ["cc-tweaked-common", "cc-tweaked-core", "peripheralium-core"]
 apicommon = ["common-config"]
 ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core", "peripheralium-fabric"]

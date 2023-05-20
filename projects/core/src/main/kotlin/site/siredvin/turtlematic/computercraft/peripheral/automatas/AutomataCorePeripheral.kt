@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.plugins.AutomataInteractionPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
@@ -24,9 +25,8 @@ class AutomataCorePeripheral(
         addPlugin(AutomataScanPlugin(this))
     }
 
-    companion object {
-        const val TYPE = "automata"
-        val UPGRADE_ID = ResourceLocation(TurtlematicCore.MOD_ID, TYPE)
+    companion object: PeripheralConfiguration {
+        override val TYPE = "automata"
     }
 
     override val isEnabled: Boolean

@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation
 import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.plugins.*
 import site.siredvin.turtlematic.util.toCreative
@@ -27,12 +28,8 @@ class EndAutomataCorePeripheral(
         addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.BLOCK)))
     }
 
-    companion object {
-        const val TYPE = "endAutomata"
-        val UPGRADE_ID = ResourceLocation(TurtlematicCore.MOD_ID, TYPE)
-        val NETHERITE_UPGRADE_ID = UPGRADE_ID.toNetherite()
-        val STARBOUND_UPGRADE_ID = UPGRADE_ID.toStarbound()
-        val CREATIVE_UPGRADE_ID = UPGRADE_ID.toCreative()
+    companion object: PeripheralConfiguration {
+        override val TYPE = "endAutomata"
     }
 
     override val isEnabled: Boolean

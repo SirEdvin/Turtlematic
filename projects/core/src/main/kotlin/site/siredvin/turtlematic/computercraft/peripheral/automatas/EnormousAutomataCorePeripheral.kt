@@ -7,6 +7,7 @@ import site.siredvin.peripheralium.api.datatypes.AreaInteractionMode
 import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.plugins.*
 
@@ -41,9 +42,8 @@ class EnormousAutomataCorePeripheral(
         addPlugin(AutomataWarpingPlugin(this))
     }
 
-    companion object {
-        const val TYPE = "enormousAutomata"
-        val UPGRADE_ID = ResourceLocation(TurtlematicCore.MOD_ID, TYPE)
+    companion object: PeripheralConfiguration {
+        override val TYPE = "enormousAutomata"
     }
 
     override val isEnabled: Boolean

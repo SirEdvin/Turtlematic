@@ -14,30 +14,30 @@ import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
-import kotlin.reflect.KFunction2
+import java.util.function.BiConsumer
 
 class AutomataLookPlugin(
     automataCore: BaseAutomataCorePeripheral,
-    private val entityEnriches: List<KFunction2<Entity, MutableMap<String, Any>, Unit>> = emptyList(),
-    private val blockStateEnriches: List<KFunction2<BlockState, MutableMap<String, Any>, Unit>> = emptyList(),
-    private val blockEntityEnriches: List<KFunction2<BlockEntity, MutableMap<String, Any>, Unit>> = emptyList(),
+    private val entityEnriches: List<BiConsumer<Entity, MutableMap<String, Any>>> = emptyList(),
+    private val blockStateEnriches: List<BiConsumer<BlockState, MutableMap<String, Any>>> = emptyList(),
+    private val blockEntityEnriches: List<BiConsumer<BlockEntity, MutableMap<String, Any>>> = emptyList(),
     private val allowedMods: Set<InteractionMode> = InteractionMode.values().toSet()
 ) : AutomataCorePlugin(automataCore) {
 
     private fun entityConverter(entity: Entity): MutableMap<String, Any> {
         val base = LuaRepresentation.forEntity(entity)
-        entityEnriches.forEach { it.invoke(entity, base) }
+        entityEnriches.forEach { it.accept(entity, base) }
         return base
     }
 
     private fun blockStateConverter(blockState: BlockState): MutableMap<String, Any> {
         val base = LuaRepresentation.forBlockState(blockState)
-        blockStateEnriches.forEach { it.invoke(blockState, base) }
+        blockStateEnriches.forEach { it.accept(blockState, base) }
         return base
     }
 
     private fun blockEntityConverter(blockEntity: BlockEntity, data: MutableMap<String, Any>) {
-        blockEntityEnriches.forEach { it.invoke(blockEntity, data) }
+        blockEntityEnriches.forEach { it.accept(blockEntity, data) }
     }
 
     private fun lookImpl(arguments: IArguments): MethodResult {

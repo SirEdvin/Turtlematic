@@ -6,6 +6,7 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.RandomSource
 import net.minecraft.world.Container
 import net.minecraft.world.item.ItemStack
@@ -18,17 +19,22 @@ import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOw
 import site.siredvin.peripheralium.util.*
 import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.peripheralium.util.world.ScanUtils
+import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.tags.BlockTags
+import site.siredvin.turtlematic.util.toCreative
+import site.siredvin.turtlematic.util.toStarbound
 import kotlin.math.max
 
 open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
-    companion object {
-        const val TYPE = "enchantingAutomataCore"
+    companion object: PeripheralConfiguration {
+        override val TYPE = "enchantingAutomataCore"
+
         private const val MAX_ENCHANTMENT_LEVEL = 30
     }
 
@@ -70,7 +76,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                 if (blockState.`is`(BlockTags.ENCHANTMENT_POWER_PROVIDER)) {
                     enchantmentPower.value = enchantmentPower.value + 1
                 } else if (blockState.`is`(ComputerCraftTags.Blocks.TURTLE)) {
-                    val itemStorage = ExtractorProxy.extractStorage(level, blockPos)
+                    val itemStorage = ExtractorProxy.extractStorage(level, blockPos, level.getBlockEntity(blockPos))
                     itemStorage?.getItems()?.forEach {
                         if (it.`is`(Items.ENCHANTED_BOOK))
                             enchantmentPower.value = enchantmentPower.value + 1

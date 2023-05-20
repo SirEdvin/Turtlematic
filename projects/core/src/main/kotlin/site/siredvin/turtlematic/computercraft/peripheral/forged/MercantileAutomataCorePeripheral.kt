@@ -10,16 +10,22 @@ import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.trading.Merchant
 import site.siredvin.peripheralium.api.datatypes.AreaInteractionMode
+import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.peripheralium.util.representation.merchantData
 import site.siredvin.peripheralium.util.representation.villagerData
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataRestockPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataScanPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataTradePlugin
 import java.util.function.Predicate
+
+fun merchantData(entity: Entity, data: MutableMap<String, Any>) {
+    if (entity is Merchant) data["offers"] = LuaRepresentation.forMerchantOffers(entity)
+}
 
 class MercantileAutomataCorePeripheral(
     turtle: ITurtleAccess,
@@ -30,11 +36,11 @@ class MercantileAutomataCorePeripheral(
 ){
     init {
         addPlugin(AutomataLookPlugin(
-            this, entityEnriches = listOf(::merchantData, ::villagerData)
+            this, entityEnriches = listOf(merchantData, villagerData)
         ))
         addPlugin(
             AutomataScanPlugin(
-            this, suitableEntity = suitableEntity, entityEnriches = listOf(::merchantData, ::villagerData),
+            this, suitableEntity = suitableEntity, entityEnriches = listOf(merchantData, villagerData),
             allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY))
         )
         addPlugin(AutomataTradePlugin(this, suitableEntity))
@@ -56,8 +62,9 @@ class MercantileAutomataCorePeripheral(
             }, suitableEntity))
     }
 
-    companion object {
-        const val TYPE = "mercantileAutomataCore"
+    companion object: PeripheralConfiguration {
+        override val TYPE = "mercantileAutomataCore"
+
         private val isMerchant =
             Predicate { entity1: Entity -> entity1 is Merchant }
         private val isLivingEntity =

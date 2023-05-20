@@ -8,7 +8,6 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.Util
 import net.minecraft.core.*
-import net.minecraft.core.dispenser.DispenseItemBehavior
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
@@ -30,22 +29,24 @@ import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.peripheralium.util.representation.effectsData
 import site.siredvin.turtlematic.api.IAutomataCoreTier
+import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.*
+import site.siredvin.turtlematic.util.TurtleDispenseBehavior
 import java.util.function.Predicate
 import kotlin.math.min
 
 class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
-    companion object {
-        const val TYPE = "brewingAutomataCore"
+    companion object : PeripheralConfiguration {
+        override val TYPE = "brewingAutomataCore"
         private val suitableEntity: Predicate<Entity> = Predicate<Entity> { entity: Entity -> entity is ZombieVillager }
     }
 
     init {
-        addPlugin(AutomataLookPlugin(this, entityEnriches = listOf(::effectsData)))
+        addPlugin(AutomataLookPlugin(this, entityEnriches = listOf(effectsData)))
         addPlugin(
             AutomataInteractionPlugin(
                 this, allowedMods = InteractionMode.values().toSet(),
@@ -54,61 +55,14 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
         )
         addPlugin(
             AutomataScanPlugin(
-                this, suitableEntity = suitableEntity, entityEnriches = listOf(::effectsData),
+                this, suitableEntity = suitableEntity, entityEnriches = listOf(effectsData),
                 allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY)
             )
         )
     }
 
-    // TODO: something really strange here, dispence behavior should be created every time
-
-    private class TurtlePotionDispenseBehavior constructor(
-        private val uncertaintyMultiply: Double,
-        private val powerMultiply: Double,
-        private val owner: IPeripheralOwner
-    ) : DispenseItemBehavior {
-        fun getDispensePosition(direction: Direction, turtleBlockSource: BlockSource): Position {
-            val x: Double = turtleBlockSource.x() + 0.7 * direction.stepX
-            val y: Double = turtleBlockSource.y() + 0.7 * direction.stepY
-            val z: Double = turtleBlockSource.z() + 0.7 * direction.stepZ
-            return PositionImpl(x, y, z)
-        }
-
-        override fun dispense(turtleBlockSource: BlockSource, stack: ItemStack): ItemStack {
-            val lvt_3_1_ = execute(turtleBlockSource, stack)
-            playSound(turtleBlockSource)
-            playAnimation(turtleBlockSource, owner.facing)
-            return lvt_3_1_
-        }
-
-        fun execute(turtleBlockSource: BlockSource, stack: ItemStack): ItemStack {
-            val level: Level = turtleBlockSource.level
-            val currentDirection = owner.facing
-            val targetPosition  = getDispensePosition(currentDirection, turtleBlockSource)
-            val entity: Projectile = getProjectile(level, targetPosition, stack)
-            entity.shoot(
-                currentDirection.stepX.toDouble(), currentDirection.stepY.toDouble() + 0.1f,
-                currentDirection.stepZ.toDouble(), power, uncertainty
-            )
-            level.addFreshEntity(entity)
-            stack.shrink(1)
-            return stack
-        }
-
-        protected fun playSound(turtleBlockSource: BlockSource) {
-            turtleBlockSource.level.levelEvent(1002, turtleBlockSource.pos, 0)
-        }
-
-        protected fun playAnimation(turtleBlockSource: BlockSource, direction: Direction) {
-            turtleBlockSource.level.levelEvent(2000, turtleBlockSource.pos, direction.get3DDataValue())
-        }
-
-        protected val uncertainty: Float
-            get() = (6.0f * uncertaintyMultiply).toFloat()
-        protected val power: Float
-            get() = (1.1f * powerMultiply).toFloat()
-
-        protected fun getProjectile(level: Level, targetPosition: Position, stack: ItemStack): Projectile {
+    internal class TurtlePotionDispenseBehavior(owner: IPeripheralOwner) : TurtleDispenseBehavior(owner) {
+        override fun getProjectile(level: Level, targetPosition: Position, stack: ItemStack): Projectile {
             return Util.make(
                 ThrownPotion(level, targetPosition.x(), targetPosition.y(), targetPosition.z())
             ) { p_218413_1_ -> p_218413_1_.item = stack }
@@ -117,6 +71,10 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
 
     override val isEnabled: Boolean
         get() = TurtlematicConfig.enableBrewingAutomataCore
+
+    private val dispenseBehavior: TurtlePotionDispenseBehavior by lazy {
+        TurtlePotionDispenseBehavior(peripheralOwner)
+    }
 
     override fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
         val operations = super.possibleOperations()
@@ -175,10 +133,9 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             )
             val potion: Potion = PotionUtils.getPotion(selectedStack)
             if (potion === Potions.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
-            val behavior: DispenseItemBehavior = TurtlePotionDispenseBehavior(uncertainty, power, peripheralOwner)
             turtleInventory.setItem(
                 selectedSlot,
-                behavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack)
+                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, power.toFloat(), uncertainty.toFloat())
             )
             MethodResult.of(true)
         }

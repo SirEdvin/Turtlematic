@@ -4,18 +4,17 @@ import net.minecraftforge.common.ForgeConfigSpec
 import site.siredvin.peripheralium.api.config.IConfigHandler
 import site.siredvin.peripheralium.api.config.IOperationAbilityConfig
 import site.siredvin.turtlematic.api.AutomataCoreTier
-import site.siredvin.turtlematic.computercraft.operations.CountOperation
-import site.siredvin.turtlematic.computercraft.operations.SimpleFreeOperation
-import site.siredvin.turtlematic.computercraft.operations.SingleOperation
-import site.siredvin.turtlematic.computercraft.operations.SphereOperation
+import site.siredvin.turtlematic.computercraft.operations.*
 
 object TurtlematicConfig: IOperationAbilityConfig {
     override val isInitialCooldownEnabled: Boolean
         get() = ConfigHolder.COMMON_CONFIG.IS_INITIAL_COOLDOWN_ENABLED.get()
     override val initialCooldownSensetiveLevel: Int
         get() = ConfigHolder.COMMON_CONFIG.INITIAL_COOLDOWN_SENSENTIVE_LEVEL.get()
-    override val cooldownTrasholdLevel: Int
-        get() = ConfigHolder.COMMON_CONFIG.COOLDOWN_TRASHOLD_LEVEL.get()
+    override val cooldownTresholdLevel: Int
+        get() = ConfigHolder.COMMON_CONFIG.COOLDOWN_TRESHOLD_LEVEL.get()
+    val xpToFuelRate: Int
+        get() = ConfigHolder.COMMON_CONFIG.XP_TO_FUEL_RATE.get()
 
     // additonal turtle peripherals
     val enableTurtleChatter: Boolean
@@ -38,6 +37,9 @@ object TurtlematicConfig: IOperationAbilityConfig {
 
     val chunkLoadedTimeLimit: Long
         get() = ConfigHolder.COMMON_CONFIG.CHUNK_VIAL_TIME_LIMIT.get()
+
+    val enableBowTurtle: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_BOW_TURTLE.get()
 
     // automata core toggles
     val enableAutomataCore: Boolean
@@ -99,7 +101,8 @@ object TurtlematicConfig: IOperationAbilityConfig {
         // Generic configuration
         var IS_INITIAL_COOLDOWN_ENABLED: ForgeConfigSpec.BooleanValue
         var INITIAL_COOLDOWN_SENSENTIVE_LEVEL: ForgeConfigSpec.IntValue
-        var COOLDOWN_TRASHOLD_LEVEL: ForgeConfigSpec.IntValue
+        var COOLDOWN_TRESHOLD_LEVEL: ForgeConfigSpec.IntValue
+        var XP_TO_FUEL_RATE: ForgeConfigSpec.IntValue
         // Extra turtle peripherals
         val ENABLE_TURTLE_CHATTER: ForgeConfigSpec.BooleanValue
         val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
@@ -108,6 +111,7 @@ object TurtlematicConfig: IOperationAbilityConfig {
         val ENABLE_LAVA_BUCKET: ForgeConfigSpec.BooleanValue
         val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
         val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
+        val ENABLE_BOW_TURTLE: ForgeConfigSpec.BooleanValue
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -137,8 +141,9 @@ object TurtlematicConfig: IOperationAbilityConfig {
                 .define("isInitialCooldownEnabled", true)
             INITIAL_COOLDOWN_SENSENTIVE_LEVEL = builder.comment("Determinates initial cooldown sensentive level, values lower then this value will not trigger initial cooldown")
                 .defineInRange("initialCooldownSensetiveLevel", 6000, 0, Int.MAX_VALUE)
-            COOLDOWN_TRASHOLD_LEVEL = builder.comment("Determinates trashold for cooldown to be stored")
-                .defineInRange("cooldownTrashholdLevel", 100, 0, Int.MAX_VALUE)
+            COOLDOWN_TRESHOLD_LEVEL = builder.comment("Determinates trashold for cooldown to be stored")
+                .defineInRange("cooldownTreshholdLevel", 100, 0, Int.MAX_VALUE)
+            XP_TO_FUEL_RATE = builder.comment("Determinate amount xp to correspond one fuel point").defineInRange("xpToFuelRate", 10, 1, Int.MAX_VALUE)
             builder.pop()
             builder.push("turtlePeripherals")
             ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
@@ -149,12 +154,14 @@ object TurtlematicConfig: IOperationAbilityConfig {
             ENABLE_CHUNK_VIAL = builder.define("enableChunkVial", true)
             CHUNK_VIAL_TIME_LIMIT = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
                 .defineInRange("chunkVialTimeLimit", 5_000, 1, Long.MAX_VALUE)
+            ENABLE_BOW_TURTLE = builder.define("enableBowTurtle", true)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)
             register(SphereOperation.values(), builder)
             register(SimpleFreeOperation.values(), builder)
             register(CountOperation.values(), builder)
+            register(UnconditionalOperations.values(), builder)
             builder.pop()
             builder.push("automataCores")
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)

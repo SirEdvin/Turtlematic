@@ -103,13 +103,14 @@ class AutomataCapturePlugin(
     }
 
     protected fun captureBlock(hit: BlockHitResult): MethodResult {
-        // TODO: consider adding block protection logic somehow ...
         return automataCore.withOperation(
             SingleOperation.CAPTURE,
             {
                 val owner = automataCore.peripheralOwner
                 val level = owner.level!!
                 val state = level.getBlockState(hit.blockPos)
+                if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it) }))
+                    return@withOperation MethodResult.of(null, "Block is protected")
                 if (state.`is`(BlockTags.CAPTURE_BLACKLIST))
                     return@withOperation MethodResult.of(null, "Block is in blacklist")
                 val serializedData = CompoundTag()
@@ -146,12 +147,11 @@ class AutomataCapturePlugin(
         val pos = owner.pos.offset(owner.facing.normal)
         if (!level.isEmptyBlock(pos))
             return MethodResult.of(null, "Target area should be empty")
-        // TODO: restore block protection logic here
-//        val isEditable = owner.withPlayer(
-//            { player -> ComputerCraft.turtlesObeyBlockProtection && TurtlePermissions.isBlockEditable(level, pos, player) }
-//        )
-//        if (!isEditable)
-//            return MethodResult.of(null, "This block is protected")
+        val isEditable = owner.withPlayer(
+            { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it) }
+        )
+        if (!isEditable)
+            return MethodResult.of(null, "This block is protected")
         level.setBlockAndUpdate(pos, extractedBlock.first)
         val entity = level.getBlockEntity(pos)
         if (entity != null && !extractedBlock.second.isEmpty)
