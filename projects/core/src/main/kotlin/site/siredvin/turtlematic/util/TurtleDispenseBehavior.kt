@@ -23,7 +23,6 @@ abstract class TurtleDispenseBehavior constructor(protected val owner: IPeripher
     fun dispense(turtleBlockSource: BlockSource, stack: ItemStack, power: Double, angle: Double): ItemStack {
         val resultStack = execute(turtleBlockSource, stack, power, angle)
         playSound(turtleBlockSource)
-        playAnimation(turtleBlockSource, owner.facing)
         return resultStack
     }
 
@@ -40,16 +39,11 @@ abstract class TurtleDispenseBehavior constructor(protected val owner: IPeripher
             currentDirection.stepZ.toDouble() * directionalMovement
         ))
         level.addFreshEntity(entity)
-        stack.shrink(1)
         return stack
     }
 
     protected fun playSound(turtleBlockSource: BlockSource) {
         turtleBlockSource.level.levelEvent(1002, turtleBlockSource.pos, 0)
-    }
-
-    protected fun playAnimation(turtleBlockSource: BlockSource, direction: Direction) {
-        turtleBlockSource.level.levelEvent(2000, turtleBlockSource.pos, direction.get3DDataValue())
     }
 
     abstract fun getProjectile(level: Level, targetPosition: Position, stack: ItemStack): Projectile

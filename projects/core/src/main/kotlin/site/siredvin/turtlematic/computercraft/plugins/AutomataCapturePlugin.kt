@@ -95,7 +95,6 @@ class AutomataCapturePlugin(
         if (storedType != InteractionMode.BLOCK)
             return null
         val data: CompoundTag = storedData
-        // TODO: critical to test this!
         val blockState =  NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound("state"))
         if (blockState.isAir)
             return null
@@ -147,10 +146,10 @@ class AutomataCapturePlugin(
         val pos = owner.pos.offset(owner.facing.normal)
         if (!level.isEmptyBlock(pos))
             return MethodResult.of(null, "Target area should be empty")
-        val isEditable = owner.withPlayer(
+        val isProtected = owner.withPlayer(
             { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it) }
         )
-        if (!isEditable)
+        if (isProtected)
             return MethodResult.of(null, "This block is protected")
         level.setBlockAndUpdate(pos, extractedBlock.first)
         val entity = level.getBlockEntity(pos)
@@ -183,7 +182,7 @@ class AutomataCapturePlugin(
 
     @LuaFunction(mainThread = true)
     fun release(): MethodResult {
-        if (!isFilled) return MethodResult.of(null, "No entity is stored")
+        if (!isFilled) return MethodResult.of(null, "Nothing is stored")
         return when (storedType) {
             InteractionMode.BLOCK -> releaseBlock()
             InteractionMode.ENTITY -> releaseEntity()

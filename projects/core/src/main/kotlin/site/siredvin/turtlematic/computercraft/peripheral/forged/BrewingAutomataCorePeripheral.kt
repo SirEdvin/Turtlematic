@@ -31,6 +31,8 @@ import site.siredvin.peripheralium.util.representation.effectsData
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.turtlematic.computercraft.operations.PowerOperation
+import site.siredvin.turtlematic.computercraft.operations.PowerOperationContext
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.*
 import site.siredvin.turtlematic.util.TurtleDispenseBehavior
@@ -63,6 +65,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
 
     internal class TurtlePotionDispenseBehavior(owner: IPeripheralOwner) : TurtleDispenseBehavior(owner) {
         override fun getProjectile(level: Level, targetPosition: Position, stack: ItemStack): Projectile {
+            stack.shrink(1)
             return Util.make(
                 ThrownPotion(level, targetPosition.x(), targetPosition.y(), targetPosition.z())
             ) { p_218413_1_ -> p_218413_1_.item = stack }
@@ -79,7 +82,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
     override fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
         val operations = super.possibleOperations()
         operations.add(SingleOperation.BREW)
-        operations.add(SingleOperation.THROW_POTION)
+        operations.add(PowerOperation.THROW_POTION)
         return operations
     }
 
@@ -118,11 +121,10 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun throwPotion(arguments: IArguments): MethodResult {
-        val power = min(arguments.optFiniteDouble(0, 1.0), 16.04)
-        val uncertainty = min(arguments.optFiniteDouble(1, 1.0), 16.0)
-        if (power == 0.0) throw LuaException("Power multiplicator cannot be 0")
-        if (uncertainty == 0.0) throw LuaException("Uncertainty multiplicator cannot be 0")
-        return withOperation(SingleOperation.THROW_POTION) {
+        val power = min(arguments.optFiniteDouble(0, 1.0), 16.0)
+        val angle = min(arguments.optFiniteDouble(1, 0.0), 16.0)
+        if (power <= 0.0) throw LuaException("Power cannot be 0")
+        return withOperation(PowerOperation.THROW_POTION, PowerOperationContext(power), {
             val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedStack: ItemStack = turtleInventory.getItem(selectedSlot)
@@ -135,9 +137,9 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             if (potion === Potions.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
             turtleInventory.setItem(
                 selectedSlot,
-                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, power.toFloat(), uncertainty.toFloat())
+                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, power, angle)
             )
             MethodResult.of(true)
-        }
+        })
     }
 }

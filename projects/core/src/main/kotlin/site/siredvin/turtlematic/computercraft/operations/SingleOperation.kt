@@ -21,7 +21,6 @@ enum class SingleOperation(
     TRADE(1000, 5),
     RESTOCK(60_000, 500),
     BREW(1_000, 5),
-    THROW_POTION(1_000, 10),
     SMITH(1_000, 1),
     CAPTURE(50000, 100),
     ENCHANTMENT(5_000, 10),

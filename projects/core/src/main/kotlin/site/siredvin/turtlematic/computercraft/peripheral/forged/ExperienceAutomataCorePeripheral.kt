@@ -6,7 +6,7 @@ import dan200.computercraft.api.turtle.TurtleSide
 import site.siredvin.peripheralium.computercraft.peripheral.ability.ExperienceAbility
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
-import site.siredvin.turtlematic.computercraft.operations.UnconditionalOperations
+import site.siredvin.turtlematic.computercraft.operations.UnconditionalOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 
 abstract class ExperienceAutomataCorePeripheral(
@@ -18,6 +18,6 @@ abstract class ExperienceAutomataCorePeripheral(
     type, turtle, side, tier
 ) {
     init {
-        peripheralOwner.attachAbility(EXPERIENCE, ExperienceAbility(peripheralOwner, tier.interactionRadius, TurtlematicConfig.xpToFuelRate, UnconditionalOperations.XP_TRANSFER))
+        peripheralOwner.attachAbility(EXPERIENCE, ExperienceAbility(peripheralOwner, tier.interactionRadius, TurtlematicConfig.xpToFuelRate, UnconditionalOperation.XP_TRANSFER))
     }
 }
