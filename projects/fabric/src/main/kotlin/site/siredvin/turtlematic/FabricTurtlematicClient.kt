@@ -15,7 +15,8 @@ object FabricTurtlematicClient: ClientModInitializer {
         ModelLoadingRegistry.INSTANCE.registerModelProvider { _: ResourceManager, out: Consumer<ResourceLocation> ->
             TurtlematicCoreClient.registerExtraModels(out)
         }
-        // TODO: don't forget to cleanup this
-        EntityRendererRegistry.register(EntityTypes.SHOOTED_ITEM_TYPE.get(), ::ThrownItemRenderer)
+        TurtlematicCoreClient.EXTRA_ENTITY_RENDERERS.forEach {
+            EntityRendererRegistry.register(it.get(), TurtlematicCoreClient.getEntityRendererProvider(it.get()))
+        }
     }
 }

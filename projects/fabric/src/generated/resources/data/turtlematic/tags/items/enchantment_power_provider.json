@@ -1,7 +1,20 @@
 {
   "replace": false,
   "values": [
-    "minecraft:nether_wart",
-    "minecraft:cocoa_beans"
+    "minecraft:bookshelf",
+    "minecraft:creeper_head",
+    "minecraft:creeper_head",
+    "minecraft:dragon_head",
+    "minecraft:dragon_head",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:wither_skeleton_skull",
+    "minecraft:skeleton_skull",
+    "minecraft:skeleton_skull",
+    "minecraft:zombie_head",
+    "minecraft:zombie_head",
+    "minecraft:player_head",
+    "minecraft:player_head",
+    "minecraft:candle",
+    "minecraft:air"
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "E": {
+      "tag": "forge:gems/emerald"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "S": {
+      "item": "turtlematic:filled_soul_vial"
+    }
+  },
+  "pattern": [
+    "GDG",
+    "GSG",
+    "GEG"
+  ],
+  "result": {
+    "item": "turtlematic:chunk_vial"
+  }
+}

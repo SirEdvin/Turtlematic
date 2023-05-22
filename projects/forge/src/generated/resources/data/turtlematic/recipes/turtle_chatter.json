@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "item": "computercraft:speaker"
+    }
+  },
+  "pattern": [
+    "RIR",
+    "ISI",
+    "RIR"
+  ],
+  "result": {
+    "item": "turtlematic:turtle_chatter"
+  }
+}

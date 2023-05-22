@@ -151,11 +151,11 @@ minecraft {
     }
 }
 
-//mixin {
-//    add(sourceSets.main.get(), "turtlematic.refmap.json")
-//
-//    config("turtlematic.mixins.json")
-//}
+mixin {
+    add(sourceSets.main.get(), "turtlematic.refmap.json")
+
+    config("turtlematic.mixins.json")
+}
 
 dependencies {
     val extractedLibs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")

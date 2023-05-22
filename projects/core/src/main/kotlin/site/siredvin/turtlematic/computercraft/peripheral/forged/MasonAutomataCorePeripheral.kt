@@ -100,7 +100,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     }
 
     companion object: PeripheralConfiguration {
-        override val TYPE = "masonAutomataCore"
+        override val TYPE = "masonAutomata"
 
 
         private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()

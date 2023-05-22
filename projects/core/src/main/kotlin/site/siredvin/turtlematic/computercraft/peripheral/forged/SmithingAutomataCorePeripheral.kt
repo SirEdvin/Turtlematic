@@ -42,7 +42,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
     companion object: PeripheralConfiguration {
-        override val TYPE = "smithingAutomataCore"
+        override val TYPE = "smithingAutomata"
     }
 
     override val isEnabled: Boolean

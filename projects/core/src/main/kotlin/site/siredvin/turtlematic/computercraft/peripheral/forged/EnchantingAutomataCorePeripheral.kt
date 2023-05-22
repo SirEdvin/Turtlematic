@@ -33,7 +33,7 @@ import kotlin.math.max
 open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
     companion object: PeripheralConfiguration {
-        override val TYPE = "enchantingAutomataCore"
+        override val TYPE = "enchantingAutomata"
 
         private const val MAX_ENCHANTMENT_LEVEL = 30
     }

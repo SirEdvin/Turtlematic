@@ -29,8 +29,6 @@ object TurtlematicCore {
     fun configure(platform: TurtlematicPlatform, ingredients: ModRecipeIngredients) {
         TurtlematicPlatform.configure(platform)
         ModRecipeIngredients.configure(ingredients)
-        SoulHarvestRecipeRegistry.injectAutomataCoreRecipes()
-        SoulHarvestRecipeRegistry.injectForgedAutomataCoreRecipes()
     }
 
 //    override fun onInitialize() {

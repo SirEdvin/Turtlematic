@@ -43,7 +43,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "brewingAutomataCore"
+        override val TYPE = "brewingAutomata"
         private val suitableEntity: Predicate<Entity> = Predicate<Entity> { entity: Entity -> entity is ZombieVillager }
     }
 

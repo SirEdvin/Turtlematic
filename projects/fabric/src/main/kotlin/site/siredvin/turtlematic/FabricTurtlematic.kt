@@ -31,6 +31,7 @@ object FabricTurtlematic: ModInitializer {
         )).build()
         // Register items and blocks
         TurtlematicCommonHooks.onRegister()
+        TurtlematicCommonHooks.commonSetup()
         // Load all integrations
         // Pretty important to setup configuration after integration loading!
         ForgeConfigRegistry.INSTANCE.register(TurtlematicCore.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC)

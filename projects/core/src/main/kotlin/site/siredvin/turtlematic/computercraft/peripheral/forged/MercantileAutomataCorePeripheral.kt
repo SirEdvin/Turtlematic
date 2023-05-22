@@ -23,10 +23,6 @@ import site.siredvin.turtlematic.computercraft.plugins.AutomataScanPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataTradePlugin
 import java.util.function.Predicate
 
-fun merchantData(entity: Entity, data: MutableMap<String, Any>) {
-    if (entity is Merchant) data["offers"] = LuaRepresentation.forMerchantOffers(entity)
-}
-
 class MercantileAutomataCorePeripheral(
     turtle: ITurtleAccess,
     side: TurtleSide,
@@ -63,7 +59,7 @@ class MercantileAutomataCorePeripheral(
     }
 
     companion object: PeripheralConfiguration {
-        override val TYPE = "mercantileAutomataCore"
+        override val TYPE = "mercantileAutomata"
 
         private val isMerchant =
             Predicate { entity1: Entity -> entity1 is Merchant }

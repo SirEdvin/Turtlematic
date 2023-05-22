@@ -67,8 +67,7 @@
   "turtle.turtlematic.sticky_piston": "Sticky piston",
   "turtle.turtlematic.lava_bucket": "Trashing",
   "turtle.turtlematic.chunk_vial": "Loading",
-
-  "itemGroup.turtlematic.main": "Turtlematic",
+  "turtle.turtlematic.bow": "Shooting",
 
   "item.turtlematic.tooltip.soul_vial": "§7Storage for raw souls. Click on soul sand to fill it",
   "item.turtlematic.extra.soul_vial.progress": "§5Already %s from %s souls stored",
@@ -79,6 +78,7 @@
   "item.turtlematic.tooltip.forged_automata_core": "§5It seems too empty for use it now. Feed it with villager soul first",
   "item.turtlematic.tooltip.chunk_vial": "§7With this vial, turtle will always load its chunk",
 
+  "text.turtlematic.creative_tab": "Turtlematic",
   "text.turtlematic.automata_core_feed_by_player": "You will that automata core cannot be feed by human hand",
   "text.turtlematic.consumed_entities": "Consumed:",
   "text.turtlematic.consumed_entities_record": "  %s/%s of %s",

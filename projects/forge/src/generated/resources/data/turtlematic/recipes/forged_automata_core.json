@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:ingots/netherite"
+  },
+  "base": {
+    "item": "turtlematic:automata_core"
+  },
+  "result": {
+    "item": "turtlematic:forged_automata_core"
+  }
+}

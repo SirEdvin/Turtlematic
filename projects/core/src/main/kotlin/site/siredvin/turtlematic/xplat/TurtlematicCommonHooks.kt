@@ -22,6 +22,7 @@ import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.client.AngleItemTurtleModeller
 import site.siredvin.turtlematic.client.ClockwiseTurtleModeller
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
+import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.AutomataCorePeripheral
@@ -259,6 +260,11 @@ object TurtlematicCommonHooks {
         Items.doSomething()
         EntityTypes.doSomething()
         registerTurtleUpgrades()
+    }
+
+    fun commonSetup() {
+        SoulHarvestRecipeRegistry.injectAutomataCoreRecipes()
+        SoulHarvestRecipeRegistry.injectForgedAutomataCoreRecipes()
     }
 
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
