@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2023-05-23
+
+### Added
+
+- Forge support
+- 1.19.4 support
+- Bow turtle
+
+### Changed
+
+- Brewing automata throw item API
+
 ## [0.5.4] - 2023-05-18
 
 ### Added
