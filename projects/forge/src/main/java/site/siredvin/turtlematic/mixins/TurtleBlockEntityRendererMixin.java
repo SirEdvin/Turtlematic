@@ -29,7 +29,7 @@ public class TurtleBlockEntityRendererMixin{
     private static final float TEXT_SCALING = 0.025F;
     private static final float BASE_HEIGHT = 1.6f;
 
-    @Inject(at = @At("HEAD"), method="render(Ldan200/computercraft/shared/turtle/blocks/TurtleBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V")
+    @Inject(at = @At("HEAD"), method="render(Ldan200/computercraft/shared/turtle/blocks/TurtleBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", remap = false)
     public void render(
             @Nonnull TurtleBlockEntity turtle, float partialTicks, @Nonnull PoseStack transform,
             @Nonnull MultiBufferSource buffers, int lightmapCoord, int overlayLight, CallbackInfo info) {

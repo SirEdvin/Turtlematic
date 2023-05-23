@@ -153,7 +153,6 @@ minecraft {
 
 mixin {
     add(sourceSets.main.get(), "turtlematic.refmap.json")
-
     config("turtlematic.mixins.json")
 }
 
@@ -162,8 +161,7 @@ dependencies {
     minecraft("net.minecraftforge:forge:${minecraftVersion}-${extractedLibs.findVersion("forge").get()}")
     implementation(libs.bundles.kotlin)
 
-//    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
-
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
     compileOnly(project(":core")) {
         exclude("cc.tweaked")
         exclude("fuzs.forgeconfigapiport")
