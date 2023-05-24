@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.1] - 2023-05-24
+
+### Changed
+
+- Required peripheralium version to 0.5.4, to fix forge issue with shooting turtle
+
 ### Fixed
 
 - Brewing automata `throwPotion` method now correctly accepts arguments
