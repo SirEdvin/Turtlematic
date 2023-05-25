@@ -60,6 +60,8 @@ val husbandryTooltip =  Function<PeripheralItem, List<Component>> { item ->
     if (item !is BaseAutomataCore || !TurtlematicConfig.husbandryAutomataRandomTicksEnabled)
         return@Function emptyList()
     val tooltipList = mutableListOf<Component>()
+    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+        tooltipList.add(text(TurtlematicCore.MOD_ID, "can_disable_animal_ai"))
     if (item.coreTier.traits.contains(AutomataCoreTraits.MASTERPIECE))
         tooltipList.add(text(TurtlematicCore.MOD_ID, "periodical_area_grown_accelerator"))
     else if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))

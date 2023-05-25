@@ -26,14 +26,12 @@ import site.siredvin.peripheralium.util.representation.cropAge
 import site.siredvin.peripheralium.util.representation.honeyLevel
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.TurtlematicCore
+import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
-import site.siredvin.turtlematic.computercraft.plugins.AutomataCapturePlugin
-import site.siredvin.turtlematic.computercraft.plugins.AutomataInteractionPlugin
-import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
-import site.siredvin.turtlematic.computercraft.plugins.AutomataScanPlugin
+import site.siredvin.turtlematic.computercraft.plugins.*
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.tags.EntityTags
 import site.siredvin.turtlematic.util.toCreative
@@ -66,6 +64,8 @@ class HusbandryAutomataCorePeripheral(
             allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY))
         )
         addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.ENTITY), suitableEntity))
+        if (tier.traits.contains(AutomataCoreTraits.APPRENTICE))
+            addPlugin(AutomataAIPlugin(this, suitableEntity))
     }
 
     companion object: PeripheralConfiguration {
