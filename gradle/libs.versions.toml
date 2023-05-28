@@ -1,9 +1,4 @@
 [versions]
-# Base libraries
-kotlin = "1.8.21"
-kotlin-coroutines = "1.6.4"
-kotlin-atomicfu = "0.20.2"
-kotlin-datetime = "0.4.0"
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
 loom = "1.1.9"
@@ -14,7 +9,7 @@ cc-tweaked = "1.104.0"
 peripheralium = "0.5.4"
 mixin = "0.8.5"
 # Fabric dependencies
-fabric-api = "0.79.0+1.19.4"
+fabric-api = "0.82.0+1.19.4"
 fabric-loader = "0.14.9"
 fabric-kotlin = "1.9.4+kotlin.1.8.21"
 forgeconfigapirt-fabric = "6.0.2"
@@ -34,12 +29,6 @@ rei = "11.0.597"
 # Shared integration mod dependency
 
 [libraries]
-# Base libraries
-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
-kotlin-atomicfu = {module = "org.jetbrains.kotlinx:atomicfu-jvm", version.ref = "kotlin-atomicfu"}
-kotlin-datetime = {module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime"}
-
 # Core mod dependencies
 cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.19.4-common-api", version.ref = "cc-tweaked"}
 cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.19.4-core", version.ref = "cc-tweaked"}
@@ -74,13 +63,11 @@ architectury-forge = {module = "dev.architectury:architectury-forge", version.re
 architectury-fabric = {module = "dev.architectury:architectury-fabric", version.ref="architectury"}
 
 [plugins]
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 vanillaGradle = { id = "org.spongepowered.gradle.vanilla", version.ref = "sponge"}
 loom = {id = "fabric-loom", version.ref = "loom"}
 mixinGradle = { id = "org.spongepowered.mixin", version.ref = "mixinGradle" }
 
 [bundles]
-kotlin = ["kotlin-stdlib", "kotlin-coroutines", "kotlin-atomicfu", "kotlin-datetime"]
 cccommon = ["cc-tweaked-common", "cc-tweaked-core", "peripheralium-core"]
 apicommon = ["common-config"]
 ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core", "peripheralium-fabric"]

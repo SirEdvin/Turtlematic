@@ -1,57 +1,18 @@
+import java.util.function.Consumer
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.kotlin)
+    id("peripheralium.root") version "0.2.5"
 }
 
-val mavenGroup by properties
-fun getenv(path: String = ".env"): Map<String, String> {
-    val env = hashMapOf<String, String>()
-
-    val file = File(path)
-    if (file.exists()) {
-        file.readLines().forEach { line ->
-            val splitResult = line.split("=")
-            if (splitResult.size > 1) {
-                env[splitResult[0].trim()] = splitResult[1].trim()
-            }
-        }
-    }
-
-    return env
+subprojectShaking {
+    withKotlin.set(true)
 }
 
-val secretEnv = getenv()
-val rootProjectDir = projectDir
-
+val setupSubproject = subprojectShaking::setupSubproject
 
 subprojects {
-    apply(plugin = "kotlin")
-    apply(plugin = "maven-publish")
-
-    this.extra["curseforgeKey"] = secretEnv["CURSEFORGE_KEY"] ?: System.getenv("CURSEFORGE_KEY") ?: ""
-    this.extra["modrinthKey"] = secretEnv["MODRINTH_KEY"] ?: System.getenv("MODRINTH_KEY") ?: ""
-    this.extra["rootProjectDir"] = rootProjectDir
-
-    group = mavenGroup!!
-
-    val javaVersion = JavaVersion.VERSION_17
-    java {
-        toolchain { languageVersion.set(JavaLanguageVersion.of(javaVersion.toString())) }
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-        withSourcesJar()
-    }
-    tasks {
-        withType<JavaCompile> {
-            options.encoding = "UTF-8"
-            sourceCompatibility = javaVersion.toString()
-            targetCompatibility = javaVersion.toString()
-            options.release.set(javaVersion.toString().toInt())
-        }
-        withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-            kotlinOptions { jvmTarget = javaVersion.toString() }
-        }
-    }
+    setupSubproject(this)
 }
 
 repositories {

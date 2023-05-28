@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.2] - 2023-05-28
+
 ### Added
 
 - Husbandry automata, starting from netherite tier, can disable animal AI
+
+### Fixed
+
+- Mixins for forge and fabric
 
 ## [0.6.1] - 2023-05-24
 
