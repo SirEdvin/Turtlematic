@@ -1,7 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("peripheralium.vanilla")
-    id("peripheralium.publishing")
+    id("site.siredvin.vanilla")
+    id("site.siredvin.publishing")
 }
 
 val modVersion: String by extra

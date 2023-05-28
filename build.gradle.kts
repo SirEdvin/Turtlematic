@@ -1,8 +1,6 @@
-import java.util.function.Consumer
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("peripheralium.root") version "0.2.5"
+    id("site.siredvin.root") version "0.3.5"
 }
 
 subprojectShaking {

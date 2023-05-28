@@ -15,7 +15,7 @@ pluginManagement {
                 includeGroup("net.fabricmc")
                 includeGroup("fabric-loom")
                 includeGroup("site.siredvin")
-                includeGroupByRegex("peripheralium.*")
+                includeGroupByRegex("site.siredvin.*")
             }
         }
     }
