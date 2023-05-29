@@ -17,9 +17,8 @@ import site.siredvin.turtlematic.fabric.FabricModRecipeIngredients
 import site.siredvin.turtlematic.fabric.FabricTurtlematicPlatform
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 
-
 @Suppress("UNUSED")
-object FabricTurtlematic: ModInitializer {
+object FabricTurtlematic : ModInitializer {
 
     override fun onInitialize() {
         // Register configuration
@@ -27,8 +26,9 @@ object FabricTurtlematic: ModInitializer {
         TurtlematicCore.configure(FabricTurtlematicPlatform, FabricModRecipeIngredients)
         TurtlematicCore.configureCreativeTab(
             FabricItemGroup.builder(
-            ResourceLocation(TurtlematicCore.MOD_ID, "tab")
-        )).build()
+                ResourceLocation(TurtlematicCore.MOD_ID, "tab"),
+            ),
+        ).build()
         // Register items and blocks
         TurtlematicCommonHooks.onRegister()
         TurtlematicCommonHooks.commonSetup()
@@ -44,14 +44,20 @@ object FabricTurtlematic: ModInitializer {
         event.register(RegistrationQueue::onNewRegistry)
 
         // Chunk loader (mostly) hooks
-        ServerLifecycleEvents.SERVER_STARTED.register(ServerLifecycleEvents.ServerStarted {
-            TurtlematicCommonHooks.onServerStarted(it)
-        })
-        ServerLifecycleEvents.SERVER_STOPPING.register(ServerLifecycleEvents.ServerStopping {
-            TurtlematicCommonHooks.onServerStopping(it)
-        })
-        ServerTickEvents.END_SERVER_TICK.register(ServerTickEvents.EndTick {
-            TurtlematicCommonHooks.onEndOfServerTick(it)
-        })
+        ServerLifecycleEvents.SERVER_STARTED.register(
+            ServerLifecycleEvents.ServerStarted {
+                TurtlematicCommonHooks.onServerStarted(it)
+            },
+        )
+        ServerLifecycleEvents.SERVER_STOPPING.register(
+            ServerLifecycleEvents.ServerStopping {
+                TurtlematicCommonHooks.onServerStopping(it)
+            },
+        )
+        ServerTickEvents.END_SERVER_TICK.register(
+            ServerTickEvents.EndTick {
+                TurtlematicCommonHooks.onEndOfServerTick(it)
+            },
+        )
     }
 }

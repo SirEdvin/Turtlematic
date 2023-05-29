@@ -42,7 +42,7 @@ object DataStorageObjects {
             if (currentRotationCharge < MAX_ROTATION_CHARGE) {
                 data.putInt(
                     ROTATION_CHARGE_SETTING,
-                    max(0, currentRotationCharge) + count * ROTATION_STEPS
+                    max(0, currentRotationCharge) + count * ROTATION_STEPS,
                 )
                 owner.markDataStorageDirty()
             }
@@ -70,15 +70,17 @@ object DataStorageObjects {
 
         fun getMessage(access: ITurtleAccess, side: TurtleSide): String? {
             val data = DataStorageUtil.getDataStorage(access, side)
-            if (data.contains(CHAT_MESSAGE))
+            if (data.contains(CHAT_MESSAGE)) {
                 return data.getString(CHAT_MESSAGE)
+            }
             return null
         }
 
         fun getMessage(owner: IPeripheralOwner): String? {
             val data = owner.dataStorage
-            if (data.contains(CHAT_MESSAGE))
+            if (data.contains(CHAT_MESSAGE)) {
                 return data.getString(CHAT_MESSAGE)
+            }
             return null
         }
 

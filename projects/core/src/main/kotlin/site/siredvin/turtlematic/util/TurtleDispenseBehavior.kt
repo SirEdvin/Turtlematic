@@ -29,15 +29,17 @@ abstract class TurtleDispenseBehavior constructor(protected val owner: IPeripher
     open fun execute(turtleBlockSource: BlockSource, stack: ItemStack, power: Double, angle: Double): ItemStack {
         val level: Level = turtleBlockSource.level
         val currentDirection = owner.facing
-        val targetPosition  = getDispensePosition(currentDirection, turtleBlockSource)
+        val targetPosition = getDispensePosition(currentDirection, turtleBlockSource)
         val entity: Projectile = getProjectile(level, targetPosition, stack)
         val directionalMovement = power * cos(angle)
         val verticalMovement = power * sin(angle)
-        entity.advancedShoot(Vec3(
-            currentDirection.stepX.toDouble() * directionalMovement,
-            currentDirection.stepY.toDouble() + verticalMovement,
-            currentDirection.stepZ.toDouble() * directionalMovement
-        ))
+        entity.advancedShoot(
+            Vec3(
+                currentDirection.stepX.toDouble() * directionalMovement,
+                currentDirection.stepY.toDouble() + verticalMovement,
+                currentDirection.stepZ.toDouble() * directionalMovement,
+            ),
+        )
         level.addFreshEntity(entity)
         return stack
     }

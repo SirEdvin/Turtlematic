@@ -3,10 +3,10 @@ package site.siredvin.turtlematic.util
 import net.fabricmc.loader.api.FabricLoader
 import site.siredvin.turtlematic.FabricTurtlematic
 import site.siredvin.turtlematic.TurtlematicCore
-import java.lang.InstantiationException
-import java.lang.IllegalAccessException
 import java.lang.ClassNotFoundException
 import java.lang.Exception
+import java.lang.IllegalAccessException
+import java.lang.InstantiationException
 import java.util.*
 
 object Platform {
@@ -14,7 +14,7 @@ object Platform {
         val modPresent = FabricLoader.getInstance().allMods.stream().anyMatch { it.metadata.id == modid }
         if (modPresent) {
             TurtlematicCore.LOGGER.info("Loading integration for $modid")
-            return maybeLoadIntegration("${modid}.$path")
+            return maybeLoadIntegration("$modid.$path")
         } else {
             TurtlematicCore.LOGGER.info("Mod $modid is not present, skip loading integration")
         }

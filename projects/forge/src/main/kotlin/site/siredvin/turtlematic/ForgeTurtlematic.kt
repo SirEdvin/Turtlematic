@@ -20,7 +20,6 @@ import site.siredvin.turtlematic.forge.ForgeTurtlematicPlatform
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 import thedarkcolour.kotlinforforge.forge.MOD_CONTEXT
 
-
 @Mod(TurtlematicCore.MOD_ID)
 @Mod.EventBusSubscriber(modid = TurtlematicCore.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 object ForgeTurtlematic {
@@ -31,7 +30,7 @@ object ForgeTurtlematic {
         DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TurtlematicCore.MOD_ID)
     val turtleSerializers: DeferredRegister<TurtleUpgradeSerialiser<*>> = DeferredRegister.create(
         TurtleUpgradeSerialiser.REGISTRY_ID,
-        TurtlematicCore.MOD_ID
+        TurtlematicCore.MOD_ID,
     )
 
     init {

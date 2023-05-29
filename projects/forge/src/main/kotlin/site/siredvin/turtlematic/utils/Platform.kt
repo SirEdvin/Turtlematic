@@ -5,13 +5,12 @@ import site.siredvin.turtlematic.ForgeTurtlematic
 import site.siredvin.turtlematic.TurtlematicCore
 import java.util.*
 
-
 object Platform {
     fun maybeLoadIntegration(modid: String, path: String = "Integration"): Optional<Any> {
         val modPresent = ModList.get().isLoaded(modid)
         if (modPresent) {
             TurtlematicCore.LOGGER.info("Loading integration for $modid")
-            return maybeLoadIntegration("${modid}.$path")
+            return maybeLoadIntegration("$modid.$path")
         } else {
             TurtlematicCore.LOGGER.info("Mod $modid is not present, skip loading integration")
         }

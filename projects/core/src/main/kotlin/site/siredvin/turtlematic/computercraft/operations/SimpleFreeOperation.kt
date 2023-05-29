@@ -4,12 +4,16 @@ import net.minecraftforge.common.ForgeConfigSpec
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 
 enum class SimpleFreeOperation(private val defaultCooldown: Int) : IPeripheralOperation<Any> {
-    CHAT_MESSAGE(100);
+    CHAT_MESSAGE(100),
+    ;
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
-            settingsName() + "Cooldown", defaultCooldown, 1000, Int.MAX_VALUE
+            settingsName() + "Cooldown",
+            defaultCooldown,
+            1000,
+            Int.MAX_VALUE,
         )
     }
 

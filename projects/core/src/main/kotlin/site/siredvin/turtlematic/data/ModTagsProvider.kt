@@ -18,11 +18,13 @@ object ModTagsProvider {
         Blocks.SKELETON_SKULL, Blocks.SKELETON_WALL_SKULL,
         Blocks.ZOMBIE_HEAD, Blocks.ZOMBIE_WALL_HEAD,
         Blocks.PLAYER_HEAD, Blocks.PLAYER_WALL_HEAD,
-        Blocks.CANDLE, Blocks.CANDLE_CAKE
+        Blocks.CANDLE, Blocks.CANDLE_CAKE,
     )
     val HUSBANDRY_EXTRA_CROPS = arrayOf(
-        Blocks.NETHER_WART, Blocks.COCOA
+        Blocks.NETHER_WART,
+        Blocks.COCOA,
     )
+
     @JvmStatic
     fun blockTags(consumer: TagConsumer<Block>) {
         DEFAULT_ENCHANTMENT_POWER_PROVIDERS.forEach { consumer.tag(BlockTags.ENCHANTMENT_POWER_PROVIDER).add(it) }

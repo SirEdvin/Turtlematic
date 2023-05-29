@@ -6,8 +6,6 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.Level
-import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
@@ -18,6 +16,8 @@ import site.siredvin.peripheralium.util.NBTUtil.blockPosFromNBT
 import site.siredvin.peripheralium.util.NBTUtil.toNBT
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
+import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 
 class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
     override val operations: List<IPeripheralOperation<*>>
@@ -50,10 +50,12 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
     fun savePoint(name: String): MethodResult {
         automataCore.addRotationCycle()
         val data: CompoundTag = pointData
-        if (data.allKeys.size >= TurtlematicConfig.endAutomataCoreWarpPointLimit) return MethodResult.of(
-            null,
-            "Cannot add new point, limit reached"
-        )
+        if (data.allKeys.size >= TurtlematicConfig.endAutomataCoreWarpPointLimit) {
+            return MethodResult.of(
+                null,
+                "Cannot add new point, limit reached",
+            )
+        }
         data.put(name, toNBT(automataCore.peripheralOwner.pos))
         return MethodResult.of(true)
     }
@@ -79,8 +81,9 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
         val level: Level = owner.level!!
         val data: CompoundTag = pointData
-        if (!data.contains(name))
+        if (!data.contains(name)) {
             return MethodResult.of(null, "Cannot find point to warp to")
+        }
         val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
         return automataCore.withOperation(
             SingleOperation.WARP,
@@ -91,12 +94,15 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
                 MethodResult.of(true)
             },
             IPeripheralCheck {
-                if (!owner.isMovementPossible(level, newPosition)) return@IPeripheralCheck MethodResult.of(
-                    null,
-                    "Move forbidden"
-                )
+                if (!owner.isMovementPossible(level, newPosition)) {
+                    return@IPeripheralCheck MethodResult.of(
+                        null,
+                        "Move forbidden",
+                    )
+                }
                 null
-            })
+            },
+        )
     }
 
     @LuaFunction(mainThread = true)

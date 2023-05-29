@@ -3,13 +3,10 @@ import net.minecraft.world.item.CreativeModeTab
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import site.siredvin.peripheralium.util.text
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
-import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.xplat.ModRecipeIngredients
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 import site.siredvin.turtlematic.xplat.TurtlematicPlatform
-
 
 @Suppress("UNUSED")
 object TurtlematicCore {

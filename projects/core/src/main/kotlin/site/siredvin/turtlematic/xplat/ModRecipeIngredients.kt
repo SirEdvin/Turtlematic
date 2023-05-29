@@ -11,8 +11,9 @@ interface ModRecipeIngredients {
         }
 
         fun get(): ModRecipeIngredients {
-            if (_IMPL == null)
+            if (_IMPL == null) {
                 throw IllegalStateException("You should init Turtlematic Platform first")
+            }
             return _IMPL!!
         }
     }

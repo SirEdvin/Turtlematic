@@ -6,7 +6,7 @@ import site.siredvin.peripheralium.api.config.IOperationAbilityConfig
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.computercraft.operations.*
 
-object TurtlematicConfig: IOperationAbilityConfig {
+object TurtlematicConfig : IOperationAbilityConfig {
     override val isInitialCooldownEnabled: Boolean
         get() = ConfigHolder.COMMON_CONFIG.IS_INITIAL_COOLDOWN_ENABLED.get()
     override val initialCooldownSensetiveLevel: Int
@@ -52,6 +52,7 @@ object TurtlematicConfig: IOperationAbilityConfig {
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
     val enableEnormousAutomata: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENORMOUS_AUTOMATA.get()
+
     // forged automata cores toggles
     val enableBrewingAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_BREWING_AUTOMATA_CORE.get()
@@ -103,6 +104,7 @@ object TurtlematicConfig: IOperationAbilityConfig {
         var INITIAL_COOLDOWN_SENSENTIVE_LEVEL: ForgeConfigSpec.IntValue
         var COOLDOWN_TRESHOLD_LEVEL: ForgeConfigSpec.IntValue
         var XP_TO_FUEL_RATE: ForgeConfigSpec.IntValue
+
         // Extra turtle peripherals
         val ENABLE_TURTLE_CHATTER: ForgeConfigSpec.BooleanValue
         val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
@@ -112,12 +114,14 @@ object TurtlematicConfig: IOperationAbilityConfig {
         val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
         val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
         val ENABLE_BOW_TURTLE: ForgeConfigSpec.BooleanValue
+
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_HUSBANDRY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENORMOUS_AUTOMATA: ForgeConfigSpec.BooleanValue
+
         // Forged automata core
         val ENABLE_BREWING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_SMITHING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue

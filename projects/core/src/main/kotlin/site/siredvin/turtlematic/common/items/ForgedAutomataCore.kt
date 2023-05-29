@@ -11,7 +11,7 @@ import site.siredvin.turtlematic.api.RecipeEntityRepresentation
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 
-class ForgedAutomataCore: DescriptiveItem(Properties().stacksTo(1).fireResistant()), ISoulFeedableItem {
+class ForgedAutomataCore : DescriptiveItem(Properties().stacksTo(1).fireResistant()), ISoulFeedableItem {
 
     override fun consumeEntitySoul(
         stack: ItemStack,
@@ -41,7 +41,7 @@ class ForgedAutomataCore: DescriptiveItem(Properties().stacksTo(1).fireResistant
             return@map RecipeEntityRepresentation(
                 entityData.getInt(SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT),
                 it.requiredCount,
-                it.description
+                it.description,
             )
         }
     }

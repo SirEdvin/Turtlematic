@@ -5,9 +5,10 @@ import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 
 enum class UnconditionalOperation(
     private val defaultCooldown: Int,
-    private val defaultCost: Int
+    private val defaultCost: Int,
 ) : IPeripheralOperation<Any?> {
-    XP_TRANSFER(1000, 1);
+    XP_TRANSFER(1000, 1),
+    ;
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
@@ -34,10 +35,16 @@ enum class UnconditionalOperation(
 
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
-            settingsName() + "Cooldown", defaultCooldown, 1000, Int.MAX_VALUE
+            settingsName() + "Cooldown",
+            defaultCooldown,
+            1000,
+            Int.MAX_VALUE,
         )
         cost = builder.defineInRange(
-            settingsName() + "Cost", defaultCost, 0, Int.MAX_VALUE
+            settingsName() + "Cost",
+            defaultCost,
+            0,
+            Int.MAX_VALUE,
         )
     }
 }

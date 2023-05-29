@@ -18,10 +18,12 @@ baseShaking {
 fabricShaking {
     commonProjectName.set("core")
     createRefmap.set(true)
-    extraVersionMappings.set(mapOf(
-        "computercraft" to "cc-tweaked",
-        "peripheralium" to "peripheralium",
-    ))
+    extraVersionMappings.set(
+        mapOf(
+            "computercraft" to "cc-tweaked",
+            "peripheralium" to "peripheralium",
+        ),
+    )
     shake()
 }
 
@@ -65,7 +67,6 @@ dependencies {
     libs.bundles.externalMods.fabric.integrations.activedep.get().map { modRuntimeOnly(it) }
 }
 
-
 publishingShaking {
     shake()
 }
@@ -76,7 +77,7 @@ modPublishing {
         listOf(
             "cc-tweaked",
             "fabric-language-kotlin",
-            "peripheralium"
+            "peripheralium",
         ),
     )
     requiredDependenciesCurseforge.add("forge-config-api-port-fabric")

@@ -11,7 +11,7 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
     fun isSuitable(entity: Entity): Boolean {
         for (ingredient in ingredients) {
             if (ingredient.match(entity)) {
-               return true
+                return true
             }
         }
         return false
@@ -19,8 +19,9 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
 
     fun isSuitable(name: String): Boolean {
         for (ingredient in ingredients) {
-            if (ingredient.name == name)
+            if (ingredient.name == name) {
                 return true
+            }
         }
         return false
     }
@@ -32,7 +33,7 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
                 return currentCount < ingredient.requiredCount
             }
         }
-        return false;
+        return false
     }
 
     fun targetIngredient(entity: Entity): SoulHarvestIngredient? {
@@ -59,9 +60,11 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
         val consumedData = tag.getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
         val entityCompound = consumedData.getCompound(targetIngredient.name)
         entityCompound.putInt(
-            SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT, entityCompound.getInt(
-                SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
-            ) + 1)
+            SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT,
+            entityCompound.getInt(
+                SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT,
+            ) + 1,
+        )
         entityCompound.putString(SoulHarvestRecipeRegistry.CONSUMED_ENTITY_NAME, entity.name.string)
         consumedData.put(targetIngredient.name, entityCompound)
         tag.put(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND, consumedData)

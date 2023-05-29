@@ -3,7 +3,6 @@ package site.siredvin.turtlematic.util
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.ChunkPos
 
-
 fun toNBT(pos: ChunkPos): CompoundTag {
     val data = CompoundTag()
     data.putInt("x", pos.x)

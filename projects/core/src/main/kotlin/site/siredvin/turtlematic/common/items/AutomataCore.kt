@@ -20,13 +20,13 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
 
-class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, {TurtlematicConfig.enableAutomataCore}), ISoulFeedableItem {
+class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, { TurtlematicConfig.enableAutomataCore }), ISoulFeedableItem {
 
     override fun appendHoverText(
         itemStack: ItemStack,
         level: Level?,
         tooltipList: MutableList<Component>,
-        tooltipFlag: TooltipFlag
+        tooltipFlag: TooltipFlag,
     ) {
         super.appendHoverText(itemStack, level, tooltipList, tooltipFlag)
         val record = getActiveRecipe(itemStack)
@@ -49,12 +49,14 @@ class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, {TurtlematicConfig
                 SoulHarvestRecipeRegistry.searchRecipe(this, entity)
             } else {
                 val anyKey = consumedData.allKeys.stream().findAny()
-                if (!anyKey.isPresent)
+                if (!anyKey.isPresent) {
                     return Pair.onlyRight("This item are corrupted by dark gods. I cannot be used for anything")
+                }
                 SoulHarvestRecipeRegistry.searchRecipe(this, anyKey.get())
             }
-            if (correctedRecipe == null || !correctedRecipe.isSuitable(entity, consumedData))
+            if (correctedRecipe == null || !correctedRecipe.isSuitable(entity, consumedData)) {
                 return Pair.onlyRight("This item cannot hold soul of this entity")
+            }
             return correctedRecipe.consumeEntity(stack, entity)
         }
         return Pair.onlyRight("This item cannot hold soul of this entity")
@@ -76,7 +78,7 @@ class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, {TurtlematicConfig
             return@map RecipeEntityRepresentation(
                 entityData.getInt(CONSUMED_ENTITY_COUNT),
                 it.requiredCount,
-                it.description
+                it.description,
             )
         }
     }

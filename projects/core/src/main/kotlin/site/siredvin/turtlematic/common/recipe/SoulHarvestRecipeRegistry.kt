@@ -15,8 +15,9 @@ object SoulHarvestRecipeRegistry {
     private val REVERSE_RECIPE_REGISTRY: MutableMap<Item, Pair<SoulHarvestRecipe, Item>> = hashMapOf()
 
     fun addRecipe(targetItem: Item, recipe: SoulHarvestRecipe) {
-        if (!RECIPE_REGISTRY.containsKey(targetItem))
+        if (!RECIPE_REGISTRY.containsKey(targetItem)) {
             RECIPE_REGISTRY[targetItem] = mutableListOf()
+        }
         RECIPE_REGISTRY[targetItem]!!.add(recipe)
         REVERSE_RECIPE_REGISTRY[recipe.resultSoul] = Pair(recipe, targetItem)
     }
@@ -26,27 +27,32 @@ object SoulHarvestRecipeRegistry {
     }
 
     fun searchRecipe(targetItem: Item, entity: Entity): SoulHarvestRecipe? {
-        if (!RECIPE_REGISTRY.containsKey(targetItem))
+        if (!RECIPE_REGISTRY.containsKey(targetItem)) {
             return null
+        }
         val recipe = RECIPE_REGISTRY[targetItem]!!.stream().filter { it.isSuitable(entity) }.findAny()
-        if (recipe.isEmpty)
+        if (recipe.isEmpty) {
             return null
+        }
         return recipe.get()
     }
 
     fun searchRecipe(targetItem: Item, name: String): SoulHarvestRecipe? {
-        if (!RECIPE_REGISTRY.containsKey(targetItem))
+        if (!RECIPE_REGISTRY.containsKey(targetItem)) {
             return null
+        }
         val recipe = RECIPE_REGISTRY[targetItem]!!.stream().filter { it.isSuitable(name) }.findAny()
-        if (recipe.isEmpty)
+        if (recipe.isEmpty) {
             return null
+        }
         return recipe.get()
     }
 
     fun injectAutomataCoreRecipes() {
         val endSoulRecord =
             SoulHarvestRecipe(
-                listOf(SimpleSoulHarvestIngredient(EntityType.ENDERMAN, 3)), Items.END_AUTOMATA_CORE.get()
+                listOf(SimpleSoulHarvestIngredient(EntityType.ENDERMAN, 3)),
+                Items.END_AUTOMATA_CORE.get(),
             )
         val husbandrySoulRecord =
             SoulHarvestRecipe(
@@ -55,13 +61,15 @@ object SoulHarvestRecipeRegistry {
                     SimpleSoulHarvestIngredient(EntityType.SHEEP, 1),
                     SimpleSoulHarvestIngredient(EntityType.COW, 1),
                     SimpleSoulHarvestIngredient(EntityType.CHICKEN, 1),
-                ), Items.HUSBANDRY_AUTOMATA_CORE.get()
+                ),
+                Items.HUSBANDRY_AUTOMATA_CORE.get(),
             )
         val mercantileSoulRecord =
             SoulHarvestRecipe(
                 listOf(
                     SimpleSoulHarvestIngredient(EntityType.WANDERING_TRADER, 1),
-                ), Items.MERCANTILE_AUTOMATA_CORE.get()
+                ),
+                Items.MERCANTILE_AUTOMATA_CORE.get(),
             )
         addRecipe(Items.AUTOMATA_CORE.get(), endSoulRecord)
         addRecipe(Items.AUTOMATA_CORE.get(), husbandrySoulRecord)
@@ -70,13 +78,16 @@ object SoulHarvestRecipeRegistry {
 
     fun injectForgedAutomataCoreRecipes() {
         val brewingAutomataRecord = SoulHarvestRecipe(
-            listOf(VillagerSoulHarvestIngredient(VillagerProfession.CLERIC)), Items.BREWING_AUTOMATA_CORE.get()
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.CLERIC)),
+            Items.BREWING_AUTOMATA_CORE.get(),
         )
         val enchantingAutomataRecord = SoulHarvestRecipe(
-            listOf(VillagerSoulHarvestIngredient(VillagerProfession.LIBRARIAN)), Items.ENCHANTING_AUTOMATA_CORE.get()
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.LIBRARIAN)),
+            Items.ENCHANTING_AUTOMATA_CORE.get(),
         )
         val smithingAutomataRecord = SoulHarvestRecipe(
-            listOf(VillagerSoulHarvestIngredient(VillagerProfession.TOOLSMITH)), Items.SMITHING_AUTOMATA_CORE.get()
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.TOOLSMITH)),
+            Items.SMITHING_AUTOMATA_CORE.get(),
         )
 
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), brewingAutomataRecord)

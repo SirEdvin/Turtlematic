@@ -21,7 +21,7 @@ class AutomataLookPlugin(
     private val entityEnriches: List<BiConsumer<Entity, MutableMap<String, Any>>> = emptyList(),
     private val blockStateEnriches: List<BiConsumer<BlockState, MutableMap<String, Any>>> = emptyList(),
     private val blockEntityEnriches: List<BiConsumer<BlockEntity, MutableMap<String, Any>>> = emptyList(),
-    private val allowedMods: Set<InteractionMode> = InteractionMode.values().toSet()
+    private val allowedMods: Set<InteractionMode> = InteractionMode.values().toSet(),
 ) : AutomataCorePlugin(automataCore) {
 
     private fun entityConverter(entity: Entity): MutableMap<String, Any> {
@@ -43,27 +43,35 @@ class AutomataLookPlugin(
     private fun lookImpl(arguments: IArguments): MethodResult {
         val mode = InteractionMode.luaValueOf(arguments.getString(0), allowedMods)
         val directionArgument = arguments.optString(1)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
-        if (!allowedMods.contains(mode))
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
+        if (!allowedMods.contains(mode)) {
             return MethodResult.of(null, "Mode $mode are not allowed for this core")
+        }
         automataCore.addRotationCycle()
         val owner = automataCore.peripheralOwner
         val result = owner.withPlayer({
-                FakePlayerProxy(it).findHit(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock)
-        }, overwrittenDirection=overwrittenDirection?.minecraftDirection)
-        if (result.type == HitResult.Type.MISS)
+            FakePlayerProxy(it).findHit(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock)
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
+        if (result.type == HitResult.Type.MISS) {
             return MethodResult.of(null, "Nothing found")
+        }
         if (result is BlockHitResult) {
             val base = blockStateConverter(owner.level!!.getBlockState(result.blockPos))
             val entity = owner.level!!.getBlockEntity(result.blockPos)
-            if (entity != null)
+            if (entity != null) {
                 blockEntityConverter(entity, base)
+            }
             return MethodResult.of(base)
         }
-        if (result is EntityHitResult)
+        if (result is EntityHitResult) {
             return MethodResult.of(entityConverter(result.entity))
+        }
         return MethodResult.of(null, "Nothing found")
     }
 

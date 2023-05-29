@@ -10,12 +10,12 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.AABB
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 
 class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
     override val operations: List<IPeripheralOperation<*>>
@@ -27,8 +27,12 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
         val z: Int = pos.z
         val interactionRadius = automataCore.interactionRadius
         return AABB(
-            (x - interactionRadius).toDouble(), (y - interactionRadius).toDouble(), (z - interactionRadius).toDouble(),
-            (x + interactionRadius).toDouble(), (y + interactionRadius).toDouble(), (z + interactionRadius).toDouble()
+            (x - interactionRadius).toDouble(),
+            (y - interactionRadius).toDouble(),
+            (z - interactionRadius).toDouble(),
+            (x + interactionRadius).toDouble(),
+            (y + interactionRadius).toDouble(),
+            (z + interactionRadius).toDouble(),
         )
     }
 
@@ -73,7 +77,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
         val technicalName: String = arguments.getString(0)
         val requiredQuantityArg: Int = arguments.optInt(1, Int.MAX_VALUE)
         return automataCore.withOperation(
-            SingleOperation.SUCK
+            SingleOperation.SUCK,
         ) {
             val items: List<ItemEntity> = items
             var requiredQuantity = requiredQuantityArg
@@ -110,6 +114,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
                     }
                 }
                 return@IPeripheralFunction MethodResult.of(true)
-            })
+            },
+        )
     }
 }

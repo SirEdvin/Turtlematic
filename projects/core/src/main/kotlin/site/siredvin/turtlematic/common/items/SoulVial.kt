@@ -25,18 +25,21 @@ class SoulVial : DescriptiveItem(Properties().stacksTo(1).fireResistant()) {
         itemStack: ItemStack,
         level: Level?,
         list: MutableList<Component>,
-        tooltipFlag: TooltipFlag
+        tooltipFlag: TooltipFlag,
     ) {
         super.appendHoverText(itemStack, level, list, tooltipFlag)
         val data = itemStack.tag
-        if (data != null)
+        if (data != null) {
             list.add(itemExtra(descriptionId, "progress", data.getInt(NBT_KEY), SOUL_LIMIT))
+        }
     }
 
     override fun use(level: Level, player: Player, interactionHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val itemStack = player.getItemInHand(interactionHand)
         val blockHitResult = getPlayerPOVHitResult(
-            level, player, ClipContext.Fluid.NONE
+            level,
+            player,
+            ClipContext.Fluid.NONE,
         )
         return if (blockHitResult.type == HitResult.Type.MISS) {
             InteractionResultHolder.pass(itemStack)

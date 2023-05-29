@@ -15,14 +15,14 @@ import java.util.function.BiFunction
 import java.util.function.Consumer
 import java.util.function.Supplier
 
-object ForgeTurtlematicPlatform: TurtlematicPlatform {
+object ForgeTurtlematicPlatform : TurtlematicPlatform {
     override fun <T : Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T> {
         return ForgeTurtlematic.itemsRegistry.register(key.path, item)
     }
 
     override fun <V : Entity, T : EntityType<V>> registerEntity(
         key: ResourceLocation,
-        entityTypeSup: Supplier<T>
+        entityTypeSup: Supplier<T>,
     ): Supplier<T> {
         return ForgeTurtlematic.entityTypesRegistry.register(key.path, entityTypeSup)
     }
@@ -31,7 +31,7 @@ object ForgeTurtlematicPlatform: TurtlematicPlatform {
         key: ResourceLocation,
         serializer: TurtleUpgradeSerialiser<V>,
         dataGenerator: BiFunction<TurtleUpgradeDataProvider, TurtleUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<TurtleUpgradeSerialiser<*>>>,
-        postRegistrationHooks: List<Consumer<Supplier<TurtleUpgradeSerialiser<V>>>>
+        postRegistrationHooks: List<Consumer<Supplier<TurtleUpgradeSerialiser<V>>>>,
     ) {
         val turtleUpgrade = ForgeTurtlematic.turtleSerializers.register(key.path) { serializer }
         ModTurtleUpgradeDataProvider.hookUpgrade { dataGenerator.apply(it, turtleUpgrade.get()) }

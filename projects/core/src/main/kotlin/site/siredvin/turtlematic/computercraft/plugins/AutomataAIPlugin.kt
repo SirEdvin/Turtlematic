@@ -19,16 +19,18 @@ class AutomataAIPlugin(
 ) : AutomataCorePlugin(automataCore) {
 
     private fun toggleEntityAI(hit: EntityHitResult): MethodResult {
-        if (hit.entity !is Mob)
+        if (hit.entity !is Mob) {
             return MethodResult.of(false, "Entity doesn't have AI")
+        }
         val mob = hit.entity as Mob
         mob.isNoAi = !mob.isNoAi
         return MethodResult.of(true)
     }
 
     private fun isEntityAIEnabled(hit: EntityHitResult): Boolean? {
-        if (hit.entity !is Mob)
+        if (hit.entity !is Mob) {
             return null
+        }
         val mob = hit.entity as Mob
         return !mob.isNoAi
     }
@@ -36,14 +38,20 @@ class AutomataAIPlugin(
     @LuaFunction(mainThread = true)
     fun toggleAI(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
-        val hit = automataCore.peripheralOwner.withPlayer({ FakePlayerProxy(it).findHit(
-            skipEntity = false,
-            skipBlock = true,
-            entityFilter = suitableEntity
-        ) }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
+        val hit = automataCore.peripheralOwner.withPlayer({
+            FakePlayerProxy(it).findHit(
+                skipEntity = false,
+                skipBlock = true,
+                entityFilter = suitableEntity,
+            )
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         return when (hit.type) {
             HitResult.Type.MISS -> MethodResult.of(null, "nothing found")
             HitResult.Type.BLOCK -> MethodResult.of(null, "nothing found")
@@ -55,14 +63,20 @@ class AutomataAIPlugin(
     @LuaFunction(mainThread = true)
     fun isAIEnabled(arguments: IArguments): Boolean? {
         val directionArgument = arguments.optString(0)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
-        val hit = automataCore.peripheralOwner.withPlayer({ FakePlayerProxy(it).findHit(
-            skipEntity = false,
-            skipBlock = true,
-            entityFilter = suitableEntity
-        ) }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
+        val hit = automataCore.peripheralOwner.withPlayer({
+            FakePlayerProxy(it).findHit(
+                skipEntity = false,
+                skipBlock = true,
+                entityFilter = suitableEntity,
+            )
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         return when (hit.type) {
             HitResult.Type.MISS -> null
             HitResult.Type.BLOCK -> null

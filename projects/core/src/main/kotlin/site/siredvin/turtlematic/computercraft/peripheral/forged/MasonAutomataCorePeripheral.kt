@@ -35,18 +35,15 @@ import site.siredvin.peripheralium.util.representation.stateProperties
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.peripheralium.xplat.XplatRegistries
-import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
-import site.siredvin.turtlematic.util.toCreative
-import site.siredvin.turtlematic.util.toStarbound
 import java.util.function.Predicate
 
-class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
+class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
     interface MasonRecipeHandler {
@@ -62,14 +59,17 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult
     }
 
-    class StonecutterRecipeHandler: MasonRecipeHandler {
+    class StonecutterRecipeHandler : MasonRecipeHandler {
         override fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
             return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).map { it.getResultItem(RegistryAccess.EMPTY) }
         }
 
         override fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? {
-            return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find { it.getResultItem(
-                RegistryAccess.EMPTY).`is`(targetItem) }
+            return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find {
+                it.getResultItem(
+                    RegistryAccess.EMPTY,
+                ).`is`(targetItem)
+            }
         }
 
         override fun produce(
@@ -77,10 +77,11 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             fakeContainer: Container,
             targetItem: Item,
             recipe: Recipe<Container>,
-            limit: Int
+            limit: Int,
         ): ItemStack {
-            if (recipe !is StonecutterRecipe)
+            if (recipe !is StonecutterRecipe) {
                 return ItemStack.EMPTY
+            }
             var consumedAmount = 0
             val output = recipe.getResultItem(RegistryAccess.EMPTY).copy()
             output.count = 0
@@ -99,9 +100,8 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             get() = listOf(StonecutterRecipe::class.java)
     }
 
-    companion object: PeripheralConfiguration {
+    companion object : PeripheralConfiguration {
         override val TYPE = "masonAutomata"
-
 
         private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()
         private val RECIPE_TO_ID = mutableMapOf<Class<*>, String>()
@@ -129,16 +129,18 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? {
             HANDLERS.values.forEach {
                 val recipe = it.getRecipe(level, fakeContainer, targetItem)
-                if (recipe != null)
+                if (recipe != null) {
                     return recipe
+                }
             }
             return null
         }
 
         fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult {
             SHAPE_STRATEGY.forEach {
-                if (it.first.test(oldState.block))
+                if (it.first.test(oldState.block)) {
                     return it.second.changeShape(level, pos, oldState, newState)
+                }
             }
             level.setBlockAndUpdate(pos, newState)
             return MethodResult.of(true)
@@ -174,15 +176,18 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {
         val hit = peripheralOwner.withPlayer({
             val hit = FakePlayerProxy(it).findHit(skipEntity = true, skipBlock = false)
-            if (hit !is BlockHitResult)
+            if (hit !is BlockHitResult) {
                 return@withPlayer null
+            }
             return@withPlayer hit
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
         val blockState = level!!.getBlockState(hit.blockPos)
-        if (blockState.isAir)
+        if (blockState.isAir) {
             return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
-        if (!isEditable(hit.blockPos))
+        }
+        if (!isEditable(hit.blockPos)) {
             return Pair.onlyRight(MethodResult.of(null, "This block is protected"))
+        }
         return Pair.onlyLeft(Pair(hit, blockState))
     }
 
@@ -190,54 +195,69 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         val level = level!!
         val limit = arguments.optInt(2, Int.MAX_VALUE)
         val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(target))
-        if (targetItem == Items.AIR)
+        if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
+        }
         val turtleInventory = peripheralOwner.turtle.inventory
         val fakeContainer = LimitedInventory(turtleInventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
         val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
-            "Cannot transform selected item into $target"
+            "Cannot transform selected item into $target",
         )
         val output = produce(level, fakeContainer, targetItem, recipe, limit)
-        if (output.isEmpty)
+        if (output.isEmpty) {
             return MethodResult.of(null, "Strange internal error appear, cannot find useful recipe")
+        }
         ContainerUtils.toInventoryOrToWorld(
-            output, turtleInventory, peripheralOwner.turtle.selectedSlot,
-            pos.relative(peripheralOwner.facing), level
+            output,
+            turtleInventory,
+            peripheralOwner.turtle.selectedSlot,
+            pos.relative(peripheralOwner.facing),
+            level,
         )
         return MethodResult.of(true)
     }
 
     private fun chiselBlock(target: String, arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(2)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val level = level!!
         val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(target))
-        if (targetItem == Items.AIR)
+        if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
+        }
         val findBlockResult = findBlock(overwrittenDirection)
-        if (findBlockResult.rightPresent())
+        if (findBlockResult.rightPresent()) {
             return findBlockResult.right!!
+        }
         val hit = findBlockResult.left!!.left
         val blockState = findBlockResult.left!!.right
         val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
         val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
-            "Cannot transform selected item into $target"
+            "Cannot transform selected item into $target",
         )
         val output = produce(level, fakeContainer, targetItem, recipe, 1)
-        if (output.isEmpty)
+        if (output.isEmpty) {
             return MethodResult.of(null, "Strange internal error appear, cannot find useful recipe")
+        }
         if (output.item is BlockItem && output.count == 1) {
             val targetBlockState = (output.item as BlockItem).block.defaultBlockState()
             level.setBlockAndUpdate(hit.blockPos, targetBlockState)
         } else {
             level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
             ContainerUtils.toInventoryOrToWorld(
-                output.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
-                peripheralOwner.pos.relative(peripheralOwner.facing), level
+                output.copy(),
+                peripheralOwner.turtle.inventory,
+                peripheralOwner.turtle.selectedSlot,
+                peripheralOwner.pos.relative(peripheralOwner.facing),
+                level,
             )
         }
         return MethodResult.of(true)
@@ -247,15 +267,20 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     fun getAlternatives(arguments: IArguments): MethodResult {
         val mode = TransformInteractionMode.luaValueOf(arguments.getString(0))
         val directionArgument = arguments.optString(1)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val level = level!!
         val fakeContainer: Container? = if (mode == TransformInteractionMode.BLOCK) {
             val blockState = peripheralOwner.withPlayer({
                 val hit = FakePlayerProxy(it).findHit(skipEntity = true, skipBlock = false)
-                if (hit !is BlockHitResult)
+                if (hit !is BlockHitResult) {
                     return@withPlayer null
+                }
                 return@withPlayer level.getBlockState(hit.blockPos)
             }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
             if (blockState?.isAir == false) FakeItemContainer(blockState.block.asItem().defaultInstance) else null
@@ -263,8 +288,9 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             LimitedInventory(peripheralOwner.turtle.inventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
         }
 
-        if (fakeContainer == null)
+        if (fakeContainer == null) {
             return MethodResult.of(null, "Cannot find target for alternative analysis")
+        }
 
         val alternatives = getAlternatives(level, fakeContainer)
         return MethodResult.of(alternatives.map { XplatRegistries.ITEMS.getKey(it.item).toString() })
@@ -278,11 +304,13 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             TransformInteractionMode.BLOCK -> withOperation(
                 CountOperation.CHISEL,
                 1,
-                { chiselBlock(target, arguments) })
+                { chiselBlock(target, arguments) },
+            )
             TransformInteractionMode.INVENTORY -> withOperation(
                 CountOperation.CHISEL,
                 peripheralOwner.toolInMainHand.count,
-                { chiselItem(target, arguments) })
+                { chiselItem(target, arguments) },
+            )
         }
     }
 
@@ -290,14 +318,19 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     fun rotate(arguments: IArguments): MethodResult {
         val rotation: Rotation = LuaInterpretation.asRotation(arguments.getString(0))
         val directionArgument = arguments.optString(1)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val level = level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
-            if (findBlockResult.rightPresent())
+            if (findBlockResult.rightPresent()) {
                 return@withOperation findBlockResult.right!!
+            }
             val hit = findBlockResult.left!!.left
             val blockState = findBlockResult.left!!.right
             level.setBlockAndUpdate(hit.blockPos, blockState.rotate(rotation))
@@ -308,19 +341,25 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     @LuaFunction(mainThread = true)
     fun turnOver(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val level = level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
-            if (findBlockResult.rightPresent())
+            if (findBlockResult.rightPresent()) {
                 return@withOperation findBlockResult.right!!
+            }
             val hit = findBlockResult.left!!.left
             val blockState = findBlockResult.left!!.right
             val propertyCandidate = blockState.values.keys.stream().filter { it is EnumProperty<*> && it.allValues.anyMatch { pr -> pr.value() is Half } }.findAny()
-            if (propertyCandidate.isEmpty)
+            if (propertyCandidate.isEmpty) {
                 return@withOperation MethodResult.of(null, "Cannot turn over block")
+            }
             val property = propertyCandidate.get() as EnumProperty<Half>
             val currentOrientation = blockState.getValue(property) as Half
             if (currentOrientation == Half.TOP) {
@@ -335,39 +374,51 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     @LuaFunction(mainThread = true)
     fun getPossibleShapes(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val level = level!!
         val findBlockResult = findBlock(overwrittenDirection)
-        if (findBlockResult.rightPresent())
+        if (findBlockResult.rightPresent()) {
             return findBlockResult.right!!
+        }
         val blockState = findBlockResult.left!!.right
         val propertyCandidate = blockState.values.keys.stream().filter { it is EnumProperty<*> && it.getName() == "shape" }.findAny()
-        if (propertyCandidate.isEmpty)
+        if (propertyCandidate.isEmpty) {
             return MethodResult.of(null, "This block cannot change it shape")
+        }
         val property = propertyCandidate.get() as EnumProperty<*>
         val currentShape = blockState.getValue(property)
         return MethodResult.of(property.possibleValues.filter { it != currentShape }.map { it.name.lowercase() })
     }
 
     @LuaFunction(mainThread = true, value = ["changeShape"])
-    fun <V: Comparable<V>> changeShapeLua(arguments: IArguments): MethodResult {
+    fun <V : Comparable<V>> changeShapeLua(arguments: IArguments): MethodResult {
         val targetShape: String = arguments.getString(0)
         val directionArgument = arguments.optString(1)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val level = level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
-            if (findBlockResult.rightPresent())
+            if (findBlockResult.rightPresent()) {
                 return@withOperation findBlockResult.right!!
+            }
             val hit = findBlockResult.left!!.left
             val blockState = findBlockResult.left!!.right
             val propertyCandidate = blockState.values.keys.stream().filter { it is EnumProperty<*> && it.getName() == "shape" }.findAny()
-            if (propertyCandidate.isEmpty)
+            if (propertyCandidate.isEmpty) {
                 return@withOperation MethodResult.of(null, "This block cannot change it shape")
+            }
             val property = propertyCandidate.get() as EnumProperty<*>
             val newValue = property.possibleValues.find { it.name.lowercase() == targetShape }
                 ?: return@withOperation MethodResult.of(null, "This block cannot change shape to $targetShape")

@@ -6,7 +6,7 @@ import net.minecraft.data.PackOutput
 import java.util.function.Consumer
 import java.util.function.Function
 
-class ModTurtleUpgradeDataProvider(output: PackOutput): TurtleUpgradeDataProvider(output) {
+class ModTurtleUpgradeDataProvider(output: PackOutput) : TurtleUpgradeDataProvider(output) {
     companion object {
         private val REGISTERED_BUILDERS: MutableList<Function<TurtleUpgradeDataProvider, Upgrade<TurtleUpgradeSerialiser<*>>>> = mutableListOf()
 

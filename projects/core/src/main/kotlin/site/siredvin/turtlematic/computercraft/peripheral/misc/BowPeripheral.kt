@@ -29,9 +29,9 @@ import site.siredvin.turtlematic.util.TurtleDispenseBehavior
 import java.util.*
 
 class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
 
-    companion object: PeripheralConfiguration {
+    companion object : PeripheralConfiguration {
         override val TYPE = "bow"
     }
 
@@ -100,11 +100,13 @@ OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)
         val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
         val turtleInventory: Container = peripheralOwner.turtle.inventory
         val selectedStack: ItemStack = turtleInventory.getItem(selectedSlot)
-        if (selectedStack.isEmpty)
+        if (selectedStack.isEmpty) {
             return MethodResult.of(null, "Nothing to shoot")
+        }
         val realLimit = limit.orElse(selectedStack.count)
-        if (realLimit <= 0)
+        if (realLimit <= 0) {
             throw LuaException("Limit should be positive integer")
+        }
         return peripheralOwner.withOperation(PowerOperation.SHOOT, PowerOperationContext(power), {
             val stackToDispense = selectedStack.split(realLimit)
             val dispensedResult = if (suppressExtraLogic.orElse(false)) {
@@ -112,19 +114,20 @@ OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)
                     BlockSourceImpl(level as ServerLevel, pos),
                     stackToDispense,
                     power,
-                    currentAngle
+                    currentAngle,
                 )
             } else {
                 dispenseBehavior.dispense(
                     BlockSourceImpl(level as ServerLevel, pos),
                     stackToDispense,
                     power,
-                    currentAngle
+                    currentAngle,
                 )
             }
             if (!selectedStack.isEmpty) {
-                if (!dispensedResult.isEmpty)
+                if (!dispensedResult.isEmpty) {
                     StorageUtils.inplaceMerge(selectedStack, dispensedResult)
+                }
                 turtleInventory.setItem(selectedSlot, selectedStack)
             } else {
                 turtleInventory.setItem(selectedSlot, dispensedResult)

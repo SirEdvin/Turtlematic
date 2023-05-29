@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.computercraft.peripheral.forged
 
-import dan200.computercraft.api.lua.IArguments
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
@@ -22,11 +21,11 @@ import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.alchemy.PotionUtils
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.api.datatypes.AreaInteractionMode
 import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.computercraft.peripheral.ability.ScanningAbility
 import site.siredvin.peripheralium.util.representation.effectsData
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
@@ -34,12 +33,12 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.PowerOperation
 import site.siredvin.turtlematic.computercraft.operations.PowerOperationContext
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.*
 import site.siredvin.turtlematic.util.TurtleDispenseBehavior
 import java.util.function.Predicate
-import kotlin.math.min
 
-class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
+class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
     companion object : PeripheralConfiguration {
@@ -51,15 +50,23 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
         addPlugin(AutomataLookPlugin(this, entityEnriches = listOf(effectsData)))
         addPlugin(
             AutomataInteractionPlugin(
-                this, allowedMods = InteractionMode.values().toSet(),
-                suitableEntity = suitableEntity
-            )
+                this,
+                allowedMods = InteractionMode.values().toSet(),
+                suitableEntity = suitableEntity,
+            ),
         )
-        addPlugin(
-            AutomataScanPlugin(
-                this, suitableEntity = suitableEntity, entityEnriches = listOf(effectsData),
-                allowedMods = setOf(AreaInteractionMode.ITEM, AreaInteractionMode.ENTITY)
-            )
+        peripheralOwner.attachAbility(
+            PeripheralOwnerAbility.SCANNING,
+            ScanningAbility(
+                peripheralOwner,
+                tier.interactionRadius,
+            ).attachItemScan(
+                SphereOperation.SCAN_ITEMS,
+            ).attachLivingEntityScan(
+                SphereOperation.SCAN_ENTITIES,
+                { suitableEntity.test(it) },
+                { it1, it2 -> effectsData.accept(it1, it2) },
+            ),
         )
     }
 
@@ -67,7 +74,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
         override fun getProjectile(level: Level, targetPosition: Position, stack: ItemStack): Projectile {
             stack.shrink(1)
             return Util.make(
-                ThrownPotion(level, targetPosition.x(), targetPosition.y(), targetPosition.z())
+                ThrownPotion(level, targetPosition.x(), targetPosition.y(), targetPosition.z()),
             ) { p_218413_1_ -> p_218413_1_.item = stack }
         }
     }
@@ -93,10 +100,12 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
             val component: ItemStack = turtleInventory.getItem(selectedSlot)
-            if (!PotionBrewing.isIngredient(component)) return@withOperation MethodResult.of(
-                null,
-                "Selected component is not an ingredient for brewing!"
-            )
+            if (!PotionBrewing.isIngredient(component)) {
+                return@withOperation MethodResult.of(
+                    null,
+                    "Selected component is not an ingredient for brewing!",
+                )
+            }
             var usedForBrewing = false
             for (slot in 0 until turtleInventory.containerSize) {
                 if (slot == selectedSlot) continue
@@ -127,15 +136,17 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedStack: ItemStack = turtleInventory.getItem(selectedSlot)
             val selectedItem: Item = selectedStack.item
-            if (selectedItem !== Items.SPLASH_POTION && selectedItem !== Items.LINGERING_POTION) return@withOperation MethodResult.of(
-                null,
-                "Selected item should be splash or lingering potion"
-            )
+            if (selectedItem !== Items.SPLASH_POTION && selectedItem !== Items.LINGERING_POTION) {
+                return@withOperation MethodResult.of(
+                    null,
+                    "Selected item should be splash or lingering potion",
+                )
+            }
             val potion: Potion = PotionUtils.getPotion(selectedStack)
             if (potion === Potions.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
             turtleInventory.setItem(
                 selectedSlot,
-                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, power, angle)
+                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, power, angle),
             )
             MethodResult.of(true)
         })

@@ -10,10 +10,9 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.util.ChunkManager
 import java.util.*
 
-
 class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
     OwnedPeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
-    companion object: PeripheralConfiguration {
+    companion object : PeripheralConfiguration {
         override val TYPE = "chunk_vial"
         private const val UUID_TAG = "uuid"
     }
@@ -26,8 +25,8 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
         get() {
             val storage = peripheralOwner.dataStorage
             if (!storage.contains(UUID_TAG)) {
-                storage.putUUID(UUID_TAG, UUID.randomUUID());
-                peripheralOwner.markDataStorageDirty();
+                storage.putUUID(UUID_TAG, UUID.randomUUID())
+                peripheralOwner.markDataStorageDirty()
             }
             return storage.getUUID(UUID_TAG)
         }

@@ -47,13 +47,17 @@ object TurtlematicCommonHooks {
 
     private val TURTLE_UPGRADES: MutableList<ResourceLocation> = mutableListOf()
 
-    private fun <T: IOwnedPeripheral<TurtlePeripheralOwner>, V: Item> registerSimpleTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
-        registerSimpleTurtleUpgrade(id, item, BiFunction<ResourceLocation, ItemStack, PeripheralTurtleUpgrade<*>> { upgradeID, stack ->
-            PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
-        })
+    private fun <T : IOwnedPeripheral<TurtlePeripheralOwner>, V : Item> registerSimpleTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
+        registerSimpleTurtleUpgrade(
+            id,
+            item,
+            BiFunction<ResourceLocation, ItemStack, PeripheralTurtleUpgrade<*>> { upgradeID, stack ->
+                PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
+            },
+        )
     }
 
-    private fun <T: ITurtleUpgrade, V: Item> registerSimpleTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder:  BiFunction<ResourceLocation, ItemStack, T>) {
+    private fun <T : ITurtleUpgrade, V : Item> registerSimpleTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
         TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
@@ -61,29 +65,37 @@ object TurtlematicCommonHooks {
             { dataProvider, serializer ->
                 dataProvider.simpleWithCustomItem(
                     id,
-                    serializer, item.get()
+                    serializer,
+                    item.get(),
                 )
-            } ,
-            listOf(Consumer {
-                TurtlematicCoreClient.registerHook {
-                    ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-                        it.get(), TurtleUpgradeModeller.sided(
-                            ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${id.path}_left"),
-                            ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${id.path}_right")
+            },
+            listOf(
+                Consumer {
+                    TurtlematicCoreClient.registerHook {
+                        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+                            it.get(),
+                            TurtleUpgradeModeller.sided(
+                                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${id.path}_left"),
+                                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${id.path}_right"),
+                            ),
                         )
-                    )
-                }
-            })
+                    }
+                },
+            ),
         )
     }
 
-    private fun <T: IOwnedPeripheral<TurtlePeripheralOwner>, V: Item> registerFlatTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
-        registerFlatTurtleUpgrade(id, item, BiFunction<ResourceLocation, ItemStack, PeripheralTurtleUpgrade<*>> { upgradeID, stack ->
-            PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
-        })
+    private fun <T : IOwnedPeripheral<TurtlePeripheralOwner>, V : Item> registerFlatTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
+        registerFlatTurtleUpgrade(
+            id,
+            item,
+            BiFunction<ResourceLocation, ItemStack, PeripheralTurtleUpgrade<*>> { upgradeID, stack ->
+                PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
+            },
+        )
     }
 
-    private fun <T: ITurtleUpgrade, V: Item> registerFlatTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
+    private fun <T : ITurtleUpgrade, V : Item> registerFlatTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
         TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
@@ -91,27 +103,34 @@ object TurtlematicCommonHooks {
             { dataProvider, serializer ->
                 dataProvider.simpleWithCustomItem(
                     id,
-                    serializer, item.get()
+                    serializer,
+                    item.get(),
                 )
-            } ,
-            listOf(Consumer {
-                TurtlematicCoreClient.registerHook {
-                    ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-                        it.get(), TurtleUpgradeModeller.flatItem()
-                    )
-                }
-            })
+            },
+            listOf(
+                Consumer {
+                    TurtlematicCoreClient.registerHook {
+                        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+                            it.get(),
+                            TurtleUpgradeModeller.flatItem(),
+                        )
+                    }
+                },
+            ),
         )
     }
 
-    private fun <T: IOwnedPeripheral<TurtlePeripheralOwner>, V: Item> registerFacingBlockTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
-        registerFacingBlockTurtleUpgrade(id, item, BiFunction<ResourceLocation, ItemStack, PeripheralTurtleUpgrade<*>> { upgradeID, stack ->
-            PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
-        })
+    private fun <T : IOwnedPeripheral<TurtlePeripheralOwner>, V : Item> registerFacingBlockTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
+        registerFacingBlockTurtleUpgrade(
+            id,
+            item,
+            BiFunction<ResourceLocation, ItemStack, PeripheralTurtleUpgrade<*>> { upgradeID, stack ->
+                PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
+            },
+        )
     }
 
-
-    private fun <T: ITurtleUpgrade, V: Item> registerFacingBlockTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
+    private fun <T : ITurtleUpgrade, V : Item> registerFacingBlockTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
         TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
@@ -119,53 +138,60 @@ object TurtlematicCommonHooks {
             { dataProvider, serializer ->
                 dataProvider.simpleWithCustomItem(
                     id,
-                    serializer, item.get()
+                    serializer,
+                    item.get(),
                 )
-            } ,
-            listOf(Consumer {
-                TurtlematicCoreClient.registerHook {
-                    ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-                        it.get(), FacingBlockTurtleModeller()
-                    )
-                }
-            })
+            },
+            listOf(
+                Consumer {
+                    TurtlematicCoreClient.registerHook {
+                        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+                            it.get(),
+                            FacingBlockTurtleModeller(),
+                        )
+                    }
+                },
+            ),
         )
     }
 
-    private fun <O: IOwnedPeripheral<*>, V: Item> registerClockwiseTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: AutomataPeripheralBuildFunction<O>, ticker: AutomataTickerFunction? = null) {
+    private fun <O : IOwnedPeripheral<*>, V : Item> registerClockwiseTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: AutomataPeripheralBuildFunction<O>, ticker: AutomataTickerFunction? = null) {
         registerClockwiseTurtleUpgrade(id, item) { upgradeId, stack ->
             if (ticker == null) {
-                ClockwiseTurtleUpgrade.dynamic(upgradeId, stack.item as BaseAutomataCore, builder)}
-            else {
+                ClockwiseTurtleUpgrade.dynamic(upgradeId, stack.item as BaseAutomataCore, builder) } else {
                 ClockwiseTurtleUpgrade.ticker(upgradeId, stack.item as BaseAutomataCore, builder, ticker)
             }
         }
     }
 
-    private fun <T: IOwnedPeripheral<TurtlePeripheralOwner>, V: Item> registerRenderedTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>, renderer: Supplier<TurtleUpgradeModeller<PeripheralTurtleUpgrade<T>>>) {
+    private fun <T : IOwnedPeripheral<TurtlePeripheralOwner>, V : Item> registerRenderedTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>, renderer: Supplier<TurtleUpgradeModeller<PeripheralTurtleUpgrade<T>>>) {
         TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
-            TurtleUpgradeSerialiser.simpleWithCustomItem{upgradeID, stack ->
+            TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
                 PeripheralTurtleUpgrade.dynamic(stack.item, builder) { upgradeID }
             },
             { dataProvider, serializer ->
                 dataProvider.simpleWithCustomItem(
                     id,
-                    serializer, item.get()
+                    serializer,
+                    item.get(),
                 )
-            } ,
-            listOf(Consumer {
-                TurtlematicCoreClient.registerHook {
-                    ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-                        it.get(), renderer.get()
-                    )
-                }
-            })
+            },
+            listOf(
+                Consumer {
+                    TurtlematicCoreClient.registerHook {
+                        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+                            it.get(),
+                            renderer.get(),
+                        )
+                    }
+                },
+            ),
         )
     }
 
-    private fun <T: ITurtleUpgrade, V: Item> registerClockwiseTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
+    private fun <T : ITurtleUpgrade, V : Item> registerClockwiseTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
         TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
@@ -173,40 +199,49 @@ object TurtlematicCommonHooks {
             { dataProvider, serializer ->
                 dataProvider.simpleWithCustomItem(
                     id,
-                    serializer, item.get()
+                    serializer,
+                    item.get(),
                 )
-            } ,
-            listOf(Consumer {
-                TurtlematicCoreClient.registerHook {
-                    ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-                        it.get(), ClockwiseTurtleModeller()
-                    )
-                }
-            })
+            },
+            listOf(
+                Consumer {
+                    TurtlematicCoreClient.registerHook {
+                        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+                            it.get(),
+                            ClockwiseTurtleModeller(),
+                        )
+                    }
+                },
+            ),
         )
     }
 
-    private fun <O: IOwnedPeripheral<*>, V: Item> registerStarboundTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: AutomataPeripheralBuildFunction<O>, ticker: AutomataTickerFunction? = null) {
+    private fun <O : IOwnedPeripheral<*>, V : Item> registerStarboundTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: AutomataPeripheralBuildFunction<O>, ticker: AutomataTickerFunction? = null) {
         TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
-            TurtleUpgradeSerialiser.simpleWithCustomItem {  upgradeId, stack ->
-                if (ticker == null) {StarboundTurtleUpgrade.dynamic(upgradeId, stack.item as BaseAutomataCore, builder)} else {
+            TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
+                if (ticker == null) { StarboundTurtleUpgrade.dynamic(upgradeId, stack.item as BaseAutomataCore, builder) } else {
                     StarboundTurtleUpgrade.ticker(upgradeId, stack.item as BaseAutomataCore, builder, ticker)
-                }  },
+                }
+            },
             { dataProvider, serializer ->
                 dataProvider.simpleWithCustomItem(
                     id,
-                    serializer, item.get()
+                    serializer,
+                    item.get(),
                 )
-            } ,
-            listOf(Consumer {
-                TurtlematicCoreClient.registerHook {
-                    ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-                        it.get(), ClockwiseTurtleModeller()
-                    )
-                }
-            })
+            },
+            listOf(
+                Consumer {
+                    TurtlematicCoreClient.registerHook {
+                        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+                            it.get(),
+                            ClockwiseTurtleModeller(),
+                        )
+                    }
+                },
+            ),
         )
     }
 
@@ -251,7 +286,6 @@ object TurtlematicCommonHooks {
         registerFlatTurtleUpgrade(LavaBucketPeripheral.UPGRADE_ID, { net.minecraft.world.item.Items.LAVA_BUCKET }, ::LavaBucketPeripheral)
         registerRenderedTurtleUpgrade(BowPeripheral.UPGRADE_ID, { net.minecraft.world.item.Items.BOW }, ::BowPeripheral, ::AngleItemTurtleModeller)
 
-
         registerFacingBlockTurtleUpgrade(PistonPeripheral.UPGRADE_ID, { net.minecraft.world.item.Items.PISTON }, ::PistonPeripheral)
         registerFacingBlockTurtleUpgrade(StickyPistonPeripheral.UPGRADE_ID, { net.minecraft.world.item.Items.STICKY_PISTON }, ::StickyPistonPeripheral)
     }
@@ -270,8 +304,9 @@ object TurtlematicCommonHooks {
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
         TURTLE_UPGRADES.forEach {
             val upgrade = PeripheraliumPlatform.getTurtleUpgrade(it.toString())
-            if (upgrade != null)
+            if (upgrade != null) {
                 PeripheraliumPlatform.createTurtlesWithUpgrade(upgrade).forEach(output::accept)
+            }
         }
     }
 

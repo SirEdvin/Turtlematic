@@ -18,7 +18,7 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
 
-    companion object: PeripheralConfiguration {
+    companion object : PeripheralConfiguration {
         override val TYPE = "sticky_piston"
     }
 

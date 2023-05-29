@@ -9,10 +9,11 @@ enum class CountOperation(
     private val defaultCooldown: Int,
     private val defaultCost: Int,
     private val countCooldownPolicy: CountPolicy = CountPolicy.MULTIPLY,
-    private val countCostPolicy: CountPolicy = CountPolicy.MULTIPLY
+    private val countCostPolicy: CountPolicy = CountPolicy.MULTIPLY,
 ) : IPeripheralOperation<Int> {
     SMELT(1, 80),
-    CHISEL(1_000, 1, countCooldownPolicy = CountPolicy.IGNORE);
+    CHISEL(1_000, 1, countCooldownPolicy = CountPolicy.IGNORE),
+    ;
 
     enum class CountPolicy(private val factorFunction: Function<Int, Int>) {
         MULTIPLY(Function { c: Int -> c }), IGNORE(Function { 1 });
@@ -49,10 +50,16 @@ enum class CountOperation(
 
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
-            settingsName() + "Cooldown", defaultCooldown, 1000, Int.MAX_VALUE
+            settingsName() + "Cooldown",
+            defaultCooldown,
+            1000,
+            Int.MAX_VALUE,
         )
         cost = builder.defineInRange(
-            settingsName() + "Cost", defaultCost, 0, Int.MAX_VALUE
+            settingsName() + "Cost",
+            defaultCost,
+            0,
+            Int.MAX_VALUE,
         )
     }
 }

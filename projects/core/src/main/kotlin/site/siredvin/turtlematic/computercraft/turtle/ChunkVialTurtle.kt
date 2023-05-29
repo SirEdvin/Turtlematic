@@ -9,7 +9,7 @@ import site.siredvin.peripheralium.computercraft.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.peripheral.misc.ChunkVialPeripheral
 
-class ChunkVialTurtle(id: ResourceLocation, itemStack: ItemStack): PeripheralTurtleUpgrade<ChunkVialPeripheral>(id, itemStack){
+class ChunkVialTurtle(id: ResourceLocation, itemStack: ItemStack) : PeripheralTurtleUpgrade<ChunkVialPeripheral>(id, itemStack) {
     override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): ChunkVialPeripheral {
         return ChunkVialPeripheral(TurtlePeripheralOwner(turtle, side))
     }

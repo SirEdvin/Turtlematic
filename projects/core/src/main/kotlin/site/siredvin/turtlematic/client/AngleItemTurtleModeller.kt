@@ -10,7 +10,7 @@ import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
 import site.siredvin.turtlematic.util.DataStorageObjects
 
-class AngleItemTurtleModeller<T: ITurtleUpgrade>: TurtleUpgradeModeller<T> {
+class AngleItemTurtleModeller<T : ITurtleUpgrade> : TurtleUpgradeModeller<T> {
 
     companion object {
         // So, we need this shift, because default bow pointing 45 degrees up

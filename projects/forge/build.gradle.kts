@@ -19,10 +19,12 @@ forgeShaking {
     commonProjectName.set("core")
     useAT.set(false)
     useMixins.set(true)
-    extraVersionMappings.set(mapOf(
-        "computercraft" to "cc-tweaked",
-        "peripheralium" to "peripheralium",
-    ))
+    extraVersionMappings.set(
+        mapOf(
+            "computercraft" to "cc-tweaked",
+            "peripheralium" to "peripheralium",
+        ),
+    )
     shake()
 }
 
@@ -73,7 +75,7 @@ repositories {
 dependencies {
     implementation(libs.bundles.forge.raw)
     libs.bundles.forge.base.get().map { implementation(fg.deobf(it)) }
-    libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it))}
+    libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
     libs.bundles.externalMods.forge.integrations.full.get().map { compileOnly(fg.deobf(it)) }
     libs.bundles.externalMods.forge.integrations.active.get().map { runtimeOnly(fg.deobf(it)) }
@@ -90,7 +92,7 @@ modPublishing {
         listOf(
             "cc-tweaked",
             "kotlin-for-forge",
-            "peripheralium"
+            "peripheralium",
         ),
     )
     shake()

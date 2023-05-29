@@ -51,7 +51,7 @@ object Items {
 
     val FORGED_AUTOMATA_CORE = TurtlematicPlatform.registerItem("forged_automata_core") { ForgedAutomataCore() }
     val BREWING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("brewing_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER3,  TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip)
+        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip)
     }
     val SMITHING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("smithing_automata_core") {
         RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableSmithingAutomataCore)
@@ -110,21 +110,24 @@ object Items {
         PeripheralItem(
             Item.Properties(),
             TurtlematicConfig::enableTurtleChatter,
-            alwaysShow = true, isDisabled
+            alwaysShow = true,
+            isDisabled,
         )
     }
     val CREATIVE_CHEST = TurtlematicPlatform.registerItem("creative_chest") {
         PeripheralItem(
             Item.Properties(),
             TurtlematicConfig::enableCreativeChest,
-            alwaysShow = true, isDisabled
+            alwaysShow = true,
+            isDisabled,
         )
     }
     val CHUNK_VIAL = TurtlematicPlatform.registerItem("chunk_vial") {
         PeripheralItem(
             Item.Properties(),
             TurtlematicConfig::enableChunkVial,
-            alwaysShow = true, isDisabled
+            alwaysShow = true,
+            isDisabled,
         )
     }
 

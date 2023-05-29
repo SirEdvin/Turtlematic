@@ -28,20 +28,26 @@ class AutomataRestockPlugin(
     @Throws(LuaException::class)
     fun restock(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
-        val hit = automataCore.peripheralOwner.withPlayer({ FakePlayerProxy(it).findHit(
-            skipEntity = false,
-            skipBlock = true,
-            entityFilter = suitableEntity
-        ) }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
+        val hit = automataCore.peripheralOwner.withPlayer({
+            FakePlayerProxy(it).findHit(
+                skipEntity = false,
+                skipBlock = true,
+                entityFilter = suitableEntity,
+            )
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         return when (hit.type) {
             HitResult.Type.MISS -> MethodResult.of(null, "No merchant found")
             HitResult.Type.BLOCK -> MethodResult.of(null, "No merchant found")
             HitResult.Type.ENTITY -> {
                 return automataCore.withOperation(
-                    SingleOperation.RESTOCK
+                    SingleOperation.RESTOCK,
                 ) {
                     val hitEntity: Entity = (hit as EntityHitResult).entity
                     return@withOperation refresher(hitEntity)

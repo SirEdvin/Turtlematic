@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
-import net.minecraft.util.Mth
 import net.minecraft.world.Containers
 import net.minecraft.world.entity.projectile.ItemSupplier
 import net.minecraft.world.entity.projectile.ThrowableProjectile
@@ -19,9 +18,9 @@ import site.siredvin.peripheralium.ext.toBlockPos
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.setup.EntityTypes
 
-class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : ThrowableProjectile(EntityTypes.SHOOTED_ITEM_TYPE.get(), x, y, z,level), ItemSupplier {
+class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : ThrowableProjectile(EntityTypes.SHOOTED_ITEM_TYPE.get(), x, y, z, level), ItemSupplier {
 
-    constructor(level: Level): this(level, 0.0, 0.0, 0.0)
+    constructor(level: Level) : this(level, 0.0, 0.0, 0.0)
 
     companion object {
         private val DATA_ITEM_STACK: EntityDataAccessor<ItemStack> = SynchedEntityData.defineId(ShootedItemProjectile::class.java, EntityDataSerializers.ITEM_STACK)
@@ -39,8 +38,9 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
 
     override fun setPos(x: Double, y: Double, z: Double) {
         super.setPos(x, y, z)
-        if (!level.isClientSide)
+        if (!level.isClientSide) {
             TurtlematicCore.LOGGER.info("New position $x $y $z")
+        }
     }
 
     override fun onHitBlock(hit: BlockHitResult) {

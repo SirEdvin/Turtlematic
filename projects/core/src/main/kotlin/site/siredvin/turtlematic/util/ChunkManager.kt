@@ -11,8 +11,7 @@ import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.util.*
 
-
-class ChunkManager: SavedData() {
+class ChunkManager : SavedData() {
     companion object {
         private const val DIMENSION_NAME_TAG = "dimensionName"
         private const val POS_TAG = "pos"
@@ -21,7 +20,8 @@ class ChunkManager: SavedData() {
 
         private fun readChunkRecord(tag: CompoundTag): LoadChunkRecord {
             return LoadChunkRecord(
-                tag.getString(DIMENSION_NAME_TAG), chunkPosFromNBT(tag.getCompound(POS_TAG))
+                tag.getString(DIMENSION_NAME_TAG),
+                chunkPosFromNBT(tag.getCompound(POS_TAG)),
             )
         }
 
@@ -68,7 +68,7 @@ class ChunkManager: SavedData() {
      * and removing chunk from loading in computer thread lead to expected crash
      */
     @Synchronized
-    fun   removeChunk(owner: UUID, pos: ChunkPos, level: ServerLevel): Boolean {
+    fun removeChunk(owner: UUID, pos: ChunkPos, level: ServerLevel): Boolean {
         if (mainThread != null && Thread.currentThread() == mainThread) {
             TurtlematicCore.LOGGER.debug("Chunk removed from to force loaded {}", pos)
             return PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, false)
@@ -85,12 +85,12 @@ class ChunkManager: SavedData() {
         val chunkRecord = forcedChunks[owner] ?: return true
         val dimensionName = level.dimension().location().toString()
         require(
-            chunkRecord.dimensionName == dimensionName
+            chunkRecord.dimensionName == dimensionName,
         ) {
             java.lang.String.format(
                 "Incorrect dimension! Should be %s instead of %s",
                 chunkRecord.dimensionName,
-                dimensionName
+                dimensionName,
             )
         }
         val result: Boolean = if (loadedChunk == null) {
@@ -144,8 +144,9 @@ class ChunkManager: SavedData() {
             server.allLevels.forEach { level ->
                 val dimensionName: String = level.dimension().location().toString()
                 val purgeList: List<UUID> = forcedChunks.entries.mapNotNull {
-                    if (it.value.dimensionName == dimensionName && !it.value.valid)
+                    if (it.value.dimensionName == dimensionName && !it.value.valid) {
                         return@mapNotNull it.key
+                    }
                     return@mapNotNull null
                 }
                 purgeList.forEach {
@@ -161,7 +162,7 @@ class ChunkManager: SavedData() {
         forcedChunks.forEach { (key, value) ->
             forcedChunksTag.put(
                 key.toString(),
-                value.serialize()
+                value.serialize(),
             )
         }
         compoundTag.put(FORCED_CHUNKS_TAG, forcedChunksTag)
@@ -171,7 +172,7 @@ class ChunkManager: SavedData() {
     internal data class LoadChunkRecord(
         val dimensionName: String,
         val pos: ChunkPos,
-        var lastTouch: Long = Clock.System.now().toEpochMilliseconds()
+        var lastTouch: Long = Clock.System.now().toEpochMilliseconds(),
     ) {
         val valid: Boolean
             get() {

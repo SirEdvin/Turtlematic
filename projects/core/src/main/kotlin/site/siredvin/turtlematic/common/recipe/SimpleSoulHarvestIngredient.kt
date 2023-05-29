@@ -3,7 +3,7 @@ package site.siredvin.turtlematic.common.recipe
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 
-class SimpleSoulHarvestIngredient(private val entityType: EntityType<*>, private val _requiredCount: Int): SoulHarvestIngredient {
+class SimpleSoulHarvestIngredient(private val entityType: EntityType<*>, private val _requiredCount: Int) : SoulHarvestIngredient {
     override val requiredCount: Int
         get() = _requiredCount
 

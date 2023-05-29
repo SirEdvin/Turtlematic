@@ -25,8 +25,9 @@ object TickerFunctions {
     fun causeRandomTickForCrop(turtle: ITurtleAccess, coreTier: IAutomataCoreTier) {
         val randomTickCandidates = mutableListOf<Pair<BlockState, BlockPos>>()
         ScanUtils.traverseBlocks(turtle.level, turtle.position, coreTier.interactionRadius, { state, pos ->
-            if (isSuitableCrop(state))
+            if (isSuitableCrop(state)) {
                 randomTickCandidates.add(Pair(state, pos))
+            }
         })
         if (randomTickCandidates.isNotEmpty()) {
             val selected = randomTickCandidates.random()
@@ -49,8 +50,9 @@ object TickerFunctions {
     fun creativeHusbandryTick(turtle: ITurtleAccess, side: TurtleSide, coreTier: IAutomataCoreTier, tickCounter: Long) {
         if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled && tickCounter % TurtlematicConfig.creativeHusbandryAutomataGrownPeriod == 0L) {
             ScanUtils.traverseBlocks(turtle.level, turtle.position, coreTier.interactionRadius, { state, pos ->
-                if (isSuitableCrop(state))
+                if (isSuitableCrop(state)) {
                     state.randomTick(turtle.level as ServerLevel, pos, turtle.level.random)
+                }
             })
         }
     }

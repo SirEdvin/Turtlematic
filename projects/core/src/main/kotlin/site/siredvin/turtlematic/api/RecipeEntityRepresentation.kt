@@ -10,6 +10,6 @@ data class RecipeEntityRepresentation(val consumedCount: Int, val requiredCount:
         get() = requiredCount - consumedCount
 
     fun toComponent(): Component {
-        return text(TurtlematicCore.MOD_ID,"consumed_entities_record", consumedCount, requiredCount, name)
+        return text(TurtlematicCore.MOD_ID, "consumed_entities_record", consumedCount, requiredCount, name)
     }
 }

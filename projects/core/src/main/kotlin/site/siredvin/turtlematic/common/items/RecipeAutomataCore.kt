@@ -19,17 +19,20 @@ class RecipeAutomataCore(
     coreTier: IAutomataCoreTier,
     p: Properties,
     enableSup: Supplier<Boolean>,
-    vararg tooltipHook: Function<PeripheralItem, List<Component>>
+    vararg tooltipHook: Function<PeripheralItem, List<Component>>,
 ) : BaseAutomataCore(coreTier, p, enableSup, *tooltipHook) {
-    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<PeripheralItem, List<Component>>): this(
-        coreTier, Properties().stacksTo(1), enableSup, *tooltipHook
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<PeripheralItem, List<Component>>) : this(
+        coreTier,
+        Properties().stacksTo(1),
+        enableSup,
+        *tooltipHook,
     )
 
     override fun appendHoverText(
         itemStack: ItemStack,
         level: Level?,
         list: MutableList<Component>,
-        tooltipFlag: TooltipFlag
+        tooltipFlag: TooltipFlag,
     ) {
         super.appendHoverText(itemStack, level, list, tooltipFlag)
         if (InputConstants.isKeyDown(Minecraft.getInstance().window.window, InputConstants.KEY_LCONTROL)) {
@@ -42,8 +45,8 @@ class RecipeAutomataCore(
                     text(
                         TurtlematicCore.MOD_ID,
                         "required_souls_for_consuming",
-                        recipe.first.ingredients.joinToString { it.description }
-                    )
+                        recipe.first.ingredients.joinToString { it.description },
+                    ),
                 )
             }
         } else {

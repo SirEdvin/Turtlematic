@@ -6,7 +6,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import site.siredvin.turtlematic.xplat.ModRecipeIngredients
 
-object FabricModRecipeIngredients: ModRecipeIngredients {
+object FabricModRecipeIngredients : ModRecipeIngredients {
     override val soulLantern: Ingredient
         get() = Ingredient.of(Items.SOUL_LANTERN)
     override val emerald: Ingredient

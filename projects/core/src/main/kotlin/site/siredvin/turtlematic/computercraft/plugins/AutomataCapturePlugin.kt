@@ -16,7 +16,6 @@ import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
@@ -25,6 +24,7 @@ import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.tags.EntityTags
 import java.util.function.Predicate
@@ -32,7 +32,7 @@ import java.util.function.Predicate
 class AutomataCapturePlugin(
     automataCore: BaseAutomataCorePeripheral,
     private val allowedMods: Set<InteractionMode>,
-    private val suitableEntity: Predicate<Entity> = Predicate { false }
+    private val suitableEntity: Predicate<Entity> = Predicate { false },
 ) : AutomataCorePlugin(automataCore) {
     override val operations: List<IPeripheralOperation<*>>
         get() = listOf(SingleOperation.CAPTURE)
@@ -57,8 +57,9 @@ class AutomataCapturePlugin(
     }
 
     protected fun extractEntity(): Entity? {
-        if (storedType != InteractionMode.ENTITY)
+        if (storedType != InteractionMode.ENTITY) {
             return null
+        }
         val data: CompoundTag = storedData
         val type: EntityType<*>? = EntityType.byString(data.getString("entity")).orElse(null)
         if (type != null) {
@@ -74,10 +75,12 @@ class AutomataCapturePlugin(
             SingleOperation.CAPTURE,
             IPeripheralFunction {
                 val entity = hit.entity
-                if (entity is Player || !entity.isAlive)
+                if (entity is Player || !entity.isAlive) {
                     return@IPeripheralFunction MethodResult.of(null, "Unsuitable entity")
-                if (entity.type.`is`(EntityTags.CAPTURE_BLACKLIST))
+                }
+                if (entity.type.`is`(EntityTags.CAPTURE_BLACKLIST)) {
                     return@IPeripheralFunction MethodResult.of(null, "Entity in blacklist")
+                }
                 val nbt = CompoundTag()
                 nbt.putString("entity", EntityType.getKey(entity.type).toString())
                 entity.saveWithoutId(nbt)
@@ -88,16 +91,19 @@ class AutomataCapturePlugin(
             IPeripheralCheck {
                 if (isFilled) return@IPeripheralCheck MethodResult.of(null, "Something else already captured")
                 null
-            })
+            },
+        )
     }
 
     protected fun extractBlock(): Pair<BlockState, CompoundTag>? {
-        if (storedType != InteractionMode.BLOCK)
+        if (storedType != InteractionMode.BLOCK) {
             return null
+        }
         val data: CompoundTag = storedData
-        val blockState =  NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound("state"))
-        if (blockState.isAir)
+        val blockState = NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound("state"))
+        if (blockState.isAir) {
             return null
+        }
         return Pair(blockState, data.getCompound("nbt"))
     }
 
@@ -108,10 +114,12 @@ class AutomataCapturePlugin(
                 val owner = automataCore.peripheralOwner
                 val level = owner.level!!
                 val state = level.getBlockState(hit.blockPos)
-                if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it) }))
+                if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it) })) {
                     return@withOperation MethodResult.of(null, "Block is protected")
-                if (state.`is`(BlockTags.CAPTURE_BLACKLIST))
+                }
+                if (state.`is`(BlockTags.CAPTURE_BLACKLIST)) {
                     return@withOperation MethodResult.of(null, "Block is in blacklist")
+                }
                 val serializedData = CompoundTag()
                 serializedData.put("state", NbtUtils.writeBlockState(state))
                 val entity = level.getBlockEntity(hit.blockPos)
@@ -125,7 +133,7 @@ class AutomataCapturePlugin(
             IPeripheralCheck {
                 if (isFilled) return@IPeripheralCheck MethodResult.of(null, "Something else already captured")
                 null
-            }
+            },
         )
     }
 
@@ -144,17 +152,20 @@ class AutomataCapturePlugin(
         val level = owner.level!!
         val extractedBlock = extractBlock() ?: return MethodResult.of(null, "Problem with block unpacking")
         val pos = owner.pos.offset(owner.facing.normal)
-        if (!level.isEmptyBlock(pos))
+        if (!level.isEmptyBlock(pos)) {
             return MethodResult.of(null, "Target area should be empty")
+        }
         val isProtected = owner.withPlayer(
-            { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it) }
+            { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it) },
         )
-        if (isProtected)
+        if (isProtected) {
             return MethodResult.of(null, "This block is protected")
+        }
         level.setBlockAndUpdate(pos, extractedBlock.first)
         val entity = level.getBlockEntity(pos)
-        if (entity != null && !extractedBlock.second.isEmpty)
+        if (entity != null && !extractedBlock.second.isEmpty) {
             entity.load(extractedBlock.second)
+        }
         clear()
         return MethodResult.of(true)
     }
@@ -164,14 +175,20 @@ class AutomataCapturePlugin(
     fun capture(arguments: IArguments): MethodResult {
         val mode = InteractionMode.luaValueOf(arguments.getString(0), allowedMods)
         val directionArgument = arguments.optString(1)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
-        val hit = automataCore.peripheralOwner.withPlayer({ FakePlayerProxy(it).findHit(
-            skipEntity = mode.skipEntry,
-            skipBlock = mode.skipBlock,
-            entityFilter = suitableEntity
-        ) }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
+        val hit = automataCore.peripheralOwner.withPlayer({
+            FakePlayerProxy(it).findHit(
+                skipEntity = mode.skipEntry,
+                skipBlock = mode.skipBlock,
+                entityFilter = suitableEntity,
+            )
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         return when (hit.type) {
             HitResult.Type.MISS -> MethodResult.of(null, "nothing found")
             HitResult.Type.BLOCK -> captureBlock(hit as BlockHitResult)
@@ -201,8 +218,9 @@ class AutomataCapturePlugin(
                     entity.saveWithoutId(tag)
                     if (!tag.isEmpty) {
                         val serializerTag = PeripheraliumPlatform.nbtToLua(tag)
-                        if (serializerTag != null)
+                        if (serializerTag != null) {
                             base["nbt"] = serializerTag
+                        }
                     }
                     MethodResult.of(base)
                 }
@@ -211,8 +229,9 @@ class AutomataCapturePlugin(
                     val base = LuaRepresentation.forBlockState(blockData.first)
                     if (!blockData.second.isEmpty) {
                         val serializerTag = PeripheraliumPlatform.nbtToLua(blockData.second)
-                        if (serializerTag != null)
+                        if (serializerTag != null) {
                             base["nbt"] = serializerTag
+                        }
                     }
                     MethodResult.of(base)
                 }

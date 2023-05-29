@@ -3,20 +3,20 @@ package site.siredvin.turtlematic.computercraft.operations
 import net.minecraftforge.common.ForgeConfigSpec
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.turtlematic.TurtlematicCore
-import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.util.*
 import java.util.function.Function
-
 
 enum class PowerOperation(
     private val defaultCooldown: Int,
     private val defaultCost: Int,
     private val scalePolicy: ScalePolicy,
-): IPeripheralOperation<PowerOperationContext> {
+) : IPeripheralOperation<PowerOperationContext> {
     THROW_POTION(1_000, 10, ScalePolicy.EXP),
-    SHOOT(1_000, 10, ScalePolicy.EXP);
+    SHOOT(1_000, 10, ScalePolicy.EXP),
+    ;
     enum class ScalePolicy(private val factorFunction: Function<Double, Double>) {
-        EXP({ d: Double -> kotlin.math.exp(d) });
+        EXP({ d: Double -> kotlin.math.exp(d) }),
+        ;
 
         fun getFactor(power: Double): Double {
             return factorFunction.apply(power)
@@ -51,10 +51,16 @@ enum class PowerOperation(
 
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
-            settingsName() + "Cooldown", defaultCooldown, 1000, Int.MAX_VALUE
+            settingsName() + "Cooldown",
+            defaultCooldown,
+            1000,
+            Int.MAX_VALUE,
         )
         cost = builder.defineInRange(
-            settingsName() + "Cost", defaultCost, 0, Int.MAX_VALUE
+            settingsName() + "Cost",
+            defaultCost,
+            0,
+            Int.MAX_VALUE,
         )
     }
 }

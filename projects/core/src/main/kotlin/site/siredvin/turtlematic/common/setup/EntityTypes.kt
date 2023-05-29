@@ -8,7 +8,8 @@ import site.siredvin.turtlematic.xplat.TurtlematicPlatform
 
 object EntityTypes {
     val SHOOTED_ITEM_TYPE_ID = ResourceLocation(
-        TurtlematicCore.MOD_ID, "shooted_item"
+        TurtlematicCore.MOD_ID,
+        "shooted_item",
     )
 
     val SHOOTED_ITEM_TYPE = TurtlematicPlatform.registerEntity(SHOOTED_ITEM_TYPE_ID) {

@@ -17,7 +17,7 @@ import site.siredvin.turtlematic.api.PeripheralConfiguration
 
 class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
-    companion object: PeripheralConfiguration {
+    companion object : PeripheralConfiguration {
         override val TYPE = "soul_scrapper"
     }
 
@@ -27,7 +27,7 @@ class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     @LuaFunction(mainThread = true)
     fun harvestSoul(): MethodResult {
         peripheralOwner.turtle.playAnimation(
-            if (peripheralOwner.side == TurtleSide.LEFT) TurtleAnimation.SWING_LEFT_TOOL else TurtleAnimation.SWING_RIGHT_TOOL
+            if (peripheralOwner.side == TurtleSide.LEFT) TurtleAnimation.SWING_LEFT_TOOL else TurtleAnimation.SWING_RIGHT_TOOL,
         )
         val toolInMainHand = peripheralOwner.toolInMainHand
         if (toolInMainHand.item !is ISoulFeedableItem) {
@@ -36,11 +36,13 @@ class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         val feedableItem = toolInMainHand.item as ISoulFeedableItem
         return peripheralOwner.withPlayer({
             val hit = FakePlayerProxy(it).findHit(skipEntity = false, skipBlock = true) { entity -> entity !is Player && entity is LivingEntity }
-            if (hit !is EntityHitResult)
+            if (hit !is EntityHitResult) {
                 return@withPlayer MethodResult.of(null, "Nothing to consume")
+            }
             val result = feedableItem.consumeEntitySoul(toolInMainHand, it, hit.entity as LivingEntity)
-            if (result.rightPresent())
+            if (result.rightPresent()) {
                 return@withPlayer MethodResult.of(null, result.right)
+            }
             it.setItemInHand(InteractionHand.MAIN_HAND, result.left!!)
             return@withPlayer MethodResult.of(true)
         })
@@ -57,10 +59,12 @@ class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
             ?: return MethodResult.of(null, "Item have no selected recipes yet")
         val data = ArrayList<Map<String, Any>>()
         feedableItem.getEntityRepresentation(toolInMainHand, activeRecipe).filter { it.leftCount > 0 }.forEach {
-            data.add(mapOf(
-                "name" to it.name,
-                "leftCount" to it.leftCount
-            ))
+            data.add(
+                mapOf(
+                    "name" to it.name,
+                    "leftCount" to it.leftCount,
+                ),
+            )
         }
         return MethodResult.of(data)
     }

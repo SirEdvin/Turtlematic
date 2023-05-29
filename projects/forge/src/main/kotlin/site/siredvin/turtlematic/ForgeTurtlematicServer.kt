@@ -26,7 +26,8 @@ object ForgeTurtlematicServer {
     @SubscribeEvent
     fun onServerTickEnd(event: ServerTickEvent) {
 //        TurtlematicCore.LOGGER.info("Server ticking!")
-        if (event.phase == TickEvent.Phase.END)
+        if (event.phase == TickEvent.Phase.END) {
             TurtlematicCommonHooks.onEndOfServerTick(event.server)
+        }
     }
 }

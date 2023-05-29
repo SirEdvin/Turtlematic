@@ -5,28 +5,30 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
-import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.AutomataCoreFuelAbility
-import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
+import site.siredvin.turtlematic.util.DataStorageObjects
 
 abstract class BaseAutomataCorePeripheral(
     type: String,
     turtle: ITurtleAccess,
     side: TurtleSide,
-    tier: IAutomataCoreTier
+    tier: IAutomataCoreTier,
 ) : OwnedPeripheral<TurtlePeripheralOwner>(
-    type, TurtlePeripheralOwner(
-        turtle, side
-    )
+    type,
+    TurtlePeripheralOwner(
+        turtle,
+        side,
+    ),
 ) {
     val tier: IAutomataCoreTier
     private val attributes: MutableMap<String, Boolean> = HashMap()
@@ -73,7 +75,7 @@ abstract class BaseAutomataCorePeripheral(
         operation: IPeripheralOperation<T>,
         context: T,
         function: IPeripheralFunction<T, MethodResult>,
-        check: IPeripheralCheck<T>? = null
+        check: IPeripheralCheck<T>? = null,
     ): MethodResult {
         return peripheralOwner.withOperation(operation, context, function, check, { addRotationCycle() })
     }
@@ -81,7 +83,7 @@ abstract class BaseAutomataCorePeripheral(
     @Throws(LuaException::class)
     fun withOperation(
         operation: SingleOperation,
-        function: IPeripheralFunction<SingleOperationContext, MethodResult>
+        function: IPeripheralFunction<SingleOperationContext, MethodResult>,
     ): MethodResult {
         return withOperation(operation, forUnknownDistance(), function, null)
     }
@@ -90,7 +92,7 @@ abstract class BaseAutomataCorePeripheral(
     fun withOperation(
         operation: SingleOperation,
         function: IPeripheralFunction<SingleOperationContext, MethodResult>,
-        check: IPeripheralCheck<SingleOperationContext>?
+        check: IPeripheralCheck<SingleOperationContext>?,
     ): MethodResult {
         return withOperation(operation, forUnknownDistance(), function, check)
     }

@@ -8,6 +8,7 @@ import kotlin.random.Random
 interface IAutomataCoreTier : IConfigHandler {
     val interactionRadius: Int
     val maxFuelConsumptionRate: Int
+
     /**
      * This is number, that cooldown will be multiply at
      */
@@ -15,10 +16,12 @@ interface IAutomataCoreTier : IConfigHandler {
     val traits: Set<ResourceLocation>
 
     fun needRestoreDurability(): Boolean {
-        if (traits.contains(AutomataCoreTraits.DURABILITY_REFUND))
+        if (traits.contains(AutomataCoreTraits.DURABILITY_REFUND)) {
             return true
-        if (traits.contains(AutomataCoreTraits.DURABILITY_REFUND_CHANCE))
+        }
+        if (traits.contains(AutomataCoreTraits.DURABILITY_REFUND_CHANCE)) {
             return Random.nextDouble() <= TurtlematicConfig.durabilityRestoreChance
+        }
         return false
     }
 }

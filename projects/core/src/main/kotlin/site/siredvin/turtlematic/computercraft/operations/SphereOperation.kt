@@ -9,11 +9,12 @@ enum class SphereOperation(
     private val defaultCooldown: Int,
     private val defaultMaxFreeRadius: Int,
     private val defaultMaxCostRadius: Int,
-    private val defaultExtraBlockCost: Double
+    private val defaultExtraBlockCost: Double,
 ) : IPeripheralOperation<SphereOperationContext> {
     SCAN_BLOCKS(2000, 8, 16, 0.17),
     SCAN_ENTITIES(2000, 8, 16, 0.17),
-    SCAN_ITEMS(2000, 8, 16, 0.17);
+    SCAN_ITEMS(2000, 8, 16, 0.17),
+    ;
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var max_free_radius: ForgeConfigSpec.IntValue? = null
@@ -21,16 +22,28 @@ enum class SphereOperation(
     private var extra_block_cost: ForgeConfigSpec.DoubleValue? = null
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
-            settingsName() + "Cooldown", defaultCooldown, 1000, Int.MAX_VALUE
+            settingsName() + "Cooldown",
+            defaultCooldown,
+            1000,
+            Int.MAX_VALUE,
         )
         max_free_radius = builder.defineInRange(
-            settingsName() + "MaxFreeRadius", defaultMaxFreeRadius, 1, 64
+            settingsName() + "MaxFreeRadius",
+            defaultMaxFreeRadius,
+            1,
+            64,
         )
         max_cost_radius = builder.defineInRange(
-            settingsName() + "MaxCostRadius", defaultMaxCostRadius, 1, 64
+            settingsName() + "MaxCostRadius",
+            defaultMaxCostRadius,
+            1,
+            64,
         )
         extra_block_cost = builder.defineInRange(
-            settingsName() + "ExtraBlockCost", defaultExtraBlockCost, 0.1, Double.MAX_VALUE
+            settingsName() + "ExtraBlockCost",
+            defaultExtraBlockCost,
+            0.1,
+            Double.MAX_VALUE,
         )
     }
 

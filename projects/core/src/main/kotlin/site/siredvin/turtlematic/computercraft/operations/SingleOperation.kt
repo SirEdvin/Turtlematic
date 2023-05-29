@@ -11,7 +11,7 @@ enum class SingleOperation(
     private val countCooldownPolicy: CountPolicy,
     private val defaultCost: Int,
     private val distanceCostPolicy: DistancePolicy,
-    private val countCostPolicy: CountPolicy
+    private val countCostPolicy: CountPolicy,
 ) : IPeripheralOperation<SingleOperationContext> {
     SWING(1000, 1),
     TRANSFORM_BLOCK(500, 1),
@@ -25,12 +25,19 @@ enum class SingleOperation(
     CAPTURE(50000, 100),
     ENCHANTMENT(5_000, 10),
     WARP(
-        1000, DistancePolicy.IGNORED, CountPolicy.MULTIPLY,
-        1, DistancePolicy.SQRT, CountPolicy.MULTIPLY
-    );
+        1000,
+        DistancePolicy.IGNORED,
+        CountPolicy.MULTIPLY,
+        1,
+        DistancePolicy.SQRT,
+        CountPolicy.MULTIPLY,
+    ),
+    ;
 
     enum class DistancePolicy(private val factorFunction: Function<Int, Int>) {
-        IGNORED(Function { 1 }), SQRT(Function { d: Int -> kotlin.math.sqrt(d.toDouble()).toInt() });
+        IGNORED(Function { 1 }),
+        SQRT(Function { d: Int -> kotlin.math.sqrt(d.toDouble()).toInt() }),
+        ;
 
         fun getFactor(distance: Int): Int {
             return factorFunction.apply(distance)
@@ -38,7 +45,8 @@ enum class SingleOperation(
     }
 
     enum class CountPolicy(private val factorFunction: Function<Int, Int>) {
-        MULTIPLY(Function { c: Int -> c });
+        MULTIPLY(Function { c: Int -> c }),
+        ;
 
         fun getFactor(count: Int): Int {
             return factorFunction.apply(count)
@@ -54,7 +62,7 @@ enum class SingleOperation(
         CountPolicy.MULTIPLY,
         defaultCost,
         DistancePolicy.IGNORED,
-        CountPolicy.MULTIPLY
+        CountPolicy.MULTIPLY,
     ) {
     }
 
@@ -63,7 +71,7 @@ enum class SingleOperation(
 
     override fun getCooldown(context: SingleOperationContext): Int {
         return cooldown!!.get() * countCooldownPolicy.getFactor(context.count) * distanceCooldownPolicy.getFactor(
-            context.distance
+            context.distance,
         )
     }
 
@@ -86,10 +94,16 @@ enum class SingleOperation(
 
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
-            settingsName() + "Cooldown", defaultCooldown, 1000, Int.MAX_VALUE
+            settingsName() + "Cooldown",
+            defaultCooldown,
+            1000,
+            Int.MAX_VALUE,
         )
         cost = builder.defineInRange(
-            settingsName() + "Cost", defaultCost, 0, Int.MAX_VALUE
+            settingsName() + "Cost",
+            defaultCost,
+            0,
+            Int.MAX_VALUE,
         )
     }
 }

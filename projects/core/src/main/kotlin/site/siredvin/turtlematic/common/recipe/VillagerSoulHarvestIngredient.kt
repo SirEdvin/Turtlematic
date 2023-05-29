@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.npc.Villager
 import net.minecraft.world.entity.npc.VillagerProfession
 
-class VillagerSoulHarvestIngredient(private val profession: VillagerProfession): SoulHarvestIngredient {
+class VillagerSoulHarvestIngredient(private val profession: VillagerProfession) : SoulHarvestIngredient {
     override val requiredCount: Int
         get() = 1
 

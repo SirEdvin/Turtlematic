@@ -8,7 +8,6 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
@@ -27,21 +26,18 @@ import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOw
 import site.siredvin.peripheralium.util.*
 import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
-import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
-import site.siredvin.turtlematic.util.toCreative
-import site.siredvin.turtlematic.util.toStarbound
 import java.util.*
 import kotlin.math.min
 
-class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier):
+class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
     ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
 
-    companion object: PeripheralConfiguration {
+    companion object : PeripheralConfiguration {
         override val TYPE = "smithingAutomata"
     }
 
@@ -64,15 +60,18 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {
         val hit = peripheralOwner.withPlayer({
             val hit = FakePlayerProxy(it).findHit(skipEntity = true, skipBlock = false)
-            if (hit !is BlockHitResult)
+            if (hit !is BlockHitResult) {
                 return@withPlayer null
+            }
             return@withPlayer hit
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
         val blockState = level!!.getBlockState(hit.blockPos)
-        if (blockState.isAir)
+        if (blockState.isAir) {
             return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
-        if (!isEditable(hit.blockPos))
+        }
+        if (!isEditable(hit.blockPos)) {
             return Pair.onlyRight(MethodResult.of(null, "This block is protected"))
+        }
         return Pair.onlyLeft(Pair(hit, blockState))
     }
 
@@ -84,40 +83,53 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         val level: Level = level!!
         val optRecipe: Optional<SmeltingRecipe> =
             level.recipeManager.getRecipeFor(RecipeType.SMELTING, limitedInventory, level)
-        return if (!optRecipe.isPresent) MethodResult.of(
-            null,
-            "Cannot find smelting recipe"
-        ) else withOperation(CountOperation.SMELT, smeltCount, {
-            addRotationCycle(smeltCount / 2)
-            val recipe: SmeltingRecipe = optRecipe.get()
-            val result: ItemStack = recipe.assemble(limitedInventory, RegistryAccess.EMPTY)
-            result.count = result.count * smeltCount
-            limitedInventory.reduceCount(0, smeltCount)
-            ContainerUtils.toInventoryOrToWorld(
-                result, turtleInventory, peripheralOwner.turtle.selectedSlot,
-                pos.relative(peripheralOwner.facing), level
+        return if (!optRecipe.isPresent) {
+            MethodResult.of(
+                null,
+                "Cannot find smelting recipe",
             )
-            peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
-                ?.adjustStoredXP((smeltCount * recipe.experience).toDouble())
-            MethodResult.of(true)
-        }, null)
+        } else {
+            withOperation(CountOperation.SMELT, smeltCount, {
+                addRotationCycle(smeltCount / 2)
+                val recipe: SmeltingRecipe = optRecipe.get()
+                val result: ItemStack = recipe.assemble(limitedInventory, RegistryAccess.EMPTY)
+                result.count = result.count * smeltCount
+                limitedInventory.reduceCount(0, smeltCount)
+                ContainerUtils.toInventoryOrToWorld(
+                    result,
+                    turtleInventory,
+                    peripheralOwner.turtle.selectedSlot,
+                    pos.relative(peripheralOwner.facing),
+                    level,
+                )
+                peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
+                    ?.adjustStoredXP((smeltCount * recipe.experience).toDouble())
+                MethodResult.of(true)
+            }, null)
+        }
     }
 
     private fun smeltBlock(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(1)
-        val overwrittenDirection = if (directionArgument.isEmpty) null else VerticalDirection.luaValueOf(
-            directionArgument.get()
-        )
+        val overwrittenDirection = if (directionArgument.isEmpty) {
+            null
+        } else {
+            VerticalDirection.luaValueOf(
+                directionArgument.get(),
+            )
+        }
         val blockSearchResult = findBlock(overwrittenDirection)
-        if (blockSearchResult.rightPresent())
+        if (blockSearchResult.rightPresent()) {
             return blockSearchResult.right!!
+        }
         val blockState = blockSearchResult.left!!.right
         val hit = blockSearchResult.left!!.left
         val level = level!!
         val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
         val optRecipe = level.recipeManager.getRecipeFor(RecipeType.SMELTING, fakeContainer, level)
-        if (optRecipe.isEmpty)
+        if (optRecipe.isEmpty) {
             return MethodResult.of(null, "Cannot perform in-place smelting for this block")
+        }
         return withOperation(CountOperation.SMELT, 1, {
             val recipe = optRecipe.get()
             val recipeResult = recipe.getResultItem(RegistryAccess.EMPTY)
@@ -127,8 +139,11 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             } else {
                 level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
                 ContainerUtils.toInventoryOrToWorld(
-                    recipeResult.copy(), peripheralOwner.turtle.inventory, peripheralOwner.turtle.selectedSlot,
-                    peripheralOwner.pos.relative(peripheralOwner.facing), level
+                    recipeResult.copy(),
+                    peripheralOwner.turtle.inventory,
+                    peripheralOwner.turtle.selectedSlot,
+                    peripheralOwner.pos.relative(peripheralOwner.facing),
+                    level,
                 )
             }
             peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)?.adjustStoredXP(recipe.experience.toDouble())
@@ -142,8 +157,9 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         return withOperation(SingleOperation.SMITH) {
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedSlot = peripheralOwner.turtle.selectedSlot
-            if (selectedSlot + 1 == turtleInventory.containerSize)
+            if (selectedSlot + 1 == turtleInventory.containerSize) {
                 return@withOperation MethodResult.of(null, "Cannot use last slot as first for smith operation")
+            }
             val limitedInventory =
                 LimitedInventory(turtleInventory, intArrayOf(selectedSlot, selectedSlot + 1))
             val level: Level = level!!
@@ -155,8 +171,11 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             limitedInventory.reduceCount(0)
             limitedInventory.reduceCount(1)
             ContainerUtils.toInventoryOrToWorld(
-                result, turtleInventory, peripheralOwner.turtle.selectedSlot,
-                pos.relative(peripheralOwner.facing), level
+                result,
+                turtleInventory,
+                peripheralOwner.turtle.selectedSlot,
+                pos.relative(peripheralOwner.facing),
+                level,
             )
             MethodResult.of(true)
         }
