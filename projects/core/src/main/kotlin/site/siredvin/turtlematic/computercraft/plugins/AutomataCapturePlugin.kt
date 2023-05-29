@@ -114,7 +114,7 @@ class AutomataCapturePlugin(
                 val owner = automataCore.peripheralOwner
                 val level = owner.level!!
                 val state = level.getBlockState(hit.blockPos)
-                if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it) })) {
+                if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it.fakePlayer) })) {
                     return@withOperation MethodResult.of(null, "Block is protected")
                 }
                 if (state.`is`(BlockTags.CAPTURE_BLACKLIST)) {
@@ -156,7 +156,7 @@ class AutomataCapturePlugin(
             return MethodResult.of(null, "Target area should be empty")
         }
         val isProtected = owner.withPlayer(
-            { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it) },
+            { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it.fakePlayer) },
         )
         if (isProtected) {
             return MethodResult.of(null, "This block is protected")
@@ -183,7 +183,7 @@ class AutomataCapturePlugin(
             )
         }
         val hit = automataCore.peripheralOwner.withPlayer({
-            FakePlayerProxy(it).findHit(
+            it.findHit(
                 skipEntity = mode.skipEntry,
                 skipBlock = mode.skipBlock,
                 entityFilter = suitableEntity,
@@ -193,7 +193,7 @@ class AutomataCapturePlugin(
             HitResult.Type.MISS -> MethodResult.of(null, "nothing found")
             HitResult.Type.BLOCK -> captureBlock(hit as BlockHitResult)
             HitResult.Type.ENTITY -> captureEntity(hit as EntityHitResult)
-            null -> throw LuaException("This should never, never happen at all")
+            else -> throw LuaException("This should never, never happen at all")
         }
     }
 

@@ -46,7 +46,7 @@ class AutomataAIPlugin(
             )
         }
         val hit = automataCore.peripheralOwner.withPlayer({
-            FakePlayerProxy(it).findHit(
+            it.findHit(
                 skipEntity = false,
                 skipBlock = true,
                 entityFilter = suitableEntity,
@@ -56,7 +56,7 @@ class AutomataAIPlugin(
             HitResult.Type.MISS -> MethodResult.of(null, "nothing found")
             HitResult.Type.BLOCK -> MethodResult.of(null, "nothing found")
             HitResult.Type.ENTITY -> toggleEntityAI(hit as EntityHitResult)
-            null -> throw LuaException("This should never, never happen at all")
+            else -> throw LuaException("This should never, never happen at all")
         }
     }
 
@@ -71,7 +71,7 @@ class AutomataAIPlugin(
             )
         }
         val hit = automataCore.peripheralOwner.withPlayer({
-            FakePlayerProxy(it).findHit(
+            it.findHit(
                 skipEntity = false,
                 skipBlock = true,
                 entityFilter = suitableEntity,
@@ -81,7 +81,7 @@ class AutomataAIPlugin(
             HitResult.Type.MISS -> null
             HitResult.Type.BLOCK -> null
             HitResult.Type.ENTITY -> isEntityAIEnabled(hit as EntityHitResult)
-            null -> throw LuaException("This should never, never happen at all")
+            else -> throw LuaException("This should never, never happen at all")
         }
     }
 }

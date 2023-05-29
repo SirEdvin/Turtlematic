@@ -56,7 +56,7 @@ class AutomataLookPlugin(
         automataCore.addRotationCycle()
         val owner = automataCore.peripheralOwner
         val result = owner.withPlayer({
-            FakePlayerProxy(it).findHit(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock)
+            it.findHit(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock)
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         if (result.type == HitResult.Type.MISS) {
             return MethodResult.of(null, "Nothing found")

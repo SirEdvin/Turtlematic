@@ -53,13 +53,13 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
 
     private fun isEditable(pos: BlockPos): Boolean {
         return peripheralOwner.withPlayer({
-            PeripheraliumPlatform.isBlockProtected(pos, it.level.getBlockState(pos), it)
+            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level.getBlockState(pos), it.fakePlayer)
         })
     }
 
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {
         val hit = peripheralOwner.withPlayer({
-            val hit = FakePlayerProxy(it).findHit(skipEntity = true, skipBlock = false)
+            val hit = it.findHit(skipEntity = true, skipBlock = false)
             if (hit !is BlockHitResult) {
                 return@withPlayer null
             }

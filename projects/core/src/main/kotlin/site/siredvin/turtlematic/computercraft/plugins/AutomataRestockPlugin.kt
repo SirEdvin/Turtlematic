@@ -36,7 +36,7 @@ class AutomataRestockPlugin(
             )
         }
         val hit = automataCore.peripheralOwner.withPlayer({
-            FakePlayerProxy(it).findHit(
+            it.findHit(
                 skipEntity = false,
                 skipBlock = true,
                 entityFilter = suitableEntity,
@@ -53,7 +53,7 @@ class AutomataRestockPlugin(
                     return@withOperation refresher(hitEntity)
                 }
             }
-            null -> throw LuaException("This should never, never happen at all")
+            else -> throw LuaException("This should never, never happen at all")
         }
     }
 }

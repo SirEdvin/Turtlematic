@@ -107,7 +107,7 @@ class HusbandryAutomataCorePeripheral(
             )
         }
         val result = peripheralOwner.withPlayer({
-            FakePlayerProxy(it).findHit(skipEntity = true, skipBlock = false)
+            it.findHit(skipEntity = true, skipBlock = false)
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         if (result !is BlockHitResult) {
             return MethodResult.of(null, "Nothing to harvest from")
@@ -126,7 +126,7 @@ class HusbandryAutomataCorePeripheral(
         }
         return withOperation(SingleOperation.HARVEST) {
             val stacks = peripheralOwner.withPlayer({
-                Block.getDrops(blockState, level as ServerLevel, result.blockPos, null, it, it.mainHandItem)
+                Block.getDrops(blockState, level as ServerLevel, result.blockPos, null, it.fakePlayer, it.fakePlayer.mainHandItem)
             }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
             val targetItemToReduce = blockState.block.asItem()
             level.setBlockAndUpdate(result.blockPos, blockState.setValue(ageProperty, 0))

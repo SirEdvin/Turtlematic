@@ -104,7 +104,7 @@ class AutomataTradePlugin(
             )
         }
         val hit = automataCore.peripheralOwner.withPlayer({
-            FakePlayerProxy(it).findHit(
+            it.findHit(
                 skipEntity = false,
                 skipBlock = true,
                 entityFilter = suitableEntity,
@@ -117,7 +117,7 @@ class AutomataTradePlugin(
                 val hitEntity: Entity = (hit as EntityHitResult).entity
                 return if (hitEntity is Merchant) tradeImpl(hitEntity, indexHint) else MethodResult.of(null, "No merchant found")
             }
-            null -> throw LuaException("This should never, never happen at all")
+            else -> throw LuaException("This should never, never happen at all")
         }
     }
 }

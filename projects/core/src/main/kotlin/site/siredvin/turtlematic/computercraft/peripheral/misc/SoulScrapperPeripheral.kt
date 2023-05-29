@@ -35,15 +35,15 @@ class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         }
         val feedableItem = toolInMainHand.item as ISoulFeedableItem
         return peripheralOwner.withPlayer({
-            val hit = FakePlayerProxy(it).findHit(skipEntity = false, skipBlock = true) { entity -> entity !is Player && entity is LivingEntity }
+            val hit = it.findHit(skipEntity = false, skipBlock = true) { entity -> entity !is Player && entity is LivingEntity }
             if (hit !is EntityHitResult) {
                 return@withPlayer MethodResult.of(null, "Nothing to consume")
             }
-            val result = feedableItem.consumeEntitySoul(toolInMainHand, it, hit.entity as LivingEntity)
+            val result = feedableItem.consumeEntitySoul(toolInMainHand, it.fakePlayer, hit.entity as LivingEntity)
             if (result.rightPresent()) {
                 return@withPlayer MethodResult.of(null, result.right)
             }
-            it.setItemInHand(InteractionHand.MAIN_HAND, result.left!!)
+            it.fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, result.left!!)
             return@withPlayer MethodResult.of(true)
         })
     }

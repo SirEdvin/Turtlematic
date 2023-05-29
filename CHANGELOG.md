@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `sneakUse` api method for interaction
+
+### Fixed
+
+- Block breaking progress storing
+
 ## [0.6.2] - 2023-05-28
 
 ### Added
