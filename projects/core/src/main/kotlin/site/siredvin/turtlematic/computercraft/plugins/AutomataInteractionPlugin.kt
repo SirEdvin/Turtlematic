@@ -61,7 +61,7 @@ class AutomataInteractionPlugin(
         }
     }
 
-    fun useImplInner(arguments: IArguments, crouching: Boolean = false): MethodResult {
+    fun useImplInner(arguments: IArguments): MethodResult {
         val mode = InteractionMode.luaValueOf(arguments.getString(0), allowedMods)
         val directionArgument = arguments.optString(1)
         val overwrittenDirection = if (directionArgument.isEmpty) {
@@ -77,19 +77,17 @@ class AutomataInteractionPlugin(
         automataCore.addRotationCycle()
         val owner = automataCore.peripheralOwner
         val result = owner.withPlayer({
-            if (crouching)
-                it.fakePlayer.pose = Pose.CROUCHING
             it.use(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity)
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
         return MethodResult.of(true, result.toString())
     }
 
-    fun useImpl(arguments: IArguments, crouching: Boolean = false): MethodResult {
+    fun useImpl(arguments: IArguments): MethodResult {
         return automataCore.withOperation(SingleOperation.USE) {
             val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
             val selectedTool: ItemStack = owner.toolInMainHand
             val previousDamageValue = selectedTool.damageValue
-            val result = useImplInner(arguments, crouching)
+            val result = useImplInner(arguments)
             if (automataCore.tier.needRestoreDurability()) {
                 selectedTool.damageValue = previousDamageValue
             }
@@ -107,11 +105,5 @@ class AutomataInteractionPlugin(
     @Throws(LuaException::class)
     fun use(arguments: IArguments): MethodResult {
         return useImpl(arguments)
-    }
-
-    @LuaFunction(mainThread = true)
-    @Throws(LuaException::class)
-    fun sneakyUse(arguments: IArguments): MethodResult {
-        return useImpl(arguments, true)
     }
 }
