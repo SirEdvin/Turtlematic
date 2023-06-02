@@ -7,14 +7,16 @@ enum class AutomataCoreTier(
     private val defaultInteractionRadius: Int,
     private val defaultMaxFuelConsumptionRate: Int,
     private val defaultCooldownReduceFactor: Double,
+    private val defaultStorageScalingFactor: Double,
     private val _traits: Set<ResourceLocation> = emptySet(),
 ) : IAutomataCoreTier {
-    TIER1(2, 2, 1.0),
-    TIER2(4, 3, 1.0),
+    TIER1(2, 2, 1.0, 1.0),
+    TIER2(4, 3, 1.0, 2.0),
     TIER3(
         8,
         4,
         0.8,
+        4.0,
         setOf(
             AutomataCoreTraits.DURABILITY_REFUND_CHANCE,
             AutomataCoreTraits.APPRENTICE,
@@ -24,6 +26,7 @@ enum class AutomataCoreTier(
         16,
         6,
         0.5,
+        8.0,
         setOf(
             AutomataCoreTraits.DURABILITY_REFUND,
             AutomataCoreTraits.STARBOUND_REGENERATION,
@@ -35,6 +38,7 @@ enum class AutomataCoreTier(
         Int.MAX_VALUE,
         Int.MAX_VALUE,
         0.0,
+        16.0,
         setOf(
             AutomataCoreTraits.DURABILITY_REFUND,
             AutomataCoreTraits.FUEL_CONSUMPTION_DISABLED,
@@ -48,6 +52,7 @@ enum class AutomataCoreTier(
     private var _interactionRadius: ForgeConfigSpec.IntValue? = null
     private var _maxFuelConsumptionRate: ForgeConfigSpec.IntValue? = null
     private var _cooldownReduceFactor: ForgeConfigSpec.DoubleValue? = null
+    private var _storageScalingFactor: ForgeConfigSpec.DoubleValue? = null
 
     override val interactionRadius: Int
         get() = _interactionRadius?.get() ?: defaultInteractionRadius
@@ -57,6 +62,9 @@ enum class AutomataCoreTier(
 
     override val cooldownReduceFactor: Double
         get() = _cooldownReduceFactor?.get() ?: defaultCooldownReduceFactor
+
+    override val storageScaleFactor: Double
+        get() = _storageScalingFactor?.get() ?: defaultStorageScalingFactor
 
     override val traits: Set<ResourceLocation>
         get() = _traits
@@ -82,6 +90,12 @@ enum class AutomataCoreTier(
             defaultCooldownReduceFactor,
             0.0,
             1.0,
+        )
+        _storageScalingFactor = builder.defineInRange(
+            settingsName() + "StorageScalingFactory",
+            defaultStorageScalingFactor,
+            0.0,
+            1000.0,
         )
     }
 }

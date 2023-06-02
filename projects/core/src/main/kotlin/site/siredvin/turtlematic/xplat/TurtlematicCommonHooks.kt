@@ -25,10 +25,7 @@ import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.AutomataCorePeripheral
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.EndAutomataCorePeripheral
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.EnormousAutomataCorePeripheral
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.HusbandryAutomataCorePeripheral
+import site.siredvin.turtlematic.computercraft.peripheral.automatas.*
 import site.siredvin.turtlematic.computercraft.peripheral.forged.*
 import site.siredvin.turtlematic.computercraft.peripheral.misc.*
 import site.siredvin.turtlematic.computercraft.turtle.ChunkVialTurtle
@@ -251,6 +248,10 @@ object TurtlematicCommonHooks {
         registerClockwiseTurtleUpgrade(HusbandryAutomataCorePeripheral.UPGRADE_ID.toNetherite(), Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE, ::HusbandryAutomataCorePeripheral, TickerFunctions::netheriteHusbandryTick)
         registerStarboundTurtleUpgrade(HusbandryAutomataCorePeripheral.UPGRADE_ID.toStarbound(), Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE, ::HusbandryAutomataCorePeripheral, TickerFunctions::starboundHusbandryTick)
         registerClockwiseTurtleUpgrade(HusbandryAutomataCorePeripheral.UPGRADE_ID.toCreative(), Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE, ::HusbandryAutomataCorePeripheral, TickerFunctions::creativeHusbandryTick)
+        registerClockwiseTurtleUpgrade(FluidyAutomataCorePeripheral.UPGRADE_ID, Items.FLUIDY_AUTOMATA_CORE, ::FluidyAutomataCorePeripheral)
+        registerClockwiseTurtleUpgrade(FluidyAutomataCorePeripheral.UPGRADE_ID.toNetherite(), Items.NETHERITE_FLUIDY_AUTOMATA_CORE, ::FluidyAutomataCorePeripheral)
+        registerStarboundTurtleUpgrade(FluidyAutomataCorePeripheral.UPGRADE_ID.toStarbound(), Items.STARBOUND_FLUIDY_AUTOMATA_CORE, ::FluidyAutomataCorePeripheral)
+        registerClockwiseTurtleUpgrade(FluidyAutomataCorePeripheral.UPGRADE_ID.toCreative(), Items.CREATIVE_FLUIDY_AUTOMATA_CORE, ::FluidyAutomataCorePeripheral)
         registerClockwiseTurtleUpgrade(EndAutomataCorePeripheral.UPGRADE_ID, Items.END_AUTOMATA_CORE, ::EndAutomataCorePeripheral)
         registerClockwiseTurtleUpgrade(EndAutomataCorePeripheral.UPGRADE_ID.toNetherite(), Items.NETHERITE_END_AUTOMATA_CORE, ::EndAutomataCorePeripheral)
         registerStarboundTurtleUpgrade(EndAutomataCorePeripheral.UPGRADE_ID.toStarbound(), Items.STARBOUND_END_AUTOMATA_CORE, ::EndAutomataCorePeripheral)

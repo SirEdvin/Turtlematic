@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "c:netherite_ingots"
+  },
+  "base": {
+    "item": "turtlematic:fluidy_automata_core"
+  },
+  "result": {
+    "item": "turtlematic:netherite_fluidy_automata_core"
+  }
+}

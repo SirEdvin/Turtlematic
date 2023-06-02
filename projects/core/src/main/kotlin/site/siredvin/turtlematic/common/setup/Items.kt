@@ -25,11 +25,17 @@ object Items {
     val END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("end_automata_core") {
         RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableEndAutomataCore)
     }
+    val FLUIDY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("fluidy_automata_core") {
+        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableFluidyAutomataCore)
+    }
     val NETHERITE_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_husbandry_automata_core") {
         BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
     }
     val NETHERITE_END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_end_automata_core") {
         BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
+    }
+    val NETHERITE_FLUIDY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_fluidy_automata_core") {
+        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableFluidyAutomataCore, itemUsageTooltip)
     }
     val STARBOUND_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_husbandry_automata_core") {
         BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
@@ -37,11 +43,17 @@ object Items {
     val STARBOUND_END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_end_automata_core") {
         BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
     }
+    val STARBOUND_FLUIDY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_fluidy_automata_core") {
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableFluidyAutomataCore, itemUsageTooltip)
+    }
     val CREATIVE_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_husbandry_automata_core") {
         BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
     }
     val CREATIVE_END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_end_automata_core") {
         BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
+    }
+    val CREATIVE_FLUIDY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_fluidy_automata_core") {
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableFluidyAutomataCore, itemUsageTooltip)
     }
     val ENORMOUS_AUTOMATA_CORE = TurtlematicPlatform.registerItem("enormous_automata_core") {
         BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEnormousAutomata, itemUsageTooltip)

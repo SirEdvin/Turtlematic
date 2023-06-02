@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "turtlematic:item/netherite_gear",
+    "layer1": "turtlematic:item/fire/blue"
+  }
+}
