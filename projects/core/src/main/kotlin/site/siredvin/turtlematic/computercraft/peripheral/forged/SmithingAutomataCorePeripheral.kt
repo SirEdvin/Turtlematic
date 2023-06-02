@@ -24,7 +24,6 @@ import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.api.storage.ContainerUtils
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.peripheralium.util.*
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration

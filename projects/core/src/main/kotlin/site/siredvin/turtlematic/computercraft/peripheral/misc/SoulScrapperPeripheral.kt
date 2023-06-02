@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.EntityHitResult
 import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 

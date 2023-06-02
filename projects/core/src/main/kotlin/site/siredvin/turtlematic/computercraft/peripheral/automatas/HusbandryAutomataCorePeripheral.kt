@@ -24,7 +24,6 @@ import site.siredvin.peripheralium.util.representation.animalData
 import site.siredvin.peripheralium.util.representation.beeNestAnalyze
 import site.siredvin.peripheralium.util.representation.cropAge
 import site.siredvin.peripheralium.util.representation.honeyLevel
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration

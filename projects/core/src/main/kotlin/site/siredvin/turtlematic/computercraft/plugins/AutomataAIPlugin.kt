@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Mob
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import java.util.function.Predicate
 

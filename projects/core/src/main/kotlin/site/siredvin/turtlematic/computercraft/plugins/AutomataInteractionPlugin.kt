@@ -5,13 +5,11 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.Pose
 import net.minecraft.world.item.ItemStack
 import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import java.util.function.Predicate

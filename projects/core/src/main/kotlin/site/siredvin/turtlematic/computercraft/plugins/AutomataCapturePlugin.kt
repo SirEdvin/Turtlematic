@@ -20,7 +20,6 @@ import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.util.representation.LuaRepresentation
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation

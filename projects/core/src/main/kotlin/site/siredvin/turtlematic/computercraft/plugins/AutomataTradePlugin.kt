@@ -15,7 +15,6 @@ import net.minecraft.world.phys.HitResult
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.api.storage.ContainerUtils
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.forged.ExperienceAutomataCorePeripheral
 import java.util.*
