@@ -27,19 +27,4 @@ object TurtlematicCore {
         TurtlematicPlatform.configure(platform)
         ModRecipeIngredients.configure(ingredients)
     }
-
-//    override fun onInitialize() {
-//        ModLoadingContext.registerConfig(MOD_ID, ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC)
-//        LOGGER.info(Items.AUTOMATA_CORE.descriptionId)
-//
-//        SoulHarvestRecipeRegistry.injectAutomataCoreRecipes()
-//        SoulHarvestRecipeRegistry.injectForgedAutomataCoreRecipes()
-//
-//        Platform.maybeLoadIntegration("chipped").ifPresent { (it as Runnable).run() }
-//
-//        ComputerCraftProxy.initialize()
-//
-//        TooltipHandlerCollection.registerDefaults()
-//        ChunkManager.registerHooks()
-//    }
 }
