@@ -48,8 +48,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_END_AUTOMATA_CORE.get()
     val enableHusbandryAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_HUSBANDRY_AUTOMATA_CORE.get()
-    val enableMercantileAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
+    val enableFluidyAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_FLUIDY_AUTOMATA_CORE.get()
     val enableEnormousAutomata: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENORMOUS_AUTOMATA.get()
 
@@ -65,6 +65,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
 
     val enableMasonAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_MASON_AUTOMATA_CORE.get()
+    val enableMercantileAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
 
     // automata cores configuration
     val endAutomataCoreWarpPointLimit: Int
@@ -81,6 +83,12 @@ object TurtlematicConfig : IOperationAbilityConfig {
 
     val creativeHusbandryAutomataGrownPeriod: Int
         get() = ConfigHolder.COMMON_CONFIG.CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD.get()
+
+    val fluidyAutomataBaseTankCount: Int
+        get() = ConfigHolder.COMMON_CONFIG.FLUIDY_AUTOMATA_BASE_TANK_COUNT.get()
+
+    val fluidyAutomataBaseTankCapacity: Int
+        get() = ConfigHolder.COMMON_CONFIG.FLUIDY_AUTOMATA_BASE_TANK_CAPACITY.get()
 
     val durabilityRestoreChance: Double
         get() = ConfigHolder.COMMON_CONFIG.DURABILITY_RESTORE_CHANCE.get()
@@ -119,7 +127,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_HUSBANDRY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
+        val ENABLE_FLUIDY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENORMOUS_AUTOMATA: ForgeConfigSpec.BooleanValue
 
         // Forged automata core
@@ -127,6 +135,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_SMITHING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENCHANTING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_MASON_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
+        val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
 
         val STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE: ForgeConfigSpec.DoubleValue
         val STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT: ForgeConfigSpec.IntValue
@@ -135,6 +144,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val NETHERITE_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
         val STARBOUND_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
         val CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
+        val FLUIDY_AUTOMATA_BASE_TANK_COUNT: ForgeConfigSpec.IntValue
+        val FLUIDY_AUTOMATA_BASE_TANK_CAPACITY: ForgeConfigSpec.IntValue
         val DURABILITY_RESTORE_CHANCE: ForgeConfigSpec.DoubleValue
         val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
@@ -172,13 +183,14 @@ object TurtlematicConfig : IOperationAbilityConfig {
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)
             ENABLE_END_AUTOMATA_CORE = builder.define("enableEndAutomataCore", true)
             ENABLE_HUSBANDRY_AUTOMATA_CORE = builder.define("enableHusbandryAutomataCore", true)
-            ENABLE_MERCANTILE_AUTOMATA_CORE = builder.define("enableMercantileAutomataCore", true)
+            ENABLE_FLUIDY_AUTOMATA_CORE = builder.define("enableFluidyAutomataCore", true)
             ENABLE_ENORMOUS_AUTOMATA = builder.define("enableEnormousAutomata", true)
 
             ENABLE_BREWING_AUTOMATA_CORE = builder.define("enableBrewingAutomataCore", true)
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true)
             ENABLE_ENCHANTING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true)
             ENABLE_MASON_AUTOMATA_CORE = builder.define("enableMasonAutomataCore", true)
+            ENABLE_MERCANTILE_AUTOMATA_CORE = builder.define("enableMercantileAutomataCore", true)
 
             END_AUTOMATA_CORE_WARP_POINT_LIMIT = builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
                 .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
@@ -190,6 +202,10 @@ object TurtlematicConfig : IOperationAbilityConfig {
                 .defineInRange("starboundHusbandryAutomataGrownPeriod", 2, 1, Int.MAX_VALUE)
             CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD = builder.comment("Amount of ticks that separate single random tick for all of surrounding crops for creative husbandry automata")
                 .defineInRange("creativeHusbandryAutomataGrownPeriod", 40, 1, Int.MAX_VALUE)
+            FLUIDY_AUTOMATA_BASE_TANK_COUNT = builder.comment("Defines base fluidy automata tank count")
+                .defineInRange("fluidyAutomataBaseTankCount", 1, 1, 16)
+            FLUIDY_AUTOMATA_BASE_TANK_CAPACITY = builder.comment("Defines base fluidy automata tank capacity in forge buckets")
+                .defineInRange("fluidyAutomataBaseTankCapacity", 4, 1, Int.MAX_VALUE)
             DURABILITY_RESTORE_CHANCE = builder.comment("Defined chance to not loose item durability for netherite cores")
                 .defineInRange("durabilityRestoreChance", 0.1, 0.0, 1.0)
             STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE = builder.comment("Defines chance for starbound automata to regenerate fuel points")

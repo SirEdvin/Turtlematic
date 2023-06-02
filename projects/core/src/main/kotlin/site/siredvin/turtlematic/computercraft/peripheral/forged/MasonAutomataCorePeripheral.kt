@@ -32,7 +32,6 @@ import site.siredvin.peripheralium.util.LimitedInventory
 import site.siredvin.peripheralium.util.Pair
 import site.siredvin.peripheralium.util.representation.LuaInterpretation
 import site.siredvin.peripheralium.util.representation.stateProperties
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.api.IAutomataCoreTier

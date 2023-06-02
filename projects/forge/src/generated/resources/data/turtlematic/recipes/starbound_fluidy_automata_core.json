@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:nether_stars"
+  },
+  "base": {
+    "item": "turtlematic:netherite_fluidy_automata_core"
+  },
+  "result": {
+    "item": "turtlematic:starbound_fluidy_automata_core"
+  }
+}

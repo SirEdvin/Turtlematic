@@ -8,6 +8,7 @@ import kotlin.random.Random
 interface IAutomataCoreTier : IConfigHandler {
     val interactionRadius: Int
     val maxFuelConsumptionRate: Int
+    val storageScaleFactor: Double
 
     /**
      * This is number, that cooldown will be multiply at
