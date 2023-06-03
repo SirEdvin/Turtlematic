@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic
 
-import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.event.TickEvent.ServerTickEvent
 import net.minecraftforge.event.server.ServerStartedEvent
@@ -9,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 
-@Mod.EventBusSubscriber(modid = TurtlematicCore.MOD_ID, value = [Dist.DEDICATED_SERVER], bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = TurtlematicCore.MOD_ID)
 object ForgeTurtlematicServer {
     @SubscribeEvent
     fun onServerStarted(event: ServerStartedEvent) {
