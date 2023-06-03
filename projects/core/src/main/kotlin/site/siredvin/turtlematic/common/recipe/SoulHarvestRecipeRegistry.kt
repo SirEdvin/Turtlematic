@@ -64,16 +64,15 @@ object SoulHarvestRecipeRegistry {
                 ),
                 Items.HUSBANDRY_AUTOMATA_CORE.get(),
             )
-        val mercantileSoulRecord =
-            SoulHarvestRecipe(
-                listOf(
-                    SimpleSoulHarvestIngredient(EntityType.WANDERING_TRADER, 1),
-                ),
-                Items.MERCANTILE_AUTOMATA_CORE.get(),
-            )
+        val protectiveSoulRecord = SoulHarvestRecipe(
+            listOf(
+                SimpleSoulHarvestIngredient(EntityType.IRON_GOLEM, 1),
+            ),
+            Items.PROTECTIVE_AUTOMATA_CORE.get(),
+        )
         addRecipe(Items.AUTOMATA_CORE.get(), endSoulRecord)
         addRecipe(Items.AUTOMATA_CORE.get(), husbandrySoulRecord)
-        addRecipe(Items.FORGED_AUTOMATA_CORE.get(), mercantileSoulRecord)
+        addRecipe(Items.AUTOMATA_CORE.get(), protectiveSoulRecord)
     }
 
     fun injectForgedAutomataCoreRecipes() {
@@ -89,9 +88,17 @@ object SoulHarvestRecipeRegistry {
             listOf(VillagerSoulHarvestIngredient(VillagerProfession.TOOLSMITH)),
             Items.SMITHING_AUTOMATA_CORE.get(),
         )
+        val mercantileSoulRecord =
+            SoulHarvestRecipe(
+                listOf(
+                    SimpleSoulHarvestIngredient(EntityType.WANDERING_TRADER, 1),
+                ),
+                Items.MERCANTILE_AUTOMATA_CORE.get(),
+            )
 
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), brewingAutomataRecord)
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), enchantingAutomataRecord)
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), smithingAutomataRecord)
+        addRecipe(Items.FORGED_AUTOMATA_CORE.get(), mercantileSoulRecord)
     }
 }

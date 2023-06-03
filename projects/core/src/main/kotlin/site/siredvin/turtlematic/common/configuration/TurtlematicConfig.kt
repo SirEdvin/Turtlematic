@@ -48,8 +48,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_END_AUTOMATA_CORE.get()
     val enableHusbandryAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_HUSBANDRY_AUTOMATA_CORE.get()
-    val enableMercantileAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
+    val enableProtectiveAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_PROTECTIVE_AUTOMATA_CORE.get()
     val enableEnormousAutomata: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENORMOUS_AUTOMATA.get()
 
@@ -65,6 +65,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
 
     val enableMasonAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_MASON_AUTOMATA_CORE.get()
+    val enableMercantileAutomataCore: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
 
     // automata cores configuration
     val endAutomataCoreWarpPointLimit: Int
@@ -119,7 +121,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_HUSBANDRY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
+        val ENABLE_PROTECTIVE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENORMOUS_AUTOMATA: ForgeConfigSpec.BooleanValue
 
         // Forged automata core
@@ -127,6 +129,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_SMITHING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_ENCHANTING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
         val ENABLE_MASON_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
+        val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
 
         val STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE: ForgeConfigSpec.DoubleValue
         val STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT: ForgeConfigSpec.IntValue
@@ -172,13 +175,14 @@ object TurtlematicConfig : IOperationAbilityConfig {
             ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)
             ENABLE_END_AUTOMATA_CORE = builder.define("enableEndAutomataCore", true)
             ENABLE_HUSBANDRY_AUTOMATA_CORE = builder.define("enableHusbandryAutomataCore", true)
-            ENABLE_MERCANTILE_AUTOMATA_CORE = builder.define("enableMercantileAutomataCore", true)
+            ENABLE_PROTECTIVE_AUTOMATA_CORE = builder.define("enableProtectiveAutomataCore", true)
             ENABLE_ENORMOUS_AUTOMATA = builder.define("enableEnormousAutomata", true)
 
             ENABLE_BREWING_AUTOMATA_CORE = builder.define("enableBrewingAutomataCore", true)
             ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true)
             ENABLE_ENCHANTING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true)
             ENABLE_MASON_AUTOMATA_CORE = builder.define("enableMasonAutomataCore", true)
+            ENABLE_MERCANTILE_AUTOMATA_CORE = builder.define("enableMercantileAutomataCore", true)
 
             END_AUTOMATA_CORE_WARP_POINT_LIMIT = builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
                 .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)

@@ -4,6 +4,7 @@ import dan200.computercraft.api.lua.IArguments
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -23,8 +24,8 @@ class AutomataLookPlugin(
     private val allowedMods: Set<InteractionMode> = InteractionMode.values().toSet(),
 ) : AutomataCorePlugin(automataCore) {
 
-    private fun entityConverter(entity: Entity): MutableMap<String, Any> {
-        val base = LuaRepresentation.forEntity(entity)
+    private fun entityConverter(entity: LivingEntity): MutableMap<String, Any> {
+        val base = LuaRepresentation.forLivingEntity(entity)
         entityEnriches.forEach { it.accept(entity, base) }
         return base
     }
@@ -68,8 +69,8 @@ class AutomataLookPlugin(
             }
             return MethodResult.of(base)
         }
-        if (result is EntityHitResult) {
-            return MethodResult.of(entityConverter(result.entity))
+        if (result is EntityHitResult && result.entity is LivingEntity) {
+            return MethodResult.of(entityConverter(result.entity as LivingEntity))
         }
         return MethodResult.of(null, "Nothing found")
     }

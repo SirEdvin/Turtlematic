@@ -39,5 +39,10 @@ object ModTagsProvider {
     @JvmStatic
     fun entityTypeTags(consumer: TagConsumer<EntityType<*>>) {
         consumer.tag(EntityTags.ANIMAL).add(EntityType.HOGLIN)
+        consumer.tag(EntityTags.AI_CONTROL_BLACKLIST).add(
+            EntityType.ENDER_DRAGON,
+            EntityType.WITHER,
+            EntityType.WARDEN,
+        )
     }
 }

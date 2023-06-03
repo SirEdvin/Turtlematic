@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Protective automata, that can interact with hostile mobs
+
 ### Fixed
 
 - Block breaking progress storing

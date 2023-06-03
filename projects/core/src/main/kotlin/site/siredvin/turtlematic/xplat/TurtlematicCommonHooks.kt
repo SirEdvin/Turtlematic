@@ -25,10 +25,7 @@ import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.AutomataCorePeripheral
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.EndAutomataCorePeripheral
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.EnormousAutomataCorePeripheral
-import site.siredvin.turtlematic.computercraft.peripheral.automatas.HusbandryAutomataCorePeripheral
+import site.siredvin.turtlematic.computercraft.peripheral.automatas.*
 import site.siredvin.turtlematic.computercraft.peripheral.forged.*
 import site.siredvin.turtlematic.computercraft.peripheral.misc.*
 import site.siredvin.turtlematic.computercraft.turtle.ChunkVialTurtle
@@ -255,6 +252,10 @@ object TurtlematicCommonHooks {
         registerClockwiseTurtleUpgrade(EndAutomataCorePeripheral.UPGRADE_ID.toNetherite(), Items.NETHERITE_END_AUTOMATA_CORE, ::EndAutomataCorePeripheral)
         registerStarboundTurtleUpgrade(EndAutomataCorePeripheral.UPGRADE_ID.toStarbound(), Items.STARBOUND_END_AUTOMATA_CORE, ::EndAutomataCorePeripheral)
         registerClockwiseTurtleUpgrade(EndAutomataCorePeripheral.UPGRADE_ID.toCreative(), Items.CREATIVE_END_AUTOMATA_CORE, ::EndAutomataCorePeripheral)
+        registerClockwiseTurtleUpgrade(ProtectiveAutomataCorePeripheral.UPGRADE_ID, Items.PROTECTIVE_AUTOMATA_CORE, ::ProtectiveAutomataCorePeripheral)
+        registerClockwiseTurtleUpgrade(ProtectiveAutomataCorePeripheral.UPGRADE_ID.toNetherite(), Items.NETHERITE_PROTECTIVE_AUTOMATA_CORE, ::ProtectiveAutomataCorePeripheral)
+        registerStarboundTurtleUpgrade(ProtectiveAutomataCorePeripheral.UPGRADE_ID.toStarbound(), Items.STARBOUND_PROTECTIVE_AUTOMATA_CORE, ::ProtectiveAutomataCorePeripheral)
+        registerClockwiseTurtleUpgrade(ProtectiveAutomataCorePeripheral.UPGRADE_ID.toCreative(), Items.CREATIVE_PROTECTIVE_AUTOMATA_CORE, ::ProtectiveAutomataCorePeripheral)
         registerClockwiseTurtleUpgrade(EnormousAutomataCorePeripheral.UPGRADE_ID, Items.ENORMOUS_AUTOMATA_CORE, ::EnormousAutomataCorePeripheral)
 
         registerClockwiseTurtleUpgrade(BrewingAutomataCorePeripheral.UPGRADE_ID, Items.BREWING_AUTOMATA_CORE, ::BrewingAutomataCorePeripheral)

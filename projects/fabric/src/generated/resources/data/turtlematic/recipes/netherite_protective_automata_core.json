@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "c:netherite_ingots"
+  },
+  "base": {
+    "item": "turtlematic:protective_automata_core"
+  },
+  "result": {
+    "item": "turtlematic:netherite_protective_automata_core"
+  }
+}

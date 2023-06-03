@@ -77,6 +77,11 @@ class ModRecipeProvider(output: PackOutput) : RecipeProvider(output) {
             Items.NETHERITE_END_AUTOMATA_CORE.get(),
         ).save(consumer)
         TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.PROTECTIVE_AUTOMATA_CORE.get()),
+            ModRecipeIngredients.get().netheriteIngot,
+            Items.NETHERITE_PROTECTIVE_AUTOMATA_CORE.get(),
+        ).save(consumer)
+        TweakedUpgradeRecipeBuilder.smithing(
             Ingredient.of(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE.get(),
@@ -85,6 +90,11 @@ class ModRecipeProvider(output: PackOutput) : RecipeProvider(output) {
             Ingredient.of(Items.NETHERITE_END_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_END_AUTOMATA_CORE.get(),
+        ).save(consumer)
+        TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.NETHERITE_PROTECTIVE_AUTOMATA_CORE.get()),
+            ModRecipeIngredients.get().netherStar,
+            Items.STARBOUND_PROTECTIVE_AUTOMATA_CORE.get(),
         ).save(consumer)
 
         TweakedUpgradeRecipeBuilder.smithing(
@@ -106,6 +116,11 @@ class ModRecipeProvider(output: PackOutput) : RecipeProvider(output) {
             Ingredient.of(Items.MASON_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_MASON_AUTOMATA_CORE.get(),
+        ).save(consumer)
+        TweakedUpgradeRecipeBuilder.smithing(
+            Ingredient.of(Items.MERCANTILE_AUTOMATA_CORE.get()),
+            ModRecipeIngredients.get().netherStar,
+            Items.STARBOUND_MERCANTILE_AUTOMATA_CORE.get(),
         ).save(consumer)
     }
 

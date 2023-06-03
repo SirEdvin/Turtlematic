@@ -58,7 +58,7 @@ class HusbandryAutomataCorePeripheral(
             AutomataInteractionPlugin(
                 this,
                 allowedMods = InteractionMode.values().toSet(),
-                suitableEntity = isAnimal,
+                suitableEntity = suitableEntity,
             ),
         )
         peripheralOwner.attachAbility(
@@ -69,13 +69,13 @@ class HusbandryAutomataCorePeripheral(
         )
         addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.ENTITY), suitableEntity))
         if (tier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
-            addPlugin(AutomataAIPlugin(this, suitableEntity))
+            addPlugin(AutomataAIPlugin(this, suitableEntity.and { !it.type.`is`(EntityTags.AI_CONTROL_BLACKLIST) }))
         }
     }
 
     companion object : PeripheralConfiguration {
         override val TYPE = "husbandryAutomata"
-        private val isAnimal =
+        val isAnimal =
             Predicate { entity1: Entity ->
                 entity1.type.category.isFriendly || entity1.type.category == MobCategory.CREATURE || entity1.type.`is`(EntityTags.ANIMAL)
             }
