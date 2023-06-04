@@ -6,7 +6,7 @@ mixinGradle = "0.7.+"
 forgegradle = "5.1.+"
 # Core mod dependencies
 cc-tweaked = "1.104.0"
-peripheralium = "0.5.6-11"
+peripheralium = "0.5.6"
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.82.0+1.19.4"
@@ -14,7 +14,7 @@ fabric-loader = "0.14.9"
 fabric-kotlin = "1.9.4+kotlin.1.8.21"
 forgeconfigapirt-fabric = "6.0.2"
 # Forge dependencies
-forge = "45.0.57"
+forge = "45.0.66"
 forge-kotlin = "4.2.0"
 parchment = "2023.03.12"
 parchmentMc = "1.19.3"
