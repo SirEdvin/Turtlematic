@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-03T11:04:56.516292074	vanilla/Recipes
+// 1.19.4	2023-06-05T22:44:12.831501886	vanilla/Recipes
 c2ec7cde98ede9a366366f74b89edee511e7ea3f data/turtlematic/recipes/automata_core.json
 77a250c6acc8b60874a634f13afdaed7c1317edc data/turtlematic/recipes/chunk_vial.json
 8662a873a0d290b80681c71e23124351e3c82cc7 data/turtlematic/recipes/forged_automata_core.json
@@ -12,6 +12,7 @@ baa723aacb7fe0f1603beacdd8184310b07fcd21 data/turtlematic/recipes/soul_vial.json
 01d54fd92e6a8148f580bb0a6b308667ec1851c1 data/turtlematic/recipes/starbound_end_automata_core.json
 cc37f1a49e8599779f2ad52d17ef30f3e930d713 data/turtlematic/recipes/starbound_husbandry_automata_core.json
 1100415e09efd7c344bd2be958612f1bfc32df83 data/turtlematic/recipes/starbound_mason_automata_core.json
+986ac6f14b67282dcb32ed4602917bb75333f31d data/turtlematic/recipes/starbound_mercantile_automata_core.json
 08a050e7aa84a17215b6a3504de7517c39080694 data/turtlematic/recipes/starbound_protective_automata_core.json
 f62605120a5d8c7267442692d68ad5b1b7e53348 data/turtlematic/recipes/starbound_smithing_automata_core.json
 de40d6d265fb03177d988dac03de41a051f65553 data/turtlematic/recipes/turtle_chatter.json

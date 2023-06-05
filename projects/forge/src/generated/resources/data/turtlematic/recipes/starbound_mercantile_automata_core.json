@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "tag": "forge:nether_stars"
+  },
+  "base": {
+    "item": "turtlematic:mercantile_automata_core"
+  },
+  "result": {
+    "item": "turtlematic:starbound_mercantile_automata_core"
+  }
+}

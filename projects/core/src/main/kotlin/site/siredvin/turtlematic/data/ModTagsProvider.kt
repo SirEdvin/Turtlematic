@@ -44,5 +44,10 @@ object ModTagsProvider {
             EntityType.WITHER,
             EntityType.WARDEN,
         )
+        consumer.tag(EntityTags.CAPTURE_BLACKLIST).add(
+            EntityType.ENDER_DRAGON,
+            EntityType.WITHER,
+            EntityType.WARDEN,
+        )
     }
 }
