@@ -1,20 +1,13 @@
 package site.siredvin.turtlematic.data
 
 import net.minecraft.data.models.ItemModelGenerators
-import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.ModelTemplates
-import net.minecraft.data.models.model.TextureMapping
-import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.block.Block
-import site.siredvin.peripheralium.data.blocks.TURTLE_LEFT_UPGRADE
-import site.siredvin.peripheralium.data.blocks.TURTLE_RIGHT_UPGRADE
-import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.peripheralium.data.blocks.createFlatItem
 import site.siredvin.peripheralium.data.blocks.turtleUpgrades
-import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.TurtlematicCore
+import site.siredvin.turtlematic.common.setup.Items
 
 object ModItemModelProvider {
 
@@ -30,22 +23,8 @@ object ModItemModelProvider {
         generators: ItemModelGenerators, item: Item, gear: ResourceLocation,
         fire: String, fireTemplate: ResourceLocation = FIRE) {
         createFlatItem(
-            generators, ModelLocationUtils.getModelLocation(item), gear,
+            generators, item, gear,
             fireTemplate.withSuffix(fire)
-        )
-    }
-
-    fun turtleUpgrades(generators: ItemModelGenerators, item: Item, textureSuffix: String = "", baseID: ResourceLocation? = null) {
-        val realBaseID = baseID ?: XplatRegistries.ITEMS.getKey(item).withPrefix("turtle/")
-        TURTLE_RIGHT_UPGRADE.create(
-            realBaseID.withSuffix("_right"),
-            TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getItemTexture(item).withSuffix(textureSuffix)),
-            generators.output,
-        )
-        TURTLE_LEFT_UPGRADE.create(
-            realBaseID.withSuffix("_left"),
-            TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getItemTexture(item).withSuffix(textureSuffix)),
-            generators.output,
         )
     }
 
@@ -94,6 +73,9 @@ object ModItemModelProvider {
         createAutomataCore(generators, Items.CREATIVE_MASON_AUTOMATA_CORE.get(), CREATIVE_GEAR, "gray", BIG_FIRE)
         createAutomataCore(generators, Items.CREATIVE_SMITHING_AUTOMATA_CORE.get(), CREATIVE_GEAR, "base", BIG_FIRE)
         createAutomataCore(generators, Items.CREATIVE_MERCANTILE_AUTOMATA_CORE.get(), CREATIVE_GEAR, "brown", BIG_FIRE)
+
+        createFlatItem(generators, Items.FORGED_AUTOMATA_CORE.get(), NETHERITE_GEAR)
+        createFlatItem(generators, Items.FILLED_SOUL_VIAL.get(), ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/full"))
     }
 
 }
