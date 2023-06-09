@@ -1,5 +1,5 @@
 {
-  "parent": "turtlematic:base/turtle_upgrade_left",
+  "parent": "peripheralium:base/upgrade_base_right",
   "textures": {
     "texture": "turtlematic:item/chunk_vial"
   }

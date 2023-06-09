@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "turtlematic:item/base_gear",
     "layer1": "turtlematic:item/fire/base"

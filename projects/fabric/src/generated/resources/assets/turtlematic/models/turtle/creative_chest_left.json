@@ -1,5 +1,5 @@
 {
-  "parent": "turtlematic:base/turtle_upgrade_right",
+  "parent": "peripheralium:base/upgrade_base_left",
   "textures": {
     "texture": "turtlematic:item/creative_chest"
   }
