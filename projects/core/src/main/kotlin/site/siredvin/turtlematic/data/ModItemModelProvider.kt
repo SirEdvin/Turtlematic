@@ -1,6 +1,7 @@
 package site.siredvin.turtlematic.data
 
 import net.minecraft.data.models.ItemModelGenerators
+import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -76,6 +77,14 @@ object ModItemModelProvider {
 
         createFlatItem(generators, Items.FORGED_AUTOMATA_CORE.get(), NETHERITE_GEAR)
         createFlatItem(generators, Items.FILLED_SOUL_VIAL.get(), ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/full"))
+
+        for (i in 1..3) {
+            createFlatItem(
+                generators,
+                ModelLocationUtils.getModelLocation(Items.SOUL_VIAL.get()).withSuffix("_$i"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/phase$i")
+            )
+        }
     }
 
 }
