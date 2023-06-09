@@ -63,6 +63,7 @@ object ModItemModelProvider {
         createAutomataCore(generators, Items.HUSBANDRY_AUTOMATA_CORE.get(), BASE_GEAR, "green")
         createAutomataCore(generators, Items.END_AUTOMATA_CORE.get(), BASE_GEAR, "purple")
         createAutomataCore(generators, Items.PROTECTIVE_AUTOMATA_CORE.get(), BASE_GEAR, "red")
+        createAutomataCore(generators, Items.ENORMOUS_AUTOMATA_CORE.get(), CREATIVE_GEAR, "enormous", BIG_FIRE)
 
         createAutomataCore(generators, Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE.get(), NETHERITE_GEAR, "green")
         createAutomataCore(generators, Items.NETHERITE_END_AUTOMATA_CORE.get(), NETHERITE_GEAR, "purple")
@@ -75,6 +76,24 @@ object ModItemModelProvider {
         createAutomataCore(generators, Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE.get(), CREATIVE_GEAR, "green", BIG_FIRE)
         createAutomataCore(generators, Items.CREATIVE_END_AUTOMATA_CORE.get(), CREATIVE_GEAR, "purple", BIG_FIRE)
         createAutomataCore(generators, Items.CREATIVE_PROTECTIVE_AUTOMATA_CORE.get(), CREATIVE_GEAR, "red", BIG_FIRE)
+
+        createAutomataCore(generators, Items.ENCHANTING_AUTOMATA_CORE.get(), NETHERITE_GEAR, "obsidian")
+        createAutomataCore(generators, Items.BREWING_AUTOMATA_CORE.get(), NETHERITE_GEAR, "light_blue")
+        createAutomataCore(generators, Items.MASON_AUTOMATA_CORE.get(), NETHERITE_GEAR, "gray")
+        createAutomataCore(generators, Items.SMITHING_AUTOMATA_CORE.get(), NETHERITE_GEAR, "base")
+        createAutomataCore(generators, Items.MERCANTILE_AUTOMATA_CORE.get(), NETHERITE_GEAR, "brown")
+
+        createAutomataCore(generators, Items.STARBOUND_ENCHANTING_AUTOMATA_CORE.get(), STARBOUND_GEAR, "obsidian", BIG_FIRE)
+        createAutomataCore(generators, Items.STARBOUND_BREWING_AUTOMATA_CORE.get(), STARBOUND_GEAR, "light_blue", BIG_FIRE)
+        createAutomataCore(generators, Items.STARBOUND_MASON_AUTOMATA_CORE.get(), STARBOUND_GEAR, "gray", BIG_FIRE)
+        createAutomataCore(generators, Items.STARBOUND_SMITHING_AUTOMATA_CORE.get(), STARBOUND_GEAR, "base", BIG_FIRE)
+        createAutomataCore(generators, Items.STARBOUND_MERCANTILE_AUTOMATA_CORE.get(), STARBOUND_GEAR, "brown", BIG_FIRE)
+
+        createAutomataCore(generators, Items.CREATIVE_ENCHANTING_AUTOMATA_CORE.get(), CREATIVE_GEAR, "obsidian", BIG_FIRE)
+        createAutomataCore(generators, Items.CREATIVE_BREWING_AUTOMATA_CORE.get(), CREATIVE_GEAR, "light_blue", BIG_FIRE)
+        createAutomataCore(generators, Items.CREATIVE_MASON_AUTOMATA_CORE.get(), CREATIVE_GEAR, "gray", BIG_FIRE)
+        createAutomataCore(generators, Items.CREATIVE_SMITHING_AUTOMATA_CORE.get(), CREATIVE_GEAR, "base", BIG_FIRE)
+        createAutomataCore(generators, Items.CREATIVE_MERCANTILE_AUTOMATA_CORE.get(), CREATIVE_GEAR, "brown", BIG_FIRE)
     }
 
 }
