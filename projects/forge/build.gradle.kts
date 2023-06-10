@@ -17,7 +17,7 @@ baseShaking {
 
 forgeShaking {
     commonProjectName.set("core")
-    useAT.set(false)
+    useAT.set(true)
     useMixins.set(true)
     extraVersionMappings.set(
         mapOf(

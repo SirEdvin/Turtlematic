@@ -2,16 +2,15 @@ package site.siredvin.turtlematic.util
 
 import net.minecraft.network.chat.Component
 import site.siredvin.peripheralium.common.items.PeripheralItem
-import site.siredvin.peripheralium.util.text
-import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
+import site.siredvin.turtlematic.data.ModTooltip
 import java.util.function.Function
 
 val isDisabled = Function<PeripheralItem, List<Component>> { item ->
     if (!item.isEnabled()) {
-        return@Function listOf(text(TurtlematicCore.MOD_ID, "item_disabled"))
+        return@Function listOf(ModTooltip.ITEM_DISABLED.text)
     }
     return@Function emptyList()
 }
@@ -21,17 +20,17 @@ val commonTooltips = Function<PeripheralItem, List<Component>> { item ->
         return@Function emptyList()
     }
     val tooltipList = mutableListOf<Component>()
-    tooltipList.add(text(TurtlematicCore.MOD_ID, "core_configuration"))
-    tooltipList.add(text(TurtlematicCore.MOD_ID, "interaction_radius", item.coreTier.interactionRadius))
-    tooltipList.add(text(TurtlematicCore.MOD_ID, "max_fuel_consumption_rate", item.coreTier.maxFuelConsumptionRate))
+    tooltipList.add(ModTooltip.CORE_CONFIGURATION.text)
+    tooltipList.add(ModTooltip.INTERACTION_RADIUS.format(item.coreTier.interactionRadius))
+    tooltipList.add(ModTooltip.MAX_FUEL_CONSUMPTION_RATE.format(item.coreTier.maxFuelConsumptionRate))
     if (item.coreTier.cooldownReduceFactor != 1.0) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "cooldown_reduce_factor", item.coreTier.cooldownReduceFactor))
+        tooltipList.add(ModTooltip.COOLDOWN_REDUCE_FACTOR.format(item.coreTier.cooldownReduceFactor))
     }
     if (item.coreTier.traits.contains(AutomataCoreTraits.STARBOUND_REGENERATION)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "starbound_generation"))
+        tooltipList.add(ModTooltip.STARBOUND_GENERATION.text)
     }
     if (item.coreTier.traits.contains(AutomataCoreTraits.FUEL_CONSUMPTION_DISABLED)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "fuel_consumption_disabled"))
+        tooltipList.add(ModTooltip.FUEL_CONSUMPTION_DISABLED.text)
     }
     return@Function tooltipList
 }
@@ -42,10 +41,10 @@ val itemUsageTooltip = Function<PeripheralItem, List<Component>> { item ->
     }
     val tooltipList = mutableListOf<Component>()
     if (item.coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND_CHANCE)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "durability_refund_chance"))
+        tooltipList.add(ModTooltip.DURABILITY_REFUND_CHANCE.text)
     }
     if (item.coreTier.traits.contains(AutomataCoreTraits.DURABILITY_REFUND)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "durability_refund"))
+        tooltipList.add(ModTooltip.DURABILITY_REFUND.text)
     }
     return@Function tooltipList
 }
@@ -56,27 +55,29 @@ val enchantingTooltip = Function<PeripheralItem, List<Component>> { item ->
     }
     val tooltipList = mutableListOf<Component>()
     if (!item.coreTier.traits.contains(AutomataCoreTraits.SKILLED)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "enchantment_wipe_chance", (TurtlematicConfig.enchantmentWipeChance * 100).toInt()))
+        tooltipList.add(ModTooltip.ENCHANTMENT_WIPE_CHANCE.format((TurtlematicConfig.enchantmentWipeChance * 100).toInt()))
     }
     if (item.coreTier.traits.contains(AutomataCoreTraits.SKILLED)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "enchantment_no_wipe"))
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "enchantment_treasure_allowed"))
+        tooltipList.add(ModTooltip.ENCHANTMENT_NO_WIPE.text)
+        tooltipList.add(ModTooltip.ENCHANTMENT_TREASURE_ALLOWED.text)
     }
     return@Function tooltipList
 }
 
 val husbandryTooltip = Function<PeripheralItem, List<Component>> { item ->
-    if (item !is BaseAutomataCore || !TurtlematicConfig.husbandryAutomataRandomTicksEnabled) {
+    if (item !is BaseAutomataCore)
         return@Function emptyList()
-    }
     val tooltipList = mutableListOf<Component>()
-    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "can_disable_animal_ai"))
-    }
-    if (item.coreTier.traits.contains(AutomataCoreTraits.MASTERPIECE)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "periodical_area_grown_accelerator"))
-    } else if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "periodical_single_grown_accelerator"))
+    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+        tooltipList.add(ModTooltip.CAN_DISABLE_ANIMAL_AI.text)
+    if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled) {
+        // So, this condition is a little strange, but main idea here is core tier has both traits
+        // if it has MASTERPIECE, so we need this trick
+        if (item.coreTier.traits.contains(AutomataCoreTraits.MASTERPIECE)) {
+            tooltipList.add(ModTooltip.AREA_GROWN.text)
+        } else if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
+            tooltipList.add(ModTooltip.SINGLE_GROWN.text)
+        }
     }
     return@Function tooltipList
 }
@@ -86,9 +87,19 @@ val tradingTooltip = Function<PeripheralItem, List<Component>> { item ->
         return@Function emptyList()
     }
     val tooltipList = mutableListOf<Component>()
-    tooltipList.add(text(TurtlematicCore.MOD_ID, "has_trade_abilities"))
+    tooltipList.add(ModTooltip.HAS_TRADE_ABILITIES.text)
     if (item.coreTier.traits.contains(AutomataCoreTraits.SKILLED)) {
-        tooltipList.add(text(TurtlematicCore.MOD_ID, "can_restock_traders"))
+        tooltipList.add(ModTooltip.CAN_RESTORE_TRADES.text)
     }
+    return@Function tooltipList
+}
+
+val protectiveTooltip = Function<PeripheralItem, List<Component>> { item ->
+    if (item !is BaseAutomataCore) {
+        return@Function emptyList()
+    }
+    val tooltipList = mutableListOf<Component>()
+    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+        tooltipList.add(ModTooltip.CAN_DISABLE_HOSTILE_AI.text)
     return@Function tooltipList
 }

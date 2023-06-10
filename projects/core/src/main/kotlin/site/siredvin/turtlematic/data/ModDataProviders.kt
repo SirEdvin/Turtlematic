@@ -15,5 +15,6 @@ object ModDataProviders {
         generator.itemTags(TurtlematicCore.MOD_ID, ModTagsProvider::itemTags, blockTags)
         generator.entityTags(TurtlematicCore.MOD_ID, ModTagsProvider::entityTypeTags)
         generator.models({}, ModItemModelProvider::addModels)
+        generator.add(::ModEnLanguageProvider)
     }
 }

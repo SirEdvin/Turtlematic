@@ -8,8 +8,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import site.siredvin.peripheralium.util.Pair
-import site.siredvin.peripheralium.util.text
-import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
@@ -19,20 +17,21 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
+import site.siredvin.turtlematic.data.ModTooltip
 
 class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, { TurtlematicConfig.enableAutomataCore }), ISoulFeedableItem {
 
     override fun appendHoverText(
         itemStack: ItemStack,
         level: Level?,
-        tooltipList: MutableList<Component>,
+        list: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        super.appendHoverText(itemStack, level, tooltipList, tooltipFlag)
+        super.appendHoverText(itemStack, level, list, tooltipFlag)
         val record = getActiveRecipe(itemStack)
         if (record != null) {
-            tooltipList.add(text(TurtlematicCore.MOD_ID, "consumed_entities"))
-            getEntityRepresentation(itemStack, record).forEach { tooltipList.add(it.toComponent()) }
+            list.add(ModTooltip.CONSUMED_ENTITIES.text)
+            getEntityRepresentation(itemStack, record).forEach { list.add(it.toComponent()) }
         }
     }
 

@@ -1,8 +1,8 @@
 package site.siredvin.turtlematic.api
 
 import net.minecraft.network.chat.Component
-import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.TurtlematicCore
+import site.siredvin.turtlematic.data.ModTooltip
 
 data class RecipeEntityRepresentation(val consumedCount: Int, val requiredCount: Int, val name: String) {
 
@@ -10,6 +10,6 @@ data class RecipeEntityRepresentation(val consumedCount: Int, val requiredCount:
         get() = requiredCount - consumedCount
 
     fun toComponent(): Component {
-        return text(TurtlematicCore.MOD_ID, "consumed_entities_record", consumedCount, requiredCount, name)
+        return ModTooltip.CONSUMED_ENTITIES_RECORD.format(consumedCount, requiredCount, name)
     }
 }

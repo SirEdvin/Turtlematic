@@ -26,7 +26,7 @@ object Items {
         RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableEndAutomataCore)
     }
     val PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("protective_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableProtectiveAutomataCore)
+        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableProtectiveAutomataCore, protectiveTooltip)
     }
     val NETHERITE_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_husbandry_automata_core") {
         BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
@@ -35,7 +35,7 @@ object Items {
         BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
     }
     val NETHERITE_PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_protective_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip)
     }
     val STARBOUND_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_husbandry_automata_core") {
         BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
@@ -44,7 +44,7 @@ object Items {
         BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
     }
     val STARBOUND_PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_protective_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip)
     }
     val CREATIVE_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_husbandry_automata_core") {
         BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
@@ -53,7 +53,7 @@ object Items {
         BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
     }
     val CREATIVE_PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_protective_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip)
     }
     val ENORMOUS_AUTOMATA_CORE = TurtlematicPlatform.registerItem("enormous_automata_core") {
         BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEnormousAutomata, itemUsageTooltip)

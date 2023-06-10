@@ -1,8 +1,8 @@
-// 1.19.4	2023-06-09T13:26:04.98625496	Turtlematic/Block State Definitions
+// 1.19.4	2023-06-10T22:00:59.020661564	Turtlematic/Block State Definitions
 309903fe16bab683a902312169c82eb2d655f508 assets/turtlematic/models/item/smithing_automata_core.json
 ddd8f99080b1596fb387808afda571c342e0a6aa assets/turtlematic/models/turtle/chunk_vial_right.json
-25f94f13b7e6938aaf9101e88c2912350480c38b assets/turtlematic/models/item/mercantile_automata_core.json
 6c029c890959bb9c1a2b088bc6eba984da0a148c assets/turtlematic/models/item/end_automata_core.json
+25f94f13b7e6938aaf9101e88c2912350480c38b assets/turtlematic/models/item/mercantile_automata_core.json
 90020ef4a2a8b90340d582b723bffac2042cb8f2 assets/turtlematic/models/item/turtle_chatter.json
 6ccb46e27d734dca66801f1da675bae84a9d279a assets/turtlematic/models/item/starbound_mercantile_automata_core.json
 35247aac4ef47bd38e10ae82224ae46b32d65038 assets/turtlematic/models/item/starbound_smithing_automata_core.json
@@ -40,6 +40,6 @@ a36740957b761c39d22456f14de4aeb90c84fe80 assets/turtlematic/models/item/creative
 3a4fc63b44e3c0ab39e2ffc3697a8e7198165258 assets/turtlematic/models/turtle/chunk_vial_left.json
 7d8885dd74ccd9132fb4c01697b1628c37753dee assets/turtlematic/models/item/starbound_enchanting_automata_core.json
 07e6c3817f6b099b1c4d5f7e233e444fd033ef5d assets/turtlematic/models/item/automata_core.json
-0840afe6d0fdd9528016037dcf313c0ba8981ae6 assets/turtlematic/models/item/soul_scrapper.json
 a5893809d1711d921badaa50f3c17b31b8b0c2a9 assets/turtlematic/models/item/soul_vial_1.json
+0840afe6d0fdd9528016037dcf313c0ba8981ae6 assets/turtlematic/models/item/soul_scrapper.json
 4e20abaa134c6e3d25aac7aac04e971f0692e523 assets/turtlematic/models/item/enormous_automata_core.json

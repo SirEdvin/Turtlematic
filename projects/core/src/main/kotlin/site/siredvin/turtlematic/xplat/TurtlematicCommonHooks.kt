@@ -42,8 +42,6 @@ import java.util.function.Supplier
 
 object TurtlematicCommonHooks {
 
-    private val TURTLE_UPGRADES: MutableList<ResourceLocation> = mutableListOf()
-
     private fun <T : IOwnedPeripheral<TurtlePeripheralOwner>, V : Item> registerSimpleTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>) {
         registerSimpleTurtleUpgrade(
             id,
@@ -55,7 +53,6 @@ object TurtlematicCommonHooks {
     }
 
     private fun <T : ITurtleUpgrade, V : Item> registerSimpleTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
-        TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
             TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack -> builder.apply(upgradeID, stack) },
@@ -93,7 +90,6 @@ object TurtlematicCommonHooks {
     }
 
     private fun <T : ITurtleUpgrade, V : Item> registerFlatTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
-        TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
             TurtleUpgradeSerialiser.simpleWithCustomItem(builder::apply),
@@ -128,7 +124,6 @@ object TurtlematicCommonHooks {
     }
 
     private fun <T : ITurtleUpgrade, V : Item> registerFacingBlockTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
-        TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
             TurtleUpgradeSerialiser.simpleWithCustomItem(builder::apply),
@@ -162,7 +157,6 @@ object TurtlematicCommonHooks {
     }
 
     private fun <T : IOwnedPeripheral<TurtlePeripheralOwner>, V : Item> registerRenderedTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: TurtlePeripheralBuildFunction<T>, renderer: Supplier<TurtleUpgradeModeller<PeripheralTurtleUpgrade<T>>>) {
-        TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
             TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
@@ -189,7 +183,6 @@ object TurtlematicCommonHooks {
     }
 
     private fun <T : ITurtleUpgrade, V : Item> registerClockwiseTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: BiFunction<ResourceLocation, ItemStack, T>) {
-        TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
             TurtleUpgradeSerialiser.simpleWithCustomItem(builder::apply),
@@ -214,7 +207,6 @@ object TurtlematicCommonHooks {
     }
 
     private fun <O : IOwnedPeripheral<*>, V : Item> registerStarboundTurtleUpgrade(id: ResourceLocation, item: Supplier<V>, builder: AutomataPeripheralBuildFunction<O>, ticker: AutomataTickerFunction? = null) {
-        TURTLE_UPGRADES.add(id)
         TurtlematicPlatform.registerTurtleUpgrade(
             id,
             TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
@@ -303,7 +295,7 @@ object TurtlematicCommonHooks {
     }
 
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
-        TURTLE_UPGRADES.forEach {
+        TurtlematicPlatform.turtleUpgrades.forEach {
             val upgrade = PeripheraliumPlatform.getTurtleUpgrade(it.toString())
             if (upgrade != null) {
                 PeripheraliumPlatform.createTurtlesWithUpgrade(upgrade).forEach(output::accept)

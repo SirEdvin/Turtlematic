@@ -8,15 +8,24 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import site.siredvin.peripheralium.data.language.ModInformationHolder
 import site.siredvin.turtlematic.TurtlematicCore
 import java.util.function.BiFunction
 import java.util.function.Consumer
 import java.util.function.Supplier
 
-interface TurtlematicPlatform {
+interface TurtlematicPlatform: ModInformationHolder {
     companion object {
         private var _IMPL: TurtlematicPlatform? = null
-        val ITEMS: MutableList<Supplier<Item>> = mutableListOf()
+        private val ITEMS: MutableList<Supplier<Item>> = mutableListOf()
+        private val TURTLE_UPGRADES: MutableList<ResourceLocation> = mutableListOf()
+
+        val holder: ModInformationHolder
+            get() = get()
+
+        val turtleUpgrades: List<ResourceLocation>
+            get() = TURTLE_UPGRADES
 
         fun configure(impl: TurtlematicPlatform) {
             _IMPL = impl
@@ -49,8 +58,17 @@ interface TurtlematicPlatform {
             dataGenerator: BiFunction<TurtleUpgradeDataProvider, TurtleUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<TurtleUpgradeSerialiser<*>>>,
             postRegistrationHooks: List<Consumer<Supplier<TurtleUpgradeSerialiser<V>>>>,
         ) {
+            TURTLE_UPGRADES.add(key)
             get().registerTurtleUpgrade(key, serializer, dataGenerator, postRegistrationHooks)
         }
+    }
+
+    override fun getBlocks(): List<Supplier<out Block>> {
+        return emptyList()
+    }
+
+    override fun getItems(): List<Supplier<out Item>> {
+        return ITEMS
     }
 
     fun <T : Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T>

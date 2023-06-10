@@ -2,8 +2,8 @@ package site.siredvin.turtlematic
 import net.minecraft.world.item.CreativeModeTab
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.common.setup.Items
+import site.siredvin.turtlematic.data.ModText
 import site.siredvin.turtlematic.xplat.ModRecipeIngredients
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 import site.siredvin.turtlematic.xplat.TurtlematicPlatform
@@ -16,9 +16,9 @@ object TurtlematicCore {
 
     fun configureCreativeTab(builder: CreativeModeTab.Builder): CreativeModeTab.Builder {
         return builder.icon { Items.AUTOMATA_CORE.get().defaultInstance }
-            .title(text(MOD_ID, "creative_tab"))
+            .title(ModText.CREATIVE_TAB.text)
             .displayItems { _, output ->
-                TurtlematicPlatform.ITEMS.forEach { output.accept(it.get()) }
+                TurtlematicPlatform.holder.getItems().forEach { output.accept(it.get()) }
                 TurtlematicCommonHooks.registerTurtlesInCreativeTab(output)
             }
     }

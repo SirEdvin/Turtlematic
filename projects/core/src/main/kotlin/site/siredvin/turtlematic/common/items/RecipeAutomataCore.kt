@@ -7,11 +7,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import site.siredvin.peripheralium.common.items.PeripheralItem
-import site.siredvin.peripheralium.util.text
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
+import site.siredvin.turtlematic.data.ModTooltip
 import java.util.function.Function
 import java.util.function.Supplier
 
@@ -38,19 +38,13 @@ class RecipeAutomataCore(
         if (InputConstants.isKeyDown(Minecraft.getInstance().window.window, InputConstants.KEY_LCONTROL)) {
             val recipe = SoulHarvestRecipeRegistry.get(this)
             if (recipe == null) {
-                list.add(text(TurtlematicCore.MOD_ID, "recipe_missing"))
+                list.add(ModTooltip.RECIPE_MISSING.text)
             } else {
-                list.add(text(TurtlematicCore.MOD_ID, "soul_upgrade_from", recipe.second.description.string))
-                list.add(
-                    text(
-                        TurtlematicCore.MOD_ID,
-                        "required_souls_for_consuming",
-                        recipe.first.ingredients.joinToString { it.description },
-                    ),
-                )
+                list.add(ModTooltip.SOUL_UPGRADE_FROM.format(recipe.second.description.string))
+                list.add(ModTooltip.REQUIRED_SOULS.format(recipe.first.ingredients.joinToString { it.description }))
             }
         } else {
-            list.add(text(TurtlematicCore.MOD_ID, "press_for_recipe"))
+            list.add(ModTooltip.PRESS_FOR_RECIPE.text)
         }
     }
 }
