@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.4] - 2023-06-12
+
+### Added
+
+- Peripheralium 0.5.7
+
 ## [0.6.3] - 2023-06-04
 
 ### Added
