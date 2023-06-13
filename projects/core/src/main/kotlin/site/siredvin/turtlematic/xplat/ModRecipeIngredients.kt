@@ -18,6 +18,8 @@ interface ModRecipeIngredients {
         }
     }
 
+    val peripheraliumUpgrade: Ingredient
+
     val soulLantern: Ingredient
     val emerald: Ingredient
     val redstoneDust: Ingredient

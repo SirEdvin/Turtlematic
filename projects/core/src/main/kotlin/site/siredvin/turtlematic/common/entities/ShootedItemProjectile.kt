@@ -38,19 +38,19 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
 
     override fun setPos(x: Double, y: Double, z: Double) {
         super.setPos(x, y, z)
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             TurtlematicCore.LOGGER.info("New position $x $y $z")
         }
     }
 
     override fun onHitBlock(hit: BlockHitResult) {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             TurtlematicCore.LOGGER.info("Hit block ${hit.blockPos}")
             val targetableStorage =
-                ExtractorProxy.extractTargetableStorage(level, hit.blockPos, level.getBlockEntity(hit.blockPos))
+                ExtractorProxy.extractTargetableStorage(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
             if (targetableStorage != null) {
                 this.kill()
-                StorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level)
+                StorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level())
                 return
             }
         }
@@ -62,11 +62,11 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
     }
 
     override fun onHitEntity(hit: EntityHitResult) {
-        if (!level.isClientSide) {
-            val targetableStorage = ExtractorProxy.extractTargetableStorage(level, hit.entity)
+        if (!level().isClientSide) {
+            val targetableStorage = ExtractorProxy.extractTargetableStorage(level(), hit.entity)
             if (targetableStorage != null) {
                 this.kill()
-                StorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level)
+                StorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level())
                 return
             }
         }
@@ -75,14 +75,14 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
 
     override fun tick() {
         super.tick()
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (deltaMovement.length() != 0.0) {
                 TurtlematicCore.LOGGER.info("Current delta of movement $deltaMovement")
             } else if (startDecaying) {
                 decayTicker--
                 if (decayTicker <= 0) {
                     TurtlematicCore.LOGGER.info("Dropping item stack $x ${y + 0.5} $z")
-                    Containers.dropItemStack(level, x, y + 0.5, z, stack)
+                    Containers.dropItemStack(level(), x, y + 0.5, z, stack)
                     this.kill()
                 }
             }

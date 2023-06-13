@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "addition": {
     "tag": "c:netherite_ingots"
   },
@@ -8,5 +8,8 @@
   },
   "result": {
     "item": "turtlematic:netherite_protective_automata_core"
+  },
+  "template": {
+    "item": "peripheralium:peripheralium_upgrade_template"
   }
 }

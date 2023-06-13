@@ -1,18 +1,27 @@
 package site.siredvin.turtlematic
 
+import dan200.computercraft.api.client.ComputerCraftAPIClient
+import dan200.computercraft.api.client.turtle.TurtleUpgradeModeller
+import dan200.computercraft.api.turtle.ITurtleUpgrade
+import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import site.siredvin.peripheralium.client.FacingBlockTurtleModeller
+import site.siredvin.turtlematic.client.AngleItemTurtleModeller
+import site.siredvin.turtlematic.client.ClockwiseTurtleModeller
 import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
 import site.siredvin.turtlematic.common.setup.EntityTypes
+import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
+import site.siredvin.turtlematic.computercraft.peripheral.misc.ChunkVialPeripheral
+import site.siredvin.turtlematic.computercraft.peripheral.misc.CreativeChestPeripheral
+import site.siredvin.turtlematic.computercraft.peripheral.misc.TurtleChatterPeripheral
 import java.util.function.Consumer
 import java.util.function.Supplier
 
 object TurtlematicCoreClient {
-    private val CLIENT_HOOKS: MutableList<Runnable> = mutableListOf()
-    private var initialized: Boolean = false
 
     private val EXTRA_MODELS: Array<String> = arrayOf(
         "turtle/chatter_left",
@@ -38,16 +47,91 @@ object TurtlematicCoreClient {
         EXTRA_MODELS.forEach { register.accept(ResourceLocation(TurtlematicCore.MOD_ID, it)) }
     }
 
-    fun registerHook(it: Runnable) {
-        if (!initialized) {
-            CLIENT_HOOKS.add(it)
-        } else {
-            it.run()
-        }
+    fun <T: ITurtleUpgrade> asClockwise(serializer: Supplier<TurtleUpgradeSerialiser<T>>) {
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            serializer.get(), ClockwiseTurtleModeller()
+        )
     }
 
     fun onInit() {
-        CLIENT_HOOKS.forEach { it.run() }
-        initialized = true
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
+            TurtleUpgradeModeller.sided(
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.UPGRADE_ID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.UPGRADE_ID.path}_right"),
+            ),
+        )
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.CREATIVE_CHEST.get(),
+            TurtleUpgradeModeller.sided(
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.UPGRADE_ID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.UPGRADE_ID.path}_right"),
+            ),
+        )
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.CHUNK_VIAL.get(),
+            TurtleUpgradeModeller.sided(
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.UPGRADE_ID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.UPGRADE_ID.path}_right"),
+            ),
+        )
+
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.SOUL_SCRAPPER.get(),
+            TurtleUpgradeModeller.flatItem()
+        )
+
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.LAVA_BUCKET.get(),
+            TurtleUpgradeModeller.flatItem()
+        )
+
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.BOW.get(),
+            AngleItemTurtleModeller()
+        )
+
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.PISTON.get(),
+            FacingBlockTurtleModeller()
+        )
+
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.STICKY_PISTON.get(),
+            FacingBlockTurtleModeller()
+        )
+
+        asClockwise(TurtleUpgradeSerializers.AUTOMATA_CORE)
+        asClockwise(TurtleUpgradeSerializers.HUSBANDRY_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.NETHERITE_HUSBANDRY_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_HUSBANDRY_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_HUSBANDRY_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.END_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.NETHERITE_END_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_END_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_END_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.PROTECTIVE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.NETHERITE_PROTECTIVE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_PROTECTIVE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_PROTECTIVE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.ENORMOUS_AUTOMATA)
+        
+        asClockwise(TurtleUpgradeSerializers.BREWING_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.ENCHANTING_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.MASON_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.MERCANTILE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.SMITHING_AUTOMATA)
+
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_BREWING_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_ENCHANTING_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_MASON_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_MERCANTILE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.STARBOUND_SMITHING_AUTOMATA)
+
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_BREWING_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_ENCHANTING_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_MASON_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_MERCANTILE_AUTOMATA)
+        asClockwise(TurtleUpgradeSerializers.CREATIVE_SMITHING_AUTOMATA)
     }
 }

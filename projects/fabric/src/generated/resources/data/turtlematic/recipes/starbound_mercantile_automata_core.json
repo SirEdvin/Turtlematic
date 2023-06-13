@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "minecraft:nether_star"
   },
@@ -8,5 +8,8 @@
   },
   "result": {
     "item": "turtlematic:starbound_mercantile_automata_core"
+  },
+  "template": {
+    "item": "peripheralium:peripheralium_upgrade_template"
   }
 }

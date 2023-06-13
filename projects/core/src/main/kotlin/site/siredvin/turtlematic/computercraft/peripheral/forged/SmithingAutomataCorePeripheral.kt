@@ -11,6 +11,7 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmithingRecipe
@@ -52,7 +53,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
 
     private fun isEditable(pos: BlockPos): Boolean {
         return peripheralOwner.withPlayer({
-            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level.getBlockState(pos), it.fakePlayer)
+            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
         })
     }
 
@@ -153,6 +154,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun smith(): MethodResult {
+        // TODO: correctify to new minecraft smithing logic
         return withOperation(SingleOperation.SMITH) {
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedSlot = peripheralOwner.turtle.selectedSlot

@@ -41,7 +41,7 @@ class AutomataTradePlugin(
         }
         val matchingOffers = mutableMapOf<Int, MerchantOffer>()
         merchant.offers.onEachIndexed { index, offer ->
-            if (!offer.isOutOfStock && offer.costA.sameItem(firstItem) && (offer.costB.isEmpty || offer.costB.sameItem(secondItem))) {
+            if (!offer.isOutOfStock && ItemStack.isSameItem(offer.costA, firstItem) && (offer.costB.isEmpty || ItemStack.isSameItem(offer.costB, secondItem))) {
                 matchingOffers[index] = offer
             }
         }

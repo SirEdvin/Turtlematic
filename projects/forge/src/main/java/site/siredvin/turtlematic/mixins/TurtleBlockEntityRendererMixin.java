@@ -6,7 +6,9 @@ import dan200.computercraft.client.render.TurtleBlockEntityRenderer;
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.debug.DebugRenderer;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.util.FormattedCharSequence;
 import org.spongepowered.asm.mixin.Mixin;
@@ -69,7 +71,7 @@ public class TurtleBlockEntityRendererMixin{
             if (i == 0) {
                 firstLineOffset = -font.width(textLine) / 2.0f;
             }
-            font.draw(transform, textLine, firstLineOffset, font.lineHeight*(i + 1), 0xffffff);
+            font.renderText(textLine.toString(), firstLineOffset, font.lineHeight*(i + 1), 0xffffff, true, transform.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, lightmapCoord);
         }
         transform.popPose();
     }

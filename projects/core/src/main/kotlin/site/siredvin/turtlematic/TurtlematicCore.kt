@@ -18,7 +18,7 @@ object TurtlematicCore {
         return builder.icon { Items.AUTOMATA_CORE.get().defaultInstance }
             .title(ModText.CREATIVE_TAB.text)
             .displayItems { _, output ->
-                TurtlematicPlatform.holder.getItems().forEach { output.accept(it.get()) }
+                TurtlematicPlatform.holder.items.forEach { output.accept(it.get()) }
                 TurtlematicCommonHooks.registerTurtlesInCreativeTab(output)
             }
     }

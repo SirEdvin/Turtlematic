@@ -69,7 +69,7 @@ public class TurtleBlockEntityRendererMixin{
             if (i == 0) {
                 firstLineOffset = -font.width(textLine) / 2.0f;
             }
-            font.draw(transform, textLine, firstLineOffset, font.lineHeight*(i + 1), 0xffffff);
+            font.renderText(textLine.toString(), firstLineOffset, font.lineHeight*(i + 1), 0xffffff, true, transform.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, lightmapCoord);
         }
         transform.popPose();
     }

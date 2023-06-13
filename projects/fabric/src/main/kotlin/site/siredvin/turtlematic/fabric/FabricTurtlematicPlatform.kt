@@ -1,20 +1,15 @@
 package site.siredvin.turtlematic.fabric
 
 import dan200.computercraft.api.turtle.ITurtleUpgrade
-import dan200.computercraft.api.turtle.TurtleUpgradeDataProvider
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
-import dan200.computercraft.api.upgrades.UpgradeDataProvider
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
-import site.siredvin.turtlematic.common.RegistrationQueue
-import site.siredvin.turtlematic.data.ModTurtleUpgradeDataProvider
 import site.siredvin.turtlematic.xplat.TurtlematicPlatform
-import java.util.function.BiFunction
-import java.util.function.Consumer
 import java.util.function.Supplier
 
 object FabricTurtlematicPlatform : TurtlematicPlatform {
@@ -28,36 +23,20 @@ object FabricTurtlematicPlatform : TurtlematicPlatform {
         return Supplier { registeredEntityType }
     }
 
-    private fun <V : ITurtleUpgrade> rawTurtleUpgradeRegistration(
-        registry: Registry<TurtleUpgradeSerialiser<*>>,
-        key: ResourceLocation,
-        serializer: TurtleUpgradeSerialiser<V>,
-        dataGenerator: BiFunction<TurtleUpgradeDataProvider, TurtleUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<TurtleUpgradeSerialiser<*>>>,
-        postRegistrationHooks: List<Consumer<Supplier<TurtleUpgradeSerialiser<V>>>>,
-    ): TurtleUpgradeSerialiser<V> {
-        val registeredSerializer = Registry.register(registry, key, serializer)
-
-        ModTurtleUpgradeDataProvider.hookUpgrade {
-            dataGenerator.apply(it, registeredSerializer)
-        }
-        val supplier = Supplier { registeredSerializer }
-        postRegistrationHooks.forEach { it.accept(supplier) }
-        return registeredSerializer
+    override fun registerCreativeTab(key: ResourceLocation, tab: CreativeModeTab): Supplier<CreativeModeTab> {
+        val registeredTab = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, key, tab)
+        return Supplier { registeredTab }
     }
 
     override fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
         serializer: TurtleUpgradeSerialiser<V>,
-        dataGenerator: BiFunction<TurtleUpgradeDataProvider, TurtleUpgradeSerialiser<V>, UpgradeDataProvider.Upgrade<TurtleUpgradeSerialiser<*>>>,
-        postRegistrationHooks: List<Consumer<Supplier<TurtleUpgradeSerialiser<V>>>>,
-    ) {
-        val rawTurtleRegistry = BuiltInRegistries.REGISTRY.get(TurtleUpgradeSerialiser.REGISTRY_ID.location())
-
-        if (rawTurtleRegistry == null) {
-            RegistrationQueue.scheduleTurtleUpgrade { rawTurtleUpgradeRegistration(it, key, serializer, dataGenerator, postRegistrationHooks) }
-        } else {
-            val turtleSerializerRegister = rawTurtleRegistry as Registry<TurtleUpgradeSerialiser<*>>
-            rawTurtleUpgradeRegistration(turtleSerializerRegister, key, serializer, dataGenerator, postRegistrationHooks)
-        }
+    ): Supplier<TurtleUpgradeSerialiser<V>> {
+        val registry: Registry<TurtleUpgradeSerialiser<*>> = (
+                BuiltInRegistries.REGISTRY.get(TurtleUpgradeSerialiser.registryId().location())
+                    ?: throw IllegalStateException("Something is not correct with turtle registry")
+                ) as Registry<TurtleUpgradeSerialiser<*>>
+        val registered = Registry.register(registry, key, serializer)
+        return Supplier { registered }
     }
 }

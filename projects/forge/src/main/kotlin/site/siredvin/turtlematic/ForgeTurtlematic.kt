@@ -1,11 +1,10 @@
 package site.siredvin.turtlematic
 
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
-import net.minecraftforge.event.CreativeModeTabEvent
-import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
@@ -28,8 +27,9 @@ object ForgeTurtlematic {
         DeferredRegister.create(ForgeRegistries.ITEMS, TurtlematicCore.MOD_ID)
     val entityTypesRegistry: DeferredRegister<EntityType<*>> =
         DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, TurtlematicCore.MOD_ID)
+    val creativeTabRegistry: DeferredRegister<CreativeModeTab> = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), TurtlematicCore.MOD_ID)
     val turtleSerializers: DeferredRegister<TurtleUpgradeSerialiser<*>> = DeferredRegister.create(
-        TurtleUpgradeSerialiser.REGISTRY_ID,
+        TurtleUpgradeSerialiser.registryId(),
         TurtlematicCore.MOD_ID,
     )
 
@@ -56,10 +56,5 @@ object ForgeTurtlematic {
     }
 
     fun registrySetup(event: NewRegistryEvent) {
-    }
-
-    @SubscribeEvent
-    fun registerCreativeTab(event: CreativeModeTabEvent.Register) {
-        event.registerCreativeModeTab(ResourceLocation(TurtlematicCore.MOD_ID, "tab"), TurtlematicCore::configureCreativeTab)
     }
 }

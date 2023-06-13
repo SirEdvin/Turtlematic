@@ -5,7 +5,7 @@ import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.world.item.crafting.Ingredient
 import site.siredvin.peripheralium.data.blocks.TweakedShapedRecipeBuilder
-import site.siredvin.peripheralium.data.blocks.TweakedUpgradeRecipeBuilder
+import site.siredvin.peripheralium.data.blocks.TweakedSmithingTransformRecipeBuilder
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.xplat.ModRecipeIngredients
 import java.util.*
@@ -61,63 +61,75 @@ class ModRecipeProvider(output: PackOutput) : RecipeProvider(output) {
     }
 
     fun generateSmithingRecipes(consumer: Consumer<FinishedRecipe>) {
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netheriteIngot,
             Items.FORGED_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.HUSBANDRY_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netheriteIngot,
             Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.END_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netheriteIngot,
             Items.NETHERITE_END_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.PROTECTIVE_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netheriteIngot,
             Items.NETHERITE_PROTECTIVE_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.NETHERITE_END_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_END_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.NETHERITE_PROTECTIVE_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_PROTECTIVE_AUTOMATA_CORE.get(),
         ).save(consumer)
 
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.BREWING_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_BREWING_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.ENCHANTING_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_ENCHANTING_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.SMITHING_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_SMITHING_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.MASON_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_MASON_AUTOMATA_CORE.get(),
         ).save(consumer)
-        TweakedUpgradeRecipeBuilder.smithing(
+        TweakedSmithingTransformRecipeBuilder.smithingTransform(
+            ModRecipeIngredients.get().peripheraliumUpgrade,
             Ingredient.of(Items.MERCANTILE_AUTOMATA_CORE.get()),
             ModRecipeIngredients.get().netherStar,
             Items.STARBOUND_MERCANTILE_AUTOMATA_CORE.get(),

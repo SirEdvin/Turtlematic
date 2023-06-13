@@ -168,7 +168,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
 
     private fun isEditable(pos: BlockPos): Boolean {
         return peripheralOwner.withPlayer({
-            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level.getBlockState(pos), it.fakePlayer)
+            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
         })
     }
 
