@@ -6,7 +6,7 @@ mixinGradle = "0.8.+"
 forgegradle = "6.+"
 # Core mod dependencies
 cc-tweaked = "1.105.0"
-peripheralium = "0.6.0-6"
+peripheralium = "0.6.0"
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.83.0+1.20"
@@ -19,12 +19,12 @@ forge-kotlin = "4.3.0"
 parchment = "2023.03.12"
 parchmentMc = "1.19.3"
 # Extra mod dependencies
-cloth-config = "10.0.96"
-architectury = "8.1.80"
+cloth-config = "11.0.99"
+architectury = "9.0.8"
 
 # Dev mod dependenceis
-jei = "13.1.0.9"
-rei = "11.0.597"
+jei = "14.0.0.11"
+rei = "12.0.625"
 
 # Shared integration mod dependency
 
@@ -51,8 +51,8 @@ forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-ko
 peripheralium-forge = {module = "site.siredvin:peripheralium-forge-1.20", version.ref = "peripheralium"}
 
 # Dev mod dependencies
-jei-fabric = { module = "mezz.jei:jei-1.19.4-fabric", version.ref = "jei" }
-jei-forge = { module = "mezz.jei:jei-1.19.4-forge", version.ref = "jei" }
+jei-fabric = { module = "mezz.jei:jei-1.20-fabric", version.ref = "jei" }
+jei-forge = { module = "mezz.jei:jei-1.20-forge", version.ref = "jei" }
 rei-fabric = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei"}
 
 # Extra mod dependency
@@ -78,10 +78,10 @@ forge-base = ["cc-tweaked-forge", "peripheralium-forge"]
 
 # Minecraft
 externalMods-forge-runtime = [
-    # "jei-forge", "architectury-forge", "cloth-config-forge"
+     "jei-forge", "architectury-forge", "cloth-config-forge"
 ]
 externalMods-fabric-runtime = [
-    # "rei-fabric", "architectury-fabric", "cloth-config-fabric"
+     "rei-fabric", "architectury-fabric", "cloth-config-fabric"
 ]
 
 # Integration dependencies

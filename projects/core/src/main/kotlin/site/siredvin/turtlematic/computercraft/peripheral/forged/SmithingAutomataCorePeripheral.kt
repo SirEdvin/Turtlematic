@@ -153,15 +153,14 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun smith(): MethodResult {
-        // TODO: correctify to new minecraft smithing logic
         return withOperation(SingleOperation.SMITH) {
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedSlot = peripheralOwner.turtle.selectedSlot
-            if (selectedSlot + 1 == turtleInventory.containerSize) {
-                return@withOperation MethodResult.of(null, "Cannot use last slot as first for smith operation")
+            if (selectedSlot + 2 >= turtleInventory.containerSize) {
+                return@withOperation MethodResult.of(null, "Cannot use last and pre-last slot as first for smith operation")
             }
             val limitedInventory =
-                LimitedInventory(turtleInventory, intArrayOf(selectedSlot, selectedSlot + 1))
+                LimitedInventory(turtleInventory, intArrayOf(selectedSlot, selectedSlot + 1, selectedSlot + 2))
             val level: Level = level!!
             val optRecipe: Optional<SmithingRecipe> =
                 level.recipeManager.getRecipeFor(RecipeType.SMITHING, limitedInventory, level)
@@ -170,6 +169,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             val result: ItemStack = recipe.assemble(limitedInventory, RegistryAccess.EMPTY)
             limitedInventory.reduceCount(0)
             limitedInventory.reduceCount(1)
+            limitedInventory.reduceCount(2)
             ContainerUtils.toInventoryOrToWorld(
                 result,
                 turtleInventory,
