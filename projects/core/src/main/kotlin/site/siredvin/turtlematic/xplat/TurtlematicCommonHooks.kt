@@ -20,7 +20,7 @@ object TurtlematicCommonHooks {
         TurtleUpgradeSerializers.doSomething()
         TurtlematicPlatform.registerCreativeTab(
             ResourceLocation(TurtlematicCore.MOD_ID, "tab"),
-            TurtlematicCore.configureCreativeTab(PeripheraliumPlatform.createTabBuilder()).build()
+            TurtlematicCore.configureCreativeTab(PeripheraliumPlatform.createTabBuilder()).build(),
         )
     }
 

@@ -3,7 +3,7 @@ package site.siredvin.turtlematic.data
 import site.siredvin.peripheralium.data.language.TextRecord
 import site.siredvin.turtlematic.TurtlematicCore
 
-enum class ModText: TextRecord{
+enum class ModText : TextRecord {
     CREATIVE_TAB,
     CORE_FEED_BY_PLAYER,
     ;

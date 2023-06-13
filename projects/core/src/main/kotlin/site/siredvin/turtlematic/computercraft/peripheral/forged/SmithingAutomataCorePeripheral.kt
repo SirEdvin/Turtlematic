@@ -11,7 +11,6 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmithingRecipe

@@ -48,6 +48,7 @@ object ForgeTurtlematic {
         itemsRegistry.register(eventBus)
         entityTypesRegistry.register(eventBus)
         turtleSerializers.register(eventBus)
+        creativeTabRegistry.register(eventBus)
     }
 
     fun commonSetup(event: FMLCommonSetupEvent) {

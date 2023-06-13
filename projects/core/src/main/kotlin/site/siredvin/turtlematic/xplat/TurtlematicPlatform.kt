@@ -3,9 +3,7 @@ package site.siredvin.turtlematic.xplat
 import dan200.computercraft.api.pocket.IPocketUpgrade
 import dan200.computercraft.api.pocket.PocketUpgradeSerialiser
 import dan200.computercraft.api.turtle.ITurtleUpgrade
-import dan200.computercraft.api.turtle.TurtleUpgradeDataProvider
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
-import dan200.computercraft.api.upgrades.UpgradeDataProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -14,11 +12,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import site.siredvin.peripheralium.data.language.ModInformationHolder
 import site.siredvin.turtlematic.TurtlematicCore
-import java.util.function.BiFunction
-import java.util.function.Consumer
 import java.util.function.Supplier
 
-interface TurtlematicPlatform: ModInformationHolder {
+interface TurtlematicPlatform : ModInformationHolder {
     companion object {
         private var _IMPL: TurtlematicPlatform? = null
         private val ITEMS: MutableList<Supplier<Item>> = mutableListOf()

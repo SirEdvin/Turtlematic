@@ -1,3 +1,1 @@
 accessWidener v1 named
-
-accessible method net/minecraft/client/gui/Font renderText (Ljava/lang/String;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;II)F

@@ -1,6 +1,7 @@
 package site.siredvin.turtlematic.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.client.render.TurtleBlockEntityRenderer;
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity;
@@ -69,7 +70,9 @@ public class TurtleBlockEntityRendererMixin{
             if (i == 0) {
                 firstLineOffset = -font.width(textLine) / 2.0f;
             }
-            font.renderText(textLine.toString(), firstLineOffset, font.lineHeight*(i + 1), 0xffffff, true, transform.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, lightmapCoord);
+            MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            font.drawInBatch(textLine, firstLineOffset, font.lineHeight*(i + 1), 0xffffff, false, transform.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+            bufferSource.endBatch();
         }
         transform.popPose();
     }

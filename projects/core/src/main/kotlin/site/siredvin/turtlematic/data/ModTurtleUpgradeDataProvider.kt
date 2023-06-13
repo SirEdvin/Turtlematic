@@ -30,12 +30,12 @@ class ModTurtleUpgradeDataProvider(output: PackOutput) : LibTurtleUpgradeDataPro
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.SOUL_SCRAPPER, Items.SOUL_SCRAPPER))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.LAVA_BUCKET, net.minecraft.world.item.Items.LAVA_BUCKET))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.BOW, net.minecraft.world.item.Items.BOW))
-        addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.PISTON,net.minecraft.world.item.Items.PISTON))
+        addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.PISTON, net.minecraft.world.item.Items.PISTON))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.STICKY_PISTON, net.minecraft.world.item.Items.STICKY_PISTON))
 
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.AUTOMATA_CORE, Items.AUTOMATA_CORE))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.ENORMOUS_AUTOMATA, Items.ENORMOUS_AUTOMATA_CORE))
-        
+
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.HUSBANDRY_AUTOMATA, Items.HUSBANDRY_AUTOMATA_CORE))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.NETHERITE_HUSBANDRY_AUTOMATA, Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.STARBOUND_HUSBANDRY_AUTOMATA, Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE))

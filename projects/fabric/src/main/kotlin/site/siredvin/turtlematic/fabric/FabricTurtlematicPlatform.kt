@@ -33,9 +33,9 @@ object FabricTurtlematicPlatform : TurtlematicPlatform {
         serializer: TurtleUpgradeSerialiser<V>,
     ): Supplier<TurtleUpgradeSerialiser<V>> {
         val registry: Registry<TurtleUpgradeSerialiser<*>> = (
-                BuiltInRegistries.REGISTRY.get(TurtleUpgradeSerialiser.registryId().location())
-                    ?: throw IllegalStateException("Something is not correct with turtle registry")
-                ) as Registry<TurtleUpgradeSerialiser<*>>
+            BuiltInRegistries.REGISTRY.get(TurtleUpgradeSerialiser.registryId().location())
+                ?: throw IllegalStateException("Something is not correct with turtle registry")
+            ) as Registry<TurtleUpgradeSerialiser<*>>
         val registered = Registry.register(registry, key, serializer)
         return Supplier { registered }
     }

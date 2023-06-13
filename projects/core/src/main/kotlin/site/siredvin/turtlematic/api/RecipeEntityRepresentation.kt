@@ -1,7 +1,6 @@
 package site.siredvin.turtlematic.api
 
 import net.minecraft.network.chat.Component
-import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.data.ModTooltip
 
 data class RecipeEntityRepresentation(val consumedCount: Int, val requiredCount: Int, val name: String) {

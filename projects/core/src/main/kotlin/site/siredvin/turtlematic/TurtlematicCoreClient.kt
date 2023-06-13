@@ -47,9 +47,10 @@ object TurtlematicCoreClient {
         EXTRA_MODELS.forEach { register.accept(ResourceLocation(TurtlematicCore.MOD_ID, it)) }
     }
 
-    fun <T: ITurtleUpgrade> asClockwise(serializer: Supplier<TurtleUpgradeSerialiser<T>>) {
+    fun <T : ITurtleUpgrade> asClockwise(serializer: Supplier<TurtleUpgradeSerialiser<T>>) {
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-            serializer.get(), ClockwiseTurtleModeller()
+            serializer.get(),
+            ClockwiseTurtleModeller(),
         )
     }
 
@@ -78,27 +79,27 @@ object TurtlematicCoreClient {
 
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.SOUL_SCRAPPER.get(),
-            TurtleUpgradeModeller.flatItem()
+            TurtleUpgradeModeller.flatItem(),
         )
 
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.LAVA_BUCKET.get(),
-            TurtleUpgradeModeller.flatItem()
+            TurtleUpgradeModeller.flatItem(),
         )
 
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.BOW.get(),
-            AngleItemTurtleModeller()
+            AngleItemTurtleModeller(),
         )
 
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.PISTON.get(),
-            FacingBlockTurtleModeller()
+            FacingBlockTurtleModeller(),
         )
 
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.STICKY_PISTON.get(),
-            FacingBlockTurtleModeller()
+            FacingBlockTurtleModeller(),
         )
 
         asClockwise(TurtleUpgradeSerializers.AUTOMATA_CORE)
@@ -115,7 +116,7 @@ object TurtlematicCoreClient {
         asClockwise(TurtleUpgradeSerializers.STARBOUND_PROTECTIVE_AUTOMATA)
         asClockwise(TurtleUpgradeSerializers.CREATIVE_PROTECTIVE_AUTOMATA)
         asClockwise(TurtleUpgradeSerializers.ENORMOUS_AUTOMATA)
-        
+
         asClockwise(TurtleUpgradeSerializers.BREWING_AUTOMATA)
         asClockwise(TurtleUpgradeSerializers.ENCHANTING_AUTOMATA)
         asClockwise(TurtleUpgradeSerializers.MASON_AUTOMATA)
