@@ -9,6 +9,7 @@ import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataInteractionPlugin
+import site.siredvin.turtlematic.computercraft.plugins.AutomataItemSuckPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
 
 class AutomataCorePeripheral(
@@ -24,6 +25,7 @@ class AutomataCorePeripheral(
     init {
         addPlugin(AutomataLookPlugin(this))
         addPlugin(AutomataInteractionPlugin(this))
+        addPlugin(AutomataItemSuckPlugin(this))
         peripheralOwner.attachAbility(
             PeripheralOwnerAbility.SCANNING,
             ScanningAbility(

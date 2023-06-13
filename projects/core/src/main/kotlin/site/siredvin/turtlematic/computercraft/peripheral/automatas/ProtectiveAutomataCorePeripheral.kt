@@ -32,6 +32,7 @@ class ProtectiveAutomataCorePeripheral(
             // TODO: consider adding exposing explosion protection, if this is not done yet
             AutomataLookPlugin(this),
         )
+        addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(
             AutomataInteractionPlugin(
                 this,

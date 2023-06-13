@@ -24,6 +24,7 @@ class EndAutomataCorePeripheral(
     init {
         addPlugin(AutomataLookPlugin(this))
         addPlugin(AutomataInteractionPlugin(this))
+        addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataWarpingPlugin(this))
         peripheralOwner.attachAbility(
             PeripheralOwnerAbility.SCANNING,

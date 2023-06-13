@@ -5,7 +5,6 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.core.BlockPos
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -13,9 +12,10 @@ import net.minecraft.world.phys.AABB
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.peripheralium.extra.plugins.PeripheralPluginUtils
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import java.util.function.Predicate
 
 class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
     override val operations: List<IPeripheralOperation<*>>
@@ -43,12 +43,11 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
         }
 
     protected fun suckItem(entity: ItemEntity, requiredQuantity: Int): Int {
-        var requiredQuantityMutable = requiredQuantity
         val stack: ItemStack = entity.item.copy()
         val storeStack: ItemStack
         val leaveStack: ItemStack
-        if (stack.count > requiredQuantityMutable) {
-            storeStack = stack.split(requiredQuantityMutable)
+        if (stack.count > requiredQuantity) {
+            storeStack = stack.split(requiredQuantity)
             leaveStack = stack
         } else {
             storeStack = stack
@@ -67,35 +66,14 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
                 entity.item = leaveStack
             }
         }
-        requiredQuantityMutable -= storeStack.count
-        return requiredQuantity
+        return storeStack.count - remainder.count
     }
 
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
-    fun collectSpecificItem(arguments: IArguments): MethodResult {
-        val technicalName: String = arguments.getString(0)
-        val requiredQuantityArg: Int = arguments.optInt(1, Int.MAX_VALUE)
-        return automataCore.withOperation(
-            SingleOperation.SUCK,
-        ) {
-            val items: List<ItemEntity> = items
-            var requiredQuantity = requiredQuantityArg
-            for (item in items) {
-                val itemName: ResourceLocation = XplatRegistries.ITEMS.getKey(item.item.item)
-                if (itemName.toString() == technicalName) {
-                    requiredQuantity -= suckItem(item, requiredQuantity)
-                }
-                if (requiredQuantity <= 0) break
-            }
-            MethodResult.of(true)
-        }
-    }
-
-    @LuaFunction(mainThread = true)
-    @Throws(LuaException::class)
-    fun collectItems(arguments: IArguments): MethodResult {
+    fun suck(arguments: IArguments): MethodResult {
         val requiredQuantityArg: Int = arguments.optInt(0, Int.MAX_VALUE)
+        val itemPredicate: Predicate<ItemStack> = PeripheralPluginUtils.itemQueryToPredicate(arguments.get(1))
         return automataCore.withOperation(
             SingleOperation.SUCK,
             IPeripheralFunction {
@@ -108,7 +86,9 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
                 }
                 var requiredQuantity = requiredQuantityArg
                 for (entity in items) {
-                    requiredQuantity -= suckItem(entity, requiredQuantity)
+                    if (itemPredicate.test(entity.item)) {
+                        requiredQuantity -= suckItem(entity, requiredQuantity)
+                    }
                     if (requiredQuantity <= 0) {
                         break
                     }

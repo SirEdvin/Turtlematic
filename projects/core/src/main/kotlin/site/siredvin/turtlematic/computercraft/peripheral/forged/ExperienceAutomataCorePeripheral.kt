@@ -8,6 +8,7 @@ import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.UnconditionalOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.turtlematic.computercraft.plugins.AutomataItemSuckPlugin
 
 abstract class ExperienceAutomataCorePeripheral(
     type: String,
@@ -22,5 +23,6 @@ abstract class ExperienceAutomataCorePeripheral(
 ) {
     init {
         peripheralOwner.attachAbility(EXPERIENCE, ExperienceAbility(peripheralOwner, tier.interactionRadius, TurtlematicConfig.xpToFuelRate, UnconditionalOperation.XP_TRANSFER))
+        addPlugin(AutomataItemSuckPlugin(this))
     }
 }

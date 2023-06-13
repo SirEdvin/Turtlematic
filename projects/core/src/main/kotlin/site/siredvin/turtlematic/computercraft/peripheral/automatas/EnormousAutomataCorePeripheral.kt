@@ -23,6 +23,7 @@ class EnormousAutomataCorePeripheral(
 ) {
     init {
         addPlugin(AutomataLookPlugin(this))
+        addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(
             AutomataInteractionPlugin(
                 this,

@@ -61,6 +61,7 @@ class HusbandryAutomataCorePeripheral(
                 suitableEntity = suitableEntity,
             ),
         )
+        addPlugin(AutomataItemSuckPlugin(this))
         peripheralOwner.attachAbility(
             PeripheralOwnerAbility.SCANNING,
             ScanningAbility(peripheralOwner, tier.interactionRadius).attachItemScan(
