@@ -15,10 +15,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
-import site.siredvin.peripheralium.api.storage.StorageUtils
 import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.storages.item.ItemStorageUtils
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
@@ -126,7 +126,7 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
             }
             if (!selectedStack.isEmpty) {
                 if (!dispensedResult.isEmpty) {
-                    StorageUtils.inplaceMerge(selectedStack, dispensedResult)
+                    ItemStorageUtils.inplaceMerge(selectedStack, dispensedResult)
                 }
                 turtleInventory.setItem(selectedSlot, selectedStack)
             } else {

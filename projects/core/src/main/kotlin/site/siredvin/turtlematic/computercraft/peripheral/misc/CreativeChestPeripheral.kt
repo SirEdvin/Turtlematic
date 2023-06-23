@@ -7,9 +7,9 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.TagParser
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
-import site.siredvin.peripheralium.api.storage.ContainerUtils
 import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
 import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.peripheralium.storages.ContainerUtils
 import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig

@@ -13,8 +13,8 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.api.storage.ExtractorProxy
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
 import site.siredvin.peripheralium.util.*
 import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.peripheralium.util.world.ScanUtils
@@ -73,7 +73,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                 if (blockState.`is`(BlockTags.ENCHANTMENT_POWER_PROVIDER)) {
                     enchantmentPower.value = enchantmentPower.value + 1
                 } else if (blockState.`is`(ComputerCraftTags.Blocks.TURTLE)) {
-                    val itemStorage = ExtractorProxy.extractStorage(level, blockPos, level.getBlockEntity(blockPos))
+                    val itemStorage = ItemStorageExtractor.extractStorage(level, blockPos, level.getBlockEntity(blockPos))
                     itemStorage?.getItems()?.forEach {
                         if (it.`is`(Items.ENCHANTED_BOOK)) {
                             enchantmentPower.value = enchantmentPower.value + 1

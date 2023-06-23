@@ -6,15 +6,15 @@ mixinGradle = "0.8.+"
 forgegradle = "6.+"
 # Core mod dependencies
 cc-tweaked = "1.105.0"
-peripheralium = "0.6.2"
+peripheralium = "0.6.3-3"
 mixin = "0.8.5"
 # Fabric dependencies
-fabric-api = "0.83.0+1.20"
+fabric-api = "0.83.1+1.20.1"
 fabric-loader = "0.14.21"
 fabric-kotlin = "1.9.4+kotlin.1.8.21"
 forgeconfigapirt-fabric = "7.0.0"
 # Forge dependencies
-forge = "46.0.1"
+forge = "47.0.19"
 forge-kotlin = "4.3.0"
 parchment = "2023.03.12"
 parchmentMc = "1.19.3"
@@ -23,17 +23,17 @@ cloth-config = "11.0.99"
 architectury = "9.0.8"
 
 # Dev mod dependenceis
-jei = "14.0.0.11"
+jei = "15.1.0.19"
 rei = "12.0.625"
 
 # Shared integration mod dependency
 
 [libraries]
 # Core mod dependencies
-cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20-common-api", version.ref = "cc-tweaked"}
-cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20-core", version.ref = "cc-tweaked"}
+cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
+cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "cc-tweaked"}
 common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt-fabric"}
-peripheralium-core = {module = "site.siredvin:peripheralium-common-1.20", version.ref = "peripheralium"}
+peripheralium-core = {module = "site.siredvin:peripheralium-common-1.20.1", version.ref = "peripheralium"}
 mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
 
 # Fabric mod dependencies
@@ -41,18 +41,18 @@ fabric-loader = {module = "net.fabricmc:fabric-loader", version.ref = "fabric-lo
 fabric-api = {module = "net.fabricmc.fabric-api:fabric-api", version.ref="fabric-api"}
 fabric-kotlin = {module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-kotlin"}
 fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt-fabric"}
-cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.20-fabric-api", version.ref = "cc-tweaked"}
-cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.20-fabric", version.ref = "cc-tweaked"}
-peripheralium-fabric = {module = "site.siredvin:peripheralium-fabric-1.20", version.ref = "peripheralium"}
+cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric-api", version.ref = "cc-tweaked"}
+cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric", version.ref = "cc-tweaked"}
+peripheralium-fabric = {module = "site.siredvin:peripheralium-fabric-1.20.1", version.ref = "peripheralium"}
 
 # Forge mod dependencies
-cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20-forge", version.ref="cc-tweaked"}
+cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="cc-tweaked"}
 forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
-peripheralium-forge = {module = "site.siredvin:peripheralium-forge-1.20", version.ref = "peripheralium"}
+peripheralium-forge = {module = "site.siredvin:peripheralium-forge-1.20.1", version.ref = "peripheralium"}
 
 # Dev mod dependencies
-jei-fabric = { module = "mezz.jei:jei-1.20-fabric", version.ref = "jei" }
-jei-forge = { module = "mezz.jei:jei-1.20-forge", version.ref = "jei" }
+jei-fabric = { module = "mezz.jei:jei-1.20.1-fabric", version.ref = "jei" }
+jei-forge = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei" }
 rei-fabric = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei"}
 
 # Extra mod dependency

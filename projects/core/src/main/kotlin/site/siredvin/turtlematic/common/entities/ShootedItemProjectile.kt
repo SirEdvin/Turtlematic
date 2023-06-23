@@ -12,9 +12,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
-import site.siredvin.peripheralium.api.storage.ExtractorProxy
-import site.siredvin.peripheralium.api.storage.StorageUtils
 import site.siredvin.peripheralium.ext.toBlockPos
+import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
+import site.siredvin.peripheralium.storages.item.ItemStorageUtils
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.setup.EntityTypes
 
@@ -47,10 +47,10 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
         if (!level().isClientSide) {
             TurtlematicCore.LOGGER.info("Hit block ${hit.blockPos}")
             val targetableStorage =
-                ExtractorProxy.extractTargetableStorage(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
+                ItemStorageExtractor.extractItemSink(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
             if (targetableStorage != null) {
                 this.kill()
-                StorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level())
+                ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level())
                 return
             }
         }
@@ -63,10 +63,10 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
 
     override fun onHitEntity(hit: EntityHitResult) {
         if (!level().isClientSide) {
-            val targetableStorage = ExtractorProxy.extractTargetableStorage(level(), hit.entity)
+            val targetableStorage = ItemStorageExtractor.extractItemSink(level(), hit.entity)
             if (targetableStorage != null) {
                 this.kill()
-                StorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level())
+                ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level())
                 return
             }
         }

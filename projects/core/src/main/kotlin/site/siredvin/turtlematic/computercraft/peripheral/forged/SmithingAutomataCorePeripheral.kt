@@ -21,8 +21,10 @@ import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.peripheralium.api.datatypes.TransformInteractionMode
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.api.storage.ContainerUtils
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.peripheralium.storages.ContainerUtils
+import site.siredvin.peripheralium.storages.FakeItemContainer
+import site.siredvin.peripheralium.storages.LimitedInventory
 import site.siredvin.peripheralium.util.*
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.turtlematic.api.IAutomataCoreTier

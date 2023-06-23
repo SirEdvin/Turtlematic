@@ -26,9 +26,9 @@ import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.peripheralium.api.datatypes.TransformInteractionMode
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.api.storage.ContainerUtils
-import site.siredvin.peripheralium.util.FakeItemContainer
-import site.siredvin.peripheralium.util.LimitedInventory
+import site.siredvin.peripheralium.storages.ContainerUtils
+import site.siredvin.peripheralium.storages.FakeItemContainer
+import site.siredvin.peripheralium.storages.LimitedInventory
 import site.siredvin.peripheralium.util.Pair
 import site.siredvin.peripheralium.util.representation.LuaInterpretation
 import site.siredvin.peripheralium.util.representation.stateProperties

@@ -17,9 +17,9 @@ import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.api.storage.ContainerUtils
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
 import site.siredvin.peripheralium.computercraft.peripheral.ability.ScanningAbility
+import site.siredvin.peripheralium.storages.ContainerUtils
 import site.siredvin.peripheralium.util.representation.animalData
 import site.siredvin.peripheralium.util.representation.beeNestAnalyze
 import site.siredvin.peripheralium.util.representation.cropAge
