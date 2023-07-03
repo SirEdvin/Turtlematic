@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.util
 
-import kotlinx.datetime.Clock
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -9,6 +8,7 @@ import net.minecraft.world.level.saveddata.SavedData
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import java.time.Instant
 import java.util.*
 
 class ChunkManager : SavedData() {
@@ -172,20 +172,20 @@ class ChunkManager : SavedData() {
     internal data class LoadChunkRecord(
         val dimensionName: String,
         val pos: ChunkPos,
-        var lastTouch: Long = Clock.System.now().toEpochMilliseconds(),
+        var lastTouch: Long = Instant.now().epochSecond,
     ) {
         val valid: Boolean
             get() {
-                val currentEpoch: Long = Clock.System.now().toEpochMilliseconds()
+                val currentEpoch: Long = Instant.now().epochSecond
                 return lastTouch + TurtlematicConfig.chunkLoadedTimeLimit >= currentEpoch
             }
 
         fun touch() {
-            lastTouch = Clock.System.now().toEpochMilliseconds()
+            lastTouch = Instant.now().epochSecond
         }
 
         fun invalidate() {
-            lastTouch = Clock.System.now().toEpochMilliseconds() - TurtlematicConfig.chunkLoadedTimeLimit / 2
+            lastTouch = Instant.now().epochSecond - TurtlematicConfig.chunkLoadedTimeLimit / 2
         }
 
         fun serialize(): CompoundTag {
