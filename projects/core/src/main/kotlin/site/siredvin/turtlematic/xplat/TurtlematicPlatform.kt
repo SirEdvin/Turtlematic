@@ -15,7 +15,7 @@ import java.util.function.BiFunction
 import java.util.function.Consumer
 import java.util.function.Supplier
 
-interface TurtlematicPlatform: ModInformationHolder {
+interface TurtlematicPlatform : ModInformationHolder {
     companion object {
         private var _IMPL: TurtlematicPlatform? = null
         private val ITEMS: MutableList<Supplier<Item>> = mutableListOf()

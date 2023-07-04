@@ -65,11 +65,13 @@ val enchantingTooltip = Function<PeripheralItem, List<Component>> { item ->
 }
 
 val husbandryTooltip = Function<PeripheralItem, List<Component>> { item ->
-    if (item !is BaseAutomataCore)
+    if (item !is BaseAutomataCore) {
         return@Function emptyList()
+    }
     val tooltipList = mutableListOf<Component>()
-    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
         tooltipList.add(ModTooltip.CAN_DISABLE_ANIMAL_AI.text)
+    }
     if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled) {
         // So, this condition is a little strange, but main idea here is core tier has both traits
         // if it has MASTERPIECE, so we need this trick
@@ -99,7 +101,8 @@ val protectiveTooltip = Function<PeripheralItem, List<Component>> { item ->
         return@Function emptyList()
     }
     val tooltipList = mutableListOf<Component>()
-    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE))
+    if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
         tooltipList.add(ModTooltip.CAN_DISABLE_HOSTILE_AI.text)
+    }
     return@Function tooltipList
 }

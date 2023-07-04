@@ -19,13 +19,18 @@ object ModItemModelProvider {
     val FIRE = ResourceLocation(TurtlematicCore.MOD_ID, "item/fire/")
     val BIG_FIRE = ResourceLocation(TurtlematicCore.MOD_ID, "item/big_fire/")
 
-
     fun createAutomataCore(
-        generators: ItemModelGenerators, item: Item, gear: ResourceLocation,
-        fire: String, fireTemplate: ResourceLocation = FIRE) {
+        generators: ItemModelGenerators,
+        item: Item,
+        gear: ResourceLocation,
+        fire: String,
+        fireTemplate: ResourceLocation = FIRE,
+    ) {
         createFlatItem(
-            generators, item, gear,
-            fireTemplate.withSuffix(fire)
+            generators,
+            item,
+            gear,
+            fireTemplate.withSuffix(fire),
         )
     }
 
@@ -82,9 +87,8 @@ object ModItemModelProvider {
             createFlatItem(
                 generators,
                 ModelLocationUtils.getModelLocation(Items.SOUL_VIAL.get()).withSuffix("_$i"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/phase$i")
+                ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/phase$i"),
             )
         }
     }
-
 }

@@ -3,7 +3,7 @@ package site.siredvin.turtlematic.data
 import site.siredvin.peripheralium.data.language.TextRecord
 import site.siredvin.turtlematic.TurtlematicCore
 
-enum class ModTooltip: TextRecord{
+enum class ModTooltip : TextRecord {
     ITEM_DISABLED,
     CONSUMED_ENTITIES,
     CONSUMED_ENTITIES_RECORD,
@@ -28,7 +28,7 @@ enum class ModTooltip: TextRecord{
     CAN_DISABLE_HOSTILE_AI,
     HAS_TRADE_ABILITIES,
     CAN_RESTORE_TRADES,
-    SOUL_VIAL_PROGRESS
+    SOUL_VIAL_PROGRESS,
     ;
 
     override val textID: String by lazy {

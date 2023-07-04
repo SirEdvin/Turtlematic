@@ -28,7 +28,6 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
 
         add(Items.FORGED_AUTOMATA_CORE.get(), "Forged automata core", "§5It seems too empty for use it now. Feed it with villager soul first")
 
-
         add(Items.BREWING_AUTOMATA_CORE.get(), "Brewing automata core")
         add(Items.SMITHING_AUTOMATA_CORE.get(), "Smithing automata core")
         add(Items.ENCHANTING_AUTOMATA_CORE.get(), "Enchanting automata core")
