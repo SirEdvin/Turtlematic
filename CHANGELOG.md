@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2023-07-09
+
+### Changed
+
+- Adapt to CC:T 1.106 and introduce a lot of persistency into turtles
+
 ## [0.7.4] - 2023-07-03
 
 ### Changed

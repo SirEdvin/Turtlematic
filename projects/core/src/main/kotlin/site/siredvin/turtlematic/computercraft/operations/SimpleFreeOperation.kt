@@ -17,9 +17,6 @@ enum class SimpleFreeOperation(private val defaultCooldown: Int) : IPeripheralOp
         )
     }
 
-    override val initialCooldown: Int
-        get() = cooldown!!.get()
-
     override fun getCooldown(context: Any): Int {
         return cooldown!!.get()
     }

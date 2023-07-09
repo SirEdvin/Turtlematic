@@ -1,5 +1,6 @@
 package site.siredvin.turtlematic.xplat
 
+import dan200.computercraft.api.upgrades.UpgradeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.CreativeModeTab
@@ -33,7 +34,7 @@ object TurtlematicCommonHooks {
         TurtlematicPlatform.holder.turtleSerializers.forEach {
             val upgrade = PeripheraliumPlatform.getTurtleUpgrade(XplatRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toString())
             if (upgrade != null) {
-                PeripheraliumPlatform.createTurtlesWithUpgrade(upgrade).forEach(output::accept)
+                PeripheraliumPlatform.createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade)).forEach(output::accept)
             }
         }
     }

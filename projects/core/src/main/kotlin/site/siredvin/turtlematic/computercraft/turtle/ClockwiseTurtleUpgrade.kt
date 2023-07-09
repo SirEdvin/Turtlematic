@@ -5,13 +5,13 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
-import site.siredvin.peripheralium.computercraft.turtle.PeripheralTurtleUpgrade
+import site.siredvin.peripheralium.computercraft.turtle.StatefulPeripheralTurtleUpgrade
 import site.siredvin.turtlematic.api.AutomataPeripheralBuildFunction
 import site.siredvin.turtlematic.api.AutomataTickerFunction
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.util.DataStorageObjects
 
-abstract class ClockwiseTurtleUpgrade<T : IOwnedPeripheral<*>> : PeripheralTurtleUpgrade<T> {
+abstract class ClockwiseTurtleUpgrade<T : IOwnedPeripheral<*>> : StatefulPeripheralTurtleUpgrade<T> {
     constructor(id: ResourceLocation, adjective: String, item: ItemStack) : super(id, adjective, item)
     constructor(id: ResourceLocation, item: ItemStack) : super(id, item)
 

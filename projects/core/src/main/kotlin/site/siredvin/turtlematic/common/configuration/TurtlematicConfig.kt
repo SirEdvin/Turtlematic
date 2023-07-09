@@ -7,10 +7,6 @@ import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.computercraft.operations.*
 
 object TurtlematicConfig : IOperationAbilityConfig {
-    override val isInitialCooldownEnabled: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.IS_INITIAL_COOLDOWN_ENABLED.get()
-    override val initialCooldownSensetiveLevel: Int
-        get() = ConfigHolder.COMMON_CONFIG.INITIAL_COOLDOWN_SENSENTIVE_LEVEL.get()
     override val cooldownTresholdLevel: Int
         get() = ConfigHolder.COMMON_CONFIG.COOLDOWN_TRESHOLD_LEVEL.get()
     val xpToFuelRate: Int
@@ -102,8 +98,6 @@ object TurtlematicConfig : IOperationAbilityConfig {
 
     class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
         // Generic configuration
-        var IS_INITIAL_COOLDOWN_ENABLED: ForgeConfigSpec.BooleanValue
-        var INITIAL_COOLDOWN_SENSENTIVE_LEVEL: ForgeConfigSpec.IntValue
         var COOLDOWN_TRESHOLD_LEVEL: ForgeConfigSpec.IntValue
         var XP_TO_FUEL_RATE: ForgeConfigSpec.IntValue
 
@@ -144,10 +138,6 @@ object TurtlematicConfig : IOperationAbilityConfig {
 
         init {
             builder.push("base")
-            IS_INITIAL_COOLDOWN_ENABLED = builder.comment("Enables initial cooldown on peripheral initialization")
-                .define("isInitialCooldownEnabled", true)
-            INITIAL_COOLDOWN_SENSENTIVE_LEVEL = builder.comment("Determinates initial cooldown sensentive level, values lower then this value will not trigger initial cooldown")
-                .defineInRange("initialCooldownSensetiveLevel", 6000, 0, Int.MAX_VALUE)
             COOLDOWN_TRESHOLD_LEVEL = builder.comment("Determinates trashold for cooldown to be stored")
                 .defineInRange("cooldownTreshholdLevel", 100, 0, Int.MAX_VALUE)
             XP_TO_FUEL_RATE = builder.comment("Determinate amount xp to correspond one fuel point").defineInRange("xpToFuelRate", 10, 1, Int.MAX_VALUE)

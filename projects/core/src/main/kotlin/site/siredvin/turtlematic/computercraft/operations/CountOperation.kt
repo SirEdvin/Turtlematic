@@ -26,9 +26,6 @@ enum class CountOperation(
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
 
-    override val initialCooldown: Int
-        get() = cooldown!!.get() * 64
-
     override fun getCooldown(context: Int): Int {
         return cooldown!!.get() * countCooldownPolicy.getFactor(context)
     }

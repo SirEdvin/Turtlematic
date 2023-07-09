@@ -26,9 +26,6 @@ enum class PowerOperation(
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
 
-    override val initialCooldown: Int
-        get() = cooldown!!.get() * 3
-
     override fun getCooldown(context: PowerOperationContext): Int {
         return cooldown!!.get()
     }

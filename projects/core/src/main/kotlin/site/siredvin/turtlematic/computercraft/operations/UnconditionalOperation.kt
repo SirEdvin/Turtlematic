@@ -13,9 +13,6 @@ enum class UnconditionalOperation(
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
 
-    override val initialCooldown: Int
-        get() = cooldown!!.get()
-
     override fun getCooldown(context: Any?): Int {
         return cooldown!!.get()
     }

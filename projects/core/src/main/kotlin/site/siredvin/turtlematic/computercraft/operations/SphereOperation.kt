@@ -47,9 +47,6 @@ enum class SphereOperation(
         )
     }
 
-    override val initialCooldown: Int
-        get() = cooldown!!.get()
-
     override fun getCooldown(context: SphereOperationContext): Int {
         return cooldown!!.get()
     }

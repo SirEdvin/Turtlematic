@@ -66,9 +66,6 @@ enum class SingleOperation(
     ) {
     }
 
-    override val initialCooldown: Int
-        get() = cooldown!!.get() * countCooldownPolicy.getFactor(5) * distanceCooldownPolicy.getFactor(2)
-
     override fun getCooldown(context: SingleOperationContext): Int {
         return cooldown!!.get() * countCooldownPolicy.getFactor(context.count) * distanceCooldownPolicy.getFactor(
             context.distance,
