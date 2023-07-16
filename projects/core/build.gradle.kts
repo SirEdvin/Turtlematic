@@ -15,6 +15,7 @@ baseShaking {
 
 vanillaShaking {
     accessWideners.add("src/main/resources/turtlematic-common.accesswidener")
+    accessWideners.add("src/main/resources/turtlematic.accesswidener")
     shake()
 }
 

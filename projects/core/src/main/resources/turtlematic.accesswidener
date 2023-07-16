@@ -1,0 +1,3 @@
+accessWidener v1 named
+
+accessible field net/minecraft/client/renderer/block/BlockRenderDispatcher blockEntityRenderer Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;

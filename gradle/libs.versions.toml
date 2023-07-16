@@ -6,7 +6,7 @@ mixinGradle = "0.8.+"
 forgegradle = "6.+"
 # Core mod dependencies
 cc-tweaked = "1.106.1"
-peripheralium = "0.6.4"
+peripheralium = "0.6.5-1"
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.83.1+1.20.1"
@@ -30,7 +30,8 @@ rei = "12.0.625"
 
 [libraries]
 # Core mod dependencies
-cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
+cc-tweaked-common = {module = "cc.tweaked:common", version.ref = "cc-tweaked"}
+cc-tweaked-common-api = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
 cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "cc-tweaked"}
 common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt-fabric"}
 peripheralium-core = {module = "site.siredvin:peripheralium-common-1.20.1", version.ref = "peripheralium"}
@@ -68,7 +69,7 @@ loom = {id = "fabric-loom", version.ref = "loom"}
 mixinGradle = { id = "org.spongepowered.mixin", version.ref = "mixinGradle" }
 
 [bundles]
-cccommon = ["cc-tweaked-common", "cc-tweaked-core", "peripheralium-core"]
+cccommon = ["cc-tweaked-common", "cc-tweaked-common-api", "cc-tweaked-core", "peripheralium-core"]
 apicommon = ["common-config"]
 ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core", "peripheralium-fabric"]
 fabric-core = ["fabric-loader"]

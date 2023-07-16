@@ -10,8 +10,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import site.siredvin.peripheralium.client.FacingBlockTurtleModeller
-import site.siredvin.turtlematic.client.AngleItemTurtleModeller
-import site.siredvin.turtlematic.client.ClockwiseTurtleModeller
+import site.siredvin.turtlematic.client.*
 import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
 import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
@@ -62,6 +61,22 @@ object TurtlematicCoreClient {
                 ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.UPGRADE_ID.path}_right"),
             ),
         )
+
+        TurtleRenderTrickRegistry.registerTrick(
+            TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
+            ChattingTurtleRenderTrick,
+        )
+
+        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+            TurtleUpgradeSerializers.MIMIC.get(),
+            TurtleUpgradeModeller.flatItem(),
+        )
+
+        TurtleRenderTrickRegistry.registerTrick(
+            TurtleUpgradeSerializers.MIMIC.get(),
+            MimicTurtleRenderTrick,
+        )
+
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.CREATIVE_CHEST.get(),
             TurtleUpgradeModeller.sided(

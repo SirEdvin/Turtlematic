@@ -50,6 +50,7 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         add(Items.FILLED_SOUL_VIAL.get(), "Filled soul vial", "§5You can hear strange noises from this vial ...")
         add(Items.SOUL_SCRAPPER.get(), "Soul scrapper", "§5Mysterious device, that somehow allow turtle to imprison souls into specific automata cores")
         add(Items.TURTLE_CHATTER.get(), "Turtle chatter", "§7Strange device that allows turtle to create crude chat bubbles")
+        add(Items.MIMIC_TOOL.get(), "Mimic tool", "§7Allows turtle to mimic nearly any block in the game")
         add(Items.CREATIVE_CHEST.get(), "Creative chest", "§7Creative item, that allows turtle to generate items")
         add(Items.CHUNK_VIAL.get(), "Chunk vial", "§7With this vial, turtle will always load its chunk")
 
@@ -129,5 +130,6 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         addTurtle(LavaBucketPeripheral.UPGRADE_ID, "Trashing")
         addTurtle(ChunkVialPeripheral.UPGRADE_ID, "Loading")
         addTurtle(BowPeripheral.UPGRADE_ID, "Shooting")
+        addTurtle(MimicPeripheral.UPGRADE_ID, "Mimic")
     }
 }

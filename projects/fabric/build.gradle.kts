@@ -17,7 +17,7 @@ baseShaking {
 
 fabricShaking {
     commonProjectName.set("core")
-    accessWidener.set(file("src/main/resources/turtlematic.accesswidener"))
+    accessWidener.set(project(":core").file("src/main/resources/turtlematic.accesswidener"))
     createRefmap.set(true)
     extraVersionMappings.set(
         mapOf(

@@ -126,6 +126,16 @@ object Items {
             isDisabled,
         )
     }
+
+    val MIMIC_TOOL = TurtlematicPlatform.registerItem("mimic_tool") {
+        PeripheralItem(
+            Item.Properties(),
+            { true }, // TODO: fix here also,
+            alwaysShow = true,
+            isDisabled,
+        )
+    }
+
     val CREATIVE_CHEST = TurtlematicPlatform.registerItem("creative_chest") {
         PeripheralItem(
             Item.Properties(),

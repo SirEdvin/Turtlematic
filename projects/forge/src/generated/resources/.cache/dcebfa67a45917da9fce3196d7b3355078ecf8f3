@@ -1,4 +1,4 @@
-// 1.20	2023-06-12T21:21:22.095349249	vanilla/Tags for minecraft:entity_type mod id turtlematic
+// 1.20.1	2023-07-16T12:40:48.525024433	vanilla/Tags for minecraft:entity_type mod id turtlematic
 669025814936e708d42d9d0a5b88c11e62cf12ef data/turtlematic/tags/entity_types/ai_control_blacklist.json
 f7cc9e720867f2fea58d5b0840bdce7a253ca3fe data/turtlematic/tags/entity_types/animal.json
 669025814936e708d42d9d0a5b88c11e62cf12ef data/turtlematic/tags/entity_types/capture_blacklist.json

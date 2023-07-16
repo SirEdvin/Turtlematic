@@ -24,6 +24,13 @@ object TurtleUpgradeSerializers {
         },
     )
 
+    val MIMIC = TurtlematicPlatform.registerTurtleUpgrade(
+        MimicPeripheral.UPGRADE_ID,
+        TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
+            PeripheralTurtleUpgrade.dynamic(stack.item, ::MimicPeripheral) { upgradeID }
+        },
+    )
+
     val CREATIVE_CHEST = TurtlematicPlatform.registerTurtleUpgrade(
         CreativeChestPeripheral.UPGRADE_ID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->

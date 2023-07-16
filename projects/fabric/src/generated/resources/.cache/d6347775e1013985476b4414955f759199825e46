@@ -1,6 +1,7 @@
-// 1.20	2023-06-13T12:19:17.095508995	Turtlematic/Turtle Upgrades
+// 1.20.1	2023-07-16T12:40:39.378192229	Turtlematic/Turtle Upgrades
 9b2ddb951d234857533a8b1bf8ccbe53eb73ef24 data/turtlematic/computercraft/turtle_upgrades/creative_mason_automata.json
 8fff04acaa49950df15fecf1772c2feb9ed4252b data/turtlematic/computercraft/turtle_upgrades/netherite_husbandry_automata.json
+d209d11e91a798d34d782b6eb8408ccaf6809cd1 data/turtlematic/computercraft/turtle_upgrades/mimic.json
 dc6c3ae644b1aa45dc75db2f09d32bd3ce770dcc data/turtlematic/computercraft/turtle_upgrades/creative_husbandry_automata.json
 145f673041d392a42706969711a1b92e2fa4fe43 data/turtlematic/computercraft/turtle_upgrades/starbound_mason_automata.json
 4844cfbb85ea8d959323e9daf65fda5ee3f4ad2a data/turtlematic/computercraft/turtle_upgrades/smithing_automata.json
