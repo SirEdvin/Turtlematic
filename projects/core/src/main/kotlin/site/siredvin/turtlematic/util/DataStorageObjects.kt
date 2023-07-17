@@ -195,6 +195,21 @@ object DataStorageObjects {
         }
     }
 
+    object RMLInstructions : AbstractDataObject<String>() {
+        override val nbtTag: String
+            get() = "rml"
+
+        override fun read(data: CompoundTag): String? {
+            if (!data.contains(nbtTag)) return null
+            return data.getString(nbtTag)
+        }
+
+        override fun write(data: CompoundTag, value: String): Boolean {
+            data.putString(nbtTag, value)
+            return true
+        }
+    }
+
     object Angle : AbstractNotNullDataObject<Double>() {
         override val nbtTag: String
             get() = "angle"

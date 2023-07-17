@@ -3,7 +3,6 @@ package site.siredvin.turtlematic.client
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.math.Axis
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
@@ -53,9 +52,12 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
         val state = DataStorageObjects.Mimic[upgradeData] ?: return RenderTrickOpcode.NOOP
         transform.pushPose()
         val minecraft = Minecraft.getInstance()
-//        transform.translate(0f, 0.5f, 0f)
-        transform.rotateAround(Axis.YP.rotationDegrees(45f), 0.5f, 0f, 0.5f)
-        transform.rotateAround(Axis.XP.rotationDegrees(90f), 0f, 0.5f, 0.5f)
+        val rmlInstructions = DataStorageObjects.RMLInstructions[upgradeData]
+        if (rmlInstructions != null) {
+            RenderUtil.parseRML(rmlInstructions).forEach {
+                it.process(transform)
+            }
+        }
         when (state.renderShape) {
             RenderShape.MODEL -> minecraft.blockRenderer.modelRenderer.renderModel(
                 transform.last(), buffers.getBuffer(RenderType.translucent()), state,
