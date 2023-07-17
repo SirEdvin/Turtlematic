@@ -8,10 +8,11 @@ import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.FormattedText
 import net.minecraft.util.FormattedCharSequence
 import net.minecraft.world.phys.Vec3
-import site.siredvin.turtlematic.util.DataStorageObjects.TurtleChat.getMessage
+import site.siredvin.turtlematic.util.DataStorageObjects
 
 object ChattingTurtleRenderTrick : TurtleRenderTrick {
     // This strange constants are mostly for nice rendering limitations
@@ -23,15 +24,16 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
         turtle: TurtleBlockEntity,
         access: ITurtleAccess,
         side: TurtleSide,
+        upgradeData: CompoundTag,
         partialTicks: Float,
         transform: PoseStack,
         buffers: MultiBufferSource,
         lightmapCoord: Int,
         overlayLight: Int,
-    ) {
-        val text = getMessage(access, side)
+    ): RenderTrickOpcode {
+        val text = DataStorageObjects.TurtleChat[upgradeData]
 
-        if (text.isNullOrBlank()) return
+        if (text.isNullOrBlank()) return RenderTrickOpcode.NOOP
 
         val font = Minecraft.getInstance().font
         val textLines: MutableList<FormattedCharSequence> = ArrayList()
@@ -71,5 +73,6 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
             bufferSource.endBatch()
         }
         transform.popPose()
+        return RenderTrickOpcode.NOOP
     }
 }

@@ -77,7 +77,7 @@ class AutomataCapturePlugin(
                 if (entity is Player || !entity.isAlive) {
                     return@IPeripheralFunction MethodResult.of(null, "Unsuitable entity")
                 }
-                if (entity.type.`is`(EntityTags.CAPTURE_BLACKLIST)) {
+                if (entity.type.`is`(EntityTags.CAPTURE_BLOCKLIST)) {
                     return@IPeripheralFunction MethodResult.of(null, "Entity in blacklist")
                 }
                 val nbt = CompoundTag()
@@ -116,7 +116,7 @@ class AutomataCapturePlugin(
                 if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it.fakePlayer) })) {
                     return@withOperation MethodResult.of(null, "Block is protected")
                 }
-                if (state.`is`(BlockTags.CAPTURE_BLACKLIST)) {
+                if (state.`is`(BlockTags.CAPTURE_BLOCKLIST)) {
                     return@withOperation MethodResult.of(null, "Block is in blacklist")
                 }
                 val serializedData = CompoundTag()

@@ -21,16 +21,16 @@ class TurtleChatterPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
 
     @LuaFunction(mainThread = true)
     fun getMessage(): String? {
-        return DataStorageObjects.TurtleChat.getMessage(peripheralOwner)
+        return DataStorageObjects.TurtleChat[peripheralOwner]
     }
 
     @LuaFunction(mainThread = true)
     fun setMessage(text: String) {
-        DataStorageObjects.TurtleChat.setMessage(peripheralOwner, text)
+        DataStorageObjects.TurtleChat[peripheralOwner] = text
     }
 
     @LuaFunction(mainThread = true)
     fun clearMessage() {
-        DataStorageObjects.TurtleChat.setMessage(peripheralOwner, null)
+        DataStorageObjects.TurtleChat[peripheralOwner] = null
     }
 }

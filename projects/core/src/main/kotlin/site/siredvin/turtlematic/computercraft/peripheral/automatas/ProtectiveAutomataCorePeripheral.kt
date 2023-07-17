@@ -48,7 +48,7 @@ class ProtectiveAutomataCorePeripheral(
         )
         addPlugin(AutomataCapturePlugin(this, allowedMods = setOf(InteractionMode.ENTITY), suitableEntity))
         if (tier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
-            addPlugin(AutomataAIPlugin(this, suitableEntity.and { !it.type.`is`(EntityTags.AI_CONTROL_BLACKLIST) }))
+            addPlugin(AutomataAIPlugin(this, suitableEntity.and { !it.type.`is`(EntityTags.AI_CONTROL_BLOCKLIST) }))
         }
     }
 
