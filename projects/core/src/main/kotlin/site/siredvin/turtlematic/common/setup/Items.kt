@@ -19,95 +19,95 @@ object Items {
 
     val HUSBANDRY_AUTOMATA_CORE =
         TurtlematicPlatform.registerItem("husbandry_automata_core") {
-            RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableHusbandryAutomataCore)
+            RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableHusbandryAutomataCore, coreHook = capturedTooltip)
         }
 
     val END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("end_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableEndAutomataCore)
+        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableEndAutomataCore, coreHook = capturedTooltip)
     }
     val PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("protective_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableProtectiveAutomataCore, protectiveTooltip)
+        RecipeAutomataCore(AutomataCoreTier.TIER2, TurtlematicConfig::enableProtectiveAutomataCore, protectiveTooltip, coreHook = capturedTooltip)
     }
     val NETHERITE_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_husbandry_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip, coreHook = capturedTooltip)
     }
     val NETHERITE_END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_end_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip, coreHook = capturedTooltip)
     }
     val NETHERITE_PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("netherite_protective_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip, coreHook = capturedTooltip)
     }
     val STARBOUND_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_husbandry_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip, coreHook = capturedTooltip)
     }
     val STARBOUND_END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_end_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip, coreHook = capturedTooltip)
     }
     val STARBOUND_PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_protective_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip, coreHook = capturedTooltip)
     }
     val CREATIVE_HUSBANDRY_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_husbandry_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableHusbandryAutomataCore, itemUsageTooltip, husbandryTooltip, coreHook = capturedTooltip)
     }
     val CREATIVE_END_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_end_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEndAutomataCore, itemUsageTooltip, coreHook = capturedTooltip)
     }
     val CREATIVE_PROTECTIVE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_protective_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableProtectiveAutomataCore, itemUsageTooltip, protectiveTooltip, coreHook = capturedTooltip)
     }
     val ENORMOUS_AUTOMATA_CORE = TurtlematicPlatform.registerItem("enormous_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEnormousAutomata, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEnormousAutomata, itemUsageTooltip, coreHook = capturedTooltip)
     }
 
     // Forged automata cores
 
     val FORGED_AUTOMATA_CORE = TurtlematicPlatform.registerItem("forged_automata_core") { ForgedAutomataCore() }
     val BREWING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("brewing_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip)
+        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip, coreHook = xpTooltip)
     }
     val SMITHING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("smithing_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableSmithingAutomataCore)
+        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableSmithingAutomataCore, coreHook = xpTooltip)
     }
     val ENCHANTING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("enchanting_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableEnchantingAutomataCore, enchantingTooltip)
+        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableEnchantingAutomataCore, enchantingTooltip, coreHook = xpTooltip)
     }
     val MASON_AUTOMATA_CORE = TurtlematicPlatform.registerItem("mason_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableMasonAutomataCore)
+        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableMasonAutomataCore, coreHook = xpTooltip)
     }
     val MERCANTILE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("mercantile_automata_core") {
-        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableMercantileAutomataCore, tradingTooltip)
+        RecipeAutomataCore(AutomataCoreTier.TIER3, TurtlematicConfig::enableMercantileAutomataCore, tradingTooltip, coreHook = xpTooltip)
     }
 
     val STARBOUND_BREWING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_brewing_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip, coreHook = xpTooltip)
     }
     val STARBOUND_SMITHING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_smithing_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableSmithingAutomataCore)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableSmithingAutomataCore, coreHook = xpTooltip)
     }
     val STARBOUND_ENCHANTING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_enchanting_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableEnchantingAutomataCore, enchantingTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableEnchantingAutomataCore, enchantingTooltip, coreHook = xpTooltip)
     }
     val STARBOUND_MASON_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_mason_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableMasonAutomataCore)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableMasonAutomataCore, coreHook = xpTooltip)
     }
     val STARBOUND_MERCANTILE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("starbound_mercantile_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableMercantileAutomataCore, tradingTooltip)
+        BaseAutomataCore(AutomataCoreTier.TIER4, TurtlematicConfig::enableMercantileAutomataCore, tradingTooltip, coreHook = xpTooltip)
     }
 
     val CREATIVE_BREWING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_brewing_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableBrewingAutomataCore, itemUsageTooltip, coreHook = xpTooltip)
     }
     val CREATIVE_SMITHING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_smithing_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableSmithingAutomataCore)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableSmithingAutomataCore, coreHook = xpTooltip)
     }
     val CREATIVE_ENCHANTING_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_enchanting_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEnchantingAutomataCore, enchantingTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableEnchantingAutomataCore, enchantingTooltip, coreHook = xpTooltip)
     }
     val CREATIVE_MASON_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_mason_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableMasonAutomataCore)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableMasonAutomataCore, coreHook = xpTooltip)
     }
     val CREATIVE_MERCANTILE_AUTOMATA_CORE = TurtlematicPlatform.registerItem("creative_mercantile_automata_core") {
-        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableMercantileAutomataCore, tradingTooltip)
+        BaseAutomataCore(AutomataCoreTier.CREATIVE, TurtlematicConfig::enableMercantileAutomataCore, tradingTooltip, coreHook = xpTooltip)
     }
 
     // Progression items

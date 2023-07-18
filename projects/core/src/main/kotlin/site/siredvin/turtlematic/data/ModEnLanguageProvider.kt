@@ -82,6 +82,9 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         add(ModTooltip.CAN_DISABLE_HOSTILE_AI, "  §6§nCan disable hostile mobs AI")
         add(ModTooltip.HAS_TRADE_ABILITIES, "  §6§nCan see and perform merchant trades")
         add(ModTooltip.CAN_RESTORE_TRADES, "  §6§nCan restock villager trades")
+        add(ModTooltip.CAPTURED_BLOCK, "§oStored block: %s")
+        add(ModTooltip.CAPTURED_ENTITY, "§oStored entity: %s")
+        add(ModTooltip.AMOUNT_OF_XP, "§oStored xp: %s")
 
         add(ModTooltip.SOUL_VIAL_PROGRESS, "§5Already %s from %s souls stored")
 

@@ -11,6 +11,7 @@ import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.data.ModTooltip
+import java.util.function.BiFunction
 import java.util.function.Function
 import java.util.function.Supplier
 
@@ -19,12 +20,14 @@ class RecipeAutomataCore(
     p: Properties,
     enableSup: Supplier<Boolean>,
     vararg tooltipHook: Function<PeripheralItem, List<Component>>,
-) : BaseAutomataCore(coreTier, p, enableSup, *tooltipHook) {
-    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<PeripheralItem, List<Component>>) : this(
+    coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null,
+) : BaseAutomataCore(coreTier, p, enableSup, *tooltipHook, coreHook = coreHook) {
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<PeripheralItem, List<Component>>, coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null) : this(
         coreTier,
         Properties().stacksTo(1),
         enableSup,
         *tooltipHook,
+        coreHook = coreHook,
     )
 
     override fun appendHoverText(

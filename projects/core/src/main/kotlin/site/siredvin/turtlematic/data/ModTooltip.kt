@@ -29,6 +29,9 @@ enum class ModTooltip : TextRecord {
     HAS_TRADE_ABILITIES,
     CAN_RESTORE_TRADES,
     SOUL_VIAL_PROGRESS,
+    CAPTURED_BLOCK,
+    CAPTURED_ENTITY,
+    AMOUNT_OF_XP,
     ;
 
     override val textID: String by lazy {

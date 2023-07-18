@@ -1,11 +1,18 @@
 package site.siredvin.turtlematic.util
 
 import net.minecraft.network.chat.Component
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+import site.siredvin.peripheralium.api.datatypes.InteractionMode
 import site.siredvin.peripheralium.common.items.PeripheralItem
+import site.siredvin.peripheralium.computercraft.peripheral.ability.ExperienceAbility
+import site.siredvin.peripheralium.computercraft.turtle.StatefulTurtleUpgrade
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
+import site.siredvin.turtlematic.computercraft.plugins.AutomataCapturePlugin
 import site.siredvin.turtlematic.data.ModTooltip
+import java.util.function.BiFunction
 import java.util.function.Function
 
 val isDisabled = Function<PeripheralItem, List<Component>> { item ->
@@ -105,4 +112,29 @@ val protectiveTooltip = Function<PeripheralItem, List<Component>> { item ->
         tooltipList.add(ModTooltip.CAN_DISABLE_HOSTILE_AI.text)
     }
     return@Function tooltipList
+}
+
+val capturedTooltip = BiFunction<ItemStack, Level?, List<Component>> { it, level ->
+    if (it.item !is BaseAutomataCore) return@BiFunction emptyList()
+    val dataStorage = it.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
+    val capturedType = AutomataCapturePlugin.getStoredType(dataStorage) ?: return@BiFunction emptyList()
+    return@BiFunction when (capturedType) {
+        InteractionMode.BLOCK -> listOf(ModTooltip.CAPTURED_BLOCK.format(AutomataCapturePlugin.extractBlock(dataStorage)!!.first.block.name.string))
+        InteractionMode.ENTITY -> {
+            if (level != null) {
+                listOf(ModTooltip.CAPTURED_ENTITY.format(AutomataCapturePlugin.extractEntity(dataStorage, level)!!.name.string))
+            } else {
+                emptyList()
+            }
+        }
+        else -> emptyList()
+    }
+}
+
+val xpTooltip = BiFunction<ItemStack, Level?, List<Component>> { stack, _ ->
+    if (stack.item !is BaseAutomataCore) return@BiFunction emptyList()
+    val dataStorage = stack.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
+    val storedXP = ExperienceAbility.getStoredXP(dataStorage)
+    if (storedXP < 1) return@BiFunction emptyList()
+    return@BiFunction listOf(ModTooltip.AMOUNT_OF_XP.format(storedXP))
 }

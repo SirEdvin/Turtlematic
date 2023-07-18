@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -33,11 +34,55 @@ class AutomataCapturePlugin(
     private val allowedMods: Set<InteractionMode>,
     private val suitableEntity: Predicate<Entity> = Predicate { false },
 ) : AutomataCorePlugin(automataCore) {
+
+    companion object {
+        private const val STORED_OBJECT_NBT_KEY = "storedObject"
+        private const val STORED_OBJECT_TYPE_NBT_KEY = "storedObjectType"
+
+        fun isSomethingPresent(dataStorage: CompoundTag): Boolean {
+            return !dataStorage.getCompound(STORED_OBJECT_NBT_KEY).isEmpty
+        }
+
+        fun getStoredType(dataStorage: CompoundTag): InteractionMode? {
+            return InteractionMode.optValueOf(dataStorage.getString(STORED_OBJECT_TYPE_NBT_KEY))
+        }
+
+        fun getStoredData(dataStorage: CompoundTag): CompoundTag {
+            return dataStorage.getCompound(STORED_OBJECT_NBT_KEY)
+        }
+
+        fun extractEntity(dataStorage: CompoundTag, level: Level): Entity? {
+            if (getStoredType(dataStorage) != InteractionMode.ENTITY) {
+                return null
+            }
+            val data = getStoredData(dataStorage)
+            val type: EntityType<*>? = EntityType.byString(data.getString("entity")).orElse(null)
+            if (type != null) {
+                val entity: Entity = type.create(level) ?: return null
+                entity.load(data)
+                return entity
+            }
+            return null
+        }
+
+        fun extractBlock(dataStorage: CompoundTag): Pair<BlockState, CompoundTag>? {
+            if (getStoredType(dataStorage) != InteractionMode.BLOCK) {
+                return null
+            }
+            val data: CompoundTag = getStoredData(dataStorage)
+            val blockState = NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound("state"))
+            if (blockState.isAir) {
+                return null
+            }
+            return Pair(blockState, data.getCompound("nbt"))
+        }
+    }
+
     override val operations: List<IPeripheralOperation<*>>
         get() = listOf(SingleOperation.CAPTURE)
 
     protected val isFilled: Boolean
-        get() = !automataCore.peripheralOwner.dataStorage.getCompound(STORED_OBJECT_NBT_KEY).isEmpty
+        get() = isSomethingPresent(automataCore.peripheralOwner.dataStorage)
 
     protected fun saveSomething(data: CompoundTag, type: InteractionMode) {
         automataCore.peripheralOwner.dataStorage.put(STORED_OBJECT_NBT_KEY, data)
@@ -45,28 +90,14 @@ class AutomataCapturePlugin(
     }
 
     protected val storedData: CompoundTag
-        get() = automataCore.peripheralOwner.dataStorage.getCompound(STORED_OBJECT_NBT_KEY)
+        get() = getStoredData(automataCore.peripheralOwner.dataStorage)
 
     protected val storedType: InteractionMode?
-        get() = InteractionMode.optValueOf(automataCore.peripheralOwner.dataStorage.getString(STORED_OBJECT_TYPE_NBT_KEY))
+        get() = getStoredType(automataCore.peripheralOwner.dataStorage)
 
     protected fun clear() {
         automataCore.peripheralOwner.dataStorage.remove(STORED_OBJECT_NBT_KEY)
         automataCore.peripheralOwner.dataStorage.remove(STORED_OBJECT_TYPE_NBT_KEY)
-    }
-
-    protected fun extractEntity(): Entity? {
-        if (storedType != InteractionMode.ENTITY) {
-            return null
-        }
-        val data: CompoundTag = storedData
-        val type: EntityType<*>? = EntityType.byString(data.getString("entity")).orElse(null)
-        if (type != null) {
-            val entity: Entity = type.create(automataCore.peripheralOwner.level!!) ?: return null
-            entity.load(data)
-            return entity
-        }
-        return null
     }
 
     protected fun captureEntity(hit: EntityHitResult): MethodResult {
@@ -92,18 +123,6 @@ class AutomataCapturePlugin(
                 null
             },
         )
-    }
-
-    protected fun extractBlock(): Pair<BlockState, CompoundTag>? {
-        if (storedType != InteractionMode.BLOCK) {
-            return null
-        }
-        val data: CompoundTag = storedData
-        val blockState = NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound("state"))
-        if (blockState.isAir) {
-            return null
-        }
-        return Pair(blockState, data.getCompound("nbt"))
     }
 
     protected fun captureBlock(hit: BlockHitResult): MethodResult {
@@ -138,7 +157,7 @@ class AutomataCapturePlugin(
 
     protected fun releaseEntity(): MethodResult {
         val owner = automataCore.peripheralOwner
-        val extractedEntity = extractEntity() ?: return MethodResult.of(null, "Problem with entity unpacking")
+        val extractedEntity = extractEntity(automataCore.peripheralOwner.dataStorage, automataCore.peripheralOwner.level!!) ?: return MethodResult.of(null, "Problem with entity unpacking")
         val blockPos = owner.pos.offset(owner.facing.normal)
         extractedEntity.absMoveTo(blockPos.x + 0.5, blockPos.y.toDouble(), blockPos.z + 0.5, 0f, 0f)
         clear()
@@ -149,7 +168,7 @@ class AutomataCapturePlugin(
     protected fun releaseBlock(): MethodResult {
         val owner = automataCore.peripheralOwner
         val level = owner.level!!
-        val extractedBlock = extractBlock() ?: return MethodResult.of(null, "Problem with block unpacking")
+        val extractedBlock = extractBlock(owner.dataStorage) ?: return MethodResult.of(null, "Problem with block unpacking")
         val pos = owner.pos.offset(owner.facing.normal)
         if (!level.isEmptyBlock(pos)) {
             return MethodResult.of(null, "Target area should be empty")
@@ -211,7 +230,7 @@ class AutomataCapturePlugin(
         get() {
             return when (storedType) {
                 InteractionMode.ENTITY -> {
-                    val entity = extractEntity()!!
+                    val entity = extractEntity(automataCore.peripheralOwner.dataStorage, automataCore.peripheralOwner.level!!)!!
                     val base = LuaRepresentation.forEntity(entity)
                     val tag = CompoundTag()
                     entity.saveWithoutId(tag)
@@ -224,7 +243,7 @@ class AutomataCapturePlugin(
                     MethodResult.of(base)
                 }
                 InteractionMode.BLOCK -> {
-                    val blockData = extractBlock()!!
+                    val blockData = extractBlock(automataCore.peripheralOwner.dataStorage)!!
                     val base = LuaRepresentation.forBlockState(blockData.first)
                     if (!blockData.second.isEmpty) {
                         val serializerTag = PeripheraliumPlatform.nbtToLua(blockData.second)
@@ -237,9 +256,4 @@ class AutomataCapturePlugin(
                 InteractionMode.ANY, null -> MethodResult.of(emptyMap<String, Any>())
             }
         }
-
-    companion object {
-        private const val STORED_OBJECT_NBT_KEY = "storedObject"
-        private const val STORED_OBJECT_TYPE_NBT_KEY = "storedObjectType"
-    }
 }
