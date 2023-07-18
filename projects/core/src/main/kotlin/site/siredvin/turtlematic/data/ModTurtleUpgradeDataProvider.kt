@@ -25,7 +25,7 @@ class ModTurtleUpgradeDataProvider(output: PackOutput) : LibTurtleUpgradeDataPro
         }
 
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.TURTLE_CHATTER, Items.TURTLE_CHATTER))
-        addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.MIMIC, Items.MIMIC_TOOL))
+        addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.MIMIC, Items.MIMIC_GADGET))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.CREATIVE_CHEST, Items.CREATIVE_CHEST))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.CHUNK_VIAL, Items.CHUNK_VIAL))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.SOUL_SCRAPPER, Items.SOUL_SCRAPPER))

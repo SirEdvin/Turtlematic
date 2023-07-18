@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "tag": "forge:dusts/redstone"
+    },
+    "R": {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    "S": {
+      "item": "computercraft:speaker"
+    }
+  },
+  "pattern": [
+    "RIR",
+    "ISI",
+    "RIR"
+  ],
+  "result": {
+    "item": "turtlematic:mimic_gadget"
+  }
+}

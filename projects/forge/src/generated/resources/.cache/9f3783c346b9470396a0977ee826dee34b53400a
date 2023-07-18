@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-16T12:40:48.527475704	vanilla/Block State Definitions
+// 1.20.1	2023-07-18T11:23:49.241598701	vanilla/Block State Definitions
 07e6c3817f6b099b1c4d5f7e233e444fd033ef5d assets/turtlematic/models/item/automata_core.json
 7802b552e7c7dde5fadc36748b75d7a800db36ba assets/turtlematic/models/item/brewing_automata_core.json
 170ae3a2ca7eae54074f52548f177d884df0d010 assets/turtlematic/models/item/chunk_vial.json
@@ -19,6 +19,7 @@ f21324ea6bd3b2d1893f40b8fe23312a2e534bb5 assets/turtlematic/models/item/filled_s
 db93b1f15ddfaab56811b4cdc4a61b684413154e assets/turtlematic/models/item/husbandry_automata_core.json
 1f25a7a21f850402437487360f0c2c6d31c8d0ba assets/turtlematic/models/item/mason_automata_core.json
 25f94f13b7e6938aaf9101e88c2912350480c38b assets/turtlematic/models/item/mercantile_automata_core.json
+588b8e6c85f8b563511434c0415f6a95118cd871 assets/turtlematic/models/item/mimic_gadget.json
 c76a088a0af63ba07f19058a28571e7c9e742d35 assets/turtlematic/models/item/netherite_end_automata_core.json
 236e41847b68be363e6b775e69b9129301bc13e9 assets/turtlematic/models/item/netherite_husbandry_automata_core.json
 c5663b653279e58961c47e12cf63b57d5e385a15 assets/turtlematic/models/item/netherite_protective_automata_core.json

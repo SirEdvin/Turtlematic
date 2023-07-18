@@ -15,6 +15,7 @@ import site.siredvin.peripheralium.util.representation.LuaRepresentation
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.client.RenderUtil
+import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.util.DataStorageObjects
 
@@ -25,18 +26,18 @@ class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     }
 
     override val isEnabled: Boolean
-        // TODO: fix this
-        get() = true
+        get() = TurtlematicConfig.enableMimicGadget
 
     @LuaFunction(mainThread = true)
-    fun setTransformation(rml: String): MethodResult {
+    fun setTransformation(rml: String) {
         try {
-            RenderUtil.parseRML(rml)
+            val instructions = RenderUtil.parseRML(rml)
+            if (instructions.size > TurtlematicConfig.mimicGadgetRMLLimit)
+                throw LuaException("You can use up to ${TurtlematicConfig.mimicGadgetRMLLimit} instructions")
         } catch (exception: RMLParsingException) {
             throw LuaException("Unable to parse rml: ${exception.message}")
         }
         DataStorageObjects.RMLInstructions[peripheralOwner] = rml
-        return MethodResult.of(true)
     }
 
     @LuaFunction(mainThread = true)
@@ -45,7 +46,7 @@ class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     }
 
     @LuaFunction(mainThread = true)
-    fun setMimic(arguments: IArguments): MethodResult {
+    fun setMimic(arguments: IArguments) {
         val mimic = arguments.getBlockState(0)
         if (mimic.`is`(BlockTags.MIMIC_BLOCKLIST)) {
             throw LuaException("You cannot mimic this block, he is in blocklist")
@@ -55,7 +56,6 @@ class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         if (extraData.isPresent) {
             DataStorageObjects.MimicExtraData[peripheralOwner] = TagParser.parseTag(extraData.get())
         }
-        return MethodResult.of(true)
     }
 
     @LuaFunction(mainThread = true)

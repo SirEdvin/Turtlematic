@@ -1,6 +1,7 @@
 package site.siredvin.turtlematic.xplat
 
 import net.minecraft.world.item.crafting.Ingredient
+import site.siredvin.peripheralium.common.setup.Items
 
 interface ModRecipeIngredients {
     companion object {
@@ -17,6 +18,9 @@ interface ModRecipeIngredients {
             return _IMPL!!
         }
     }
+
+    val peripheralium: Ingredient
+        get() = Ingredient.of(Items.PERIPHERALIUM_DUST.get())
 
     val peripheraliumUpgrade: Ingredient
 

@@ -127,10 +127,10 @@ object Items {
         )
     }
 
-    val MIMIC_TOOL = TurtlematicPlatform.registerItem("mimic_tool") {
+    val MIMIC_GADGET = TurtlematicPlatform.registerItem("mimic_gadget") {
         PeripheralItem(
             Item.Properties(),
-            { true }, // TODO: fix here also,
+            TurtlematicConfig::enableMimicGadget,
             alwaysShow = true,
             isDisabled,
         )

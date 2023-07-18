@@ -37,6 +37,12 @@ object TurtlematicConfig : IOperationAbilityConfig {
     val enableBowTurtle: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_BOW_TURTLE.get()
 
+    val enableMimicGadget: Boolean
+        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MIMIC_GADGET.get()
+
+    val mimicGadgetRMLLimit: Int
+        get() = ConfigHolder.COMMON_CONFIG.MIMIC_GADGET_RML_LIMIT.get()
+
     // automata core toggles
     val enableAutomataCore: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_AUTOMATA_CORE.get()
@@ -110,6 +116,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
         val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
         val ENABLE_BOW_TURTLE: ForgeConfigSpec.BooleanValue
+        val ENABLE_MIMIC_GADGET: ForgeConfigSpec.BooleanValue
+        val MIMIC_GADGET_RML_LIMIT: ForgeConfigSpec.IntValue
 
         // Automata Core
         val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
@@ -152,6 +160,9 @@ object TurtlematicConfig : IOperationAbilityConfig {
             CHUNK_VIAL_TIME_LIMIT = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
                 .defineInRange("chunkVialTimeLimit", 5_000, 1, Long.MAX_VALUE)
             ENABLE_BOW_TURTLE = builder.define("enableBowTurtle", true)
+            ENABLE_MIMIC_GADGET = builder.define("enableMimicGadget", true)
+            MIMIC_GADGET_RML_LIMIT = builder.comment("Defines limit of RML instructions")
+                .defineInRange("mimicGadgetRMLLimit", 8, 0, 128)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.values(), builder)

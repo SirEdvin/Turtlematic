@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-16T12:40:39.37878407	Turtlematic/Recipes
+// 1.20.1	2023-07-18T11:49:39.785192427	Turtlematic/Recipes
 c4fa29293eff4af57167a3d4090f908d06ee8afa data/turtlematic/recipes/starbound_smithing_automata_core.json
 f5fc32b41e4bd9c63259373065b9501067ce88fb data/turtlematic/recipes/starbound_end_automata_core.json
 edcb59b3086b936091372ad71088294d18609809 data/turtlematic/recipes/netherite_husbandry_automata_core.json
@@ -14,5 +14,6 @@ fd6ef195de2aebe210b3493b36c250e97fa75236 data/turtlematic/recipes/netherite_end_
 9c781da0a5e3102ccecc7b9a199532ccfaa9317b data/turtlematic/recipes/starbound_protective_automata_core.json
 f15156213de4b4b657dc02d84c24fd44162eac77 data/turtlematic/recipes/automata_core.json
 1bf422808dcdf2d92da5d1a973e0e51fe547283c data/turtlematic/recipes/starbound_enchanting_automata_core.json
+73043731980dadec5ad1c06394eb0154aebea845 data/turtlematic/recipes/mimic_gadget.json
 57605655591269fed7ec3a6beafdfae76318a3a5 data/turtlematic/recipes/soul_vial.json
 cea456921b90d0b143346e26e02d7a79f820832b data/turtlematic/recipes/starbound_mason_automata_core.json

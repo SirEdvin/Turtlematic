@@ -49,6 +49,15 @@ class ModRecipeProvider(output: PackOutput) : RecipeProvider(output) {
             .pattern("RIR")
             .save(consumer)
 
+        TweakedShapedRecipeBuilder.shaped(Items.MIMIC_GADGET.get())
+            .define('S', ModRecipeIngredients.get().computerSpeaker)
+            .define('R', ModRecipeIngredients.get().peripheralium)
+            .define('I', ModRecipeIngredients.get().redstoneDust)
+            .pattern("RIR")
+            .pattern("ISI")
+            .pattern("RIR")
+            .save(consumer)
+
         TweakedShapedRecipeBuilder.shaped(Items.CHUNK_VIAL.get())
             .define('S', Items.FILLED_SOUL_VIAL.get())
             .define('G', ModRecipeIngredients.get().goldIngot)
