@@ -32,8 +32,9 @@ class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     fun setTransformation(rml: String) {
         try {
             val instructions = RenderUtil.parseRML(rml)
-            if (instructions.size > TurtlematicConfig.mimicGadgetRMLLimit)
+            if (instructions.size > TurtlematicConfig.mimicGadgetRMLLimit) {
                 throw LuaException("You can use up to ${TurtlematicConfig.mimicGadgetRMLLimit} instructions")
+            }
         } catch (exception: RMLParsingException) {
             throw LuaException("Unable to parse rml: ${exception.message}")
         }
