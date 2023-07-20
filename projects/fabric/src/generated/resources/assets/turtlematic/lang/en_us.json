@@ -72,7 +72,7 @@
   "tooltip.turtlematic.required_souls": "  Required souls: %s",
   "tooltip.turtlematic.single_grown": "  §6§nPeriodically accelerate grown of random crop in interaction radius",
   "tooltip.turtlematic.soul_upgrade_from": "  Upgrade from: %s",
-  "tooltip.turtlematic.soul_vial_progress": "§5Already %s from %s souls stored",
+  "tooltip.turtlematic.soul_vial_progress": "§5Already %s §5from %s §5souls stored",
   "tooltip.turtlematic.starbound_generation": "  §6§nPeriodically generate small amount of fuel points",
   "turtle.turtlematic.automata": "Automata",
   "turtle.turtlematic.bow": "Shooting",

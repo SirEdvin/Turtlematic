@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Various scanner problems (see UnlimitedPeripheralWorks#22)
 - Potential crash when provide incorrect item to automata upgrades
 - Mason recipe is not missed anymore (#12)
+- Tooltip for soul vial (#13)
 
 ## [1.0.0] - 2023-07-09
 

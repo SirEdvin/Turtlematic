@@ -86,7 +86,7 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         add(ModTooltip.CAPTURED_ENTITY, "§oStored entity: %s")
         add(ModTooltip.AMOUNT_OF_XP, "§oStored xp: %s")
 
-        add(ModTooltip.SOUL_VIAL_PROGRESS, "§5Already %s from %s souls stored")
+        add(ModTooltip.SOUL_VIAL_PROGRESS, "§5Already %s §5from %s §5souls stored")
 
         addTurtle(AutomataCorePeripheral.UPGRADE_ID, "Automata")
         addTurtle(HusbandryAutomataCorePeripheral.UPGRADE_ID, "Husbandry Automata")

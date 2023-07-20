@@ -13,6 +13,7 @@ import net.minecraft.world.phys.HitResult
 import site.siredvin.peripheralium.common.items.DescriptiveItem
 import site.siredvin.peripheralium.util.itemExtra
 import site.siredvin.turtlematic.common.setup.Items
+import site.siredvin.turtlematic.data.ModTooltip
 
 class SoulVial : DescriptiveItem(Properties().stacksTo(1).fireResistant()) {
 
@@ -30,7 +31,7 @@ class SoulVial : DescriptiveItem(Properties().stacksTo(1).fireResistant()) {
         super.appendHoverText(itemStack, level, list, tooltipFlag)
         val data = itemStack.tag
         if (data != null) {
-            list.add(itemExtra(descriptionId, "progress", data.getInt(NBT_KEY), SOUL_LIMIT))
+            list.add(ModTooltip.SOUL_VIAL_PROGRESS.format(data.getInt(NBT_KEY), SOUL_LIMIT))
         }
     }
 
