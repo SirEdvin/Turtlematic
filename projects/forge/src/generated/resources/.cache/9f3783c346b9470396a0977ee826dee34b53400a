@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-18T11:23:49.241598701	vanilla/Block State Definitions
+// 1.20.1	2023-07-20T17:10:49.941150787	vanilla/Block State Definitions
 07e6c3817f6b099b1c4d5f7e233e444fd033ef5d assets/turtlematic/models/item/automata_core.json
 7802b552e7c7dde5fadc36748b75d7a800db36ba assets/turtlematic/models/item/brewing_automata_core.json
 170ae3a2ca7eae54074f52548f177d884df0d010 assets/turtlematic/models/item/chunk_vial.json
@@ -44,3 +44,5 @@ d299671b86fbce6399bb7c4fd0b01d19209ce182 assets/turtlematic/models/item/starboun
 ddd8f99080b1596fb387808afda571c342e0a6aa assets/turtlematic/models/turtle/chunk_vial_right.json
 df9b1cb8b814c8e57c8c8cdf9061df315b6c0474 assets/turtlematic/models/turtle/creative_chest_left.json
 016d42c4c52ace0461c3edbaaef484d8674ade2f assets/turtlematic/models/turtle/creative_chest_right.json
+7b8b166e5b2b3c9187e935442ee12d9f447412f5 assets/turtlematic/models/turtle/mimic_left.json
+9266b777193cc7dae7cde3d2014a06bef4656102 assets/turtlematic/models/turtle/mimic_right.json

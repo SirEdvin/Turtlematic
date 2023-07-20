@@ -44,6 +44,7 @@ object ModItemModelProvider {
         turtleUpgrades(generators, Items.CHUNK_VIAL.get())
         turtleUpgrades(generators, Items.CREATIVE_CHEST.get())
         turtleUpgrades(generators, Items.TURTLE_CHATTER.get(), baseID = ResourceLocation(TurtlematicCore.MOD_ID, "turtle/chatter"))
+        turtleUpgrades(generators, Items.MIMIC_GADGET.get(), baseID = ResourceLocation(TurtlematicCore.MOD_ID, "turtle/mimic"))
 
         createAutomataCore(generators, Items.AUTOMATA_CORE.get(), BASE_GEAR, "base")
         createAutomataCore(generators, Items.HUSBANDRY_AUTOMATA_CORE.get(), BASE_GEAR, "green")

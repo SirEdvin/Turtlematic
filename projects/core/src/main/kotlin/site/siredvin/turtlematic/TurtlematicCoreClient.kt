@@ -16,6 +16,7 @@ import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
 import site.siredvin.turtlematic.computercraft.peripheral.misc.ChunkVialPeripheral
 import site.siredvin.turtlematic.computercraft.peripheral.misc.CreativeChestPeripheral
+import site.siredvin.turtlematic.computercraft.peripheral.misc.MimicPeripheral
 import site.siredvin.turtlematic.computercraft.peripheral.misc.TurtleChatterPeripheral
 import java.util.function.Consumer
 import java.util.function.Supplier
@@ -25,6 +26,8 @@ object TurtlematicCoreClient {
     private val EXTRA_MODELS: Array<String> = arrayOf(
         "turtle/chatter_left",
         "turtle/chatter_right",
+        "turtle/mimic_left",
+        "turtle/mimic_right",
         "turtle/chunk_vial_left",
         "turtle/chunk_vial_right",
         "turtle/creative_chest_left",
@@ -69,7 +72,10 @@ object TurtlematicCoreClient {
 
         ComputerCraftAPIClient.registerTurtleUpgradeModeller(
             TurtleUpgradeSerializers.MIMIC.get(),
-            TurtleUpgradeModeller.flatItem(),
+            TurtleUpgradeModeller.sided(
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.UPGRADE_ID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.UPGRADE_ID.path}_right"),
+            ),
         )
 
         TurtleRenderTrickRegistry.registerTrick(
