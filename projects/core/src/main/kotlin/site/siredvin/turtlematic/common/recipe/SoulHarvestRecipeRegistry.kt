@@ -80,6 +80,10 @@ object SoulHarvestRecipeRegistry {
             listOf(VillagerSoulHarvestIngredient(VillagerProfession.CLERIC)),
             Items.BREWING_AUTOMATA_CORE.get(),
         )
+        val masonAutomataRecipe = SoulHarvestRecipe(
+            listOf(VillagerSoulHarvestIngredient(VillagerProfession.MASON)),
+            Items.MASON_AUTOMATA_CORE.get(),
+        )
         val enchantingAutomataRecord = SoulHarvestRecipe(
             listOf(VillagerSoulHarvestIngredient(VillagerProfession.LIBRARIAN)),
             Items.ENCHANTING_AUTOMATA_CORE.get(),
@@ -100,5 +104,6 @@ object SoulHarvestRecipeRegistry {
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), enchantingAutomataRecord)
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), smithingAutomataRecord)
         addRecipe(Items.FORGED_AUTOMATA_CORE.get(), mercantileSoulRecord)
+        addRecipe(Items.FORGED_AUTOMATA_CORE.get(), masonAutomataRecipe)
     }
 }
