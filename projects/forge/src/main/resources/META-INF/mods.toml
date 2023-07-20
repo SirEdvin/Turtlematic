@@ -13,8 +13,9 @@ displayName="Turtlematic"
 displayURL="https://github.com/SirEdvin/Turtlematic/"
 
 credits=""
-authors=""
+authors="SirEdvin"
 description='''
+CC:T addon, that makes turtles great again!
 '''
 
 [[dependencies.turtlematic]]

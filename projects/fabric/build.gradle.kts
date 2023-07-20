@@ -38,14 +38,16 @@ repositories {
             includeGroup("mezz.jei")
         }
     }
+    maven {
+        name = "ModMenu maven"
+        url = uri("https://maven.terraformersmc.com/releases")
+        content {
+            includeGroup("com.terraformersmc")
+        }
+    }
 }
 
 dependencies {
-    // TODO: dark mark here, if I will try to move this dependency
-    // to libs it will change down toi 0.14.17
-    // Like, what???
-    modImplementation("net.fabricmc:fabric-loader:0.14.21")
-
     modApi(libs.bundles.externalMods.fabric.integrations.api) {
         exclude("net.fabricmc.fabric-api")
     }

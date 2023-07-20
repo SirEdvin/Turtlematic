@@ -11,8 +11,8 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 object MimicTurtleRenderTrick : TurtleRenderTrick {
 
     private val fakeBlockEntityCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(30, TimeUnit.SECONDS).maximumSize(2_000)
+        .expireAfterAccess(30, TimeUnit.SECONDS).maximumSize(10_000)
         .build(CacheLoader.from(::getBlockEntity))
 
     private val dummyBlockEntity = object : BlockEntity(BlockEntityType.BARREL, BlockPos(0, 0, 0), Blocks.BARREL.defaultBlockState()) {
@@ -32,10 +32,35 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
     private val emptyCompoundTag = CompoundTag()
 
     fun getBlockEntity(data: Triple<BlockState, BlockPos, CompoundTag>): BlockEntity {
-        val block = data.first.block as? BaseEntityBlock ?: return dummyBlockEntity
+        val block = data.first.block as? EntityBlock ?: return dummyBlockEntity
         val blockEntity = block.newBlockEntity(data.second, data.first) ?: dummyBlockEntity
         blockEntity.load(data.third)
         return blockEntity
+    }
+
+    fun renderBlockModel(minecraft: Minecraft, transform: PoseStack, buffers: MultiBufferSource, state: BlockState, lightmapCoord: Int, overlayLight: Int) {
+        minecraft.blockRenderer.modelRenderer.renderModel(
+            transform.last(), buffers.getBuffer(RenderType.translucent()), state,
+            minecraft.blockRenderer.getBlockModel(state), 1f, 1f, 1f, lightmapCoord, overlayLight,
+        )
+    }
+
+    fun renderBlockEntity(minecraft: Minecraft, state: BlockState, turtle: TurtleBlockEntity, upgradeData: CompoundTag, partialTicks: Float, transform: PoseStack, buffers: MultiBufferSource) {
+        if (state.block is EntityBlock) {
+            val entity = fakeBlockEntityCache.get(
+                Triple(
+                    state,
+                    turtle.blockPos,
+                    DataStorageObjects.MimicExtraData[upgradeData] ?: emptyCompoundTag,
+                ),
+            )
+            // Yep, this is check for SAME OBJECT
+            if (entity !== dummyBlockEntity) {
+                entity.level = turtle.level
+                minecraft.blockEntityRenderDispatcher.render(entity, partialTicks, transform, buffers)
+                entity.level = null
+            }
+        }
     }
 
     override fun render(
@@ -59,17 +84,11 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
             }
         }
         when (state.renderShape) {
-            RenderShape.MODEL -> minecraft.blockRenderer.modelRenderer.renderModel(
-                transform.last(), buffers.getBuffer(RenderType.translucent()), state,
-                minecraft.blockRenderer.getBlockModel(state), 1f, 1f, 1f, lightmapCoord, overlayLight,
-            )
-            RenderShape.ENTITYBLOCK_ANIMATED -> {
-                val entity = fakeBlockEntityCache.get(Triple(state, turtle.blockPos, DataStorageObjects.MimicExtraData[upgradeData] ?: emptyCompoundTag))
-                // Yep, this is check for SAME OBJECT
-                if (entity === dummyBlockEntity) {
-                    minecraft.blockEntityRenderDispatcher.render(entity, partialTicks, transform, buffers)
-                }
+            RenderShape.MODEL -> {
+                renderBlockModel(minecraft, transform, buffers, state, lightmapCoord, overlayLight)
+                renderBlockEntity(minecraft, state, turtle, upgradeData, partialTicks, transform, buffers)
             }
+            RenderShape.ENTITYBLOCK_ANIMATED -> renderBlockEntity(minecraft, state, turtle, upgradeData, partialTicks, transform, buffers)
             else -> {}
         }
         transform.popPose()
