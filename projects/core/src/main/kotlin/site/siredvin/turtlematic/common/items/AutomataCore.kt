@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.common.items
 
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
@@ -59,15 +58,6 @@ class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, { TurtlematicConfi
             return correctedRecipe.consumeEntity(stack, entity)
         }
         return Pair.onlyRight("This item cannot hold soul of this entity")
-    }
-
-    override fun getActiveRecipe(stack: ItemStack): SoulHarvestRecipe? {
-        val tag: CompoundTag? = stack.tag
-        if (tag != null && !tag.isEmpty) {
-            val consumedData = tag.getCompound(CONSUMER_ENTITY_COMPOUND)
-            return SoulHarvestRecipeRegistry.searchRecipe(this, consumedData.allKeys.first())
-        }
-        return null
     }
 
     override fun getEntityRepresentation(stack: ItemStack, recipe: SoulHarvestRecipe): List<RecipeEntityRepresentation> {

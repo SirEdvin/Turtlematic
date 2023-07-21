@@ -41,11 +41,7 @@ object SoulHarvestRecipeRegistry {
         if (!RECIPE_REGISTRY.containsKey(targetItem)) {
             return null
         }
-        val recipe = RECIPE_REGISTRY[targetItem]!!.stream().filter { it.isSuitable(name) }.findAny()
-        if (recipe.isEmpty) {
-            return null
-        }
-        return recipe.get()
+        return RECIPE_REGISTRY[targetItem]!!.find { it.isSuitable(name) }
     }
 
     fun injectAutomataCoreRecipes() {
