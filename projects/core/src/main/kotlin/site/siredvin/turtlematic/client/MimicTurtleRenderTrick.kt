@@ -39,6 +39,7 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
     }
 
     fun renderBlockModel(minecraft: Minecraft, transform: PoseStack, buffers: MultiBufferSource, state: BlockState, lightmapCoord: Int, overlayLight: Int) {
+        @Suppress("DEPRECATION", "KotlinRedundantDiagnosticSuppress")
         minecraft.blockRenderer.modelRenderer.renderModel(
             transform.last(), buffers.getBuffer(RenderType.translucent()), state,
             minecraft.blockRenderer.getBlockModel(state), 1f, 1f, 1f, lightmapCoord, overlayLight,

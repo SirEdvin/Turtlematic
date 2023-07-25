@@ -19,7 +19,7 @@ object TurtlematicCommonHooks {
         Items.doSomething()
         EntityTypes.doSomething()
         TurtleUpgradeSerializers.doSomething()
-        TurtlematicPlatform.registerCreativeTab(
+        ModPlatform.registerCreativeTab(
             ResourceLocation(TurtlematicCore.MOD_ID, "tab"),
             TurtlematicCore.configureCreativeTab(PeripheraliumPlatform.createTabBuilder()).build(),
         )
@@ -31,7 +31,7 @@ object TurtlematicCommonHooks {
     }
 
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
-        TurtlematicPlatform.holder.turtleSerializers.forEach {
+        ModPlatform.holder.turtleSerializers.forEach {
             val upgrade = PeripheraliumPlatform.getTurtleUpgrade(XplatRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toString())
             if (upgrade != null) {
                 PeripheraliumPlatform.createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade)).forEach(output::accept)

@@ -1,4 +1,5 @@
 package site.siredvin.turtlematic
+
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
@@ -6,8 +7,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.minecraftforge.fml.config.ModConfig
 import site.siredvin.peripheralium.FabricPeripheralium
 import site.siredvin.turtlematic.common.configuration.ConfigHolder
+import site.siredvin.turtlematic.fabric.FabricModInnerPlatform
 import site.siredvin.turtlematic.fabric.FabricModRecipeIngredients
-import site.siredvin.turtlematic.fabric.FabricTurtlematicPlatform
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 
 @Suppress("UNUSED")
@@ -16,7 +17,7 @@ object FabricTurtlematic : ModInitializer {
     override fun onInitialize() {
         // Register configuration
         FabricPeripheralium.sayHi()
-        TurtlematicCore.configure(FabricTurtlematicPlatform, FabricModRecipeIngredients)
+        TurtlematicCore.configure(FabricModInnerPlatform, FabricModRecipeIngredients)
         // Register items and blocks
         TurtlematicCommonHooks.onRegister()
         TurtlematicCommonHooks.commonSetup()

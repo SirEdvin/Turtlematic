@@ -6,11 +6,11 @@ import net.minecraft.data.PackOutput
 import site.siredvin.peripheralium.data.blocks.LibTurtleUpgradeDataProvider
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
-import site.siredvin.turtlematic.xplat.TurtlematicPlatform
+import site.siredvin.turtlematic.xplat.ModPlatform
 import java.util.function.Consumer
 import java.util.function.Function
 
-class ModTurtleUpgradeDataProvider(output: PackOutput) : LibTurtleUpgradeDataProvider(output, TurtlematicPlatform.holder.turtleSerializers) {
+class ModTurtleUpgradeDataProvider(output: PackOutput) : LibTurtleUpgradeDataProvider(output, ModPlatform.holder.turtleSerializers) {
     companion object {
         private val REGISTERED_BUILDERS: MutableList<Function<TurtleUpgradeDataProvider, Upgrade<TurtleUpgradeSerialiser<*>>>> = mutableListOf()
 

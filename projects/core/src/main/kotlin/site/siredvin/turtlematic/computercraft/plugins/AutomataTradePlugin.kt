@@ -48,7 +48,7 @@ class AutomataTradePlugin(
         if (matchingOffers.isEmpty()) {
             return MethodResult.of(null, "No matching trades found")
         }
-        var matchingOffer: MerchantOffer? = null
+        var matchingOffer: MerchantOffer?
         if (matchingOffers.size > 1) {
             if (indexHint == null) {
                 return MethodResult.of(null, "Several overlapping offers found, please, provide index hint")

@@ -8,6 +8,7 @@ object TurtleRenderTrickRegistry {
     private val registry = mutableMapOf<TurtleUpgradeSerialiser<out ITurtleUpgrade>, TurtleRenderTrick>()
 
     fun getSerializer(upgrade: ITurtleUpgrade): TurtleUpgradeSerialiser<ITurtleUpgrade>? {
+        @Suppress("UNCHECKED_CAST")
         return TurtleUpgrades.instance().getWrapper(upgrade)?.serialiser as? TurtleUpgradeSerialiser<ITurtleUpgrade>
     }
 

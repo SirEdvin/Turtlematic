@@ -35,18 +35,21 @@ object TickerFunctions {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun netheriteHusbandryTick(turtle: ITurtleAccess, side: TurtleSide, coreTier: IAutomataCoreTier, tickCounter: Long) {
         if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled && tickCounter % TurtlematicConfig.netheriteHusbandryAutomataGrownPeriod == 0L) {
             causeRandomTickForCrop(turtle, coreTier)
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun starboundHusbandryTick(turtle: ITurtleAccess, side: TurtleSide, coreTier: IAutomataCoreTier, tickCounter: Long) {
         if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled && tickCounter % TurtlematicConfig.starboundeHusbandryAutomataGrownPeriod == 0L) {
             causeRandomTickForCrop(turtle, coreTier)
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun creativeHusbandryTick(turtle: ITurtleAccess, side: TurtleSide, coreTier: IAutomataCoreTier, tickCounter: Long) {
         if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled && tickCounter % TurtlematicConfig.creativeHusbandryAutomataGrownPeriod == 0L) {
             ScanUtils.traverseBlocks(turtle.level, turtle.position, coreTier.interactionRadius, { state, pos ->

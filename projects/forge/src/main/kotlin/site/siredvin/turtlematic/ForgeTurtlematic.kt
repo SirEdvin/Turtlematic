@@ -14,8 +14,8 @@ import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.NewRegistryEvent
 import site.siredvin.peripheralium.ForgePeripheralium
 import site.siredvin.turtlematic.common.configuration.ConfigHolder
+import site.siredvin.turtlematic.forge.ForgeModInnerPlatform
 import site.siredvin.turtlematic.forge.ForgeModRecipeIngredients
-import site.siredvin.turtlematic.forge.ForgeTurtlematicPlatform
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 import thedarkcolour.kotlinforforge.forge.MOD_CONTEXT
 
@@ -39,7 +39,7 @@ object ForgeTurtlematic {
         val context = ModLoadingContext.get()
         context.registerConfig(ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC, "${TurtlematicCore.MOD_ID}.toml")
 
-        TurtlematicCore.configure(ForgeTurtlematicPlatform, ForgeModRecipeIngredients)
+        TurtlematicCore.configure(ForgeModInnerPlatform, ForgeModRecipeIngredients)
         val eventBus = MOD_CONTEXT.getKEventBus()
         eventBus.addListener(this::commonSetup)
         eventBus.addListener(this::registrySetup)
@@ -51,11 +51,13 @@ object ForgeTurtlematic {
         creativeTabRegistry.register(eventBus)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun commonSetup(event: FMLCommonSetupEvent) {
         // Load all integrations
         TurtlematicCommonHooks.commonSetup()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun registrySetup(event: NewRegistryEvent) {
     }
 }

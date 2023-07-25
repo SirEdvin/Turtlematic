@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 object ForgeTurtlematicClient {
 
     @SubscribeEvent
+    @Suppress("UNUSED_PARAMETER")
     fun onClientSetup(event: FMLClientSetupEvent) {
         TurtlematicCoreClient.onInit()
     }

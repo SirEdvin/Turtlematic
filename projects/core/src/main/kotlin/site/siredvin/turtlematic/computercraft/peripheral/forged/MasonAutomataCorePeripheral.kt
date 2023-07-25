@@ -332,6 +332,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             }
             val hit = findBlockResult.left!!.left
             val blockState = findBlockResult.left!!.right
+            @Suppress("DEPRECATION", "KotlinRedundantDiagnosticSuppress")
             level.setBlockAndUpdate(hit.blockPos, blockState.rotate(rotation))
             return@withOperation MethodResult.of(true)
         }
@@ -359,7 +360,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             if (propertyCandidate.isEmpty) {
                 return@withOperation MethodResult.of(null, "Cannot turn over block")
             }
-            val property = propertyCandidate.get() as EnumProperty<Half>
+            @Suppress("UNCHECKED_CAST") val property = propertyCandidate.get() as EnumProperty<Half>
             val currentOrientation = blockState.getValue(property) as Half
             if (currentOrientation == Half.TOP) {
                 level.setBlockAndUpdate(hit.blockPos, blockState.setValue(property, Half.BOTTOM))
@@ -380,7 +381,6 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 directionArgument.get(),
             )
         }
-        val level = level!!
         val findBlockResult = findBlock(overwrittenDirection)
         if (findBlockResult.rightPresent()) {
             return findBlockResult.right!!
@@ -421,7 +421,8 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             val property = propertyCandidate.get() as EnumProperty<*>
             val newValue = property.possibleValues.find { it.name.lowercase() == targetShape }
                 ?: return@withOperation MethodResult.of(null, "This block cannot change shape to $targetShape")
-            val fixedProperty = propertyCandidate.get() as Property<V>
+            @Suppress("UNCHECKED_CAST") val fixedProperty = propertyCandidate.get() as Property<V>
+            @Suppress("UNCHECKED_CAST")
             return@withOperation changeShape(level, hit.blockPos, blockState, blockState.setValue(fixedProperty, newValue as V))
         }
     }

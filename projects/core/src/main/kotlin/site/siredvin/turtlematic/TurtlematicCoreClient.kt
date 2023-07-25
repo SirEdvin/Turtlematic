@@ -34,10 +34,12 @@ object TurtlematicCoreClient {
         "turtle/creative_chest_right",
     )
 
+    @Suppress("UNCHECKED_CAST")
     val EXTRA_ENTITY_RENDERERS: Array<Supplier<EntityType<Entity>>> = arrayOf(
         EntityTypes.SHOOTED_ITEM_TYPE as Supplier<EntityType<Entity>>,
     )
 
+    @Suppress("UNCHECKED_CAST")
     fun getEntityRendererProvider(type: EntityType<Entity>): EntityRendererProvider<Entity> {
         if (type == EntityTypes.SHOOTED_ITEM_TYPE.get()) {
             return EntityRendererProvider<ShootedItemProjectile> { ThrownItemRenderer(it) } as EntityRendererProvider<Entity>

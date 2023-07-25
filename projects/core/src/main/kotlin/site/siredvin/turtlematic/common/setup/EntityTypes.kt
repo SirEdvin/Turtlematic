@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceLocation
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
-import site.siredvin.turtlematic.xplat.TurtlematicPlatform
+import site.siredvin.turtlematic.xplat.ModPlatform
 
 object EntityTypes {
     val SHOOTED_ITEM_TYPE_ID = ResourceLocation(
@@ -12,7 +12,7 @@ object EntityTypes {
         "shooted_item",
     )
 
-    val SHOOTED_ITEM_TYPE = TurtlematicPlatform.registerEntity(SHOOTED_ITEM_TYPE_ID) {
+    val SHOOTED_ITEM_TYPE = ModPlatform.registerEntity(SHOOTED_ITEM_TYPE_ID) {
         PeripheraliumPlatform.createEntityType(SHOOTED_ITEM_TYPE_ID, ::ShootedItemProjectile)
     }
 
