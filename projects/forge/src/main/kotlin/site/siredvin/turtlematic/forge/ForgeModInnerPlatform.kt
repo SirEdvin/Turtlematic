@@ -1,17 +1,15 @@
 package site.siredvin.turtlematic.forge
 
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraftforge.registries.DeferredRegister
-import net.minecraftforge.registries.ForgeRegistries
 import site.siredvin.peripheralium.forge.ForgeBaseInnerPlatform
 import site.siredvin.turtlematic.ForgeTurtlematic
 import site.siredvin.turtlematic.TurtlematicCore
 
-object ForgeModInnerPlatform: ForgeBaseInnerPlatform() {
+object ForgeModInnerPlatform : ForgeBaseInnerPlatform() {
 
     override val itemsRegistry: DeferredRegister<Item>
         get() = ForgeTurtlematic.itemsRegistry
