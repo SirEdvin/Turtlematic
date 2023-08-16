@@ -53,7 +53,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
     }
 
     private fun isEditable(pos: BlockPos): Boolean {
-        return peripheralOwner.withPlayer({
+        return !peripheralOwner.withPlayer({
             PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
         })
     }
