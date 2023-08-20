@@ -15,7 +15,6 @@ import net.minecraft.world.phys.Vec3
 import site.siredvin.peripheralium.ext.toBlockPos
 import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
 import site.siredvin.peripheralium.storages.item.ItemStorageUtils
-import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.setup.EntityTypes
 
 class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : ThrowableProjectile(EntityTypes.SHOOTED_ITEM_TYPE.get(), x, y, z, level), ItemSupplier {
@@ -36,16 +35,8 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
     private var decayTicker: Int = DEFAULT_DECAY_TICKS
     private var startDecaying: Boolean = false
 
-    override fun setPos(x: Double, y: Double, z: Double) {
-        super.setPos(x, y, z)
-        if (!level().isClientSide) {
-            TurtlematicCore.LOGGER.info("New position $x $y $z")
-        }
-    }
-
     override fun onHitBlock(hit: BlockHitResult) {
         if (!level().isClientSide) {
-            TurtlematicCore.LOGGER.info("Hit block ${hit.blockPos}")
             val targetableStorage =
                 ItemStorageExtractor.extractItemSink(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
             if (targetableStorage != null) {
@@ -76,14 +67,13 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
     override fun tick() {
         super.tick()
         if (!level().isClientSide) {
-            if (deltaMovement.length() != 0.0) {
-                TurtlematicCore.LOGGER.info("Current delta of movement $deltaMovement")
-            } else if (startDecaying) {
-                decayTicker--
-                if (decayTicker <= 0) {
-                    TurtlematicCore.LOGGER.info("Dropping item stack $x ${y + 0.5} $z")
-                    Containers.dropItemStack(level(), x, y + 0.5, z, stack)
-                    this.kill()
+            if (deltaMovement.length() == 0.0) {
+                if (startDecaying) {
+                    decayTicker--
+                    if (decayTicker <= 0) {
+                        Containers.dropItemStack(level(), x, y + 0.5, z, stack)
+                        this.kill()
+                    }
                 }
             }
         }
