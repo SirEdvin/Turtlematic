@@ -227,6 +227,22 @@ object DataStorageObjects {
         }
     }
 
+    object Silent : AbstractNotNullDataObject<Boolean>() {
+        override val nbtTag: String
+            get() = "silent"
+        override val default: Boolean
+            get() = false
+
+        override fun read(data: CompoundTag): Boolean {
+            return data.getBoolean(nbtTag)
+        }
+
+        override fun write(data: CompoundTag, value: Boolean): Boolean {
+            data.putBoolean(nbtTag, value)
+            return true
+        }
+    }
+
     object TurtleChat : AbstractDataObject<String>() {
         override val nbtTag: String
             get() = "chatMessage"

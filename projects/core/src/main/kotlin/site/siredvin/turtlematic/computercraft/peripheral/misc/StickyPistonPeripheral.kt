@@ -14,6 +14,7 @@ import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripher
 import site.siredvin.peripheralium.util.world.PistonSimulation
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.turtlematic.util.DataStorageObjects
 
 class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
@@ -26,6 +27,16 @@ class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         get() = TurtlematicConfig.enableStickyPistonTurtle
 
     @LuaFunction(mainThread = true)
+    fun isSilent(): Boolean {
+        return DataStorageObjects.Silent[peripheralOwner]
+    }
+
+    @LuaFunction(mainThread = true)
+    fun setSilent(value: Boolean) {
+        DataStorageObjects.Silent[peripheralOwner] = value
+    }
+
+    @LuaFunction(mainThread = true)
     fun push(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
         val direction = if (directionArgument.isEmpty) peripheralOwner.facing else VerticalDirection.luaValueOf(directionArgument.get()).minecraftDirection
@@ -35,7 +46,16 @@ class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
             MethodResult.of(null, "Cannot resolve piston structure")
         } else {
             PistonSimulation.move(level, resolver, direction, isExtending = true)
-            level.playSound(peripheralOwner.owner, peripheralOwner.pos, SoundEvents.PISTON_EXTEND, SoundSource.BLOCKS, 10f, 10f)
+            if (!DataStorageObjects.Silent[peripheralOwner]) {
+                level.playSound(
+                    peripheralOwner.owner,
+                    peripheralOwner.pos,
+                    SoundEvents.PISTON_EXTEND,
+                    SoundSource.BLOCKS,
+                    TurtlematicConfig.pistonVolumeLevel.toFloat(),
+                    TurtlematicConfig.pistonPitchLevel.toFloat(),
+                )
+            }
             MethodResult.of(true)
         }
     }
@@ -50,7 +70,16 @@ class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
             MethodResult.of(null, "Cannot resolve piston structure")
         } else {
             PistonSimulation.move(level, resolver, direction, isExtending = false)
-            level.playSound(peripheralOwner.owner, peripheralOwner.pos, SoundEvents.PISTON_CONTRACT, SoundSource.BLOCKS, 10f, 10f)
+            if (!DataStorageObjects.Silent[peripheralOwner]) {
+                level.playSound(
+                    peripheralOwner.owner,
+                    peripheralOwner.pos,
+                    SoundEvents.PISTON_CONTRACT,
+                    SoundSource.BLOCKS,
+                    TurtlematicConfig.pistonVolumeLevel.toFloat(),
+                    TurtlematicConfig.pistonPitchLevel.toFloat(),
+                )
+            }
             MethodResult.of(true)
         }
     }

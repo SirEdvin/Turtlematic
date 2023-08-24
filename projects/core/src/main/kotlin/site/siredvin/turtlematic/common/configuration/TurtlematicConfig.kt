@@ -25,6 +25,12 @@ object TurtlematicConfig : IOperationAbilityConfig {
     val enableStickyPistonTurtle: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_STICKY_TURTLE_PISTON.get()
 
+    val pistonVolumeLevel: Double
+        get() = ConfigHolder.COMMON_CONFIG.PISTON_VOLUME_LEVEL.get()
+
+    val pistonPitchLevel: Double
+        get() = ConfigHolder.COMMON_CONFIG.PISTON_PITCH_LEVEL.get()
+
     val enableLavaBucket: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_LAVA_BUCKET.get()
 
@@ -112,6 +118,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
         val ENABLE_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
         val ENABLE_STICKY_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
+        val PISTON_VOLUME_LEVEL: ForgeConfigSpec.DoubleValue
+        val PISTON_PITCH_LEVEL: ForgeConfigSpec.DoubleValue
         val ENABLE_LAVA_BUCKET: ForgeConfigSpec.BooleanValue
         val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
         val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
@@ -155,6 +163,8 @@ object TurtlematicConfig : IOperationAbilityConfig {
             ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
             ENABLE_TURTLE_PISTON = builder.define("enablePistonTurtle", true)
             ENABLE_STICKY_TURTLE_PISTON = builder.define("enableStickyPistonTurtle", true)
+            PISTON_PITCH_LEVEL = builder.defineInRange("pistonPitchLevel", 5.0, 0.0, 10.0)
+            PISTON_VOLUME_LEVEL = builder.defineInRange("pistonVolumeLevel", 5.0, 0.0, 10.0)
             ENABLE_LAVA_BUCKET = builder.define("enableLaaBucket", true)
             ENABLE_CHUNK_VIAL = builder.define("enableChunkVial", true)
             CHUNK_VIAL_TIME_LIMIT = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
