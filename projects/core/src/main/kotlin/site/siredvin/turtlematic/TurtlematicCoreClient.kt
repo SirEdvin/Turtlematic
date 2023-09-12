@@ -23,7 +23,7 @@ import java.util.function.Supplier
 
 object TurtlematicCoreClient {
 
-    private val EXTRA_MODELS: Array<String> = arrayOf(
+    val EXTRA_MODELS: Array<String> = arrayOf(
         "turtle/chatter_left",
         "turtle/chatter_right",
         "turtle/mimic_left",
