@@ -96,6 +96,7 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     @LuaFunction(mainThread = true)
     fun shoot(power: Double, limit: Optional<Int>, suppressExtraLogic: Optional<Boolean>): MethodResult {
         if (power <= 0.0) throw LuaException("Power cannot be equal or less then 0")
+        val limitedPower = power.coerceAtMost(TurtlematicConfig.bowTurtlePowerLimit)
         val currentAngle = Math.toRadians(DataStorageObjects.Angle[peripheralOwner])
         val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
         val turtleInventory: Container = peripheralOwner.turtle.inventory
@@ -107,20 +108,20 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         if (realLimit <= 0) {
             throw LuaException("Limit should be positive integer")
         }
-        return peripheralOwner.withOperation(PowerOperation.SHOOT, PowerOperationContext(power), {
+        return peripheralOwner.withOperation(PowerOperation.SHOOT, PowerOperationContext(limitedPower), {
             val stackToDispense = selectedStack.split(realLimit)
             val dispensedResult = if (suppressExtraLogic.orElse(false)) {
                 suppressedDispenseBehavior.dispense(
                     BlockSourceImpl(level as ServerLevel, pos),
                     stackToDispense,
-                    power,
+                    limitedPower,
                     currentAngle,
                 )
             } else {
                 dispenseBehavior.dispense(
                     BlockSourceImpl(level as ServerLevel, pos),
                     stackToDispense,
-                    power,
+                    limitedPower,
                     currentAngle,
                 )
             }

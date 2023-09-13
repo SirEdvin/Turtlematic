@@ -131,7 +131,8 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
     @Throws(LuaException::class)
     fun throwPotion(power: Double, angle: Double): MethodResult {
         if (power <= 0.0) throw LuaException("Power cannot be 0")
-        return withOperation(PowerOperation.THROW_POTION, PowerOperationContext(power), {
+        val limitedPower = power.coerceAtLeast(TurtlematicConfig.brewingPowerLimit)
+        return withOperation(PowerOperation.THROW_POTION, PowerOperationContext(limitedPower), {
             val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedStack: ItemStack = turtleInventory.getItem(selectedSlot)
@@ -146,7 +147,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             if (potion === Potions.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
             turtleInventory.setItem(
                 selectedSlot,
-                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, power, angle),
+                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, limitedPower, angle),
             )
             MethodResult.of(true)
         })

@@ -43,6 +43,9 @@ object TurtlematicConfig : IOperationAbilityConfig {
     val enableBowTurtle: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_BOW_TURTLE.get()
 
+    val bowTurtlePowerLimit: Double
+        get() = ConfigHolder.COMMON_CONFIG.BOW_TURTLE_POWER_LIMIT.get()
+
     val enableMimicGadget: Boolean
         get() = ConfigHolder.COMMON_CONFIG.ENABLE_MIMIC_GADGET.get()
 
@@ -105,6 +108,9 @@ object TurtlematicConfig : IOperationAbilityConfig {
     val brewingXPReward: Double
         get() = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get()
 
+    val brewingPowerLimit: Double
+        get() = ConfigHolder.COMMON_CONFIG.BREWING_POWER_LIMIT.get()
+
     val enchantmentWipeChance: Double
         get() = ConfigHolder.COMMON_CONFIG.ENCHANTING_WIPE_CHANGE.get()
 
@@ -124,6 +130,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
         val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
         val ENABLE_BOW_TURTLE: ForgeConfigSpec.BooleanValue
+        val BOW_TURTLE_POWER_LIMIT: ForgeConfigSpec.DoubleValue
         val ENABLE_MIMIC_GADGET: ForgeConfigSpec.BooleanValue
         val MIMIC_GADGET_RML_LIMIT: ForgeConfigSpec.IntValue
 
@@ -150,6 +157,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
         val CREATIVE_HUSBANDRY_AUTOMATA_GROWN_PERIOD: ForgeConfigSpec.IntValue
         val DURABILITY_RESTORE_CHANCE: ForgeConfigSpec.DoubleValue
         val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
+        val BREWING_POWER_LIMIT: ForgeConfigSpec.DoubleValue
         val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
 
         init {
@@ -170,6 +178,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
             CHUNK_VIAL_TIME_LIMIT = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
                 .defineInRange("chunkVialTimeLimit", 5_000, 1, Long.MAX_VALUE)
             ENABLE_BOW_TURTLE = builder.define("enableBowTurtle", true)
+            BOW_TURTLE_POWER_LIMIT = builder.defineInRange("bowTurtlePowerLimit", 10.0, 1.0, Double.MAX_VALUE)
             ENABLE_MIMIC_GADGET = builder.define("enableMimicGadget", true)
             MIMIC_GADGET_RML_LIMIT = builder.comment("Defines limit of RML instructions")
                 .defineInRange("mimicGadgetRMLLimit", 8, 0, 128)
@@ -212,6 +221,7 @@ object TurtlematicConfig : IOperationAbilityConfig {
             STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT = builder.comment("Defines amount for starbound automata that will be regenerated")
                 .defineInRange("starboundAutomataFuelGenerationAmount", 1, 0, Integer.MAX_VALUE)
             BREWING_XP_REWARD = builder.defineInRange("brewingXPReward", 0.8, 0.0, 64.0)
+            BREWING_POWER_LIMIT = builder.defineInRange("brewingPowerLimit", 10.0, 1.0, Double.MAX_VALUE)
             ENCHANTING_WIPE_CHANGE = builder.defineInRange("enchantmentWipeChance", 0.05, 0.1, 1.0)
 
             // automata core tiers registration
