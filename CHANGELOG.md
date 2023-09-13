@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `pose` argument for use and swing
+
 ### Fixed
 
 - Use function set damage nbt tag when there is no damage
