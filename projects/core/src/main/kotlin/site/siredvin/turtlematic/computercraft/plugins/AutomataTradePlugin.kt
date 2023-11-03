@@ -73,8 +73,9 @@ class AutomataTradePlugin(
         return automataCore.withOperation(SingleOperation.TRADE) {
             turtleInventory.removeItem(selectedSlot, matchingOffer.costA.count)
             if (hasCostB) turtleInventory.removeItem(selectedSlot + 1, costB.count)
+            val resultStack = matchingOffer.assemble()
             ContainerUtils.toInventoryOrToWorld(
-                matchingOffer.result,
+                resultStack,
                 turtleInventory,
                 selectedSlot,
                 automataCore.peripheralOwner.pos.above(),
@@ -85,7 +86,7 @@ class AutomataTradePlugin(
                 merchant.playSound(merchant.notifyTradeSound, 1F, merchant.voicePitch)
             }
 
-            return@withOperation MethodResult.of(matchingOffer.result.count)
+            return@withOperation MethodResult.of(resultStack.count)
         }
     }
 

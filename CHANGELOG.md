@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.5] - 2023-11-03
+
+### Fixed
+
+- Mercantile automata trading issue [#16]
+
 ## [1.2.4] - 2023-09-14
 
 ### Added
