@@ -55,11 +55,11 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
                     DataStorageObjects.MimicExtraData[upgradeData] ?: emptyCompoundTag,
                 ),
             )
-            // Yep, this is check for SAME OBJECT
+            // Yep, this is a check for SAME OBJECT
             if (entity !== dummyBlockEntity) {
                 entity.level = turtle.level
                 minecraft.blockEntityRenderDispatcher.render(entity, partialTicks, transform, buffers)
-                entity.level = null
+                // entity.level = null; Setting this to null causes a crash when rendering a beacon.
             }
         }
     }
