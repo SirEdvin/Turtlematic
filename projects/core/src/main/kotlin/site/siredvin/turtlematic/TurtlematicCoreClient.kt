@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic
 
-import dan200.computercraft.api.client.ComputerCraftAPIClient
 import dan200.computercraft.api.client.turtle.TurtleUpgradeModeller
 import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
@@ -18,6 +17,7 @@ import site.siredvin.turtlematic.computercraft.peripheral.misc.ChunkVialPeripher
 import site.siredvin.turtlematic.computercraft.peripheral.misc.CreativeChestPeripheral
 import site.siredvin.turtlematic.computercraft.peripheral.misc.MimicPeripheral
 import site.siredvin.turtlematic.computercraft.peripheral.misc.TurtleChatterPeripheral
+import java.util.function.BiConsumer
 import java.util.function.Consumer
 import java.util.function.Supplier
 
@@ -33,6 +33,7 @@ object TurtlematicCoreClient {
         "turtle/creative_chest_left",
         "turtle/creative_chest_right",
     )
+    val EXTRA_TURTLE_MODEL_PROVIDERS: MutableList<Supplier<Pair<TurtleUpgradeSerialiser<ITurtleUpgrade>, TurtleUpgradeModeller<ITurtleUpgrade>>>> = mutableListOf()
 
     @Suppress("UNCHECKED_CAST")
     val EXTRA_ENTITY_RENDERERS: Array<Supplier<EntityType<Entity>>> = arrayOf(
@@ -52,14 +53,14 @@ object TurtlematicCoreClient {
     }
 
     fun <T : ITurtleUpgrade> asClockwise(serializer: Supplier<TurtleUpgradeSerialiser<T>>) {
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
-            serializer.get(),
-            ClockwiseTurtleModeller(),
-        )
+        EXTRA_TURTLE_MODEL_PROVIDERS.add {
+            @Suppress("UNCHECKED_CAST")
+            Pair(serializer.get() as TurtleUpgradeSerialiser<ITurtleUpgrade>, ClockwiseTurtleModeller())
+        }
     }
 
-    fun onInit() {
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+    fun onModelRegister(consumer: BiConsumer<TurtleUpgradeSerialiser<*>, TurtleUpgradeModeller<ITurtleUpgrade>>) {
+        consumer.accept(
             TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
             TurtleUpgradeModeller.sided(
                 ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.UPGRADE_ID.path}_left"),
@@ -67,12 +68,7 @@ object TurtlematicCoreClient {
             ),
         )
 
-        TurtleRenderTrickRegistry.registerTrick(
-            TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
-            ChattingTurtleRenderTrick,
-        )
-
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.MIMIC.get(),
             TurtleUpgradeModeller.sided(
                 ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.UPGRADE_ID.path}_left"),
@@ -80,19 +76,14 @@ object TurtlematicCoreClient {
             ),
         )
 
-        TurtleRenderTrickRegistry.registerTrick(
-            TurtleUpgradeSerializers.MIMIC.get(),
-            MimicTurtleRenderTrick,
-        )
-
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.CREATIVE_CHEST.get(),
             TurtleUpgradeModeller.sided(
                 ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.UPGRADE_ID.path}_left"),
                 ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.UPGRADE_ID.path}_right"),
             ),
         )
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.CHUNK_VIAL.get(),
             TurtleUpgradeModeller.sided(
                 ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.UPGRADE_ID.path}_left"),
@@ -100,29 +91,45 @@ object TurtlematicCoreClient {
             ),
         )
 
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.SOUL_SCRAPPER.get(),
             TurtleUpgradeModeller.flatItem(),
         )
 
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.LAVA_BUCKET.get(),
             TurtleUpgradeModeller.flatItem(),
         )
 
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.BOW.get(),
             AngleItemTurtleModeller(),
         )
 
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.PISTON.get(),
             FacingBlockTurtleModeller(),
         )
 
-        ComputerCraftAPIClient.registerTurtleUpgradeModeller(
+        consumer.accept(
             TurtleUpgradeSerializers.STICKY_PISTON.get(),
             FacingBlockTurtleModeller(),
+        )
+        EXTRA_TURTLE_MODEL_PROVIDERS.forEach {
+            val pair = it.get()
+            consumer.accept(pair.first, pair.second)
+        }
+    }
+
+    fun onInit() {
+        TurtleRenderTrickRegistry.registerTrick(
+            TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
+            ChattingTurtleRenderTrick,
+        )
+
+        TurtleRenderTrickRegistry.registerTrick(
+            TurtleUpgradeSerializers.MIMIC.get(),
+            MimicTurtleRenderTrick,
         )
 
         asClockwise(TurtleUpgradeSerializers.AUTOMATA_CORE)

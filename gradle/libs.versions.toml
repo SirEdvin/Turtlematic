@@ -5,8 +5,8 @@ loom = "1.2.+"
 mixinGradle = "0.8.+"
 forgegradle = "6.+"
 # Core mod dependencies
-cc-tweaked = "1.108.1"
-peripheralium = "0.6.13"
+cc-tweaked = "1.109.5"
+peripheralium = "0.6.15"
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.87.0+1.20.1"
@@ -31,7 +31,7 @@ rei = "12.0.625"
 
 [libraries]
 # Core mod dependencies
-cc-tweaked-common = {module = "cc.tweaked:common", version.ref = "cc-tweaked"}
+cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20.1-common", version.ref = "cc-tweaked"}
 cc-tweaked-common-api = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
 cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "cc-tweaked"}
 common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt-fabric"}

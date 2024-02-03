@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2024-02-03
+
+### Changed
+
+- Update code to new CC:T
+
+### Fixed
+
+- Crash when turtle mimic is beacon [#19]
+
 ## [1.2.5] - 2023-11-03
 
 ### Fixed
