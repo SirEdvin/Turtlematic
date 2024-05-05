@@ -79,15 +79,6 @@ val husbandryTooltip = Function<PeripheralItem, List<Component>> { item ->
     if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
         tooltipList.add(ModTooltip.CAN_DISABLE_ANIMAL_AI.text)
     }
-    if (TurtlematicConfig.husbandryAutomataRandomTicksEnabled) {
-        // So, this condition is a little strange, but main idea here is core tier has both traits
-        // if it has MASTERPIECE, so we need this trick
-        if (item.coreTier.traits.contains(AutomataCoreTraits.MASTERPIECE)) {
-            tooltipList.add(ModTooltip.AREA_GROWN.text)
-        } else if (item.coreTier.traits.contains(AutomataCoreTraits.APPRENTICE)) {
-            tooltipList.add(ModTooltip.SINGLE_GROWN.text)
-        }
-    }
     return@Function tooltipList
 }
 

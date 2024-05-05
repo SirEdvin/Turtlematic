@@ -95,7 +95,7 @@ object TurtleUpgradeSerializers {
         HusbandryAutomataCorePeripheral.UPGRADE_ID.toNetherite(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
-            ClockwiseTurtleUpgrade.ticker(upgradeId, core, ::HusbandryAutomataCorePeripheral, TickerFunctions::netheriteHusbandryTick)
+            ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
         },
     )
 
@@ -103,7 +103,7 @@ object TurtleUpgradeSerializers {
         HusbandryAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
-            StarboundTurtleUpgrade.ticker(upgradeId, core, ::HusbandryAutomataCorePeripheral, TickerFunctions::starboundHusbandryTick)
+            StarboundTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
         },
     )
 
@@ -111,7 +111,7 @@ object TurtleUpgradeSerializers {
         HusbandryAutomataCorePeripheral.UPGRADE_ID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
-            ClockwiseTurtleUpgrade.ticker(upgradeId, core, ::HusbandryAutomataCorePeripheral, TickerFunctions::creativeHusbandryTick)
+            ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
         },
     )
 

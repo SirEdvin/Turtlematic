@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Correct drop handling for capture plugin
 
+### Removed
+
+- Husbandry automata will no longer grow crops around. Mostly because of terrible performance issues with this feature.
+
 ## [1.2.6] - 2024-02-03
 
 ### Changed

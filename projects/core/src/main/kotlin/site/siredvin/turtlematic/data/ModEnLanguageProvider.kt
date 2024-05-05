@@ -76,8 +76,6 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         add(ModTooltip.ENCHANTMENT_NO_WIPE, "  §6§nEnchantment extracting always perfect")
         add(ModTooltip.ENCHANTMENT_TREASURE_ALLOWED, "  §6§nTreasure enchantment can be applied too")
         add(ModTooltip.FUEL_CONSUMPTION_DISABLED, "  §6§nFuel consumption disabled")
-        add(ModTooltip.SINGLE_GROWN, "  §6§nPeriodically accelerate grown of random crop in interaction radius")
-        add(ModTooltip.AREA_GROWN, "  §6§nPeriodically accelerate grown of all crops in interaction radius")
         add(ModTooltip.CAN_DISABLE_ANIMAL_AI, "  §6§nCan disable animals AI")
         add(ModTooltip.CAN_DISABLE_HOSTILE_AI, "  §6§nCan disable hostile mobs AI")
         add(ModTooltip.HAS_TRADE_ABILITIES, "  §6§nCan see and perform merchant trades")
