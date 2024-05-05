@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
@@ -21,6 +22,7 @@ import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
 import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
 import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.peripheralium.util.representation.LuaRepresentation
+import site.siredvin.peripheralium.util.world.DropConsumer
 import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.peripheralium.xplat.XplatRegistries
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
@@ -114,7 +116,9 @@ class AutomataCapturePlugin(
                 val nbt = CompoundTag()
                 nbt.putString("entity", EntityType.getKey(entity.type).toString())
                 entity.saveWithoutId(nbt)
+                DropConsumer.configure(entity.level(), entity.blockPosition(), { ItemStack.EMPTY }, range = 4.0)
                 entity.remove(Entity.RemovalReason.CHANGED_DIMENSION)
+                DropConsumer.reset()
                 saveSomething(nbt, InteractionMode.ENTITY)
                 MethodResult.of(true)
             },
@@ -145,7 +149,9 @@ class AutomataCapturePlugin(
                     serializedData.put("nbt", entity.saveWithoutMetadata())
                 }
                 saveSomething(serializedData, InteractionMode.BLOCK)
+                DropConsumer.configure(level, hit.blockPos, { ItemStack.EMPTY }, range = 4.0)
                 level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
+                DropConsumer.reset()
                 MethodResult.of(true)
             },
             IPeripheralCheck {
