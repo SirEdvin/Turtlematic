@@ -6,12 +6,14 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.shared.TurtlePermissions
+import dan200.computercraft.shared.util.DropConsumer
 import dan200.computercraft.shared.util.NBTUtil
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
@@ -81,7 +83,10 @@ class AutomataCapturePlugin(
                 val nbt = CompoundTag()
                 nbt.putString("entity", EntityType.getKey(entity.type).toString())
                 entity.saveWithoutId(nbt)
+                // So, we need this before capture to make sure that all items from entity would be removed!
+                DropConsumer.set(entity.level, entity.blockPosition()) { ItemStack.EMPTY }
                 entity.remove(Entity.RemovalReason.CHANGED_DIMENSION)
+                DropConsumer.clear()
                 saveSomething(nbt, InteractionMode.ENTITY)
                 MethodResult.of(true)
             },
@@ -122,7 +127,10 @@ class AutomataCapturePlugin(
                     serializedData.put("nbt", entity.saveWithoutMetadata())
                 }
                 saveSomething(serializedData, InteractionMode.BLOCK)
+                // So, we need this before capture to make sure that all items from block would be removed!
+                DropConsumer.set(level, hit.blockPos) { ItemStack.EMPTY }
                 level.setBlockAndUpdate(hit.blockPos, Blocks.AIR.defaultBlockState())
+                DropConsumer.clear()
                 MethodResult.of(true)
             },
             IPeripheralCheck {

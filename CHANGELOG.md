@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Correct drop handling for capture plugin
+
 ## [0.5.4] - 2023-05-18
 
 ### Added
