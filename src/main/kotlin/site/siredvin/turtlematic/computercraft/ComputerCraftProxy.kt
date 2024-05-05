@@ -33,23 +33,17 @@ object ComputerCraftProxy {
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.AUTOMATA_CORE) { turtle, side, tier -> AutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.HUSBANDRY_AUTOMATA_CORE) { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
-        TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.ticker(
+        TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(
             Items.NETHERITE_HUSBANDRY_AUTOMATA_CORE,
-            { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) },
-            TickerFunctions::netheriteHusbandryTick
-        ))
+        ) { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.NETHERITE_END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
-        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.ticker(
+        TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(
             Items.STARBOUND_HUSBANDRY_AUTOMATA_CORE,
-            { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) },
-            TickerFunctions::starboundHusbandryTick
-        ))
+        ) { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.STARBOUND_END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
-        TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.ticker(
+        TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(
             Items.CREATIVE_HUSBANDRY_AUTOMATA_CORE,
-            { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) },
-            TickerFunctions::creativeHusbandryTick
-        ))
+        ) { turtle, side, tier -> HusbandryAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(ClockwiseAnimatedTurtleUpgrade.dynamic(Items.CREATIVE_END_AUTOMATA_CORE) { turtle, side, tier -> EndAutomataCorePeripheral(turtle, side, tier) })
         TURTLE_UPGRADES.add(StarboundTurtleUpgrade.dynamic(Items.ENORMOUS_AUTOMATA_CORE) { turtle, side, tier -> EnormousAutomataCorePeripheral(turtle, side, tier) })
 
