@@ -9,7 +9,7 @@ val modVersion: String by extra
 val minecraftVersion: String by extra
 val modBaseName: String by extra
 
-baseShaking {git st
+baseShaking {
     projectPart.set("fabric")
     integrationRepositories.set(true)
     shake()
