@@ -68,8 +68,8 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
     private val enchantmentPower: Int
         get() {
             val enchantmentPower = ValueContainer(0)
-            val level = level!!
-            ScanUtils.traverseBlocks(level, pos, 2, { blockState, blockPos ->
+            val level = peripheralOwner.level!!
+            ScanUtils.traverseBlocks(level, peripheralOwner.pos, 2, { blockState, blockPos ->
                 if (blockState.`is`(BlockTags.ENCHANTMENT_POWER_PROVIDER)) {
                     enchantmentPower.value = enchantmentPower.value + 1
                 } else if (blockState.`is`(ComputerCraftTags.Blocks.TURTLE)) {
@@ -91,7 +91,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
 
     @LuaFunction(mainThread = true)
     fun refreshEnchantments() {
-        enchantmentSeed += level!!.random.nextLong()
+        enchantmentSeed += peripheralOwner.level!!.random.nextLong()
     }
 
     @LuaFunction(mainThread = true)
@@ -178,7 +178,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             }
             val enchants: MutableMap<Enchantment, Int> = EnchantmentHelper.getEnchantments(selectedItem)
             if (!tier.traits.contains(AutomataCoreTraits.SKILLED)) {
-                if (level!!.random.nextInt(100) < TurtlematicConfig.enchantmentWipeChance * 100) {
+                if (peripheralOwner.level!!.random.nextInt(100) < TurtlematicConfig.enchantmentWipeChance * 100) {
                     enchants.keys.stream().findAny().ifPresent(enchants::remove)
                 }
             }

@@ -112,7 +112,7 @@ class HusbandryAutomataCorePeripheral(
         if (result !is BlockHitResult) {
             return MethodResult.of(null, "Nothing to harvest from")
         }
-        val level = level!!
+        val level = peripheralOwner.level!!
         val blockState = level.getBlockState(result.blockPos)
         val ageProperty = blockState.properties.find { it.name == "age" } as IntegerProperty?
             ?: return MethodResult.of(null, "This block is not harvestable")

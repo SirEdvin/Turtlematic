@@ -147,7 +147,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             if (potion === Potions.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
             turtleInventory.setItem(
                 selectedSlot,
-                dispenseBehavior.dispense(BlockSourceImpl(level as ServerLevel, pos), selectedStack, limitedPower, angle),
+                dispenseBehavior.dispense(BlockSourceImpl(peripheralOwner.level as ServerLevel, peripheralOwner.pos), selectedStack, limitedPower, angle),
             )
             MethodResult.of(true)
         })

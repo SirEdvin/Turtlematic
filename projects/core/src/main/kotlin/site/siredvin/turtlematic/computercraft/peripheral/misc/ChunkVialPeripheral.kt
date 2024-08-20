@@ -35,7 +35,7 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
         get() = peripheralOwner.level!!.getChunk(peripheralOwner.pos).pos
 
     fun updateChunkState() {
-        val level = level as ServerLevel
+        val level = peripheralOwner.level as ServerLevel
         val manager = ChunkManager.get(level)
         if (loadedChunk == null || loadedChunk!! != chunkPos) {
             setLoadedChunk(chunkPos, manager, level)

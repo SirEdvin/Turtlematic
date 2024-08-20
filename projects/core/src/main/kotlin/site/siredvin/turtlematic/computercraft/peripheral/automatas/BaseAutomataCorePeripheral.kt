@@ -67,7 +67,7 @@ abstract class BaseAutomataCorePeripheral(
     }
 
     fun toDistance(target: BlockPos): SingleOperationContext {
-        return SingleOperationContext(1, pos.distManhattan(target))
+        return SingleOperationContext(1, peripheralOwner.pos.distManhattan(target))
     }
 
     @Throws(LuaException::class)

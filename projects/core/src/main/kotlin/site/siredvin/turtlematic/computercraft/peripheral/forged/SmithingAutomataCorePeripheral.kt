@@ -66,7 +66,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             }
             return@withPlayer hit
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
-        val blockState = level!!.getBlockState(hit.blockPos)
+        val blockState = peripheralOwner.level!!.getBlockState(hit.blockPos)
         if (blockState.isAir) {
             return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
         }
@@ -81,7 +81,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         val limitedInventory = LimitedInventory(turtleInventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
         val limit = arguments.optInt(1, Int.MAX_VALUE)
         val smeltCount = min(limit, limitedInventory.getItem(0).count)
-        val level: Level = level!!
+        val level: Level = peripheralOwner.level!!
         val optRecipe: Optional<SmeltingRecipe> =
             level.recipeManager.getRecipeFor(RecipeType.SMELTING, limitedInventory, level)
         return if (!optRecipe.isPresent) {
@@ -100,7 +100,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                     result,
                     turtleInventory,
                     peripheralOwner.turtle.selectedSlot,
-                    pos.relative(peripheralOwner.facing),
+                    peripheralOwner.pos.relative(peripheralOwner.facing),
                     level,
                 )
                 peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
@@ -125,7 +125,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         }
         val blockState = blockSearchResult.left!!.right
         val hit = blockSearchResult.left!!.left
-        val level = level!!
+        val level = peripheralOwner.level!!
         val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
         val optRecipe = level.recipeManager.getRecipeFor(RecipeType.SMELTING, fakeContainer, level)
         if (optRecipe.isEmpty) {
@@ -163,7 +163,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             }
             val limitedInventory =
                 LimitedInventory(turtleInventory, intArrayOf(selectedSlot, selectedSlot + 1, selectedSlot + 2))
-            val level: Level = level!!
+            val level: Level = peripheralOwner.level!!
             val optRecipe: Optional<SmithingRecipe> =
                 level.recipeManager.getRecipeFor(RecipeType.SMITHING, limitedInventory, level)
             if (!optRecipe.isPresent) return@withOperation MethodResult.of(null, "Cannot find smithing recipe")
@@ -176,7 +176,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                 result,
                 turtleInventory,
                 peripheralOwner.turtle.selectedSlot,
-                pos.relative(peripheralOwner.facing),
+                peripheralOwner.pos.relative(peripheralOwner.facing),
                 level,
             )
             MethodResult.of(true)

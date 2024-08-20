@@ -112,14 +112,14 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
             val stackToDispense = selectedStack.split(realLimit)
             val dispensedResult = if (suppressExtraLogic.orElse(false)) {
                 suppressedDispenseBehavior.dispense(
-                    BlockSourceImpl(level as ServerLevel, pos),
+                    BlockSourceImpl(peripheralOwner.level as ServerLevel, peripheralOwner.pos),
                     stackToDispense,
                     limitedPower,
                     currentAngle,
                 )
             } else {
                 dispenseBehavior.dispense(
-                    BlockSourceImpl(level as ServerLevel, pos),
+                    BlockSourceImpl(peripheralOwner.level as ServerLevel, peripheralOwner.pos),
                     stackToDispense,
                     limitedPower,
                     currentAngle,

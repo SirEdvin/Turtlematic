@@ -5,8 +5,6 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.npc.Villager
-import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.trading.Merchant
 import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
@@ -62,17 +60,10 @@ class MercantileAutomataCorePeripheral(
                         return@AutomataRestockPlugin MethodResult.of(null, "Somehow targeted entity is not merchant")
                     }
                     val merchant: Merchant = it
-                    if (!merchant.canRestock()) {
-                        return@AutomataRestockPlugin MethodResult.of(null, "Merchant cannot provide restock for now")
-                    }
-                    if (merchant is Villager) {
-                        merchant.restock()
-                        return@AutomataRestockPlugin MethodResult.of(true)
-                    }
-                    if (merchant is WanderingTrader) {
-                        merchant.canRestock()
-                    }
-                    return@AutomataRestockPlugin MethodResult.of(null, "Current merchant cannot be restock at all")
+                    // So, we ignore can Restock, because nobody uses it and it useless
+                    // Reset probably too OP, but since villager reset already existed, it probably would not do too much harm
+                    merchant.offers.forEach { it1 -> it1.resetUses() }
+                    return@AutomataRestockPlugin MethodResult.of(true)
                 }, suitableEntity),
             )
         }

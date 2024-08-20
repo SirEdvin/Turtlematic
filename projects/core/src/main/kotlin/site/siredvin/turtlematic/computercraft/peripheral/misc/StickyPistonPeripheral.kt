@@ -40,8 +40,8 @@ class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     fun push(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
         val direction = if (directionArgument.isEmpty) peripheralOwner.facing else VerticalDirection.luaValueOf(directionArgument.get()).minecraftDirection
-        val level = level!!
-        val resolver = PistonStructureResolver(level, pos, direction, true)
+        val level = peripheralOwner.level!!
+        val resolver = PistonStructureResolver(level, peripheralOwner.pos, direction, true)
         return if (!resolver.resolve()) {
             MethodResult.of(null, "Cannot resolve piston structure")
         } else {
@@ -64,8 +64,8 @@ class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     fun pull(arguments: IArguments): MethodResult {
         val directionArgument = arguments.optString(0)
         val direction = if (directionArgument.isEmpty) peripheralOwner.facing else VerticalDirection.luaValueOf(directionArgument.get()).minecraftDirection
-        val level = level!!
-        val resolver = PistonStructureResolver(level, pos.relative(direction), direction, false)
+        val level = peripheralOwner.level!!
+        val resolver = PistonStructureResolver(level, peripheralOwner.pos.relative(direction), direction, false)
         return if (!resolver.resolve()) {
             MethodResult.of(null, "Cannot resolve piston structure")
         } else {

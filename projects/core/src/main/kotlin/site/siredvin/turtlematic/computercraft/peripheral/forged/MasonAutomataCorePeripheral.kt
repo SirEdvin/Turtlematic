@@ -180,7 +180,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             }
             return@withPlayer hit
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
-        val blockState = level!!.getBlockState(hit.blockPos)
+        val blockState = peripheralOwner.level!!.getBlockState(hit.blockPos)
         if (blockState.isAir) {
             return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
         }
@@ -191,7 +191,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     }
 
     private fun chiselItem(target: String, arguments: IArguments): MethodResult {
-        val level = level!!
+        val level = peripheralOwner.level!!
         val limit = arguments.optInt(2, Int.MAX_VALUE)
         val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(target))
         if (targetItem == Items.AIR) {
@@ -211,7 +211,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             output,
             turtleInventory,
             peripheralOwner.turtle.selectedSlot,
-            pos.relative(peripheralOwner.facing),
+            peripheralOwner.pos.relative(peripheralOwner.facing),
             level,
         )
         return MethodResult.of(true)
@@ -226,7 +226,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 directionArgument.get(),
             )
         }
-        val level = level!!
+        val level = peripheralOwner.level!!
         val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(target))
         if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
@@ -273,7 +273,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 directionArgument.get(),
             )
         }
-        val level = level!!
+        val level = peripheralOwner.level!!
         val fakeContainer: Container? = if (mode == TransformInteractionMode.BLOCK) {
             val blockState = peripheralOwner.withPlayer({
                 val hit = it.findHit(skipEntity = true, skipBlock = false)
@@ -324,7 +324,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 directionArgument.get(),
             )
         }
-        val level = level!!
+        val level = peripheralOwner.level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
             if (findBlockResult.rightPresent()) {
@@ -348,7 +348,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 directionArgument.get(),
             )
         }
-        val level = level!!
+        val level = peripheralOwner.level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
             if (findBlockResult.rightPresent()) {
@@ -407,7 +407,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 directionArgument.get(),
             )
         }
-        val level = level!!
+        val level = peripheralOwner.level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
             if (findBlockResult.rightPresent()) {

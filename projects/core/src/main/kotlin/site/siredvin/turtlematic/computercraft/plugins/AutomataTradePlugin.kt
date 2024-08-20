@@ -7,6 +7,8 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.npc.Villager
+import net.minecraft.world.entity.npc.WanderingTrader
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.trading.Merchant
 import net.minecraft.world.item.trading.MerchantOffer
@@ -48,21 +50,22 @@ class AutomataTradePlugin(
         if (matchingOffers.isEmpty()) {
             return MethodResult.of(null, "No matching trades found")
         }
-        var matchingOffer: MerchantOffer?
+
         if (matchingOffers.size > 1) {
             if (indexHint == null) {
                 return MethodResult.of(null, "Several overlapping offers found, please, provide index hint")
             }
+            if (matchingOffers[indexHint] == null) {
+                return MethodResult.of(null, "Incorrect index hint, there is no matching order for this index hint")
+            }
         }
-        if (matchingOffers[indexHint] == null) {
-            return MethodResult.of(null, "Incorrect index hint, there is no matching order for this index hint")
-        }
-        matchingOffer = matchingOffers[indexHint]
-        if (matchingOffers.size == 1) {
-            matchingOffer = matchingOffers.values.first()
+        val matchingOffer: MerchantOffer? = if (matchingOffers.size == 1) {
+            matchingOffers.values.first()
+        } else {
+            matchingOffers[indexHint]
         }
         if (matchingOffer == null) {
-            return MethodResult.of(null, "Some random error in mod code, thats, well, should not happen")
+            return MethodResult.of(null, "Some random error in mod code, that's, well, should not happen")
         }
         val costB: ItemStack = matchingOffer.costB
         val hasCostB = !costB.isEmpty
@@ -74,6 +77,7 @@ class AutomataTradePlugin(
             turtleInventory.removeItem(selectedSlot, matchingOffer.costA.count)
             if (hasCostB) turtleInventory.removeItem(selectedSlot + 1, costB.count)
             val resultStack = matchingOffer.assemble()
+            val acquiredCount = resultStack.count
             ContainerUtils.toInventoryOrToWorld(
                 resultStack,
                 turtleInventory,
@@ -82,11 +86,11 @@ class AutomataTradePlugin(
                 automataCore.peripheralOwner.level!!,
             )
             merchant.notifyTrade(matchingOffer)
-            if (merchant is LivingEntity) {
+            if (merchant is Villager) {
                 merchant.playSound(merchant.notifyTradeSound, 1F, merchant.voicePitch)
             }
 
-            return@withOperation MethodResult.of(resultStack.count)
+            return@withOperation MethodResult.of(acquiredCount)
         }
     }
 
