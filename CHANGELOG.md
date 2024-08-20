@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Strange mercentile automata trade logic
+- Strange mercantile automata trade logic
 - Now `restock` works for a lot more 
 
 ## [1.3.0] - 2024-05-05
