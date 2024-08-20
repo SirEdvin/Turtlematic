@@ -5,18 +5,18 @@ loom = "1.2.+"
 mixinGradle = "0.8.+"
 forgegradle = "6.+"
 # Core mod dependencies
-cc-tweaked = "1.109.5"
-peripheralium = "0.6.15"
+cc-tweaked = "1.112.0"
+peripheralium = "0.7.0"
 mixin = "0.8.5"
 # Fabric dependencies
-fabric-api = "0.87.0+1.20.1"
-fabric-loader = "0.14.21"
-fabric-kotlin = "1.10.0+kotlin.1.9.0"
+fabric-api = "0.92.0+1.20.1"
+fabric-loader = "0.15.11"
+fabric-kotlin = "1.11.0+kotlin.2.0.0"
 forgeconfigapirt-fabric = "8.0.0"
 modmenu = "7.2.1"
 # Forge dependencies
-forge = "47.1.0"
-forge-kotlin = "4.3.0"
+forge = "47.2.0"
+forge-kotlin = "4.11.0"
 parchment = "2023.07.16"
 parchmentMc = "1.20.1"
 # Extra mod dependencies
@@ -28,6 +28,8 @@ jei = "15.1.0.19"
 rei = "12.0.625"
 
 # Shared integration mod dependency
+goblin-traders-forge = "4802505"  # 1.20.1-1.9.3.jar
+framework-forge = "5388226" # 1.20.1-0.7.6.jar
 
 [libraries]
 # Core mod dependencies
@@ -65,6 +67,10 @@ cloth-config-fabric = {module = "me.shedaniel.cloth:cloth-config-fabric", versio
 architectury-forge = {module = "dev.architectury:architectury-forge", version.ref="architectury"}
 architectury-fabric = {module = "dev.architectury:architectury-fabric", version.ref="architectury"}
 
+# Forge integration dependencies
+goblin-traders-forge = {module="curse.maven:goblin-traders-forge-363703", version.ref="goblin-traders-forge"}
+framework-forge = {module="curse.maven:framework-forge-549225", version.ref="framework-forge"}
+
 [plugins]
 vanillaGradle = { id = "org.spongepowered.gradle.vanilla", version.ref = "sponge"}
 loom = {id = "fabric-loom", version.ref = "loom"}
@@ -81,7 +87,7 @@ forge-base = ["cc-tweaked-forge", "peripheralium-forge"]
 
 # Minecraft
 externalMods-forge-runtime = [
-     "jei-forge", "architectury-forge", "cloth-config-forge"
+     "jei-forge", "architectury-forge", "cloth-config-forge", "goblin-traders-forge", "framework-forge"
 ]
 externalMods-fabric-runtime = [
      "rei-fabric", "architectury-fabric", "cloth-config-fabric"
