@@ -27,9 +27,9 @@ import site.siredvin.turtlematic.tags.BlockTags
 import kotlin.math.max
 
 open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
+    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
     companion object : PeripheralConfiguration {
-        override val TYPE = "enchantingAutomata"
+        override val type = "enchantingAutomata"
 
         private const val MAX_ENCHANTMENT_LEVEL = 30
     }
@@ -49,7 +49,9 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             }
             return storedEnchantmentSeed
         }
-        set(value) { storedEnchantmentSeed = value }
+        set(value) {
+            storedEnchantmentSeed = value
+        }
 
     override val peripheralConfiguration: MutableMap<String, Any>
         get() {

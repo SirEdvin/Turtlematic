@@ -43,7 +43,7 @@ import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
 import java.util.function.Predicate
 
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
+    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
     interface MasonRecipeHandler {
         fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack>
@@ -100,7 +100,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     }
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "masonAutomata"
+        override val type = "masonAutomata"
 
         private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()
         private val RECIPE_TO_ID = mutableMapOf<Class<*>, String>()

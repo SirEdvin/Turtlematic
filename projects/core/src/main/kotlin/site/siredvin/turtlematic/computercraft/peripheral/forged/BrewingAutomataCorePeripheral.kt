@@ -39,10 +39,10 @@ import site.siredvin.turtlematic.util.TurtleDispenseBehavior
 import java.util.function.Predicate
 
 class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
+    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "brewingAutomata"
+        override val type = "brewingAutomata"
         private val suitableEntity: Predicate<Entity> = Predicate<Entity> { entity: Entity -> entity is ZombieVillager }
     }
 

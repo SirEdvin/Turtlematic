@@ -40,7 +40,7 @@ class HusbandryAutomataCorePeripheral(
     side: TurtleSide,
     tier: IAutomataCoreTier,
 ) : BaseAutomataCorePeripheral(
-    TYPE,
+    type,
     turtle,
     side,
     tier,
@@ -75,7 +75,7 @@ class HusbandryAutomataCorePeripheral(
     }
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "husbandryAutomata"
+        override val type = "husbandryAutomata"
         val isAnimal =
             Predicate { entity1: Entity ->
                 entity1.type.category.isFriendly || entity1.type.category == MobCategory.CREATURE || entity1.type.`is`(EntityTags.ANIMAL)

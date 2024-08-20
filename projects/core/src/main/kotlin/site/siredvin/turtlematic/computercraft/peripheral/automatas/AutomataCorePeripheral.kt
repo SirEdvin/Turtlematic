@@ -17,7 +17,7 @@ class AutomataCorePeripheral(
     side: TurtleSide,
     tier: IAutomataCoreTier,
 ) : BaseAutomataCorePeripheral(
-    TYPE,
+    type,
     turtle,
     side,
     tier,
@@ -36,7 +36,7 @@ class AutomataCorePeripheral(
     }
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "automata"
+        override val type = "automata"
     }
 
     override val isEnabled: Boolean

@@ -16,7 +16,9 @@ enum class CountOperation(
     ;
 
     enum class CountPolicy(private val factorFunction: Function<Int, Int>) {
-        MULTIPLY(Function { c: Int -> c }), IGNORE(Function { 1 });
+        MULTIPLY(Function { c: Int -> c }),
+        IGNORE(Function { 1 }),
+        ;
 
         fun getFactor(count: Int): Int {
             return factorFunction.apply(count)

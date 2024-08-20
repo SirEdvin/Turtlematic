@@ -22,7 +22,7 @@ class ProtectiveAutomataCorePeripheral(
     side: TurtleSide,
     tier: IAutomataCoreTier,
 ) : BaseAutomataCorePeripheral(
-    TYPE,
+    type,
     turtle,
     side,
     tier,
@@ -53,7 +53,7 @@ class ProtectiveAutomataCorePeripheral(
     }
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "protectiveAutomata"
+        override val type = "protectiveAutomata"
         private val isLivingEntity =
             Predicate { entity1: Entity? -> entity1 is LivingEntity }
         private val isNotPlayer =

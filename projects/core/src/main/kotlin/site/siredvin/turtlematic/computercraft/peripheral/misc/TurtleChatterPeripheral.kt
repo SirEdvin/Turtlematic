@@ -10,10 +10,10 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.util.DataStorageObjects
 
 class TurtleChatterPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "chatter"
+        override val type = "chatter"
     }
 
     override val isEnabled: Boolean

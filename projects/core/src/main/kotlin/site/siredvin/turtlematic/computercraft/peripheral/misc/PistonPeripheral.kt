@@ -17,10 +17,10 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.util.DataStorageObjects
 
 class PistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "piston"
+        override val type = "piston"
     }
 
     override val isEnabled: Boolean

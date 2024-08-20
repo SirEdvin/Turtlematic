@@ -20,9 +20,9 @@ import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.util.DataStorageObjects
 
 class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
     companion object : PeripheralConfiguration {
-        override val TYPE = "mimic"
+        override val type = "mimic"
     }
 
     override val isEnabled: Boolean

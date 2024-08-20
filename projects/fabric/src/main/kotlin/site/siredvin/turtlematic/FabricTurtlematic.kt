@@ -23,7 +23,7 @@ object FabricTurtlematic : ModInitializer {
         TurtlematicCommonHooks.commonSetup()
         // Load all integrations
         // Pretty important to setup configuration after integration loading!
-        ForgeConfigRegistry.INSTANCE.register(TurtlematicCore.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC)
+        ForgeConfigRegistry.INSTANCE.register(TurtlematicCore.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.commonConfigSpec)
         registerHooks()
     }
 

@@ -16,10 +16,10 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.util.Optional
 
 class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "creative_chest"
+        override val type = "creative_chest"
     }
 
     override val isEnabled: Boolean

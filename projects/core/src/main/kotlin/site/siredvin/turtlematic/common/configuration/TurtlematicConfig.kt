@@ -8,163 +8,163 @@ import site.siredvin.turtlematic.computercraft.operations.*
 
 object TurtlematicConfig : IOperationAbilityConfig {
     override val cooldownTresholdLevel: Int
-        get() = ConfigHolder.COMMON_CONFIG.COOLDOWN_TRESHOLD_LEVEL.get()
+        get() = ConfigHolder.commonConfig.cooldownTresholdLevel.get()
     val xpToFuelRate: Int
-        get() = ConfigHolder.COMMON_CONFIG.XP_TO_FUEL_RATE.get()
+        get() = ConfigHolder.commonConfig.xpToFuelRate.get()
 
     // additonal turtle peripherals
     val enableTurtleChatter: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_TURTLE_CHATTER.get()
+        get() = ConfigHolder.commonConfig.enableTurtleChatter.get()
 
     val enableCreativeChest: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_CREATIVE_CHEST.get()
+        get() = ConfigHolder.commonConfig.enableCreativeChest.get()
 
     val enablePistonTurtle: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_TURTLE_PISTON.get()
+        get() = ConfigHolder.commonConfig.enableTurtlePiston.get()
 
     val enableStickyPistonTurtle: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_STICKY_TURTLE_PISTON.get()
+        get() = ConfigHolder.commonConfig.enableStickyTurtlePiston.get()
 
     val pistonVolumeLevel: Double
-        get() = ConfigHolder.COMMON_CONFIG.PISTON_VOLUME_LEVEL.get()
+        get() = ConfigHolder.commonConfig.pistonVolumeLevel.get()
 
     val pistonPitchLevel: Double
-        get() = ConfigHolder.COMMON_CONFIG.PISTON_PITCH_LEVEL.get()
+        get() = ConfigHolder.commonConfig.pistonPitchLevel.get()
 
     val enableLavaBucket: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_LAVA_BUCKET.get()
+        get() = ConfigHolder.commonConfig.enableLavaBucket.get()
 
     val enableChunkVial: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_CHUNK_VIAL.get()
+        get() = ConfigHolder.commonConfig.enableChunkVial.get()
 
     val chunkLoadedTimeLimit: Long
-        get() = ConfigHolder.COMMON_CONFIG.CHUNK_VIAL_TIME_LIMIT.get()
+        get() = ConfigHolder.commonConfig.chunkVialTimeLimit.get()
 
     val enableBowTurtle: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_BOW_TURTLE.get()
+        get() = ConfigHolder.commonConfig.enableBowTurtle.get()
 
     val bowTurtlePowerLimit: Double
-        get() = ConfigHolder.COMMON_CONFIG.BOW_TURTLE_POWER_LIMIT.get()
+        get() = ConfigHolder.commonConfig.bowTurtlePowerLimit.get()
 
     val enableMimicGadget: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MIMIC_GADGET.get()
+        get() = ConfigHolder.commonConfig.enableMimicGadget.get()
 
     val mimicGadgetRMLLimit: Int
-        get() = ConfigHolder.COMMON_CONFIG.MIMIC_GADGET_RML_LIMIT.get()
+        get() = ConfigHolder.commonConfig.mimicGadgetRMLLimit.get()
 
     // automata core toggles
     val enableAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableAutomataCore.get()
     val enableEndAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_END_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableEndAutomataCore.get()
     val enableHusbandryAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_HUSBANDRY_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableHusbandryAutomataCore.get()
     val enableProtectiveAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_PROTECTIVE_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableProtectiveAutomataCore.get()
     val enableEnormousAutomata: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENORMOUS_AUTOMATA.get()
+        get() = ConfigHolder.commonConfig.enableEnormousAutomataCore.get()
 
     // forged automata cores toggles
     val enableBrewingAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_BREWING_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableBrewingAutomataCore.get()
 
     val enableSmithingAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_SMITHING_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableSmitingAutomataCore.get()
 
     val enableEnchantingAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_ENCHANTING_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableEnchantingAutomataCore.get()
 
     val enableMasonAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MASON_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableMasonAutomataCore.get()
     val enableMercantileAutomataCore: Boolean
-        get() = ConfigHolder.COMMON_CONFIG.ENABLE_MERCANTILE_AUTOMATA_CORE.get()
+        get() = ConfigHolder.commonConfig.enableMercantileAutomataCore.get()
 
     // automata cores configuration
     val endAutomataCoreWarpPointLimit: Int
-        get() = ConfigHolder.COMMON_CONFIG.END_AUTOMATA_CORE_WARP_POINT_LIMIT.get()
+        get() = ConfigHolder.commonConfig.endAutomataCoreWarpPointLimit.get()
 
     val durabilityRestoreChance: Double
-        get() = ConfigHolder.COMMON_CONFIG.DURABILITY_RESTORE_CHANCE.get()
+        get() = ConfigHolder.commonConfig.durabilityRestoreChance.get()
 
     val starboundAutomataFuelGenerationChance: Double
-        get() = ConfigHolder.COMMON_CONFIG.STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE.get()
+        get() = ConfigHolder.commonConfig.starboundAutomataFuelGenerationChance.get()
 
     val starboundAutomataFuelGenerationAmount: Int
-        get() = ConfigHolder.COMMON_CONFIG.STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT.get()
+        get() = ConfigHolder.commonConfig.starboundAutomataFuelGenerationAmount.get()
 
     // forged automata cores configuration
     val brewingXPReward: Double
-        get() = ConfigHolder.COMMON_CONFIG.BREWING_XP_REWARD.get()
+        get() = ConfigHolder.commonConfig.brewingXpReward.get()
 
     val brewingPowerLimit: Double
-        get() = ConfigHolder.COMMON_CONFIG.BREWING_POWER_LIMIT.get()
+        get() = ConfigHolder.commonConfig.brewingPowerLimit.get()
 
     val enchantmentWipeChance: Double
-        get() = ConfigHolder.COMMON_CONFIG.ENCHANTING_WIPE_CHANGE.get()
+        get() = ConfigHolder.commonConfig.enchantingWipeChance.get()
 
     class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
         // Generic configuration
-        var COOLDOWN_TRESHOLD_LEVEL: ForgeConfigSpec.IntValue
-        var XP_TO_FUEL_RATE: ForgeConfigSpec.IntValue
+        var cooldownTresholdLevel: ForgeConfigSpec.IntValue
+        var xpToFuelRate: ForgeConfigSpec.IntValue
 
         // Extra turtle peripherals
-        val ENABLE_TURTLE_CHATTER: ForgeConfigSpec.BooleanValue
-        val ENABLE_CREATIVE_CHEST: ForgeConfigSpec.BooleanValue
-        val ENABLE_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
-        val ENABLE_STICKY_TURTLE_PISTON: ForgeConfigSpec.BooleanValue
-        val PISTON_VOLUME_LEVEL: ForgeConfigSpec.DoubleValue
-        val PISTON_PITCH_LEVEL: ForgeConfigSpec.DoubleValue
-        val ENABLE_LAVA_BUCKET: ForgeConfigSpec.BooleanValue
-        val ENABLE_CHUNK_VIAL: ForgeConfigSpec.BooleanValue
-        val CHUNK_VIAL_TIME_LIMIT: ForgeConfigSpec.LongValue
-        val ENABLE_BOW_TURTLE: ForgeConfigSpec.BooleanValue
-        val BOW_TURTLE_POWER_LIMIT: ForgeConfigSpec.DoubleValue
-        val ENABLE_MIMIC_GADGET: ForgeConfigSpec.BooleanValue
-        val MIMIC_GADGET_RML_LIMIT: ForgeConfigSpec.IntValue
+        val enableTurtleChatter: ForgeConfigSpec.BooleanValue
+        val enableCreativeChest: ForgeConfigSpec.BooleanValue
+        val enableTurtlePiston: ForgeConfigSpec.BooleanValue
+        val enableStickyTurtlePiston: ForgeConfigSpec.BooleanValue
+        val pistonVolumeLevel: ForgeConfigSpec.DoubleValue
+        val pistonPitchLevel: ForgeConfigSpec.DoubleValue
+        val enableLavaBucket: ForgeConfigSpec.BooleanValue
+        val enableChunkVial: ForgeConfigSpec.BooleanValue
+        val chunkVialTimeLimit: ForgeConfigSpec.LongValue
+        val enableBowTurtle: ForgeConfigSpec.BooleanValue
+        val bowTurtlePowerLimit: ForgeConfigSpec.DoubleValue
+        val enableMimicGadget: ForgeConfigSpec.BooleanValue
+        val mimicGadgetRMLLimit: ForgeConfigSpec.IntValue
 
         // Automata Core
-        val ENABLE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_END_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_HUSBANDRY_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_PROTECTIVE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_ENORMOUS_AUTOMATA: ForgeConfigSpec.BooleanValue
+        val enableAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableEndAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableHusbandryAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableProtectiveAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableEnormousAutomataCore: ForgeConfigSpec.BooleanValue
 
         // Forged automata core
-        val ENABLE_BREWING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_SMITHING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_ENCHANTING_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_MASON_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
-        val ENABLE_MERCANTILE_AUTOMATA_CORE: ForgeConfigSpec.BooleanValue
+        val enableBrewingAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableSmitingAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableEnchantingAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableMasonAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableMercantileAutomataCore: ForgeConfigSpec.BooleanValue
 
-        val STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE: ForgeConfigSpec.DoubleValue
-        val STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT: ForgeConfigSpec.IntValue
-        val END_AUTOMATA_CORE_WARP_POINT_LIMIT: ForgeConfigSpec.IntValue
-        val DURABILITY_RESTORE_CHANCE: ForgeConfigSpec.DoubleValue
-        val BREWING_XP_REWARD: ForgeConfigSpec.DoubleValue
-        val BREWING_POWER_LIMIT: ForgeConfigSpec.DoubleValue
-        val ENCHANTING_WIPE_CHANGE: ForgeConfigSpec.DoubleValue
+        val starboundAutomataFuelGenerationChance: ForgeConfigSpec.DoubleValue
+        val starboundAutomataFuelGenerationAmount: ForgeConfigSpec.IntValue
+        val endAutomataCoreWarpPointLimit: ForgeConfigSpec.IntValue
+        val durabilityRestoreChance: ForgeConfigSpec.DoubleValue
+        val brewingXpReward: ForgeConfigSpec.DoubleValue
+        val brewingPowerLimit: ForgeConfigSpec.DoubleValue
+        val enchantingWipeChance: ForgeConfigSpec.DoubleValue
 
         init {
             builder.push("base")
-            COOLDOWN_TRESHOLD_LEVEL = builder.comment("Determinates trashold for cooldown to be stored")
+            cooldownTresholdLevel = builder.comment("Determinates trashold for cooldown to be stored")
                 .defineInRange("cooldownTreshholdLevel", 100, 0, Int.MAX_VALUE)
-            XP_TO_FUEL_RATE = builder.comment("Determinate amount xp to correspond one fuel point").defineInRange("xpToFuelRate", 10, 1, Int.MAX_VALUE)
+            xpToFuelRate = builder.comment("Determinate amount xp to correspond one fuel point").defineInRange("xpToFuelRate", 10, 1, Int.MAX_VALUE)
             builder.pop()
             builder.push("turtlePeripherals")
-            ENABLE_TURTLE_CHATTER = builder.define("enableTurtleChatter", true)
-            ENABLE_CREATIVE_CHEST = builder.define("enableCreativeChest", true)
-            ENABLE_TURTLE_PISTON = builder.define("enablePistonTurtle", true)
-            ENABLE_STICKY_TURTLE_PISTON = builder.define("enableStickyPistonTurtle", true)
-            PISTON_PITCH_LEVEL = builder.defineInRange("pistonPitchLevel", 5.0, 0.0, 10.0)
-            PISTON_VOLUME_LEVEL = builder.defineInRange("pistonVolumeLevel", 5.0, 0.0, 10.0)
-            ENABLE_LAVA_BUCKET = builder.define("enableLaaBucket", true)
-            ENABLE_CHUNK_VIAL = builder.define("enableChunkVial", true)
-            CHUNK_VIAL_TIME_LIMIT = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
+            enableTurtleChatter = builder.define("enableTurtleChatter", true)
+            enableCreativeChest = builder.define("enableCreativeChest", true)
+            enableTurtlePiston = builder.define("enablePistonTurtle", true)
+            enableStickyTurtlePiston = builder.define("enableStickyPistonTurtle", true)
+            pistonPitchLevel = builder.defineInRange("pistonPitchLevel", 5.0, 0.0, 10.0)
+            pistonVolumeLevel = builder.defineInRange("pistonVolumeLevel", 5.0, 0.0, 10.0)
+            enableLavaBucket = builder.define("enableLaaBucket", true)
+            enableChunkVial = builder.define("enableChunkVial", true)
+            chunkVialTimeLimit = builder.comment("Soft limit for chunk to be loaded until turtle register it again, in milliseconds")
                 .defineInRange("chunkVialTimeLimit", 5_000, 1, Long.MAX_VALUE)
-            ENABLE_BOW_TURTLE = builder.define("enableBowTurtle", true)
-            BOW_TURTLE_POWER_LIMIT = builder.defineInRange("bowTurtlePowerLimit", 10.0, 1.0, Double.MAX_VALUE)
-            ENABLE_MIMIC_GADGET = builder.define("enableMimicGadget", true)
-            MIMIC_GADGET_RML_LIMIT = builder.comment("Defines limit of RML instructions")
+            enableBowTurtle = builder.define("enableBowTurtle", true)
+            bowTurtlePowerLimit = builder.defineInRange("bowTurtlePowerLimit", 10.0, 1.0, Double.MAX_VALUE)
+            enableMimicGadget = builder.define("enableMimicGadget", true)
+            mimicGadgetRMLLimit = builder.comment("Defines limit of RML instructions")
                 .defineInRange("mimicGadgetRMLLimit", 8, 0, 128)
             builder.pop()
             builder.push("operations")
@@ -176,29 +176,29 @@ object TurtlematicConfig : IOperationAbilityConfig {
             register(PowerOperation.values(), builder)
             builder.pop()
             builder.push("automataCores")
-            ENABLE_AUTOMATA_CORE = builder.define("enableWeakAutomataCore", true)
-            ENABLE_END_AUTOMATA_CORE = builder.define("enableEndAutomataCore", true)
-            ENABLE_HUSBANDRY_AUTOMATA_CORE = builder.define("enableHusbandryAutomataCore", true)
-            ENABLE_PROTECTIVE_AUTOMATA_CORE = builder.define("enableProtectiveAutomataCore", true)
-            ENABLE_ENORMOUS_AUTOMATA = builder.define("enableEnormousAutomata", true)
+            enableAutomataCore = builder.define("enableWeakAutomataCore", true)
+            enableEndAutomataCore = builder.define("enableEndAutomataCore", true)
+            enableHusbandryAutomataCore = builder.define("enableHusbandryAutomataCore", true)
+            enableProtectiveAutomataCore = builder.define("enableProtectiveAutomataCore", true)
+            enableEnormousAutomataCore = builder.define("enableEnormousAutomata", true)
 
-            ENABLE_BREWING_AUTOMATA_CORE = builder.define("enableBrewingAutomataCore", true)
-            ENABLE_SMITHING_AUTOMATA_CORE = builder.define("enableSmithingAutomataCore", true)
-            ENABLE_ENCHANTING_AUTOMATA_CORE = builder.define("enableEnchantingAutomataCore", true)
-            ENABLE_MASON_AUTOMATA_CORE = builder.define("enableMasonAutomataCore", true)
-            ENABLE_MERCANTILE_AUTOMATA_CORE = builder.define("enableMercantileAutomataCore", true)
+            enableBrewingAutomataCore = builder.define("enableBrewingAutomataCore", true)
+            enableSmitingAutomataCore = builder.define("enableSmithingAutomataCore", true)
+            enableEnchantingAutomataCore = builder.define("enableEnchantingAutomataCore", true)
+            enableMasonAutomataCore = builder.define("enableMasonAutomataCore", true)
+            enableMercantileAutomataCore = builder.define("enableMercantileAutomataCore", true)
 
-            END_AUTOMATA_CORE_WARP_POINT_LIMIT = builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
+            endAutomataCoreWarpPointLimit = builder.comment("Defines max warp point stored in warp core. Mostly need to not allow NBT overflow error")
                 .defineInRange("endAutomataCoreWarpPointLimit", 64, 1, Int.MAX_VALUE)
-            DURABILITY_RESTORE_CHANCE = builder.comment("Defined chance to not loose item durability for netherite cores")
+            durabilityRestoreChance = builder.comment("Defined chance to not loose item durability for netherite cores")
                 .defineInRange("durabilityRestoreChance", 0.1, 0.0, 1.0)
-            STARBOUND_AUTOMATA_FUEL_GENERATION_CHANCE = builder.comment("Defines chance for starbound automata to regenerate fuel points")
+            starboundAutomataFuelGenerationChance = builder.comment("Defines chance for starbound automata to regenerate fuel points")
                 .defineInRange("starboundAutomataFuelGenerationChance", 0.15, 0.0, 1.0)
-            STARBOUND_AUTOMATA_FUEL_GENERATION_AMOUNT = builder.comment("Defines amount for starbound automata that will be regenerated")
+            starboundAutomataFuelGenerationAmount = builder.comment("Defines amount for starbound automata that will be regenerated")
                 .defineInRange("starboundAutomataFuelGenerationAmount", 1, 0, Integer.MAX_VALUE)
-            BREWING_XP_REWARD = builder.defineInRange("brewingXPReward", 0.8, 0.0, 64.0)
-            BREWING_POWER_LIMIT = builder.defineInRange("brewingPowerLimit", 10.0, 1.0, Double.MAX_VALUE)
-            ENCHANTING_WIPE_CHANGE = builder.defineInRange("enchantmentWipeChance", 0.05, 0.1, 1.0)
+            brewingXpReward = builder.defineInRange("brewingXPReward", 0.8, 0.0, 64.0)
+            brewingPowerLimit = builder.defineInRange("brewingPowerLimit", 10.0, 1.0, Double.MAX_VALUE)
+            enchantingWipeChance = builder.defineInRange("enchantmentWipeChance", 0.05, 0.1, 1.0)
 
             // automata core tiers registration
             register(AutomataCoreTier.values(), builder)

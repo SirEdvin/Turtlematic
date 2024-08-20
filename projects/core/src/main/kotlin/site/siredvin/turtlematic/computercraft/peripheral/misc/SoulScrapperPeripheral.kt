@@ -15,9 +15,9 @@ import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 
 class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, TurtlePeripheralOwner(turtle, side)) {
+    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
     companion object : PeripheralConfiguration {
-        override val TYPE = "soul_scrapper"
+        override val type = "soul_scrapper"
     }
 
     override val isEnabled: Boolean

@@ -36,10 +36,10 @@ import java.util.*
 import kotlin.math.min
 
 class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(TYPE, turtle, side, tier) {
+    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "smithingAutomata"
+        override val type = "smithingAutomata"
     }
 
     override val isEnabled: Boolean

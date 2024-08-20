@@ -14,6 +14,7 @@ enum class PowerOperation(
     THROW_POTION(1_000, 10, ScalePolicy.EXP),
     SHOOT(1_000, 10, ScalePolicy.EXP),
     ;
+
     enum class ScalePolicy(private val factorFunction: Function<Double, Double>) {
         EXP({ d: Double -> kotlin.math.exp(d) }),
         ;
@@ -32,7 +33,7 @@ enum class PowerOperation(
 
     override fun getCost(context: PowerOperationContext): Int {
         val fullCost = (cost!!.get() * scalePolicy.getFactor(context.power)).toInt()
-        TurtlematicCore.LOGGER.info("Real cost $fullCost")
+        TurtlematicCore.logger.info("Real cost $fullCost")
         return (cost!!.get() * scalePolicy.getFactor(context.power)).toInt()
     }
 

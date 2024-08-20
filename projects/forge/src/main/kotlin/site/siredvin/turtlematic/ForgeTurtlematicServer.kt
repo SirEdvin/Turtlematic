@@ -12,13 +12,13 @@ import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 object ForgeTurtlematicServer {
     @SubscribeEvent
     fun onServerStarted(event: ServerStartedEvent) {
-        TurtlematicCore.LOGGER.info("Server started")
+        TurtlematicCore.logger.info("Server started")
         TurtlematicCommonHooks.onServerStarted(event.server)
     }
 
     @SubscribeEvent
     fun onServerStopping(event: ServerStoppingEvent) {
-        TurtlematicCore.LOGGER.info("Stopping server")
+        TurtlematicCore.logger.info("Stopping server")
         TurtlematicCommonHooks.onServerStopping(event.server)
     }
 

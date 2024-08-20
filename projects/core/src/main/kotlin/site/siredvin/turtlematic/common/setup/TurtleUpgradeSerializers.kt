@@ -15,68 +15,68 @@ import site.siredvin.turtlematic.xplat.ModPlatform
 object TurtleUpgradeSerializers {
 
     val TURTLE_CHATTER = ModPlatform.registerTurtleUpgrade(
-        TurtleChatterPeripheral.UPGRADE_ID,
+        TurtleChatterPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::TurtleChatterPeripheral) { upgradeID }
         },
     )
 
     val MIMIC = ModPlatform.registerTurtleUpgrade(
-        MimicPeripheral.UPGRADE_ID,
+        MimicPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::MimicPeripheral) { upgradeID }
         },
     )
 
     val CREATIVE_CHEST = ModPlatform.registerTurtleUpgrade(
-        CreativeChestPeripheral.UPGRADE_ID,
+        CreativeChestPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::CreativeChestPeripheral) { upgradeID }
         },
     )
 
     val CHUNK_VIAL = ModPlatform.registerTurtleUpgrade(
-        ChunkVialPeripheral.UPGRADE_ID,
+        ChunkVialPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem(::ChunkVialTurtle),
     )
 
     val SOUL_SCRAPPER = ModPlatform.registerTurtleUpgrade(
-        SoulScrapperPeripheral.UPGRADE_ID,
+        SoulScrapperPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::SoulScrapperPeripheral) { upgradeID }
         },
     )
 
     val LAVA_BUCKET = ModPlatform.registerTurtleUpgrade(
-        LavaBucketPeripheral.UPGRADE_ID,
+        LavaBucketPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::LavaBucketPeripheral) { upgradeID }
         },
     )
 
     val BOW = ModPlatform.registerTurtleUpgrade(
-        BowPeripheral.UPGRADE_ID,
+        BowPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::BowPeripheral) { upgradeID }
         },
     )
 
     val PISTON = ModPlatform.registerTurtleUpgrade(
-        PistonPeripheral.UPGRADE_ID,
+        PistonPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::PistonPeripheral) { upgradeID }
         },
     )
 
     val STICKY_PISTON = ModPlatform.registerTurtleUpgrade(
-        StickyPistonPeripheral.UPGRADE_ID,
+        StickyPistonPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
             PeripheralTurtleUpgrade.dynamic(stack.item, ::StickyPistonPeripheral) { upgradeID }
         },
     )
 
     val AUTOMATA_CORE = ModPlatform.registerTurtleUpgrade(
-        AutomataCorePeripheral.UPGRADE_ID,
+        AutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::AutomataCorePeripheral)
@@ -84,7 +84,7 @@ object TurtleUpgradeSerializers {
     )
 
     val HUSBANDRY_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        HusbandryAutomataCorePeripheral.UPGRADE_ID,
+        HusbandryAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
@@ -92,7 +92,7 @@ object TurtleUpgradeSerializers {
     )
 
     val NETHERITE_HUSBANDRY_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        HusbandryAutomataCorePeripheral.UPGRADE_ID.toNetherite(),
+        HusbandryAutomataCorePeripheral.upgradeID.toNetherite(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
@@ -100,7 +100,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_HUSBANDRY_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        HusbandryAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        HusbandryAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
@@ -108,7 +108,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_HUSBANDRY_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        HusbandryAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        HusbandryAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::HusbandryAutomataCorePeripheral)
@@ -116,7 +116,7 @@ object TurtleUpgradeSerializers {
     )
 
     val END_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EndAutomataCorePeripheral.UPGRADE_ID,
+        EndAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::EndAutomataCorePeripheral)
@@ -124,7 +124,7 @@ object TurtleUpgradeSerializers {
     )
 
     val NETHERITE_END_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EndAutomataCorePeripheral.UPGRADE_ID.toNetherite(),
+        EndAutomataCorePeripheral.upgradeID.toNetherite(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::EndAutomataCorePeripheral)
@@ -132,7 +132,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_END_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EndAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        EndAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::EndAutomataCorePeripheral)
@@ -140,7 +140,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_END_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EndAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        EndAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::EndAutomataCorePeripheral)
@@ -148,7 +148,7 @@ object TurtleUpgradeSerializers {
     )
 
     val PROTECTIVE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        ProtectiveAutomataCorePeripheral.UPGRADE_ID,
+        ProtectiveAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::ProtectiveAutomataCorePeripheral)
@@ -156,7 +156,7 @@ object TurtleUpgradeSerializers {
     )
 
     val NETHERITE_PROTECTIVE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        ProtectiveAutomataCorePeripheral.UPGRADE_ID.toNetherite(),
+        ProtectiveAutomataCorePeripheral.upgradeID.toNetherite(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::ProtectiveAutomataCorePeripheral)
@@ -164,7 +164,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_PROTECTIVE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        ProtectiveAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        ProtectiveAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::ProtectiveAutomataCorePeripheral)
@@ -172,7 +172,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_PROTECTIVE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        ProtectiveAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        ProtectiveAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::ProtectiveAutomataCorePeripheral)
@@ -180,7 +180,7 @@ object TurtleUpgradeSerializers {
     )
 
     val ENORMOUS_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EnormousAutomataCorePeripheral.UPGRADE_ID,
+        EnormousAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::EnormousAutomataCorePeripheral)
@@ -188,7 +188,7 @@ object TurtleUpgradeSerializers {
     )
 
     val BREWING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        BrewingAutomataCorePeripheral.UPGRADE_ID,
+        BrewingAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::BrewingAutomataCorePeripheral)
@@ -196,7 +196,7 @@ object TurtleUpgradeSerializers {
     )
 
     val ENCHANTING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EnchantingAutomataCorePeripheral.UPGRADE_ID,
+        EnchantingAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::EnchantingAutomataCorePeripheral)
@@ -204,7 +204,7 @@ object TurtleUpgradeSerializers {
     )
 
     val MASON_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        MasonAutomataCorePeripheral.UPGRADE_ID,
+        MasonAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::MasonAutomataCorePeripheral)
@@ -212,7 +212,7 @@ object TurtleUpgradeSerializers {
     )
 
     val MERCANTILE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        MercantileAutomataCorePeripheral.UPGRADE_ID,
+        MercantileAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::MercantileAutomataCorePeripheral)
@@ -220,7 +220,7 @@ object TurtleUpgradeSerializers {
     )
 
     val SMITHING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        SmithingAutomataCorePeripheral.UPGRADE_ID,
+        SmithingAutomataCorePeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::SmithingAutomataCorePeripheral)
@@ -228,7 +228,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_BREWING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        BrewingAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        BrewingAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::BrewingAutomataCorePeripheral)
@@ -236,7 +236,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_ENCHANTING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EnchantingAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        EnchantingAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::EnchantingAutomataCorePeripheral)
@@ -244,7 +244,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_MASON_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        MasonAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        MasonAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::MasonAutomataCorePeripheral)
@@ -252,7 +252,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_MERCANTILE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        MercantileAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        MercantileAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::MercantileAutomataCorePeripheral)
@@ -260,7 +260,7 @@ object TurtleUpgradeSerializers {
     )
 
     val STARBOUND_SMITHING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        SmithingAutomataCorePeripheral.UPGRADE_ID.toStarbound(),
+        SmithingAutomataCorePeripheral.upgradeID.toStarbound(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             StarboundTurtleUpgrade.dynamic(upgradeId, core, ::SmithingAutomataCorePeripheral)
@@ -268,7 +268,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_BREWING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        BrewingAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        BrewingAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::BrewingAutomataCorePeripheral)
@@ -276,7 +276,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_ENCHANTING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        EnchantingAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        EnchantingAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::EnchantingAutomataCorePeripheral)
@@ -284,7 +284,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_MASON_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        MasonAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        MasonAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::MasonAutomataCorePeripheral)
@@ -292,7 +292,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_MERCANTILE_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        MercantileAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        MercantileAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::MercantileAutomataCorePeripheral)
@@ -300,7 +300,7 @@ object TurtleUpgradeSerializers {
     )
 
     val CREATIVE_SMITHING_AUTOMATA = ModPlatform.registerTurtleUpgrade(
-        SmithingAutomataCorePeripheral.UPGRADE_ID.toCreative(),
+        SmithingAutomataCorePeripheral.upgradeID.toCreative(),
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeId, stack ->
             val core = stack.item as? BaseAutomataCore ?: return@simpleWithCustomItem DisabledTurtleUpgrade(upgradeId, stack)
             ClockwiseTurtleUpgrade.dynamic(upgradeId, core, ::SmithingAutomataCorePeripheral)

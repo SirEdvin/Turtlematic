@@ -26,7 +26,7 @@ class MercantileAutomataCorePeripheral(
     side: TurtleSide,
     tier: IAutomataCoreTier,
 ) : ExperienceAutomataCorePeripheral(
-    TYPE,
+    type,
     turtle,
     side,
     tier,
@@ -70,7 +70,7 @@ class MercantileAutomataCorePeripheral(
     }
 
     companion object : PeripheralConfiguration {
-        override val TYPE = "mercantileAutomata"
+        override val type = "mercantileAutomata"
 
         private val isMerchant =
             Predicate { entity1: Entity -> entity1 is Merchant }

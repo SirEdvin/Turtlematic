@@ -13,7 +13,7 @@ import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 object TurtlematicCore {
     const val MOD_ID = "turtlematic"
 
-    var LOGGER: Logger = LogManager.getLogger(MOD_ID)
+    var logger: Logger = LogManager.getLogger(MOD_ID)
 
     fun configureCreativeTab(builder: CreativeModeTab.Builder): CreativeModeTab.Builder {
         return builder.icon { Items.AUTOMATA_CORE.get().defaultInstance }

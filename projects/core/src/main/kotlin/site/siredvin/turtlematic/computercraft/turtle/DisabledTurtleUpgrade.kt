@@ -11,7 +11,7 @@ import site.siredvin.turtlematic.TurtlematicCore
 class DisabledTurtleUpgrade(id: ResourceLocation, item: ItemStack) :
     PeripheralTurtleUpgrade<DisabledPeripheral>(id, item) {
     init {
-        TurtlematicCore.LOGGER.warn("Creating new disabled turtle upgrade with id $id and for item ${item.item}, something clearly wrong here")
+        TurtlematicCore.logger.warn("Creating new disabled turtle upgrade with id $id and for item ${item.item}, something clearly wrong here")
     }
     override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): DisabledPeripheral {
         return DisabledPeripheral

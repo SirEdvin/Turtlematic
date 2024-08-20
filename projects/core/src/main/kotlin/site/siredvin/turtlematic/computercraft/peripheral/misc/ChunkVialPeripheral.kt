@@ -11,9 +11,9 @@ import site.siredvin.turtlematic.util.ChunkManager
 import java.util.*
 
 class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
-    OwnedPeripheral<TurtlePeripheralOwner>(TYPE, peripheralOwner) {
+    OwnedPeripheral<TurtlePeripheralOwner>(type, peripheralOwner) {
     companion object : PeripheralConfiguration {
-        override val TYPE = "chunk_vial"
+        override val type = "chunk_vial"
         private const val UUID_TAG = "uuid"
     }
 

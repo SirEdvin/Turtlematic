@@ -37,7 +37,7 @@ object ForgeTurtlematic {
         ForgePeripheralium.sayHi()
         // Configure configuration
         val context = ModLoadingContext.get()
-        context.registerConfig(ModConfig.Type.COMMON, ConfigHolder.COMMON_SPEC, "${TurtlematicCore.MOD_ID}.toml")
+        context.registerConfig(ModConfig.Type.COMMON, ConfigHolder.commonConfigSpec, "${TurtlematicCore.MOD_ID}.toml")
 
         TurtlematicCore.configure(ForgeModInnerPlatform, ForgeModRecipeIngredients)
         val eventBus = MOD_CONTEXT.getKEventBus()

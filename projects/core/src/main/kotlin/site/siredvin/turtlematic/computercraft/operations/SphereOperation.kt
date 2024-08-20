@@ -17,9 +17,9 @@ enum class SphereOperation(
     ;
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
-    private var max_free_radius: ForgeConfigSpec.IntValue? = null
-    private var max_cost_radius: ForgeConfigSpec.IntValue? = null
-    private var extra_block_cost: ForgeConfigSpec.DoubleValue? = null
+    private var maxFreeRadiusConfig: ForgeConfigSpec.IntValue? = null
+    private var maxCostRadiusConfig: ForgeConfigSpec.IntValue? = null
+    private var extraBlockCostConfig: ForgeConfigSpec.DoubleValue? = null
     override fun addToConfig(builder: ForgeConfigSpec.Builder) {
         cooldown = builder.defineInRange(
             settingsName() + "Cooldown",
@@ -27,19 +27,19 @@ enum class SphereOperation(
             1000,
             Int.MAX_VALUE,
         )
-        max_free_radius = builder.defineInRange(
+        maxFreeRadiusConfig = builder.defineInRange(
             settingsName() + "MaxFreeRadius",
             defaultMaxFreeRadius,
             1,
             64,
         )
-        max_cost_radius = builder.defineInRange(
+        maxCostRadiusConfig = builder.defineInRange(
             settingsName() + "MaxCostRadius",
             defaultMaxCostRadius,
             1,
             64,
         )
-        extra_block_cost = builder.defineInRange(
+        extraBlockCostConfig = builder.defineInRange(
             settingsName() + "ExtraBlockCost",
             defaultExtraBlockCost,
             0.1,
@@ -52,25 +52,25 @@ enum class SphereOperation(
     }
 
     override fun getCost(context: SphereOperationContext): Int {
-        if (context.radius <= max_free_radius!!.get()) return 0
-        val freeBlockCount = IntMath.pow(2 * max_free_radius!!.get() + 1, 3)
+        if (context.radius <= maxFreeRadiusConfig!!.get()) return 0
+        val freeBlockCount = IntMath.pow(2 * maxFreeRadiusConfig!!.get() + 1, 3)
         val allBlockCount = IntMath.pow(2 * context.radius + 1, 3)
-        return Math.floor((allBlockCount - freeBlockCount) * extra_block_cost!!.get()).toInt()
+        return Math.floor((allBlockCount - freeBlockCount) * extraBlockCostConfig!!.get()).toInt()
     }
 
     val maxFreeRadius: Int
-        get() = max_free_radius!!.get()
+        get() = maxFreeRadiusConfig!!.get()
     val maxCostRadius: Int
-        get() = max_cost_radius!!.get()
+        get() = maxCostRadiusConfig!!.get()
 
     override fun computerDescription(): Map<String, Any> {
         val data: MutableMap<String, Any> = HashMap()
         data["name"] = settingsName()
         data["type"] = javaClass.name
         data["cooldown"] = cooldown!!.get()
-        data["maxFreeRadius"] = max_free_radius!!.get()
-        data["maxCostRadius"] = max_cost_radius!!.get()
-        data["extraBlockCost"] = extra_block_cost!!.get()
+        data["maxFreeRadius"] = maxFreeRadiusConfig!!.get()
+        data["maxCostRadius"] = maxCostRadiusConfig!!.get()
+        data["extraBlockCost"] = extraBlockCostConfig!!.get()
         return data
     }
 

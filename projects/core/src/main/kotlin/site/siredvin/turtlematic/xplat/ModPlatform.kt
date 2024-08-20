@@ -5,21 +5,21 @@ import site.siredvin.peripheralium.xplat.BasePlatform
 import site.siredvin.peripheralium.xplat.ModInformationTracker
 
 object ModPlatform : BasePlatform {
-    private var _IMPL: BaseInnerPlatform? = null
-    private val _informationTracker = ModInformationTracker()
+    private var impl: BaseInnerPlatform? = null
+    private val informationTracker = ModInformationTracker()
 
     fun configure(impl: BaseInnerPlatform) {
-        _IMPL = impl
+        this.impl = impl
     }
 
     override val baseInnerPlatform: BaseInnerPlatform
         get() {
-            if (_IMPL == null) {
+            if (impl == null) {
                 throw IllegalStateException("You should configure upw ModPlatform first")
             }
-            return _IMPL!!
+            return impl!!
         }
 
     override val modInformationTracker: ModInformationTracker
-        get() = _informationTracker
+        get() = informationTracker
 }

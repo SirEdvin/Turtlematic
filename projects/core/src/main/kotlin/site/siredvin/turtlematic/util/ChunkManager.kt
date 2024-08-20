@@ -31,7 +31,7 @@ class ChunkManager : SavedData() {
             for (key in forcedData.allKeys) {
                 manager.forcedChunks[UUID.fromString(key)] = readChunkRecord(forcedData.getCompound(key))
             }
-            TurtlematicCore.LOGGER.info("Loaded ${manager.forcedChunks.size} forced chunks")
+            TurtlematicCore.logger.info("Loaded ${manager.forcedChunks.size} forced chunks")
             return manager
         }
 
@@ -48,11 +48,11 @@ class ChunkManager : SavedData() {
     @Synchronized
     fun addForceChunk(level: ServerLevel, owner: UUID, pos: ChunkPos): Boolean {
         if (forcedChunks.containsKey(owner)) {
-            TurtlematicCore.LOGGER.debug("Chunk re-added to force loaded {} with touch", pos)
+            TurtlematicCore.logger.debug("Chunk re-added to force loaded {} with touch", pos)
             forcedChunks[owner]?.touch()
             return true
         }
-        TurtlematicCore.LOGGER.debug("Chunk added to force loaded {}", pos)
+        TurtlematicCore.logger.debug("Chunk added to force loaded {}", pos)
         forcedChunks[owner] = LoadChunkRecord(level.dimension().location().toString(), pos)
         setDirty()
         return PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, true)
@@ -70,10 +70,10 @@ class ChunkManager : SavedData() {
     @Synchronized
     fun removeChunk(owner: UUID, pos: ChunkPos, level: ServerLevel): Boolean {
         if (mainThread != null && Thread.currentThread() == mainThread) {
-            TurtlematicCore.LOGGER.debug("Chunk removed from to force loaded {}", pos)
+            TurtlematicCore.logger.debug("Chunk removed from to force loaded {}", pos)
             return PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, false)
         }
-        TurtlematicCore.LOGGER.debug("Market chunk to remove {}", pos)
+        TurtlematicCore.logger.debug("Market chunk to remove {}", pos)
         val forcedChunk = forcedChunks[owner] ?: return false
         forcedChunk.invalidate()
         return false
@@ -157,7 +157,7 @@ class ChunkManager : SavedData() {
     }
 
     override fun save(compoundTag: CompoundTag): CompoundTag {
-        TurtlematicCore.LOGGER.info("Saving all forces chunks ${forcedChunks.entries.size}")
+        TurtlematicCore.logger.info("Saving all forces chunks ${forcedChunks.entries.size}")
         val forcedChunksTag = CompoundTag()
         forcedChunks.forEach { (key, value) ->
             forcedChunksTag.put(

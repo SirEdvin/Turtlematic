@@ -63,31 +63,31 @@ object TurtlematicCoreClient {
         consumer.accept(
             TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.UPGRADE_ID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.UPGRADE_ID.path}_right"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.upgradeID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.upgradeID.path}_right"),
             ),
         )
 
         consumer.accept(
             TurtleUpgradeSerializers.MIMIC.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.UPGRADE_ID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.UPGRADE_ID.path}_right"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.upgradeID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.upgradeID.path}_right"),
             ),
         )
 
         consumer.accept(
             TurtleUpgradeSerializers.CREATIVE_CHEST.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.UPGRADE_ID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.UPGRADE_ID.path}_right"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.upgradeID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.upgradeID.path}_right"),
             ),
         )
         consumer.accept(
             TurtleUpgradeSerializers.CHUNK_VIAL.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.UPGRADE_ID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.UPGRADE_ID.path}_right"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.upgradeID.path}_left"),
+                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.upgradeID.path}_right"),
             ),
         )
 
