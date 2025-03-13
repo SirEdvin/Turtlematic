@@ -17,7 +17,7 @@ open class BaseAutomataCore(
     p: Properties,
     enableSup: Supplier<Boolean>,
     vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>,
-    private val coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null,
+    private val coreHook: BiFunction<ItemStack, TooltipContext, List<Component>>? = null,
 ) : HiddenDescriptiveItemItem(p, enableSup, alwaysShow = false, isDisabled, commonTooltips, *tooltipHook) {
     constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>, coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null) : this(
         coreTier,
@@ -29,13 +29,13 @@ open class BaseAutomataCore(
 
     override fun appendHoverText(
         itemStack: ItemStack,
-        level: Level?,
+        context: TooltipContext,
         list: MutableList<Component>,
-        tooltipFlag: TooltipFlag,
+        tooltipFlag: TooltipFlag
     ) {
         if (coreHook != null) {
-            list.addAll(coreHook.apply(itemStack, level))
+            list.addAll(coreHook.apply(itemStack, context))
         }
-        super.appendHoverText(itemStack, level, list, tooltipFlag)
+        super.appendHoverText(itemStack, context, list, tooltipFlag)
     }
 }

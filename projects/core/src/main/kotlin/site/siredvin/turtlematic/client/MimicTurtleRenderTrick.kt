@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import java.util.concurrent.TimeUnit
@@ -35,7 +36,7 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
     fun getBlockEntity(data: Triple<BlockState, BlockPos, CompoundTag>): BlockEntity {
         val block = data.first.block as? EntityBlock ?: return dummyBlockEntity
         val blockEntity = block.newBlockEntity(data.second, data.first) ?: dummyBlockEntity
-        blockEntity.load(data.third)
+        blockEntity.loadWithComponents(data.third, PlatformToolkit.get().registries!!)
         return blockEntity
     }
 

@@ -12,12 +12,12 @@ import site.siredvin.tweakium.modules.data.turtleUpgrades
 
 object ModItemModelProvider {
 
-    val BASE_GEAR = ResourceLocation(TurtlematicCore.MOD_ID, "item/base_gear")
-    val NETHERITE_GEAR = ResourceLocation(TurtlematicCore.MOD_ID, "item/netherite_gear")
-    val STARBOUND_GEAR = ResourceLocation(TurtlematicCore.MOD_ID, "item/starbound_gear")
-    val CREATIVE_GEAR = ResourceLocation(TurtlematicCore.MOD_ID, "item/creative_gear")
-    val FIRE = ResourceLocation(TurtlematicCore.MOD_ID, "item/fire/")
-    val BIG_FIRE = ResourceLocation(TurtlematicCore.MOD_ID, "item/big_fire/")
+    val BASE_GEAR = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/base_gear")
+    val NETHERITE_GEAR = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/netherite_gear")
+    val STARBOUND_GEAR = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/starbound_gear")
+    val CREATIVE_GEAR = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/creative_gear")
+    val FIRE = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/fire/")
+    val BIG_FIRE = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/big_fire/")
 
     fun createAutomataCore(
         generators: ItemModelGenerators,
@@ -43,8 +43,8 @@ object ModItemModelProvider {
 
         turtleUpgrades(generators, Items.CHUNK_VIAL.get())
         turtleUpgrades(generators, Items.CREATIVE_CHEST.get())
-        turtleUpgrades(generators, Items.TURTLE_CHATTER.get(), baseID = ResourceLocation(TurtlematicCore.MOD_ID, "turtle/chatter"))
-        turtleUpgrades(generators, Items.MIMIC_GADGET.get(), baseID = ResourceLocation(TurtlematicCore.MOD_ID, "turtle/mimic"))
+        turtleUpgrades(generators, Items.TURTLE_CHATTER.get(), baseID = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/chatter"))
+        turtleUpgrades(generators, Items.MIMIC_GADGET.get(), baseID = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/mimic"))
 
         createAutomataCore(generators, Items.AUTOMATA_CORE.get(), BASE_GEAR, "base")
         createAutomataCore(generators, Items.HUSBANDRY_AUTOMATA_CORE.get(), BASE_GEAR, "green")
@@ -83,13 +83,13 @@ object ModItemModelProvider {
         createAutomataCore(generators, Items.CREATIVE_MERCANTILE_AUTOMATA_CORE.get(), CREATIVE_GEAR, "brown", BIG_FIRE)
 
         createFlatItem(generators, Items.FORGED_AUTOMATA_CORE.get(), NETHERITE_GEAR)
-        createFlatItem(generators, Items.FILLED_SOUL_VIAL.get(), ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/full"))
+        createFlatItem(generators, Items.FILLED_SOUL_VIAL.get(), ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/soul_vial/full"))
 
         for (i in 1..3) {
             createFlatItem(
                 generators,
                 ModelLocationUtils.getModelLocation(Items.SOUL_VIAL.get()).withSuffix("_$i"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "item/soul_vial/phase$i"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "item/soul_vial/phase$i"),
             )
         }
     }

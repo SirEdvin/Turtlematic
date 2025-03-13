@@ -5,9 +5,7 @@ import site.siredvin.turtlematic.TurtlematicCore
 
 object ModDataProviders {
     fun add(generator: GeneratorSink) {
-        generator.add {
-            ModRecipeProvider(it)
-        }
+        generator.add(::ModRecipeProvider)
         generator.add {
             ModTurtleUpgradeDataProvider(it)
         }

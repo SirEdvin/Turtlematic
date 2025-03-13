@@ -33,7 +33,7 @@ val minecraftVersion: String by settings
 rootProject.name = "Turtlematic $minecraftVersion"
 
 include(":core")
-include(":forge")
+//include(":forge")
 include(":fabric")
 
 

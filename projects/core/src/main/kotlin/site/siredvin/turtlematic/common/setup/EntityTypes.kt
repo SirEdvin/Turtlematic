@@ -7,7 +7,7 @@ import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
 import site.siredvin.turtlematic.xplat.ModPlatform
 
 object EntityTypes {
-    val SHOOTED_ITEM_TYPE_ID = ResourceLocation(
+    val SHOOTED_ITEM_TYPE_ID = ResourceLocation.fromNamespaceAndPath(
         TurtlematicCore.MOD_ID,
         "shooted_item",
     )

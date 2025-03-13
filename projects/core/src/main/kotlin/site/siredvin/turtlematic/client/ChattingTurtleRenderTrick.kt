@@ -2,6 +2,7 @@ package site.siredvin.turtlematic.client
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.Tesselator
+import com.mojang.blaze3d.vertex.VertexFormat
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
@@ -57,7 +58,7 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
             if (i == 0) {
                 firstLineOffset = -font.width(textLine) / 2.0f
             }
-            val bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().builder)
+            val bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().begin(VertexFormat.Mode.DEBUG_LINES, VertexFormat.))
             font.drawInBatch(
                 textLine,
                 firstLineOffset,

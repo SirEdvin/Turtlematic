@@ -13,6 +13,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
 import site.siredvin.broccolium.modules.base.ext.toBlockPos
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.turtlematic.common.setup.EntityTypes
@@ -66,6 +67,10 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
         super.onHitEntity(hit)
     }
 
+    override fun defineSynchedData(p0: SynchedEntityData.Builder) {
+        p0.define(DATA_ITEM_STACK, ItemStack.EMPTY).build()
+    }
+
     override fun tick() {
         super.tick()
         if (!level().isClientSide) {
@@ -81,23 +86,19 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
         }
     }
 
-    override fun defineSynchedData() {
-        getEntityData().define(DATA_ITEM_STACK, ItemStack.EMPTY)
-    }
-
     override fun isNoGravity(): Boolean = super.isNoGravity() || deltaMovement.length() == 0.0
 
     override fun addAdditionalSaveData(tag: CompoundTag) {
         super.addAdditionalSaveData(tag)
         val stack = this.stack
         if (!stack.isEmpty) {
-            tag.put("Item", stack.save(CompoundTag()))
+            tag.put("Item", stack.save(PlatformToolkit.get().registries!!, CompoundTag()))
         }
     }
 
     override fun readAdditionalSaveData(tag: CompoundTag) {
         super.readAdditionalSaveData(tag)
-        stack = ItemStack.of(tag.getCompound("Item"))
+        stack = ItemStack.parseOptional(PlatformToolkit.get().registries!!, tag.getCompound("Item"))
     }
 
     override fun getItem(): ItemStack = stack

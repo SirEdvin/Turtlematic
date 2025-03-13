@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.xplat
 
-import dan200.computercraft.api.upgrades.UpgradeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.CreativeModeTab
@@ -11,8 +10,6 @@ import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
 import site.siredvin.turtlematic.util.ChunkManager
-import site.siredvin.tweakium.modules.platform.ComputerPlatformRegistries
-import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 
 object TurtlematicCommonHooks {
 
@@ -21,7 +18,7 @@ object TurtlematicCommonHooks {
         EntityTypes.doSomething()
         TurtleUpgradeSerializers.doSomething()
         ModPlatform.registerCreativeTab(
-            ResourceLocation(TurtlematicCore.MOD_ID, "tab"),
+            ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "tab"),
             TurtlematicCore.configureCreativeTab(PlatformToolkit.get().createTabBuilder()).build(),
         )
     }
@@ -32,12 +29,12 @@ object TurtlematicCommonHooks {
     }
 
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
-        ModPlatform.holder.turtleSerializers.forEach {
-            val upgrade = ComputerPlatformToolkit.get().getTurtleUpgrade(ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toString())
-            if (upgrade != null) {
-                ComputerPlatformToolkit.get().createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade)).forEach(output::accept)
-            }
-        }
+//        ModPlatform.holder.turtleSerializers.forEach {
+//            val upgrade = ComputerPlatformToolkit.get().getTurtleUpgrade(ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toString())
+//            if (upgrade != null) {
+//                ComputerPlatformToolkit.get().createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade)).forEach(output::accept)
+//            }
+//        }
     }
 
     fun onServerStarted(server: MinecraftServer) {

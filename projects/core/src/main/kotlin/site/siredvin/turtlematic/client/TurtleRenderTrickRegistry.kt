@@ -1,23 +1,16 @@
 package site.siredvin.turtlematic.client
 
 import dan200.computercraft.api.turtle.ITurtleUpgrade
-import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
-import dan200.computercraft.impl.TurtleUpgrades
+import dan200.computercraft.api.upgrades.UpgradeType
 
 object TurtleRenderTrickRegistry {
-    private val registry = mutableMapOf<TurtleUpgradeSerialiser<out ITurtleUpgrade>, TurtleRenderTrick>()
+    private val registry = mutableMapOf<UpgradeType<out ITurtleUpgrade>, TurtleRenderTrick>()
 
-    fun getSerializer(upgrade: ITurtleUpgrade): TurtleUpgradeSerialiser<ITurtleUpgrade>? {
-        @Suppress("UNCHECKED_CAST")
-        return TurtleUpgrades.instance().getWrapper(upgrade)?.serialiser as? TurtleUpgradeSerialiser<ITurtleUpgrade>
-    }
-
-    fun registerTrick(serializer: TurtleUpgradeSerialiser<out ITurtleUpgrade>, trick: TurtleRenderTrick) {
+    fun registerTrick(serializer: UpgradeType<out ITurtleUpgrade>, trick: TurtleRenderTrick) {
         registry[serializer] = trick
     }
 
     fun getTrick(upgrade: ITurtleUpgrade): TurtleRenderTrick? {
-        val serializer = getSerializer(upgrade) ?: return null
-        return registry[serializer]
+        return registry[upgrade.type]
     }
 }

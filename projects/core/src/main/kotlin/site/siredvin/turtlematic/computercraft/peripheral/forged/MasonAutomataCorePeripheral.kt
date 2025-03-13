@@ -14,7 +14,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.*
@@ -43,10 +45,10 @@ import java.util.function.Predicate
 
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
-    interface MasonRecipeHandler {
-        fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack>
-        fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>?
-        fun produce(level: Level, fakeContainer: Container, targetItem: Item, recipe: Recipe<Container>, limit: Int): ItemStack
+    interface MasonRecipeHandler<V: Recipe<Z>, Z: RecipeInput> {
+        fun getAlternatives(level: Level, fakeContainer: Z): List<ItemStack>
+        fun getRecipe(level: Level, fakeContainer: Z, targetItem: Item): V?
+        fun produce(level: Level, fakeContainer: Z, targetItem: Item, recipe: V, limit: Int): ItemStack
 
         val handlerID: String
         val workWith: List<Class<*>>
@@ -56,25 +58,22 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         fun changeShape(level: Level, pos: BlockPos, oldState: BlockState, newState: BlockState): MethodResult
     }
 
-    class StonecutterRecipeHandler : MasonRecipeHandler {
-        override fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).map { it.getResultItem(RegistryAccess.EMPTY) }
+    class StonecutterRecipeHandler : MasonRecipeHandler<StonecutterRecipe, SingleRecipeInput> {
+        override fun getAlternatives(level: Level, fakeContainer: SingleRecipeInput): List<ItemStack> = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).map { it.value.getResultItem(RegistryAccess.EMPTY) }
 
-        override fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find {
-            it.getResultItem(
+        override fun getRecipe(level: Level, fakeContainer: SingleRecipeInput, targetItem: Item): StonecutterRecipe? = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find {
+            it.value.getResultItem(
                 RegistryAccess.EMPTY,
             ).`is`(targetItem)
-        }
+        }?.value
 
         override fun produce(
             level: Level,
-            fakeContainer: Container,
+            fakeContainer: SingleRecipeInput,
             targetItem: Item,
-            recipe: Recipe<Container>,
+            recipe: StonecutterRecipe,
             limit: Int,
         ): ItemStack {
-            if (recipe !is StonecutterRecipe) {
-                return ItemStack.EMPTY
-            }
             var consumedAmount = 0
             val output = recipe.getResultItem(RegistryAccess.EMPTY).copy()
             output.count = 0
@@ -96,11 +95,11 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     companion object : PeripheralConfiguration {
         override val type = "masonAutomata"
 
-        private val HANDLERS = mutableMapOf<String, MasonRecipeHandler>()
+        private val HANDLERS = mutableMapOf<String, MasonRecipeHandler<*, *>>()
         private val RECIPE_TO_ID = mutableMapOf<Class<*>, String>()
         private val SHAPE_STRATEGY = mutableListOf<kotlin.Pair<Predicate<Block>, MasonShapeChangeStrategy>>()
 
-        fun addRecipeHandler(handler: MasonRecipeHandler) {
+        fun addRecipeHandler(handler: MasonRecipeHandler<*, *>) {
             HANDLERS[handler.handlerID] = handler
             handler.workWith.forEach { RECIPE_TO_ID[it] = handler.handlerID }
         }
@@ -113,15 +112,17 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             addRecipeHandler(StonecutterRecipeHandler())
         }
 
-        fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
+        @Suppress("UNCHECKED_CAST")
+        fun getAlternatives(level: Level, fakeContainer: RecipeInput): List<ItemStack> {
             val alternatives = mutableListOf<ItemStack>()
-            HANDLERS.values.forEach { alternatives.addAll(it.getAlternatives(level, fakeContainer)) }
+            HANDLERS.values.forEach { alternatives.addAll((it as MasonRecipeHandler<Recipe<RecipeInput>, RecipeInput>).getAlternatives(level, fakeContainer)) }
             return alternatives
         }
 
-        fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? {
+        @Suppress("UNCHECKED_CAST")
+        fun getRecipe(level: Level, fakeContainer: RecipeInput, targetItem: Item): Recipe<RecipeInput>? {
             HANDLERS.values.forEach {
-                val recipe = it.getRecipe(level, fakeContainer, targetItem)
+                val recipe = (it as MasonRecipeHandler<Recipe<RecipeInput>, RecipeInput>).getRecipe(level, fakeContainer, targetItem)
                 if (recipe != null) {
                     return recipe
                 }
@@ -139,9 +140,10 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             return MethodResult.of(true)
         }
 
-        fun produce(level: Level, fakeContainer: Container, targetItem: Item, recipe: Recipe<Container>, limit: Int): ItemStack {
+        @Suppress("UNCHECKED_CAST")
+        fun produce(level: Level, fakeContainer: RecipeInput, targetItem: Item, recipe: Recipe<RecipeInput>, limit: Int): ItemStack {
             val handlerID = RECIPE_TO_ID[recipe::class.java] ?: return ItemStack.EMPTY
-            val handler = HANDLERS[handlerID] ?: return ItemStack.EMPTY
+            val handler = HANDLERS[handlerID] as? MasonRecipeHandler<Recipe<RecipeInput>, RecipeInput> ?: return ItemStack.EMPTY
             return handler.produce(level, fakeContainer, targetItem, recipe, limit)
         }
     }
@@ -185,12 +187,12 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     private fun chiselItem(target: String, arguments: IArguments): MethodResult {
         val level = peripheralOwner.level!!
         val limit = arguments.optInt(2, Int.MAX_VALUE)
-        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation(target))
+        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation.parse(target))
         if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
         }
         val turtleInventory = peripheralOwner.turtle.inventory
-        val fakeContainer = LimitedInventory(turtleInventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
+        val fakeContainer = SingleRecipeInput(peripheralOwner.toolInMainHand)
         val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
             "Cannot transform selected item into $target",
@@ -219,7 +221,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             )
         }
         val level = peripheralOwner.level!!
-        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation(target))
+        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation.parse(target))
         if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
         }
@@ -229,7 +231,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         }
         val hit = findBlockResult.first!!.first
         val blockState = findBlockResult.first!!.second
-        val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
+        val fakeContainer = SingleRecipeInput(blockState.block.asItem().defaultInstance)
         val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
             "Cannot transform selected item into $target",
@@ -266,7 +268,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             )
         }
         val level = peripheralOwner.level!!
-        val fakeContainer: Container? = if (mode == TransformInteractionMode.BLOCK) {
+        val fakeContainer: SingleRecipeInput? = if (mode == TransformInteractionMode.BLOCK) {
             val blockState = peripheralOwner.withPlayer({
                 val hit = it.findHit(skipEntity = true, skipBlock = false)
                 if (hit !is BlockHitResult) {
@@ -274,9 +276,9 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 }
                 return@withPlayer level.getBlockState(hit.blockPos)
             }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
-            if (blockState?.isAir == false) FakeItemContainer(blockState.block.asItem().defaultInstance) else null
+            if (blockState?.isAir == false) SingleRecipeInput(blockState.block.asItem().defaultInstance) else null
         } else {
-            LimitedInventory(peripheralOwner.turtle.inventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
+            SingleRecipeInput(peripheralOwner.toolInMainHand)
         }
 
         if (fakeContainer == null) {

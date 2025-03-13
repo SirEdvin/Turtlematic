@@ -8,10 +8,11 @@ import dan200.computercraft.api.client.turtle.TurtleUpgradeModeller
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
+import net.minecraft.core.component.DataComponentPatch
 import site.siredvin.turtlematic.util.DataStorageObjects
 
 class ClockwiseTurtleModeller<T : ITurtleUpgrade> : TurtleUpgradeModeller<T> {
-    override fun getModel(upgrade: T, turtle: ITurtleAccess?, side: TurtleSide): TransformedModel {
+    override fun getModel(upgrade: T, turtle: ITurtleAccess?, side: TurtleSide, data: DataComponentPatch): TransformedModel {
         val stack = PoseStack()
         stack.pushPose()
         stack.translate(0.0, 0.5, 0.5)

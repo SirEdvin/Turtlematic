@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.computercraft.operations
 
-import net.minecraftforge.common.ForgeConfigSpec
+import net.neoforged.neoforge.common.ModConfigSpec
 import site.siredvin.turtlematic.api.IForgeConfigHandler
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 
@@ -10,8 +10,8 @@ enum class SimpleFreeOperation(private val defaultCooldown: Int) :
     CHAT_MESSAGE(100),
     ;
 
-    private var cooldown: ForgeConfigSpec.IntValue? = null
-    override fun addToConfig(builder: ForgeConfigSpec.Builder) {
+    private var cooldown: ModConfigSpec.IntValue? = null
+    override fun addToConfig(builder: ModConfigSpec.Builder) {
         cooldown = builder.defineInRange(
             settingsName() + "Cooldown",
             defaultCooldown,

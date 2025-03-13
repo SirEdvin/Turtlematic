@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.api
 
 import net.minecraft.resources.ResourceLocation
-import net.minecraftforge.common.ForgeConfigSpec
+import net.neoforged.neoforge.common.ModConfigSpec
 
 enum class AutomataCoreTier(
     private val defaultInteractionRadius: Int,
@@ -45,9 +45,9 @@ enum class AutomataCoreTier(
     ),
     ;
 
-    private var _interactionRadius: ForgeConfigSpec.IntValue? = null
-    private var _maxFuelConsumptionRate: ForgeConfigSpec.IntValue? = null
-    private var _cooldownReduceFactor: ForgeConfigSpec.DoubleValue? = null
+    private var _interactionRadius: ModConfigSpec.IntValue? = null
+    private var _maxFuelConsumptionRate: ModConfigSpec.IntValue? = null
+    private var _cooldownReduceFactor: ModConfigSpec.DoubleValue? = null
 
     override val interactionRadius: Int
         get() = _interactionRadius?.get() ?: defaultInteractionRadius
@@ -64,7 +64,7 @@ enum class AutomataCoreTier(
     override val settingsPostfix: String
         get() = "AutomataCore"
 
-    override fun addToConfig(builder: ForgeConfigSpec.Builder) {
+    override fun addToConfig(builder: ModConfigSpec.Builder) {
         _interactionRadius = builder.defineInRange(
             settingsName() + "InteractionRadius",
             defaultInteractionRadius,

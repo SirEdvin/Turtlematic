@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import com.google.common.math.IntMath
-import net.minecraftforge.common.ForgeConfigSpec
+import net.neoforged.neoforge.common.ModConfigSpec
 import site.siredvin.turtlematic.api.IForgeConfigHandler
 import site.siredvin.tweakium.modules.operation.SphereOperationContext
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
@@ -18,11 +18,11 @@ enum class SphereOperation(
     SCAN_ITEMS(2000, 8, 16, 0.17),
     ;
 
-    private var cooldown: ForgeConfigSpec.IntValue? = null
-    private var maxFreeRadiusConfig: ForgeConfigSpec.IntValue? = null
-    private var maxCostRadiusConfig: ForgeConfigSpec.IntValue? = null
-    private var extraBlockCostConfig: ForgeConfigSpec.DoubleValue? = null
-    override fun addToConfig(builder: ForgeConfigSpec.Builder) {
+    private var cooldown: ModConfigSpec.IntValue? = null
+    private var maxFreeRadiusConfig: ModConfigSpec.IntValue? = null
+    private var maxCostRadiusConfig: ModConfigSpec.IntValue? = null
+    private var extraBlockCostConfig: ModConfigSpec.DoubleValue? = null
+    override fun addToConfig(builder: ModConfigSpec.Builder) {
         cooldown = builder.defineInRange(
             settingsName() + "Cooldown",
             defaultCooldown,

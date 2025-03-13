@@ -1,5 +1,6 @@
 package site.siredvin.turtlematic.util
 
+import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -152,7 +153,7 @@ class ChunkManager : SavedData() {
         }
     }
 
-    override fun save(compoundTag: CompoundTag): CompoundTag {
+    override fun save(compoundTag: CompoundTag, p1: HolderLookup.Provider): CompoundTag {
         TurtlematicCore.logger.info("Saving all forces chunks ${forcedChunks.entries.size}")
         val forcedChunksTag = CompoundTag()
         forcedChunks.forEach { (key, value) ->

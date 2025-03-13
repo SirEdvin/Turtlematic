@@ -7,13 +7,18 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleItemRecipe
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.item.crafting.SmithingRecipe
+import net.minecraft.world.item.crafting.SmithingRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
@@ -74,11 +79,11 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
 
     private fun smeltItem(arguments: IArguments): MethodResult {
         val turtleInventory: Container = peripheralOwner.turtle.inventory
-        val limitedInventory = LimitedInventory(turtleInventory, intArrayOf(peripheralOwner.turtle.selectedSlot))
+        val limitedInventory = SingleRecipeInput(peripheralOwner.toolInMainHand)
         val limit = arguments.optInt(1, Int.MAX_VALUE)
         val smeltCount = min(limit, limitedInventory.getItem(0).count)
         val level: Level = peripheralOwner.level!!
-        val optRecipe: Optional<SmeltingRecipe> =
+        val optRecipe: Optional<RecipeHolder<SmeltingRecipe>> =
             level.recipeManager.getRecipeFor(RecipeType.SMELTING, limitedInventory, level)
         return if (!optRecipe.isPresent) {
             MethodResult.of(
@@ -88,10 +93,10 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         } else {
             withOperation(CountOperation.SMELT, smeltCount, {
                 addRotationCycle(smeltCount / 2)
-                val recipe: SmeltingRecipe = optRecipe.get()
+                val recipe: SmeltingRecipe = optRecipe.get().value
                 val result: ItemStack = recipe.assemble(limitedInventory, RegistryAccess.EMPTY)
                 result.count *= smeltCount
-                limitedInventory.reduceCount(0, smeltCount)
+                peripheralOwner.toolInMainHand.shrink(smeltCount)
                 ContainerUtils.toInventoryOrToWorld(
                     result,
                     turtleInventory,
@@ -122,14 +127,14 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         val blockState = blockSearchResult.first!!.second
         val hit = blockSearchResult.first!!.first
         val level = peripheralOwner.level!!
-        val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
+        val fakeContainer = SingleRecipeInput(blockState.block.asItem().defaultInstance)
         val optRecipe = level.recipeManager.getRecipeFor(RecipeType.SMELTING, fakeContainer, level)
         if (optRecipe.isEmpty) {
             return MethodResult.of(null, "Cannot perform in-place smelting for this block")
         }
         return withOperation(CountOperation.SMELT, 1, {
             val recipe = optRecipe.get()
-            val recipeResult = recipe.getResultItem(RegistryAccess.EMPTY)
+            val recipeResult = recipe.value.getResultItem(RegistryAccess.EMPTY)
             if (recipeResult.item is BlockItem && recipeResult.count == 1) {
                 val targetBlockState = (recipeResult.item as BlockItem).block.defaultBlockState()
                 level.setBlockAndUpdate(hit.blockPos, targetBlockState)
@@ -143,7 +148,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                     level,
                 )
             }
-            peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)?.adjustStoredXP(recipe.experience.toDouble())
+            peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)?.adjustStoredXP(recipe.value.experience.toDouble())
             return@withOperation MethodResult.of(true)
         })
     }
@@ -159,12 +164,14 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             }
             val limitedInventory =
                 LimitedInventory(turtleInventory, intArrayOf(selectedSlot, selectedSlot + 1, selectedSlot + 2))
+            val recipeInput = SmithingRecipeInput(limitedInventory.getItem(0), limitedInventory.getItem(1), limitedInventory.getItem(2))
             val level: Level = peripheralOwner.level!!
-            val optRecipe: Optional<SmithingRecipe> =
-                level.recipeManager.getRecipeFor(RecipeType.SMITHING, limitedInventory, level)
+            val optRecipe =
+                level.recipeManager.getRecipeFor(RecipeType.SMITHING, recipeInput, level)
             if (!optRecipe.isPresent) return@withOperation MethodResult.of(null, "Cannot find smithing recipe")
             val recipe = optRecipe.get()
-            val result: ItemStack = recipe.assemble(limitedInventory, RegistryAccess.EMPTY)
+            // TODO: validate mutation correctly (?)
+            val result: ItemStack = recipe.value.assemble(recipeInput, RegistryAccess.EMPTY)
             limitedInventory.reduceCount(0)
             limitedInventory.reduceCount(1)
             limitedInventory.reduceCount(2)

@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.common.configuration
 
-import net.minecraftforge.common.ForgeConfigSpec
+import net.neoforged.neoforge.common.ModConfigSpec
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.IForgeConfigHandler
 import site.siredvin.turtlematic.computercraft.operations.*
@@ -101,47 +101,47 @@ object TurtlematicConfig {
     val enchantmentWipeChance: Double
         get() = ConfigHolder.commonConfig.enchantingWipeChance.get()
 
-    class CommonConfig internal constructor(builder: ForgeConfigSpec.Builder) {
+    class CommonConfig internal constructor(builder: ModConfigSpec.Builder) {
         // Generic configuration
-        var cooldownTresholdLevel: ForgeConfigSpec.IntValue
-        var xpToFuelRate: ForgeConfigSpec.IntValue
+        var cooldownTresholdLevel: ModConfigSpec.IntValue
+        var xpToFuelRate: ModConfigSpec.IntValue
 
         // Extra turtle peripherals
-        val enableTurtleChatter: ForgeConfigSpec.BooleanValue
-        val enableCreativeChest: ForgeConfigSpec.BooleanValue
-        val enableTurtlePiston: ForgeConfigSpec.BooleanValue
-        val enableStickyTurtlePiston: ForgeConfigSpec.BooleanValue
-        val pistonVolumeLevel: ForgeConfigSpec.DoubleValue
-        val pistonPitchLevel: ForgeConfigSpec.DoubleValue
-        val enableLavaBucket: ForgeConfigSpec.BooleanValue
-        val enableChunkVial: ForgeConfigSpec.BooleanValue
-        val chunkVialTimeLimit: ForgeConfigSpec.LongValue
-        val enableBowTurtle: ForgeConfigSpec.BooleanValue
-        val bowTurtlePowerLimit: ForgeConfigSpec.DoubleValue
-        val enableMimicGadget: ForgeConfigSpec.BooleanValue
-        val mimicGadgetRMLLimit: ForgeConfigSpec.IntValue
+        val enableTurtleChatter: ModConfigSpec.BooleanValue
+        val enableCreativeChest: ModConfigSpec.BooleanValue
+        val enableTurtlePiston: ModConfigSpec.BooleanValue
+        val enableStickyTurtlePiston: ModConfigSpec.BooleanValue
+        val pistonVolumeLevel: ModConfigSpec.DoubleValue
+        val pistonPitchLevel: ModConfigSpec.DoubleValue
+        val enableLavaBucket: ModConfigSpec.BooleanValue
+        val enableChunkVial: ModConfigSpec.BooleanValue
+        val chunkVialTimeLimit: ModConfigSpec.LongValue
+        val enableBowTurtle: ModConfigSpec.BooleanValue
+        val bowTurtlePowerLimit: ModConfigSpec.DoubleValue
+        val enableMimicGadget: ModConfigSpec.BooleanValue
+        val mimicGadgetRMLLimit: ModConfigSpec.IntValue
 
         // Automata Core
-        val enableAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableEndAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableHusbandryAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableProtectiveAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableEnormousAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableAutomataCore: ModConfigSpec.BooleanValue
+        val enableEndAutomataCore: ModConfigSpec.BooleanValue
+        val enableHusbandryAutomataCore: ModConfigSpec.BooleanValue
+        val enableProtectiveAutomataCore: ModConfigSpec.BooleanValue
+        val enableEnormousAutomataCore: ModConfigSpec.BooleanValue
 
         // Forged automata core
-        val enableBrewingAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableSmitingAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableEnchantingAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableMasonAutomataCore: ForgeConfigSpec.BooleanValue
-        val enableMercantileAutomataCore: ForgeConfigSpec.BooleanValue
+        val enableBrewingAutomataCore: ModConfigSpec.BooleanValue
+        val enableSmitingAutomataCore: ModConfigSpec.BooleanValue
+        val enableEnchantingAutomataCore: ModConfigSpec.BooleanValue
+        val enableMasonAutomataCore: ModConfigSpec.BooleanValue
+        val enableMercantileAutomataCore: ModConfigSpec.BooleanValue
 
-        val starboundAutomataFuelGenerationChance: ForgeConfigSpec.DoubleValue
-        val starboundAutomataFuelGenerationAmount: ForgeConfigSpec.IntValue
-        val endAutomataCoreWarpPointLimit: ForgeConfigSpec.IntValue
-        val durabilityRestoreChance: ForgeConfigSpec.DoubleValue
-        val brewingXpReward: ForgeConfigSpec.DoubleValue
-        val brewingPowerLimit: ForgeConfigSpec.DoubleValue
-        val enchantingWipeChance: ForgeConfigSpec.DoubleValue
+        val starboundAutomataFuelGenerationChance: ModConfigSpec.DoubleValue
+        val starboundAutomataFuelGenerationAmount: ModConfigSpec.IntValue
+        val endAutomataCoreWarpPointLimit: ModConfigSpec.IntValue
+        val durabilityRestoreChance: ModConfigSpec.DoubleValue
+        val brewingXpReward: ModConfigSpec.DoubleValue
+        val brewingPowerLimit: ModConfigSpec.DoubleValue
+        val enchantingWipeChance: ModConfigSpec.DoubleValue
 
         init {
             builder.push("base")
@@ -204,7 +204,7 @@ object TurtlematicConfig {
             builder.pop()
         }
 
-        private fun register(data: Array<out IForgeConfigHandler>, builder: ForgeConfigSpec.Builder) {
+        private fun register(data: Array<out IForgeConfigHandler>, builder: ModConfigSpec.Builder) {
             for (handler in data) {
                 handler.addToConfig(builder)
             }

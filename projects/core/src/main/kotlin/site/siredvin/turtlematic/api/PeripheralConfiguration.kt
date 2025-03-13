@@ -7,5 +7,5 @@ import site.siredvin.turtlematic.util.camelToSnakeCase
 interface PeripheralConfiguration {
     val type: String
     val upgradeID: ResourceLocation
-        get() = ResourceLocation(TurtlematicCore.MOD_ID, type.camelToSnakeCase())
+        get() = ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, type.camelToSnakeCase())
 }

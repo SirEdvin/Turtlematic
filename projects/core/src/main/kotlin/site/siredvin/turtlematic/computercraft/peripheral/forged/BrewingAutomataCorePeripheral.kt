@@ -7,6 +7,8 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.Util
 import net.minecraft.core.*
+import net.minecraft.core.component.DataComponents
+import net.minecraft.core.dispenser.BlockSource
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
@@ -16,10 +18,8 @@ import net.minecraft.world.entity.projectile.ThrownPotion
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionBrewing
-import net.minecraft.world.item.alchemy.PotionUtils
-import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.Level
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
@@ -50,7 +50,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
         addPlugin(
             AutomataInteractionPlugin(
                 this,
-                allowedMods = InteractionMode.values().toSet(),
+                allowedMods = InteractionMode.entries.toSet(),
                 suitableEntity = suitableEntity,
             ),
         )
@@ -85,6 +85,9 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
         TurtlePotionDispenseBehavior(peripheralOwner)
     }
 
+    private val potionBrewing: PotionBrewing
+        get() = peripheralOwner.level!!.potionBrewing()
+
     override fun possibleOperations(): MutableList<IPeripheralOperation<*>> {
         val operations = super.possibleOperations()
         operations.add(SingleOperation.BREW)
@@ -99,7 +102,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             val turtleInventory: Container = peripheralOwner.turtle.inventory
             val selectedSlot: Int = peripheralOwner.turtle.selectedSlot
             val component: ItemStack = turtleInventory.getItem(selectedSlot)
-            if (!PotionBrewing.isIngredient(component)) {
+            if (!potionBrewing.isIngredient(component)) {
                 return@withOperation MethodResult.of(
                     null,
                     "Selected component is not an ingredient for brewing!",
@@ -110,8 +113,8 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
                 if (slot == selectedSlot) continue
                 val slotStack: ItemStack = turtleInventory.getItem(slot)
                 if (slotStack.isEmpty) continue
-                if (PotionBrewing.hasMix(slotStack, component)) {
-                    turtleInventory.setItem(slot, PotionBrewing.mix(component, slotStack))
+                if (potionBrewing.hasMix(slotStack, component)) {
+                    turtleInventory.setItem(slot, potionBrewing.mix(component, slotStack))
                     usedForBrewing = true
                     peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)
                         ?.adjustStoredXP(TurtlematicConfig.brewingXPReward)
@@ -142,11 +145,15 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
                     "Selected item should be splash or lingering potion",
                 )
             }
-            val potion: Potion = PotionUtils.getPotion(selectedStack)
-            if (potion === Potions.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
+            val potion = selectedStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+            if (potion === PotionContents.EMPTY) return@withOperation MethodResult.of(null, "Selected item is not potion")
+            val serverLevel = peripheralOwner.level as ServerLevel
+            val blockState = serverLevel.getBlockState(peripheralOwner.pos)
+            val blockEntity = serverLevel.getBlockEntity(peripheralOwner.pos)
+            @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
             turtleInventory.setItem(
                 selectedSlot,
-                dispenseBehavior.dispense(BlockSourceImpl(peripheralOwner.level as ServerLevel, peripheralOwner.pos), selectedStack, limitedPower, angle),
+                dispenseBehavior.dispense(BlockSource(serverLevel, peripheralOwner.pos, blockState, null), selectedStack, limitedPower, angle),
             )
             MethodResult.of(true)
         })

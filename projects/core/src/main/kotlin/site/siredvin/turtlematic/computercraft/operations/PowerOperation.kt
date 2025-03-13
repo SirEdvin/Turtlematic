@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.computercraft.operations
 
-import net.minecraftforge.common.ForgeConfigSpec
+import net.neoforged.neoforge.common.ModConfigSpec
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.api.IForgeConfigHandler
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
@@ -24,8 +24,8 @@ enum class PowerOperation(
         fun getFactor(power: Double): Double = factorFunction.apply(power)
     }
 
-    private var cooldown: ForgeConfigSpec.IntValue? = null
-    private var cost: ForgeConfigSpec.IntValue? = null
+    private var cooldown: ModConfigSpec.IntValue? = null
+    private var cost: ModConfigSpec.IntValue? = null
 
     override fun getCooldown(context: PowerOperationContext): Int = cooldown!!.get()
 
@@ -45,7 +45,7 @@ enum class PowerOperation(
         return data
     }
 
-    override fun addToConfig(builder: ForgeConfigSpec.Builder) {
+    override fun addToConfig(builder: ModConfigSpec.Builder) {
         cooldown = builder.defineInRange(
             settingsName() + "Cooldown",
             defaultCooldown,

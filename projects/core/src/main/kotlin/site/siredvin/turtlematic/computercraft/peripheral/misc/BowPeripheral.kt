@@ -5,8 +5,8 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
-import net.minecraft.core.BlockSourceImpl
 import net.minecraft.core.Position
+import net.minecraft.core.dispenser.BlockSource
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.entity.projectile.*
@@ -45,20 +45,19 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<T
             if (!suppressExtraLogic) {
                 if (stack.`is`(Items.SPECTRAL_ARROW)) {
                     val newProjectile: AbstractArrow =
-                        SpectralArrow(level, targetPosition.x(), targetPosition.y(), targetPosition.z())
+                        SpectralArrow(level, targetPosition.x(), targetPosition.y(), targetPosition.z(), stack, null)
                     newProjectile.pickup = AbstractArrow.Pickup.ALLOWED
                     stack.shrink(1)
                     return newProjectile
                 }
                 if (stack.`is`(Items.TIPPED_ARROW)) {
-                    val newProjectile = Arrow(level, targetPosition.x(), targetPosition.y(), targetPosition.z())
-                    newProjectile.setEffectsFromItem(stack)
+                    val newProjectile = Arrow(level, targetPosition.x(), targetPosition.y(), targetPosition.z(), stack, null)
                     newProjectile.pickup = AbstractArrow.Pickup.ALLOWED
                     stack.shrink(1)
                     return newProjectile
                 }
                 if (stack.item is ArrowItem) {
-                    val newProjectile = Arrow(level, targetPosition.x(), targetPosition.y(), targetPosition.z())
+                    val newProjectile = Arrow(level, targetPosition.x(), targetPosition.y(), targetPosition.z(), stack, null)
                     newProjectile.pickup = AbstractArrow.Pickup.ALLOWED
                     stack.shrink(1)
                     return newProjectile
@@ -107,16 +106,20 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<T
         }
         return peripheralOwner.withOperation(PowerOperation.SHOOT, PowerOperationContext(limitedPower), {
             val stackToDispense = selectedStack.split(realLimit)
+            val level = peripheralOwner.level as ServerLevel
+            val blockSource = level.getBlockState(peripheralOwner.pos)
             val dispensedResult = if (suppressExtraLogic.orElse(false)) {
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
                 suppressedDispenseBehavior.dispense(
-                    BlockSourceImpl(peripheralOwner.level as ServerLevel, peripheralOwner.pos),
+                    BlockSource(level, peripheralOwner.pos, blockSource, null),
                     stackToDispense,
                     limitedPower,
                     currentAngle,
                 )
             } else {
+                @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
                 dispenseBehavior.dispense(
-                    BlockSourceImpl(peripheralOwner.level as ServerLevel, peripheralOwner.pos),
+                    BlockSource(level, peripheralOwner.pos, blockSource, null),
                     stackToDispense,
                     limitedPower,
                     currentAngle,

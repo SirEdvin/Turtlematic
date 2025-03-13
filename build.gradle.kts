@@ -7,6 +7,7 @@ plugins {
 subprojectShaking {
     withKotlin.set(true)
     kotlinVersion.set("2.0.0")
+    javaVersion.set(JavaVersion.VERSION_21)
 }
 
 val setupSubproject = subprojectShaking::setupSubproject

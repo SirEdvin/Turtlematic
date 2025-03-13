@@ -6,15 +6,22 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
+import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.EnchantmentTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.Container
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import site.siredvin.broccolium.modules.base.util.ValueContainer
 import site.siredvin.broccolium.modules.base.util.XPUtil
 import site.siredvin.broccolium.modules.base.util.world.ScanUtils
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
@@ -27,6 +34,8 @@ import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import site.siredvin.tweakium.modules.peripheral.util.assertBetween
 import site.siredvin.tweakium.modules.peripheral.util.isCorrectSlot
+import java.util.*
+import java.util.stream.Stream
 import kotlin.math.max
 
 open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
@@ -88,6 +97,28 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             return max(enchantmentPower.value * 2, MAX_ENCHANTMENT_LEVEL)
         }
 
+    private fun getComponentType(stack: ItemStack): DataComponentType<ItemEnchantments> {
+        return if (stack.`is`(Items.ENCHANTED_BOOK)) DataComponents.STORED_ENCHANTMENTS else DataComponents.ENCHANTMENTS
+    }
+
+    private fun extractEnchantments(stack: ItemStack): ItemEnchantments {
+        return stack.getOrDefault(getComponentType(stack), ItemEnchantments.EMPTY)
+    }
+
+    private fun buildEnchantments(): Stream<Holder<Enchantment>> {
+        val enchantmentRegistry = PlatformToolkit.get().registries!!.lookupOrThrow(Registries.ENCHANTMENT)
+        var enchantmentStream: Stream<Holder<Enchantment>> = Stream.of()
+        enchantmentRegistry.get(EnchantmentTags.IN_ENCHANTING_TABLE).ifPresent { enchantments ->
+            enchantmentStream = Stream.concat(enchantmentStream, enchantments.stream())
+        }
+        if (allowTreasureEnchants) {
+            enchantmentRegistry.get(EnchantmentTags.TREASURE).ifPresent { enchantments ->
+                enchantmentStream = Stream.concat(enchantmentStream, enchantments.stream())
+            }
+        }
+        return enchantmentStream
+    }
+
     @LuaFunction(mainThread = true, value = ["getEnchantmentPower"])
     fun getEnchantmentPowerLua(): Int = enchantmentPower
 
@@ -108,10 +139,10 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             ?: return MethodResult.of(null, "Internal error ...?")
         intArrayOf(0, 1, 2).forEach {
             val cost = EnchantmentHelper.getEnchantmentCost(RandomSource.create(enchantmentSeed + it), it, enchantmentPower, targetItem)
-            val enchantments = EnchantmentHelper.selectEnchantment(RandomSource.create(enchantmentSeed + it), targetItem, cost, allowTreasureEnchants)
+            val enchantments = EnchantmentHelper.selectEnchantment(RandomSource.create(enchantmentSeed + it), targetItem, cost, buildEnchantments())
             if (enchantments.isNotEmpty()) {
                 val enchantment = enchantments.first()
-                val baseInformation = LuaRepresentation.forEnchantment(enchantment.enchantment, enchantment.level)
+                val baseInformation = LuaRepresentation.forEnchantment(enchantment.enchantment.value(), enchantment.level)
                 val requiredCost = XPUtil.levelsToXP(cost)
                 baseInformation["requiredXP"] = requiredCost
                 baseInformation["cost"] = XPUtil.levelReductionToXp(
@@ -150,7 +181,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                     RandomSource.create(enchantmentSeed + slot),
                     targetItem,
                     enchantmentPower,
-                    allowTreasureEnchants,
+                    buildEnchantments(),
                 )
             experienceAbility.adjustStoredXP(-requiredXP)
             turtleInventory.setItem(selectedSlot, enchantedItem)
@@ -178,15 +209,15 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             if (targetItem.count != 1) {
                 return@withOperation MethodResult.of(null, "Target book should be 1 in stack")
             }
-            val enchants: MutableMap<Enchantment, Int> = EnchantmentHelper.getEnchantments(selectedItem)
+            val enchants = ItemEnchantments.Mutable(extractEnchantments(selectedItem))
             if (!tier.traits.contains(AutomataCoreTraits.SKILLED)) {
                 if (peripheralOwner.level!!.random.nextInt(100) < TurtlematicConfig.enchantmentWipeChance * 100) {
-                    enchants.keys.stream().findAny().ifPresent(enchants::remove)
+                    enchants.keySet().stream().findAny().ifPresent { enchants.set(it, 0) }
                 }
             }
             val enchantedBook = ItemStack(Items.ENCHANTED_BOOK)
-            EnchantmentHelper.setEnchantments(enchants, enchantedBook)
-            EnchantmentHelper.setEnchantments(emptyMap(), selectedItem)
+            EnchantmentHelper.setEnchantments(enchantedBook, enchants.toImmutable())
+            EnchantmentHelper.setEnchantments(selectedItem, ItemEnchantments.EMPTY)
             turtleInventory.setItem(realSlot, enchantedBook)
             return@withOperation MethodResult.of(true)
         }

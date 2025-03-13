@@ -137,7 +137,7 @@ class AutomataCapturePlugin(
                 serializedData.put("state", NbtUtils.writeBlockState(state))
                 val entity = level.getBlockEntity(hit.blockPos)
                 if (entity != null) {
-                    serializedData.put("nbt", entity.saveWithoutMetadata())
+                    serializedData.put("nbt", entity.saveWithoutMetadata(PlatformToolkit.get().registries!!))
                 }
                 saveSomething(serializedData, InteractionMode.BLOCK)
                 DropConsumer.configure(level, hit.blockPos, { ItemStack.EMPTY }, range = 4.0)
@@ -179,7 +179,7 @@ class AutomataCapturePlugin(
         level.setBlockAndUpdate(pos, extractedBlock.first)
         val entity = level.getBlockEntity(pos)
         if (entity != null && !extractedBlock.second.isEmpty) {
-            entity.load(extractedBlock.second)
+            entity.loadWithComponents(extractedBlock.second, PlatformToolkit.get().registries!!)
         }
         clear()
         return MethodResult.of(true)

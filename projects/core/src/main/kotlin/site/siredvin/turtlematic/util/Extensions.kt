@@ -12,11 +12,11 @@ import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
 import java.util.*
 import java.util.stream.Collectors
 
-fun ResourceLocation.toNetherite(): ResourceLocation = ResourceLocation(this.namespace, "netherite_${this.path}")
+fun ResourceLocation.toNetherite(): ResourceLocation = ResourceLocation.fromNamespaceAndPath(this.namespace, "netherite_${this.path}")
 
-fun ResourceLocation.toStarbound(): ResourceLocation = ResourceLocation(this.namespace, "starbound_${this.path}")
+fun ResourceLocation.toStarbound(): ResourceLocation = ResourceLocation.fromNamespaceAndPath(this.namespace, "starbound_${this.path}")
 
-fun ResourceLocation.toCreative(): ResourceLocation = ResourceLocation(this.namespace, "creative_${this.path}")
+fun ResourceLocation.toCreative(): ResourceLocation = ResourceLocation.fromNamespaceAndPath(this.namespace, "creative_${this.path}")
 
 fun String.camelToSnakeCase(): String {
     val pattern = "(?<=.)[A-Z]".toRegex()

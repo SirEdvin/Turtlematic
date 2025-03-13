@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.computercraft.operations
 
-import net.minecraftforge.common.ForgeConfigSpec
+import net.neoforged.neoforge.common.ModConfigSpec
 import site.siredvin.turtlematic.api.IForgeConfigHandler
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 import java.util.*
@@ -51,8 +51,8 @@ enum class SingleOperation(
         fun getFactor(count: Int): Int = factorFunction.apply(count)
     }
 
-    private var cooldown: ForgeConfigSpec.IntValue? = null
-    private var cost: ForgeConfigSpec.IntValue? = null
+    private var cooldown: ModConfigSpec.IntValue? = null
+    private var cost: ModConfigSpec.IntValue? = null
 
     constructor(defaultCooldown: Int, defaultCost: Int) : this(
         defaultCooldown,
@@ -83,7 +83,7 @@ enum class SingleOperation(
         return data
     }
 
-    override fun addToConfig(builder: ForgeConfigSpec.Builder) {
+    override fun addToConfig(builder: ModConfigSpec.Builder) {
         cooldown = builder.defineInRange(
             settingsName() + "Cooldown",
             defaultCooldown,
