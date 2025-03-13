@@ -1,7 +1,7 @@
 package site.siredvin.turtlematic.xplat
 
 import net.minecraft.world.item.crafting.Ingredient
-import site.siredvin.peripheralium.common.setup.Items
+import site.siredvin.peripheralium.Items
 
 interface ModRecipeIngredients {
     companion object {

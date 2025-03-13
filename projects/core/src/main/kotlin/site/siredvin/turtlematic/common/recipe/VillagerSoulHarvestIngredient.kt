@@ -15,7 +15,5 @@ class VillagerSoulHarvestIngredient(private val profession: VillagerProfession) 
     override val description: String
         get() = "${requiredCount}x${profession.name.replaceFirstChar { it.titlecase() }} ${EntityType.VILLAGER.description.string}"
 
-    override fun match(entity: Entity): Boolean {
-        return entity is Villager && entity.villagerData.profession == profession
-    }
+    override fun match(entity: Entity): Boolean = entity is Villager && entity.villagerData.profession == profession
 }

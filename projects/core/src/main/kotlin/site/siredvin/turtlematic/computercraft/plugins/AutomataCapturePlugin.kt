@@ -16,19 +16,16 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
-import site.siredvin.peripheralium.api.datatypes.InteractionMode
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
-import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.util.representation.LuaRepresentation
-import site.siredvin.peripheralium.util.world.DropConsumer
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.tricks.DropConsumer
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.tags.EntityTags
+import site.siredvin.tweakium.modules.peripheral.api.*
+import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.function.Predicate
 
 class AutomataCapturePlugin(
@@ -41,19 +38,13 @@ class AutomataCapturePlugin(
         private const val STORED_OBJECT_NBT_KEY = "storedObject"
         private const val STORED_OBJECT_TYPE_NBT_KEY = "storedObjectType"
 
-        fun isSomethingPresent(dataStorage: CompoundTag): Boolean {
-            return !dataStorage.getCompound(STORED_OBJECT_NBT_KEY).isEmpty
-        }
+        fun isSomethingPresent(dataStorage: IDataStorage): Boolean = !dataStorage.getCompound(STORED_OBJECT_NBT_KEY).isEmpty
 
-        fun getStoredType(dataStorage: CompoundTag): InteractionMode? {
-            return InteractionMode.optValueOf(dataStorage.getString(STORED_OBJECT_TYPE_NBT_KEY))
-        }
+        fun getStoredType(dataStorage: IDataStorage): InteractionMode? = InteractionMode.optValueOf(dataStorage.getString(STORED_OBJECT_TYPE_NBT_KEY))
 
-        fun getStoredData(dataStorage: CompoundTag): CompoundTag {
-            return dataStorage.getCompound(STORED_OBJECT_NBT_KEY)
-        }
+        fun getStoredData(dataStorage: IDataStorage): CompoundTag = dataStorage.getCompound(STORED_OBJECT_NBT_KEY)
 
-        fun extractEntity(dataStorage: CompoundTag, level: Level): Entity? {
+        fun extractEntity(dataStorage: IDataStorage, level: Level): Entity? {
             if (getStoredType(dataStorage) != InteractionMode.ENTITY) {
                 return null
             }
@@ -67,12 +58,12 @@ class AutomataCapturePlugin(
             return null
         }
 
-        fun extractBlock(dataStorage: CompoundTag): Pair<BlockState, CompoundTag>? {
+        fun extractBlock(dataStorage: IDataStorage): Pair<BlockState, CompoundTag>? {
             if (getStoredType(dataStorage) != InteractionMode.BLOCK) {
                 return null
             }
             val data: CompoundTag = getStoredData(dataStorage)
-            val blockState = NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound("state"))
+            val blockState = NbtUtils.readBlockState(PlatformRegistries.BLOCKS, data.getCompound("state"))
             if (blockState.isAir) {
                 return null
             }
@@ -87,7 +78,7 @@ class AutomataCapturePlugin(
         get() = isSomethingPresent(automataCore.peripheralOwner.dataStorage)
 
     protected fun saveSomething(data: CompoundTag, type: InteractionMode) {
-        automataCore.peripheralOwner.dataStorage.put(STORED_OBJECT_NBT_KEY, data)
+        automataCore.peripheralOwner.dataStorage.putCompound(STORED_OBJECT_NBT_KEY, data)
         automataCore.peripheralOwner.dataStorage.putString(STORED_OBJECT_TYPE_NBT_KEY, type.toString())
     }
 
@@ -136,7 +127,7 @@ class AutomataCapturePlugin(
                 val owner = automataCore.peripheralOwner
                 val level = owner.level!!
                 val state = level.getBlockState(hit.blockPos)
-                if (owner.withPlayer({ PeripheraliumPlatform.isBlockProtected(hit.blockPos, state, it.fakePlayer) })) {
+                if (owner.withPlayer({ PlatformToolkit.get().isBlockProtected(hit.blockPos, state, it.fakePlayer) })) {
                     return@withOperation MethodResult.of(null, "Block is protected")
                 }
                 if (state.`is`(BlockTags.CAPTURE_BLOCKLIST)) {
@@ -180,7 +171,7 @@ class AutomataCapturePlugin(
             return MethodResult.of(null, "Target area should be empty")
         }
         val isProtected = owner.withPlayer(
-            { PeripheraliumPlatform.isBlockProtected(pos, level.getBlockState(pos), it.fakePlayer) },
+            { PlatformToolkit.get().isBlockProtected(pos, level.getBlockState(pos), it.fakePlayer) },
         )
         if (isProtected) {
             return MethodResult.of(null, "This block is protected")
@@ -241,7 +232,7 @@ class AutomataCapturePlugin(
                     val tag = CompoundTag()
                     entity.saveWithoutId(tag)
                     if (!tag.isEmpty) {
-                        val serializerTag = PeripheraliumPlatform.nbtToLua(tag)
+                        val serializerTag = ComputerPlatformToolkit.get().nbtToLua(tag)
                         if (serializerTag != null) {
                             base["nbt"] = serializerTag
                         }
@@ -252,7 +243,7 @@ class AutomataCapturePlugin(
                     val blockData = extractBlock(automataCore.peripheralOwner.dataStorage)!!
                     val base = LuaRepresentation.forBlockState(blockData.first)
                     if (!blockData.second.isEmpty) {
-                        val serializerTag = PeripheraliumPlatform.nbtToLua(blockData.second)
+                        val serializerTag = ComputerPlatformToolkit.get().nbtToLua(blockData.second)
                         if (serializerTag != null) {
                             base["nbt"] = serializerTag
                         }

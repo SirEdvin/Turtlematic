@@ -9,13 +9,12 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.EntityHitResult
-import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.PeripheralConfiguration
+import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 
-class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
+class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
     companion object : PeripheralConfiguration {
         override val type = "soul_scrapper"
     }
@@ -39,10 +38,10 @@ class SoulScrapperPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
                 return@withPlayer MethodResult.of(null, "Nothing to consume")
             }
             val result = feedableItem.consumeEntitySoul(toolInMainHand, it.fakePlayer, hit.entity as LivingEntity)
-            if (result.rightPresent()) {
-                return@withPlayer MethodResult.of(null, result.right)
+            if (result.second != null) {
+                return@withPlayer MethodResult.of(null, result.second)
             }
-            it.fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, result.left!!)
+            it.fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, result.first!!)
             return@withPlayer MethodResult.of(true)
         })
     }

@@ -12,12 +12,14 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
-import site.siredvin.peripheralium.ext.toBlockPos
-import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
-import site.siredvin.peripheralium.storages.item.ItemStorageUtils
+import site.siredvin.broccolium.modules.base.ext.toBlockPos
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.turtlematic.common.setup.EntityTypes
 
-class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : ThrowableProjectile(EntityTypes.SHOOTED_ITEM_TYPE.get(), x, y, z, level), ItemSupplier {
+class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
+    ThrowableProjectile(EntityTypes.SHOOTED_ITEM_TYPE.get(), x, y, z, level),
+    ItemSupplier {
 
     constructor(level: Level) : this(level, 0.0, 0.0, 0.0)
 
@@ -38,7 +40,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
     override fun onHitBlock(hit: BlockHitResult) {
         if (!level().isClientSide) {
             val targetableStorage =
-                ItemStorageExtractor.extractItemSink(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
+                AgnosticItemStorageLookup.extractItemSink(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
             if (targetableStorage != null) {
                 this.kill()
                 ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level())
@@ -54,7 +56,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
 
     override fun onHitEntity(hit: EntityHitResult) {
         if (!level().isClientSide) {
-            val targetableStorage = ItemStorageExtractor.extractItemSink(level(), hit.entity)
+            val targetableStorage = AgnosticItemStorageLookup.extractItemSink(level(), hit.entity)
             if (targetableStorage != null) {
                 this.kill()
                 ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level())
@@ -83,9 +85,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
         getEntityData().define(DATA_ITEM_STACK, ItemStack.EMPTY)
     }
 
-    override fun isNoGravity(): Boolean {
-        return super.isNoGravity() || deltaMovement.length() == 0.0
-    }
+    override fun isNoGravity(): Boolean = super.isNoGravity() || deltaMovement.length() == 0.0
 
     override fun addAdditionalSaveData(tag: CompoundTag) {
         super.addAdditionalSaveData(tag)
@@ -100,7 +100,5 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) : Thr
         stack = ItemStack.of(tag.getCompound("Item"))
     }
 
-    override fun getItem(): ItemStack {
-        return stack
-    }
+    override fun getItem(): ItemStack = stack
 }

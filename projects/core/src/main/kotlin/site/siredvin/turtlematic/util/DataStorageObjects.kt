@@ -6,10 +6,11 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.level.block.state.BlockState
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
-import site.siredvin.peripheralium.util.DataStorageUtil
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.turtlematic.tags.BlockTags
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import kotlin.math.max
 
 object DataStorageObjects {
@@ -17,11 +18,11 @@ object DataStorageObjects {
     abstract class AbstractDataObject<T> {
         abstract val nbtTag: String
 
-        abstract fun read(data: CompoundTag): T?
-        abstract fun write(data: CompoundTag, value: T): Boolean
+        abstract fun read(data: IDataStorage): T?
+        abstract fun write(data: IDataStorage, value: T): Boolean
 
-        operator fun get(storage: CompoundTag): T? {
-            if (!storage.contains(nbtTag)) return null
+        operator fun get(storage: IDataStorage): T? {
+            if (!storage.has(nbtTag)) return null
             val value = read(storage)
             if (value == null) {
                 storage.remove(nbtTag)
@@ -29,19 +30,13 @@ object DataStorageObjects {
             }
             return value
         }
-        operator fun get(access: ITurtleAccess, side: TurtleSide): T? {
-            return get(DataStorageUtil.getDataStorage(access, side))
-        }
+        operator fun get(access: ITurtleAccess, side: TurtleSide): T? = get(DataStorageUtil.getDataStorage(access, side))
 
-        operator fun get(access: IPocketAccess): T? {
-            return get(DataStorageUtil.getDataStorage(access))
-        }
+        operator fun get(access: IPocketAccess): T? = get(DataStorageUtil.getDataStorage(access))
 
-        operator fun get(owner: IPeripheralOwner): T? {
-            return get(owner.dataStorage)
-        }
+        operator fun get(owner: IPeripheralOwner): T? = get(owner.dataStorage)
 
-        operator fun set(storage: CompoundTag, value: T?) {
+        operator fun set(storage: IDataStorage, value: T?) {
             if (value == null) {
                 storage.remove(nbtTag)
             } else {
@@ -53,17 +48,14 @@ object DataStorageObjects {
         }
         operator fun set(owner: IPeripheralOwner, blockState: T?) {
             set(owner.dataStorage, blockState)
-            owner.markDataStorageDirty()
         }
 
         operator fun set(access: IPocketAccess, blockState: T?) {
             set(DataStorageUtil.getDataStorage(access), blockState)
-            access.updateUpgradeNBTData()
         }
 
         operator fun set(access: ITurtleAccess, side: TurtleSide, blockState: T?) {
             set(DataStorageUtil.getDataStorage(access, side), blockState)
-            access.updateUpgradeNBTData(side)
         }
     }
 
@@ -72,11 +64,11 @@ object DataStorageObjects {
 
         abstract val default: T
 
-        abstract fun read(data: CompoundTag): T
-        abstract fun write(data: CompoundTag, value: T): Boolean
+        abstract fun read(data: IDataStorage): T
+        abstract fun write(data: IDataStorage, value: T): Boolean
 
-        operator fun get(storage: CompoundTag): T {
-            if (!storage.contains(nbtTag)) return default
+        operator fun get(storage: IDataStorage): T {
+            if (!storage.has(nbtTag)) return default
             val value = read(storage)
             if (value == null) {
                 storage.remove(nbtTag)
@@ -84,19 +76,13 @@ object DataStorageObjects {
             }
             return value
         }
-        operator fun get(access: ITurtleAccess, side: TurtleSide): T {
-            return get(DataStorageUtil.getDataStorage(access, side))
-        }
+        operator fun get(access: ITurtleAccess, side: TurtleSide): T = get(DataStorageUtil.getDataStorage(access, side))
 
-        operator fun get(access: IPocketAccess): T {
-            return get(DataStorageUtil.getDataStorage(access))
-        }
+        operator fun get(access: IPocketAccess): T = get(DataStorageUtil.getDataStorage(access))
 
-        operator fun get(owner: IPeripheralOwner): T {
-            return get(owner.dataStorage)
-        }
+        operator fun get(owner: IPeripheralOwner): T = get(owner.dataStorage)
 
-        operator fun set(storage: CompoundTag, value: T) {
+        operator fun set(storage: IDataStorage, value: T) {
             val writeResult = write(storage, value)
             if (!writeResult) {
                 storage.remove(nbtTag)
@@ -104,17 +90,14 @@ object DataStorageObjects {
         }
         operator fun set(owner: IPeripheralOwner, blockState: T) {
             set(owner.dataStorage, blockState)
-            owner.markDataStorageDirty()
         }
 
         operator fun set(access: IPocketAccess, blockState: T) {
             set(DataStorageUtil.getDataStorage(access), blockState)
-            access.updateUpgradeNBTData()
         }
 
         operator fun set(access: ITurtleAccess, side: TurtleSide, blockState: T) {
             set(DataStorageUtil.getDataStorage(access, side), blockState)
-            access.updateUpgradeNBTData(side)
         }
     }
 
@@ -132,11 +115,9 @@ object DataStorageObjects {
         override val nbtTag: String
             get() = "rotationCharge"
 
-        override fun read(data: CompoundTag): Int {
-            return data.getInt(nbtTag)
-        }
+        override fun read(data: IDataStorage): Int = data.getInt(nbtTag)
 
-        override fun write(data: CompoundTag, value: Int): Boolean {
+        override fun write(data: IDataStorage, value: Int): Boolean {
             data.putInt(nbtTag, value)
             return true
         }
@@ -162,19 +143,19 @@ object DataStorageObjects {
         override val nbtTag: String
             get() = "mimic"
 
-        override fun read(data: CompoundTag): BlockState? {
-            val blockState = NbtUtils.readBlockState(XplatRegistries.BLOCKS, data.getCompound(nbtTag))
+        override fun read(data: IDataStorage): BlockState? {
+            val blockState = NbtUtils.readBlockState(PlatformRegistries.BLOCKS, data.getCompound(nbtTag))
             if (blockState.`is`(BlockTags.MIMIC_BLOCKLIST)) {
                 return null
             }
             return blockState
         }
 
-        override fun write(data: CompoundTag, value: BlockState): Boolean {
+        override fun write(data: IDataStorage, value: BlockState): Boolean {
             if (value.`is`(BlockTags.MIMIC_BLOCKLIST)) {
                 return false
             }
-            data.put(nbtTag, NbtUtils.writeBlockState(value))
+            data.putCompound(nbtTag, NbtUtils.writeBlockState(value))
             return true
         }
     }
@@ -184,13 +165,13 @@ object DataStorageObjects {
         override val nbtTag: String
             get() = "mimicNBTData"
 
-        override fun read(data: CompoundTag): CompoundTag? {
-            if (!data.contains(nbtTag)) return null
+        override fun read(data: IDataStorage): CompoundTag? {
+            if (!data.has(nbtTag)) return null
             return data.getCompound(nbtTag)
         }
 
-        override fun write(data: CompoundTag, value: CompoundTag): Boolean {
-            data.put(nbtTag, value)
+        override fun write(data: IDataStorage, value: CompoundTag): Boolean {
+            data.putCompound(nbtTag, value)
             return true
         }
     }
@@ -199,12 +180,12 @@ object DataStorageObjects {
         override val nbtTag: String
             get() = "rml"
 
-        override fun read(data: CompoundTag): String? {
-            if (!data.contains(nbtTag)) return null
+        override fun read(data: IDataStorage): String? {
+            if (!data.has(nbtTag)) return null
             return data.getString(nbtTag)
         }
 
-        override fun write(data: CompoundTag, value: String): Boolean {
+        override fun write(data: IDataStorage, value: String): Boolean {
             data.putString(nbtTag, value)
             return true
         }
@@ -217,11 +198,9 @@ object DataStorageObjects {
         override val default: Double
             get() = 0.0
 
-        override fun read(data: CompoundTag): Double {
-            return data.getDouble(nbtTag)
-        }
+        override fun read(data: IDataStorage): Double = data.getDouble(nbtTag)
 
-        override fun write(data: CompoundTag, value: Double): Boolean {
+        override fun write(data: IDataStorage, value: Double): Boolean {
             data.putDouble(nbtTag, value)
             return true
         }
@@ -233,11 +212,9 @@ object DataStorageObjects {
         override val default: Boolean
             get() = false
 
-        override fun read(data: CompoundTag): Boolean {
-            return data.getBoolean(nbtTag)
-        }
+        override fun read(data: IDataStorage): Boolean = data.getBoolean(nbtTag)
 
-        override fun write(data: CompoundTag, value: Boolean): Boolean {
+        override fun write(data: IDataStorage, value: Boolean): Boolean {
             data.putBoolean(nbtTag, value)
             return true
         }
@@ -247,14 +224,14 @@ object DataStorageObjects {
         override val nbtTag: String
             get() = "chatMessage"
 
-        override fun read(data: CompoundTag): String? {
-            if (data.contains(nbtTag)) {
+        override fun read(data: IDataStorage): String? {
+            if (data.has(nbtTag)) {
                 return data.getString(nbtTag)
             }
             return null
         }
 
-        override fun write(data: CompoundTag, value: String): Boolean {
+        override fun write(data: IDataStorage, value: String): Boolean {
             data.putString(nbtTag, value)
             return true
         }

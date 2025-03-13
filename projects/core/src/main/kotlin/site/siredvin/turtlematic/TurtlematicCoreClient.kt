@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
-import site.siredvin.peripheralium.client.FacingBlockTurtleModeller
 import site.siredvin.turtlematic.client.*
 import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
 import site.siredvin.turtlematic.common.setup.EntityTypes
@@ -17,6 +16,7 @@ import site.siredvin.turtlematic.computercraft.peripheral.misc.ChunkVialPeripher
 import site.siredvin.turtlematic.computercraft.peripheral.misc.CreativeChestPeripheral
 import site.siredvin.turtlematic.computercraft.peripheral.misc.MimicPeripheral
 import site.siredvin.turtlematic.computercraft.peripheral.misc.TurtleChatterPeripheral
+import site.siredvin.tweakium.modules.turtle.client.FacingBlockTurtleModeller
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 import java.util.function.Supplier

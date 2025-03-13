@@ -6,18 +6,18 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.core.BlockPos
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.api.peripheral.IPeripheralCheck
-import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.ability.FuelAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.util.NBTUtil.blockPosFromNBT
-import site.siredvin.peripheralium.util.NBTUtil.toNBT
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.tweakium.modules.peripheral.ability.FuelBoon
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralCheck
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralFunction
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.util.NBTUtil
 
 class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {
     override val operations: List<IPeripheralOperation<*>>
@@ -26,8 +26,8 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
     protected val pointData: CompoundTag
         get() {
             val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-            val settings: CompoundTag = owner.dataStorage
-            if (!settings.contains(WORLD_DATA_MARK)) {
+            val settings: IDataStorage = owner.dataStorage
+            if (!settings.has(WORLD_DATA_MARK)) {
                 settings.putString(WORLD_DATA_MARK, owner.level!!.dimension().location().toString())
             } else {
                 val worldName: String = settings.getString(WORLD_DATA_MARK)
@@ -35,14 +35,14 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
                     throw LuaException("Incorrect world for this upgrade")
                 }
             }
-            if (!settings.contains(POINT_DATA_MARK)) {
-                settings.put(POINT_DATA_MARK, CompoundTag())
+            if (!settings.has(POINT_DATA_MARK)) {
+                settings.putCompound(POINT_DATA_MARK, CompoundTag())
             }
             return settings.getCompound(POINT_DATA_MARK)
         }
 
     private fun getWarpCost(context: SingleOperationContext): Int {
-        val fuelAbility: FuelAbility<*> = automataCore.peripheralOwner.getAbility(PeripheralOwnerAbility.FUEL)!!
+        val fuelAbility: FuelBoon<*> = automataCore.peripheralOwner.getBoon(PeripheralOwnerBoonKey.FUEL)!!
         return SingleOperation.WARP.getCost(context) * fuelAbility.fuelConsumptionMultiply
     }
 
@@ -56,7 +56,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
                 "Cannot add new point, limit reached",
             )
         }
-        data.put(name, toNBT(automataCore.peripheralOwner.pos))
+        data.put(name, NBTUtil.toNBT(automataCore.peripheralOwner.pos))
         return MethodResult.of(true)
     }
 
@@ -84,7 +84,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         if (!data.contains(name)) {
             return MethodResult.of(null, "Cannot find point to warp to")
         }
-        val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
+        val newPosition: BlockPos = NBTUtil.blockPosFromNBT(data.getCompound(name))
         return automataCore.withOperation(
             SingleOperation.WARP,
             automataCore.toDistance(newPosition),
@@ -108,14 +108,14 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
     @LuaFunction(mainThread = true)
     fun estimateWarpCost(name: String): MethodResult {
         val data: CompoundTag = pointData
-        val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
+        val newPosition: BlockPos = NBTUtil.blockPosFromNBT(data.getCompound(name))
         return MethodResult.of(getWarpCost(automataCore.toDistance(newPosition)))
     }
 
     @LuaFunction(mainThread = true)
     fun distanceToPoint(name: String): MethodResult {
         val data: CompoundTag = pointData
-        val newPosition: BlockPos = blockPosFromNBT(data.getCompound(name))
+        val newPosition: BlockPos = NBTUtil.blockPosFromNBT(data.getCompound(name))
         return MethodResult.of(newPosition.distManhattan(automataCore.peripheralOwner.pos))
     }
 

@@ -13,7 +13,5 @@ class SimpleSoulHarvestIngredient(private val entityType: EntityType<*>, private
     override val description: String
         get() = "${requiredCount}x${entityType.description.string}"
 
-    override fun match(entity: Entity): Boolean {
-        return entity.type == entityType
-    }
+    override fun match(entity: Entity): Boolean = entity.type == entityType
 }

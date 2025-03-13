@@ -74,7 +74,8 @@ repositories {
 
 dependencies {
     implementation(libs.bundles.forge.raw)
-    libs.bundles.forge.base.get().map { implementation(fg.deobf(it)) }
+    libs.bundles.forge.cc.get().map { implementation(fg.deobf(it)) }
+    libs.bundles.forge.include.get().map { implementation(fg.deobf(it)) }
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
     libs.bundles.externalMods.forge.integrations.full.get().map { compileOnly(fg.deobf(it)) }

@@ -9,7 +9,7 @@ import site.siredvin.turtlematic.xplat.ModRecipeIngredients
 object ForgeModRecipeIngredients : ModRecipeIngredients {
 
     override val peripheraliumUpgrade: Ingredient
-        get() = Ingredient.of(site.siredvin.peripheralium.common.setup.Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get())
+        get() = Ingredient.of(site.siredvin.peripheralium.Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get())
     override val soulLantern: Ingredient
         get() = Ingredient.of(Items.SOUL_LANTERN)
     override val emerald: Ingredient

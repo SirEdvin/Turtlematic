@@ -14,16 +14,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.BlockHitResult
-import site.siredvin.peripheralium.api.datatypes.InteractionMode
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.ScanningAbility
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.util.representation.animalData
-import site.siredvin.peripheralium.util.representation.beeNestAnalyze
-import site.siredvin.peripheralium.util.representation.cropAge
-import site.siredvin.peripheralium.util.representation.honeyLevel
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
@@ -33,6 +24,15 @@ import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.*
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.tags.EntityTags
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.ability.ScanningBoon
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
+import site.siredvin.tweakium.modules.peripheral.representation.animalData
+import site.siredvin.tweakium.modules.peripheral.representation.beeNestAnalyze
+import site.siredvin.tweakium.modules.peripheral.representation.cropAge
+import site.siredvin.tweakium.modules.peripheral.representation.honeyLevel
 import java.util.function.Predicate
 
 class HusbandryAutomataCorePeripheral(
@@ -62,9 +62,9 @@ class HusbandryAutomataCorePeripheral(
             ),
         )
         addPlugin(AutomataItemSuckPlugin(this))
-        peripheralOwner.attachAbility(
-            PeripheralOwnerAbility.SCANNING,
-            ScanningAbility(peripheralOwner, tier.interactionRadius).attachItemScan(
+        peripheralOwner.attachBoon(
+            PeripheralOwnerBoonKey.SCANNING,
+            ScanningBoon(peripheralOwner, tier.interactionRadius).attachItemScan(
                 SphereOperation.SCAN_ITEMS,
             ).attachLivingEntityScan(SphereOperation.SCAN_ENTITIES, { suitableEntity.test(it) }, { it1, it2 -> animalData.accept(it1, it2) }),
         )

@@ -7,22 +7,16 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.Pose
 import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.phys.Vec3
-import site.siredvin.peripheralium.api.datatypes.InteractionMode
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
+import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
 import java.util.*
 import java.util.stream.Collectors
 
-fun ResourceLocation.toNetherite(): ResourceLocation {
-    return ResourceLocation(this.namespace, "netherite_${this.path}")
-}
+fun ResourceLocation.toNetherite(): ResourceLocation = ResourceLocation(this.namespace, "netherite_${this.path}")
 
-fun ResourceLocation.toStarbound(): ResourceLocation {
-    return ResourceLocation(this.namespace, "starbound_${this.path}")
-}
+fun ResourceLocation.toStarbound(): ResourceLocation = ResourceLocation(this.namespace, "starbound_${this.path}")
 
-fun ResourceLocation.toCreative(): ResourceLocation {
-    return ResourceLocation(this.namespace, "creative_${this.path}")
-}
+fun ResourceLocation.toCreative(): ResourceLocation = ResourceLocation(this.namespace, "creative_${this.path}")
 
 fun String.camelToSnakeCase(): String {
     val pattern = "(?<=.)[A-Z]".toRegex()
@@ -38,9 +32,7 @@ fun Projectile.advancedShoot(deltaMovements: Vec3) {
     xRotO = xRot
 }
 
-fun IArguments.getInteractionMode(index: Int, allowedMods: Set<InteractionMode>): InteractionMode {
-    return InteractionMode.luaValueOf(this.getString(index), allowedMods)
-}
+fun IArguments.getInteractionMode(index: Int, allowedMods: Set<InteractionMode>): InteractionMode = InteractionMode.luaValueOf(this.getString(index), allowedMods)
 
 fun IArguments.optVerticalDirection(index: Int): VerticalDirection? {
     val directionArgument = this.optString(index)
@@ -61,7 +53,7 @@ fun IArguments.optPose(index: Int): Pose? {
         try {
             Pose.valueOf(poseArgument.get().uppercase())
         } catch (exc: IllegalArgumentException) {
-            val allValues = Arrays.stream(Pose.values()).map { mode -> mode.name.lowercase() }.collect(
+            val allValues = Arrays.stream(Pose.entries.toTypedArray()).map { mode -> mode.name.lowercase() }.collect(
                 Collectors.toList(),
             ).joinToString(", ")
             throw LuaException("Vertical direction should be one of: $allValues")

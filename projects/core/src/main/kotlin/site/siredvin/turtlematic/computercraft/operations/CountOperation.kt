@@ -1,7 +1,8 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.turtlematic.api.IForgeConfigHandler
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 import java.util.*
 import java.util.function.Function
 
@@ -10,7 +11,8 @@ enum class CountOperation(
     private val defaultCost: Int,
     private val countCooldownPolicy: CountPolicy = CountPolicy.MULTIPLY,
     private val countCostPolicy: CountPolicy = CountPolicy.MULTIPLY,
-) : IPeripheralOperation<Int> {
+) : IPeripheralOperation<Int>,
+    IForgeConfigHandler {
     SMELT(1, 80),
     CHISEL(1_000, 1, countCooldownPolicy = CountPolicy.IGNORE),
     ;
@@ -20,21 +22,15 @@ enum class CountOperation(
         IGNORE(Function { 1 }),
         ;
 
-        fun getFactor(count: Int): Int {
-            return factorFunction.apply(count)
-        }
+        fun getFactor(count: Int): Int = factorFunction.apply(count)
     }
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
 
-    override fun getCooldown(context: Int): Int {
-        return cooldown!!.get() * countCooldownPolicy.getFactor(context)
-    }
+    override fun getCooldown(context: Int): Int = cooldown!!.get() * countCooldownPolicy.getFactor(context)
 
-    override fun getCost(context: Int): Int {
-        return cost!!.get() * countCostPolicy.getFactor(context)
-    }
+    override fun getCost(context: Int): Int = cost!!.get() * countCostPolicy.getFactor(context)
 
     override fun computerDescription(): Map<String, Any?> {
         val data: MutableMap<String, Any?> = HashMap()

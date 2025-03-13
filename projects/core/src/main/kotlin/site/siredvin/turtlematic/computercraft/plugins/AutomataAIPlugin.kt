@@ -8,8 +8,8 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
 import java.util.function.Predicate
 
 class AutomataAIPlugin(

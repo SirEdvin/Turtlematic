@@ -54,7 +54,12 @@ dependencies {
 
     modImplementation(libs.bundles.fabric.core)
     modImplementation(libs.bundles.fabric)
-    modImplementation(libs.bundles.ccfabric) {
+    modImplementation(libs.bundles.fabric.cc) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+        exclude("mezz.jei")
+    }
+    modImplementation(libs.bundles.fabric.include) {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")
         exclude("mezz.jei")

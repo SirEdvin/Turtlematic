@@ -3,26 +3,27 @@ package site.siredvin.turtlematic.util
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.api.datatypes.InteractionMode
-import site.siredvin.peripheralium.common.items.PeripheralItem
-import site.siredvin.peripheralium.computercraft.peripheral.ability.ExperienceAbility
-import site.siredvin.peripheralium.computercraft.turtle.StatefulTurtleUpgrade
+import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.computercraft.plugins.AutomataCapturePlugin
 import site.siredvin.turtlematic.data.ModTooltip
+import site.siredvin.tweakium.modules.peripheral.ability.ExperienceBoon
+import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
+import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
+import site.siredvin.tweakium.modules.turtle.StatefulTurtleUpgrade
 import java.util.function.BiFunction
 import java.util.function.Function
 
-val isDisabled = Function<PeripheralItem, List<Component>> { item ->
+val isDisabled = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (!item.isEnabled()) {
         return@Function listOf(ModTooltip.ITEM_DISABLED.text)
     }
     return@Function emptyList()
 }
 
-val commonTooltips = Function<PeripheralItem, List<Component>> { item ->
+val commonTooltips = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (item !is BaseAutomataCore) {
         return@Function emptyList()
     }
@@ -42,7 +43,7 @@ val commonTooltips = Function<PeripheralItem, List<Component>> { item ->
     return@Function tooltipList
 }
 
-val itemUsageTooltip = Function<PeripheralItem, List<Component>> { item ->
+val itemUsageTooltip = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (item !is BaseAutomataCore) {
         return@Function emptyList()
     }
@@ -56,7 +57,7 @@ val itemUsageTooltip = Function<PeripheralItem, List<Component>> { item ->
     return@Function tooltipList
 }
 
-val enchantingTooltip = Function<PeripheralItem, List<Component>> { item ->
+val enchantingTooltip = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (item !is BaseAutomataCore) {
         return@Function emptyList()
     }
@@ -71,7 +72,7 @@ val enchantingTooltip = Function<PeripheralItem, List<Component>> { item ->
     return@Function tooltipList
 }
 
-val husbandryTooltip = Function<PeripheralItem, List<Component>> { item ->
+val husbandryTooltip = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (item !is BaseAutomataCore) {
         return@Function emptyList()
     }
@@ -82,7 +83,7 @@ val husbandryTooltip = Function<PeripheralItem, List<Component>> { item ->
     return@Function tooltipList
 }
 
-val tradingTooltip = Function<PeripheralItem, List<Component>> { item ->
+val tradingTooltip = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (item !is BaseAutomataCore) {
         return@Function emptyList()
     }
@@ -94,7 +95,7 @@ val tradingTooltip = Function<PeripheralItem, List<Component>> { item ->
     return@Function tooltipList
 }
 
-val protectiveTooltip = Function<PeripheralItem, List<Component>> { item ->
+val protectiveTooltip = Function<HiddenDescriptiveItemItem, List<Component>> { item ->
     if (item !is BaseAutomataCore) {
         return@Function emptyList()
     }
@@ -107,7 +108,8 @@ val protectiveTooltip = Function<PeripheralItem, List<Component>> { item ->
 
 val capturedTooltip = BiFunction<ItemStack, Level?, List<Component>> { it, level ->
     if (it.item !is BaseAutomataCore) return@BiFunction emptyList()
-    val dataStorage = it.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
+    val dataTag = it.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
+    val dataStorage = CompoundTagDataStorage(dataTag) {}
     val capturedType = AutomataCapturePlugin.getStoredType(dataStorage) ?: return@BiFunction emptyList()
     return@BiFunction when (capturedType) {
         InteractionMode.BLOCK -> listOf(ModTooltip.CAPTURED_BLOCK.format(AutomataCapturePlugin.extractBlock(dataStorage)!!.first.block.name.string))
@@ -125,7 +127,7 @@ val capturedTooltip = BiFunction<ItemStack, Level?, List<Component>> { it, level
 val xpTooltip = BiFunction<ItemStack, Level?, List<Component>> { stack, _ ->
     if (stack.item !is BaseAutomataCore) return@BiFunction emptyList()
     val dataStorage = stack.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
-    val storedXP = ExperienceAbility.getStoredXP(dataStorage)
+    val storedXP = ExperienceBoon.getStoredXP(CompoundTagDataStorage(dataStorage) {})
     if (storedXP < 1) return@BiFunction emptyList()
     return@BiFunction listOf(ModTooltip.AMOUNT_OF_XP.format(storedXP))
 }

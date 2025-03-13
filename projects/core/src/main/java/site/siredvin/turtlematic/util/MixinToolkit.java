@@ -6,17 +6,17 @@ import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import site.siredvin.peripheralium.api.turtle.TurtleUpgradeHolder;
-import site.siredvin.peripheralium.util.Pair;
 import site.siredvin.turtlematic.api.AutomataCoreTraits;
 import site.siredvin.turtlematic.client.RenderTrickOpcode;
 import site.siredvin.turtlematic.client.TurtleRenderTrick;
 import site.siredvin.turtlematic.client.TurtleRenderTrickRegistry;
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore;
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage;
+import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage;
+import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,16 +24,16 @@ import java.util.Map;
 
 public class MixinToolkit {
 
-    public static @Nullable Pair<TurtleRenderTrick, CompoundTag> searchRenderTrickWithData(@Nonnull ITurtleUpgrade upgrade, @Nonnull ITurtleAccess access, @Nonnull TurtleSide side) {
+    public static @Nullable PairMonad<TurtleRenderTrick, IDataStorage> searchRenderTrickWithData(@Nonnull ITurtleUpgrade upgrade, @Nonnull ITurtleAccess access, @Nonnull TurtleSide side) {
         var coreTrick = TurtleRenderTrickRegistry.INSTANCE.getTrick(upgrade);
         if (coreTrick != null) {
-            return Pair.Companion.of(coreTrick, access.getUpgradeNBTData(side));
+            return new PairMonad<>(coreTrick, new CompoundTagDataStorage(access.getUpgradeNBTData(side), () -> null));
         }
         if (upgrade instanceof TurtleUpgradeHolder upgradeHolder) {
             for (var internalUpgrade: upgradeHolder.getInternalUpgrades(access, side)) {
                 var internalTrick = TurtleRenderTrickRegistry.INSTANCE.getTrick(internalUpgrade.upgrade());
                 if (internalTrick != null)
-                    return Pair.Companion.of(internalTrick, internalUpgrade.data());
+                    return new PairMonad<>(internalTrick, new CompoundTagDataStorage(internalUpgrade.data(), () -> null));
             }
         }
         return null;
@@ -50,7 +50,7 @@ public class MixinToolkit {
         if (leftUpgrade != null) {
             var leftRenderTrick = searchRenderTrickWithData(leftUpgrade, access, TurtleSide.LEFT);
             if (leftRenderTrick != null) {
-                var opcode = leftRenderTrick.getLeft().render(turtle, access, TurtleSide.LEFT, leftRenderTrick.getRight(), partialTicks, transform, buffers, lightmapCoord, overlayLight);
+                var opcode = leftRenderTrick.first().render(turtle, access, TurtleSide.LEFT, leftRenderTrick.second(), partialTicks, transform, buffers, lightmapCoord, overlayLight);
                 if (opcode == RenderTrickOpcode.CANCEL_RENDER)
                     cancelTurtleRender = true;
             }
@@ -59,7 +59,7 @@ public class MixinToolkit {
         if (rightUpgrade != null) {
             var rightRenderTrick = searchRenderTrickWithData(rightUpgrade, access, TurtleSide.RIGHT);
             if (rightRenderTrick != null) {
-                var opcode = rightRenderTrick.getLeft().render(turtle, access, TurtleSide.RIGHT, rightRenderTrick.getRight(), partialTicks, transform, buffers, lightmapCoord, overlayLight);
+                var opcode = rightRenderTrick.first().render(turtle, access, TurtleSide.RIGHT, rightRenderTrick.second(), partialTicks, transform, buffers, lightmapCoord, overlayLight);
                 if (opcode == RenderTrickOpcode.CANCEL_RENDER)
                     cancelTurtleRender = true;
             }

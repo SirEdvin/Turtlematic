@@ -3,8 +3,8 @@ package site.siredvin.turtlematic.data
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import site.siredvin.peripheralium.data.blocks.ItemTagConsumer
-import site.siredvin.peripheralium.data.blocks.TagConsumer
+import site.siredvin.broccolium.modules.data.api.ItemTagConsumer
+import site.siredvin.broccolium.modules.data.api.TagConsumer
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.tags.EntityTags
 import site.siredvin.turtlematic.tags.ItemTags

@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.util.Pair
 
 data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val resultSoul: Item) {
 
@@ -45,16 +44,14 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
         return null
     }
 
-    fun isFinished(consumedData: CompoundTag): Boolean {
-        return ingredients.stream().filter {
-            it.requiredCount != consumedData.getCompound(it.name)
-                .getInt(SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT)
-        }.findAny().isEmpty
-    }
+    fun isFinished(consumedData: CompoundTag): Boolean = ingredients.stream().filter {
+        it.requiredCount != consumedData.getCompound(it.name)
+            .getInt(SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT)
+    }.findAny().isEmpty
 
     fun consumeEntity(stack: ItemStack, entity: Entity): Pair<ItemStack?, String?> {
         val targetIngredient = targetIngredient(entity)
-            ?: return Pair.onlyRight("Cannot find ingredient that match this entity")
+            ?: return Pair(null, "Cannot find ingredient that match this entity")
         entity.remove(Entity.RemovalReason.KILLED)
         val tag = stack.orCreateTag
         val consumedData = tag.getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
@@ -69,8 +66,8 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
         consumedData.put(targetIngredient.name, entityCompound)
         tag.put(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND, consumedData)
         if (isFinished(consumedData)) {
-            return Pair.onlyLeft(resultSoul.defaultInstance)
+            return Pair(resultSoul.defaultInstance, null)
         }
-        return Pair.onlyLeft(stack)
+        return Pair(stack, null)
     }
 }

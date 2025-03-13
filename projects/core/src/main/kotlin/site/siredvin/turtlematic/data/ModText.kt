@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.data
 
-import site.siredvin.peripheralium.data.language.TextRecord
+import site.siredvin.broccolium.modules.data.api.TextRecord
 import site.siredvin.turtlematic.TurtlematicCore
 
 enum class ModText : TextRecord {

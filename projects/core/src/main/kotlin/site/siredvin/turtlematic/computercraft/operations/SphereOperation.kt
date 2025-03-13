@@ -2,15 +2,17 @@ package site.siredvin.turtlematic.computercraft.operations
 
 import com.google.common.math.IntMath
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.operations.SphereOperationContext
+import site.siredvin.turtlematic.api.IForgeConfigHandler
+import site.siredvin.tweakium.modules.operation.SphereOperationContext
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 
 enum class SphereOperation(
     private val defaultCooldown: Int,
     private val defaultMaxFreeRadius: Int,
     private val defaultMaxCostRadius: Int,
     private val defaultExtraBlockCost: Double,
-) : IPeripheralOperation<SphereOperationContext> {
+) : IPeripheralOperation<SphereOperationContext>,
+    IForgeConfigHandler {
     SCAN_BLOCKS(2000, 8, 16, 0.17),
     SCAN_ENTITIES(2000, 8, 16, 0.17),
     SCAN_ITEMS(2000, 8, 16, 0.17),
@@ -47,9 +49,7 @@ enum class SphereOperation(
         )
     }
 
-    override fun getCooldown(context: SphereOperationContext): Int {
-        return cooldown!!.get()
-    }
+    override fun getCooldown(context: SphereOperationContext): Int = cooldown!!.get()
 
     override fun getCost(context: SphereOperationContext): Int {
         if (context.radius <= maxFreeRadiusConfig!!.get()) return 0
@@ -74,11 +74,7 @@ enum class SphereOperation(
         return data
     }
 
-    fun free(): SphereOperationContext {
-        return SphereOperationContext(maxFreeRadius)
-    }
+    fun free(): SphereOperationContext = SphereOperationContext(maxFreeRadius)
 
-    fun cost(): SphereOperationContext {
-        return SphereOperationContext(maxCostRadius)
-    }
+    fun cost(): SphereOperationContext = SphereOperationContext(maxCostRadius)
 }

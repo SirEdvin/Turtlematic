@@ -5,11 +5,11 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraftforge.registries.DeferredRegister
-import site.siredvin.peripheralium.forge.ForgeBaseInnerPlatform
 import site.siredvin.turtlematic.ForgeTurtlematic
 import site.siredvin.turtlematic.TurtlematicCore
+import site.siredvin.tweakium.modules.platform.ForgeInnerComputerBasePlatform
 
-object ForgeModInnerPlatform : ForgeBaseInnerPlatform() {
+object ForgeModInnerPlatform : ForgeInnerComputerBasePlatform() {
 
     override val itemsRegistry: DeferredRegister<Item>
         get() = ForgeTurtlematic.itemsRegistry

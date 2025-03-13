@@ -22,9 +22,7 @@ object SoulHarvestRecipeRegistry {
         REVERSE_RECIPE_REGISTRY[recipe.resultSoul] = Pair(recipe, targetItem)
     }
 
-    fun get(item: Item): Pair<SoulHarvestRecipe, Item>? {
-        return REVERSE_RECIPE_REGISTRY[item]
-    }
+    fun get(item: Item): Pair<SoulHarvestRecipe, Item>? = REVERSE_RECIPE_REGISTRY[item]
 
     fun searchRecipe(targetItem: Item, entity: Entity): SoulHarvestRecipe? {
         if (!RECIPE_REGISTRY.containsKey(targetItem)) {

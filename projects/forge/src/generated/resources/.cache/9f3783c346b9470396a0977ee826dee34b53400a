@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-20T17:10:49.941150787	vanilla/Block State Definitions
+// 1.20.1	2025-03-13T20:17:36.357382253	vanilla/Block State Definitions
 07e6c3817f6b099b1c4d5f7e233e444fd033ef5d assets/turtlematic/models/item/automata_core.json
 7802b552e7c7dde5fadc36748b75d7a800db36ba assets/turtlematic/models/item/brewing_automata_core.json
 170ae3a2ca7eae54074f52548f177d884df0d010 assets/turtlematic/models/item/chunk_vial.json
@@ -38,11 +38,11 @@ bb1fc2331e01106412b812d8e40a425bc87016f1 assets/turtlematic/models/item/starboun
 d299671b86fbce6399bb7c4fd0b01d19209ce182 assets/turtlematic/models/item/starbound_protective_automata_core.json
 35247aac4ef47bd38e10ae82224ae46b32d65038 assets/turtlematic/models/item/starbound_smithing_automata_core.json
 90020ef4a2a8b90340d582b723bffac2042cb8f2 assets/turtlematic/models/item/turtle_chatter.json
-0ac550cc551abbdca71de79329574a625964efb8 assets/turtlematic/models/turtle/chatter_left.json
-11245eb0b2b39d729313639432f425faf5366d08 assets/turtlematic/models/turtle/chatter_right.json
-3a4fc63b44e3c0ab39e2ffc3697a8e7198165258 assets/turtlematic/models/turtle/chunk_vial_left.json
-ddd8f99080b1596fb387808afda571c342e0a6aa assets/turtlematic/models/turtle/chunk_vial_right.json
-df9b1cb8b814c8e57c8c8cdf9061df315b6c0474 assets/turtlematic/models/turtle/creative_chest_left.json
-016d42c4c52ace0461c3edbaaef484d8674ade2f assets/turtlematic/models/turtle/creative_chest_right.json
-7b8b166e5b2b3c9187e935442ee12d9f447412f5 assets/turtlematic/models/turtle/mimic_left.json
-9266b777193cc7dae7cde3d2014a06bef4656102 assets/turtlematic/models/turtle/mimic_right.json
+0fbe1ba2ed020019330f2a4ef9198e834e672a9d assets/turtlematic/models/turtle/chatter_left.json
+6ffe0f53a14f9ccdca79f7a0acdd7b01ed674b08 assets/turtlematic/models/turtle/chatter_right.json
+dded866c2ebdfa94e76ae567c0f92a413ac3e00c assets/turtlematic/models/turtle/chunk_vial_left.json
+43f72ae610fbf6fbca3cc6a17cb07a1e94ece023 assets/turtlematic/models/turtle/chunk_vial_right.json
+1deb5abb09dcbd613e7d7b5a3ed32ce06adf640c assets/turtlematic/models/turtle/creative_chest_left.json
+13843df132afa1ae18c9a4821e9fd9af3bb3613e assets/turtlematic/models/turtle/creative_chest_right.json
+347e02148d40002d8fffe6deac55e9c26ac3d7cf assets/turtlematic/models/turtle/mimic_left.json
+94386ebe78475ec772139add70e16d0d97b28e11 assets/turtlematic/models/turtle/mimic_right.json

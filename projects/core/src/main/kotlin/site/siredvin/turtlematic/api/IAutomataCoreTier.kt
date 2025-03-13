@@ -1,11 +1,10 @@
 package site.siredvin.turtlematic.api
 
 import net.minecraft.resources.ResourceLocation
-import site.siredvin.peripheralium.api.config.IConfigHandler
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import kotlin.random.Random
 
-interface IAutomataCoreTier : IConfigHandler {
+interface IAutomataCoreTier : IForgeConfigHandler {
     val interactionRadius: Int
     val maxFuelConsumptionRate: Int
 

@@ -1,11 +1,12 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("site.siredvin.root") version "0.6.2"
-    id("site.siredvin.release") version "0.6.2"
+    id("site.siredvin.root") version "0.8.16"
+    id("site.siredvin.release") version "0.8.16"
 }
 
 subprojectShaking {
     withKotlin.set(true)
+    kotlinVersion.set("2.0.0")
 }
 
 val setupSubproject = subprojectShaking::setupSubproject

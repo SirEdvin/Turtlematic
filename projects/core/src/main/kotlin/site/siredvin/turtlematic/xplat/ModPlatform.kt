@@ -1,18 +1,18 @@
 package site.siredvin.turtlematic.xplat
 
-import site.siredvin.peripheralium.xplat.BaseInnerPlatform
-import site.siredvin.peripheralium.xplat.BasePlatform
-import site.siredvin.peripheralium.xplat.ModInformationTracker
+import site.siredvin.tweakium.modules.platform.ComputerBasePlatform
+import site.siredvin.tweakium.modules.platform.ComputerModInformationTracker
+import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
 
-object ModPlatform : BasePlatform {
-    private var impl: BaseInnerPlatform? = null
-    private val informationTracker = ModInformationTracker()
+object ModPlatform : ComputerBasePlatform() {
+    private var impl: InnerComputerBasePlatform? = null
+    private val informationTracker = ComputerModInformationTracker()
 
-    fun configure(impl: BaseInnerPlatform) {
+    fun configure(impl: InnerComputerBasePlatform) {
         this.impl = impl
     }
 
-    override val baseInnerPlatform: BaseInnerPlatform
+    override val baseInnerPlatform: InnerComputerBasePlatform
         get() {
             if (impl == null) {
                 throw IllegalStateException("You should configure upw ModPlatform first")
@@ -20,6 +20,6 @@ object ModPlatform : BasePlatform {
             return impl!!
         }
 
-    override val modInformationTracker: ModInformationTracker
+    override val modInformationTracker: ComputerModInformationTracker
         get() = informationTracker
 }

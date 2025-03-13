@@ -2,9 +2,9 @@ package site.siredvin.turtlematic.client
 
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
-import site.siredvin.peripheralium.extra.dsl.rml1.RMLParser
-import site.siredvin.peripheralium.extra.dsl.rml1.RMLParsingException
-import site.siredvin.peripheralium.extra.dsl.rml1.RenderInstruction
+import site.siredvin.tweakium.modules.rml1.RMLParser
+import site.siredvin.tweakium.modules.rml1.RMLParsingException
+import site.siredvin.tweakium.modules.rml1.RenderInstruction
 import java.util.concurrent.TimeUnit
 import kotlin.jvm.Throws
 
@@ -19,19 +19,13 @@ object RenderUtil {
     }
 
     @Throws(RMLParsingException::class)
-    fun parseRMLRaw(string: String): List<RenderInstruction> {
-        return parser.parse(string)
+    fun parseRMLRaw(string: String): List<RenderInstruction> = parser.parse(string)
+
+    private fun parseRMLRawProtected(string: String): List<RenderInstruction> = try {
+        parseRMLRaw(string)
+    } catch (ignored: RMLParsingException) {
+        emptyList()
     }
 
-    private fun parseRMLRawProtected(string: String): List<RenderInstruction> {
-        return try {
-            parseRMLRaw(string)
-        } catch (ignored: RMLParsingException) {
-            emptyList()
-        }
-    }
-
-    fun parseRML(string: String): List<RenderInstruction> {
-        return cache.get(string)
-    }
+    fun parseRML(string: String): List<RenderInstruction> = cache.get(string)
 }

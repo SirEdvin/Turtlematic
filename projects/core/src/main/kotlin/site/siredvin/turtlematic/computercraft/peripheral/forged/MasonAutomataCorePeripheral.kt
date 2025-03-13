@@ -23,27 +23,25 @@ import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.Half
 import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.phys.BlockHitResult
-import site.siredvin.peripheralium.api.datatypes.TransformInteractionMode
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.storages.FakeItemContainer
-import site.siredvin.peripheralium.storages.LimitedInventory
-import site.siredvin.peripheralium.util.Pair
-import site.siredvin.peripheralium.util.representation.LuaInterpretation
-import site.siredvin.peripheralium.util.representation.stateProperties
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
+import site.siredvin.broccolium.modules.storage.item.FakeItemContainer
+import site.siredvin.broccolium.modules.storage.item.LimitedInventory
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.TransformInteractionMode
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
+import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
+import site.siredvin.tweakium.modules.peripheral.representation.stateProperties
 import java.util.function.Predicate
 
-class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
+class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
     interface MasonRecipeHandler {
         fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack>
@@ -59,16 +57,12 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
     }
 
     class StonecutterRecipeHandler : MasonRecipeHandler {
-        override fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> {
-            return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).map { it.getResultItem(RegistryAccess.EMPTY) }
-        }
+        override fun getAlternatives(level: Level, fakeContainer: Container): List<ItemStack> = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).map { it.getResultItem(RegistryAccess.EMPTY) }
 
-        override fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? {
-            return level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find {
-                it.getResultItem(
-                    RegistryAccess.EMPTY,
-                ).`is`(targetItem)
-            }
+        override fun getRecipe(level: Level, fakeContainer: Container, targetItem: Item): Recipe<Container>? = level.recipeManager.getRecipesFor(RecipeType.STONECUTTING, fakeContainer, level).find {
+            it.getResultItem(
+                RegistryAccess.EMPTY,
+            ).`is`(targetItem)
         }
 
         override fun produce(
@@ -166,11 +160,9 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         return base
     }
 
-    private fun isEditable(pos: BlockPos): Boolean {
-        return !peripheralOwner.withPlayer({
-            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
-        })
-    }
+    private fun isEditable(pos: BlockPos): Boolean = !peripheralOwner.withPlayer({
+        PlatformToolkit.get().isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
+    })
 
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {
         val hit = peripheralOwner.withPlayer({
@@ -179,21 +171,21 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
                 return@withPlayer null
             }
             return@withPlayer hit
-        }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair(null, MethodResult.of(null, "There is nothing to work with"))
         val blockState = peripheralOwner.level!!.getBlockState(hit.blockPos)
         if (blockState.isAir) {
-            return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
+            return Pair(null, MethodResult.of(null, "There is nothing to work with"))
         }
         if (!isEditable(hit.blockPos)) {
-            return Pair.onlyRight(MethodResult.of(null, "This block is protected"))
+            return Pair(null, MethodResult.of(null, "This block is protected"))
         }
-        return Pair.onlyLeft(Pair(hit, blockState))
+        return Pair(Pair(hit, blockState), null)
     }
 
     private fun chiselItem(target: String, arguments: IArguments): MethodResult {
         val level = peripheralOwner.level!!
         val limit = arguments.optInt(2, Int.MAX_VALUE)
-        val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(target))
+        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation(target))
         if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
         }
@@ -227,16 +219,16 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             )
         }
         val level = peripheralOwner.level!!
-        val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(target))
+        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation(target))
         if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Cannot find item with id $target")
         }
         val findBlockResult = findBlock(overwrittenDirection)
-        if (findBlockResult.rightPresent()) {
-            return findBlockResult.right!!
+        if (findBlockResult.second != null) {
+            return findBlockResult.second!!
         }
-        val hit = findBlockResult.left!!.left
-        val blockState = findBlockResult.left!!.right
+        val hit = findBlockResult.first!!.first
+        val blockState = findBlockResult.first!!.second
         val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
         val recipe = getRecipe(level, fakeContainer, targetItem) ?: return MethodResult.of(
             null,
@@ -292,7 +284,7 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         }
 
         val alternatives = getAlternatives(level, fakeContainer)
-        return MethodResult.of(alternatives.map { XplatRegistries.ITEMS.getKey(it.item).toString() })
+        return MethodResult.of(alternatives.map { PlatformRegistries.ITEMS.getKey(it.item).toString() })
     }
 
     @LuaFunction(mainThread = true)
@@ -327,11 +319,11 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         val level = peripheralOwner.level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
-            if (findBlockResult.rightPresent()) {
-                return@withOperation findBlockResult.right!!
+            if (findBlockResult.second != null) {
+                return@withOperation findBlockResult.second!!
             }
-            val hit = findBlockResult.left!!.left
-            val blockState = findBlockResult.left!!.right
+            val hit = findBlockResult.first!!.first
+            val blockState = findBlockResult.first!!.second
             @Suppress("DEPRECATION", "KotlinRedundantDiagnosticSuppress")
             level.setBlockAndUpdate(hit.blockPos, blockState.rotate(rotation))
             return@withOperation MethodResult.of(true)
@@ -351,11 +343,11 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         val level = peripheralOwner.level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
-            if (findBlockResult.rightPresent()) {
-                return@withOperation findBlockResult.right!!
+            if (findBlockResult.second != null) {
+                return@withOperation findBlockResult.second!!
             }
-            val hit = findBlockResult.left!!.left
-            val blockState = findBlockResult.left!!.right
+            val hit = findBlockResult.first!!.first
+            val blockState = findBlockResult.first!!.second
             val propertyCandidate = blockState.values.keys.stream().filter { it is EnumProperty<*> && it.allValues.anyMatch { pr -> pr.value() is Half } }.findAny()
             if (propertyCandidate.isEmpty) {
                 return@withOperation MethodResult.of(null, "Cannot turn over block")
@@ -383,10 +375,10 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
             )
         }
         val findBlockResult = findBlock(overwrittenDirection)
-        if (findBlockResult.rightPresent()) {
-            return findBlockResult.right!!
+        if (findBlockResult.second != null) {
+            return findBlockResult.second!!
         }
-        val blockState = findBlockResult.left!!.right
+        val blockState = findBlockResult.first!!.second
         val propertyCandidate = blockState.values.keys.stream().filter { it is EnumProperty<*> && it.getName() == "shape" }.findAny()
         if (propertyCandidate.isEmpty) {
             return MethodResult.of(null, "This block cannot change it shape")
@@ -410,11 +402,11 @@ class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier:
         val level = peripheralOwner.level!!
         return withOperation(SingleOperation.TRANSFORM_BLOCK) {
             val findBlockResult = findBlock(overwrittenDirection)
-            if (findBlockResult.rightPresent()) {
-                return@withOperation findBlockResult.right!!
+            if (findBlockResult.second != null) {
+                return@withOperation findBlockResult.second!!
             }
-            val hit = findBlockResult.left!!.left
-            val blockState = findBlockResult.left!!.right
+            val hit = findBlockResult.first!!.first
+            val blockState = findBlockResult.first!!.second
             val propertyCandidate = blockState.values.keys.stream().filter { it is EnumProperty<*> && it.getName() == "shape" }.findAny()
             if (propertyCandidate.isEmpty) {
                 return@withOperation MethodResult.of(null, "This block cannot change it shape")

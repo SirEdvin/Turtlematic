@@ -8,16 +8,15 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.piston.PistonStructureResolver
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.util.world.PistonSimulation
+import site.siredvin.broccolium.modules.base.util.world.PistonSimulation
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.util.DataStorageObjects
+import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 
-class PistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
+class PistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
 
     companion object : PeripheralConfiguration {
         override val type = "piston"
@@ -27,9 +26,7 @@ class PistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         get() = TurtlematicConfig.enablePistonTurtle
 
     @LuaFunction(mainThread = true)
-    fun isSilent(): Boolean {
-        return DataStorageObjects.Silent[peripheralOwner]
-    }
+    fun isSilent(): Boolean = DataStorageObjects.Silent[peripheralOwner]
 
     @LuaFunction(mainThread = true)
     fun setSilent(value: Boolean) {

@@ -9,12 +9,12 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.AABB
-import site.siredvin.peripheralium.api.peripheral.IPeripheralFunction
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.extra.plugins.PeripheralPluginUtils
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralFunction
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.tweakium.modules.plugins.PeripheralPluginUtils
 import java.util.function.Predicate
 
 class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : AutomataCorePlugin(automataCore) {

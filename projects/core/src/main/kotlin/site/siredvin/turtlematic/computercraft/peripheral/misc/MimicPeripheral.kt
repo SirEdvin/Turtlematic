@@ -7,20 +7,19 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.TagParser
-import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.ext.getBlockState
-import site.siredvin.peripheralium.extra.dsl.rml1.RMLParsingException
-import site.siredvin.peripheralium.util.representation.LuaRepresentation
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.client.RenderUtil
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.turtlematic.util.DataStorageObjects
+import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.ext.getBlockState
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
+import site.siredvin.tweakium.modules.rml1.RMLParsingException
 
-class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
+class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
     companion object : PeripheralConfiguration {
         override val type = "mimic"
     }
@@ -42,9 +41,7 @@ class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     }
 
     @LuaFunction(mainThread = true)
-    fun getTransformation(): String? {
-        return DataStorageObjects.RMLInstructions[peripheralOwner]
-    }
+    fun getTransformation(): String? = DataStorageObjects.RMLInstructions[peripheralOwner]
 
     @LuaFunction(mainThread = true)
     fun setMimic(arguments: IArguments) {
@@ -64,7 +61,7 @@ class MimicPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
         val blockState = DataStorageObjects.Mimic[peripheralOwner]
         val blockStateData = blockState?.let { LuaRepresentation.forBlockState(it) }
         val nbtData = DataStorageObjects.MimicExtraData[peripheralOwner]
-        val nbtDataRepresentation = nbtData?.let { PeripheraliumPlatform.nbtToLua(it) }
+        val nbtDataRepresentation = nbtData?.let { ComputerPlatformToolkit.get().nbtToLua(it) }
         return MethodResult.of(blockStateData, nbtDataRepresentation)
     }
 

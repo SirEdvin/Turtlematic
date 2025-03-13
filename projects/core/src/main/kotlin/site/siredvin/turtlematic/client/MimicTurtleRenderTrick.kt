@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import site.siredvin.turtlematic.util.DataStorageObjects
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import java.util.concurrent.TimeUnit
 
 object MimicTurtleRenderTrick : TurtleRenderTrick {
@@ -46,7 +47,7 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
         )
     }
 
-    fun renderBlockEntity(minecraft: Minecraft, state: BlockState, turtle: TurtleBlockEntity, upgradeData: CompoundTag, partialTicks: Float, transform: PoseStack, buffers: MultiBufferSource) {
+    fun renderBlockEntity(minecraft: Minecraft, state: BlockState, turtle: TurtleBlockEntity, upgradeData: IDataStorage, partialTicks: Float, transform: PoseStack, buffers: MultiBufferSource) {
         if (state.block is EntityBlock) {
             val entity = fakeBlockEntityCache.get(
                 Triple(
@@ -68,7 +69,7 @@ object MimicTurtleRenderTrick : TurtleRenderTrick {
         turtle: TurtleBlockEntity,
         access: ITurtleAccess,
         side: TurtleSide,
-        upgradeData: CompoundTag,
+        upgradeData: IDataStorage,
         partialTicks: Float,
         transform: PoseStack,
         buffers: MultiBufferSource,

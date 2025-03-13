@@ -18,25 +18,23 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import site.siredvin.peripheralium.api.datatypes.TransformInteractionMode
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.storages.FakeItemContainer
-import site.siredvin.peripheralium.storages.LimitedInventory
-import site.siredvin.peripheralium.util.*
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
+import site.siredvin.broccolium.modules.storage.item.FakeItemContainer
+import site.siredvin.broccolium.modules.storage.item.LimitedInventory
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.TransformInteractionMode
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
 import java.util.*
 import kotlin.math.min
 
-class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
+class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
     companion object : PeripheralConfiguration {
         override val type = "smithingAutomata"
@@ -52,11 +50,9 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
         return base
     }
 
-    private fun isEditable(pos: BlockPos): Boolean {
-        return !peripheralOwner.withPlayer({
-            PeripheraliumPlatform.isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
-        })
-    }
+    private fun isEditable(pos: BlockPos): Boolean = !peripheralOwner.withPlayer({
+        PlatformToolkit.get().isBlockProtected(pos, it.fakePlayer.level().getBlockState(pos), it.fakePlayer)
+    })
 
     private fun findBlock(overwrittenDirection: VerticalDirection?): Pair<Pair<BlockHitResult, BlockState>?, MethodResult?> {
         val hit = peripheralOwner.withPlayer({
@@ -65,15 +61,15 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                 return@withPlayer null
             }
             return@withPlayer hit
-        }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
+        }, overwrittenDirection = overwrittenDirection?.minecraftDirection) ?: return Pair(null, MethodResult.of(null, "There is nothing to work with"))
         val blockState = peripheralOwner.level!!.getBlockState(hit.blockPos)
         if (blockState.isAir) {
-            return Pair.onlyRight(MethodResult.of(null, "There is nothing to work with"))
+            return Pair(null, MethodResult.of(null, "There is nothing to work with"))
         }
         if (!isEditable(hit.blockPos)) {
-            return Pair.onlyRight(MethodResult.of(null, "This block is protected"))
+            return Pair(null, MethodResult.of(null, "This block is protected"))
         }
-        return Pair.onlyLeft(Pair(hit, blockState))
+        return Pair(Pair(hit, blockState), null)
     }
 
     private fun smeltItem(arguments: IArguments): MethodResult {
@@ -94,7 +90,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                 addRotationCycle(smeltCount / 2)
                 val recipe: SmeltingRecipe = optRecipe.get()
                 val result: ItemStack = recipe.assemble(limitedInventory, RegistryAccess.EMPTY)
-                result.count = result.count * smeltCount
+                result.count *= smeltCount
                 limitedInventory.reduceCount(0, smeltCount)
                 ContainerUtils.toInventoryOrToWorld(
                     result,
@@ -103,7 +99,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                     peripheralOwner.pos.relative(peripheralOwner.facing),
                     level,
                 )
-                peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
+                peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)
                     ?.adjustStoredXP((smeltCount * recipe.experience).toDouble())
                 MethodResult.of(true)
             }, null)
@@ -120,11 +116,11 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
             )
         }
         val blockSearchResult = findBlock(overwrittenDirection)
-        if (blockSearchResult.rightPresent()) {
-            return blockSearchResult.right!!
+        if (blockSearchResult.second != null) {
+            return blockSearchResult.second!!
         }
-        val blockState = blockSearchResult.left!!.right
-        val hit = blockSearchResult.left!!.left
+        val blockState = blockSearchResult.first!!.second
+        val hit = blockSearchResult.first!!.first
         val level = peripheralOwner.level!!
         val fakeContainer = FakeItemContainer(blockState.block.asItem().defaultInstance)
         val optRecipe = level.recipeManager.getRecipeFor(RecipeType.SMELTING, fakeContainer, level)
@@ -147,7 +143,7 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                     level,
                 )
             }
-            peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)?.adjustStoredXP(recipe.experience.toDouble())
+            peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)?.adjustStoredXP(recipe.experience.toDouble())
             return@withOperation MethodResult.of(true)
         })
     }
@@ -185,10 +181,8 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
 
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
-    fun smelt(arguments: IArguments): MethodResult {
-        return when (TransformInteractionMode.luaValueOf(arguments.getString(0))) {
-            TransformInteractionMode.BLOCK -> smeltBlock(arguments)
-            TransformInteractionMode.INVENTORY -> smeltItem(arguments)
-        }
+    fun smelt(arguments: IArguments): MethodResult = when (TransformInteractionMode.luaValueOf(arguments.getString(0))) {
+        TransformInteractionMode.BLOCK -> smeltBlock(arguments)
+        TransformInteractionMode.INVENTORY -> smeltItem(arguments)
     }
 }

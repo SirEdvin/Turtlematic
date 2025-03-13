@@ -1,8 +1,9 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.turtlematic.TurtlematicCore
+import site.siredvin.turtlematic.api.IForgeConfigHandler
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 import java.util.*
 import java.util.function.Function
 
@@ -10,7 +11,8 @@ enum class PowerOperation(
     private val defaultCooldown: Int,
     private val defaultCost: Int,
     private val scalePolicy: ScalePolicy,
-) : IPeripheralOperation<PowerOperationContext> {
+) : IPeripheralOperation<PowerOperationContext>,
+    IForgeConfigHandler {
     THROW_POTION(1_000, 10, ScalePolicy.EXP),
     SHOOT(1_000, 10, ScalePolicy.EXP),
     ;
@@ -19,17 +21,13 @@ enum class PowerOperation(
         EXP({ d: Double -> kotlin.math.exp(d) }),
         ;
 
-        fun getFactor(power: Double): Double {
-            return factorFunction.apply(power)
-        }
+        fun getFactor(power: Double): Double = factorFunction.apply(power)
     }
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
 
-    override fun getCooldown(context: PowerOperationContext): Int {
-        return cooldown!!.get()
-    }
+    override fun getCooldown(context: PowerOperationContext): Int = cooldown!!.get()
 
     override fun getCost(context: PowerOperationContext): Int {
         val fullCost = (cost!!.get() * scalePolicy.getFactor(context.power)).toInt()

@@ -4,14 +4,15 @@ import dan200.computercraft.api.upgrades.UpgradeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.CreativeModeTab
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
 import site.siredvin.turtlematic.util.ChunkManager
+import site.siredvin.tweakium.modules.platform.ComputerPlatformRegistries
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 
 object TurtlematicCommonHooks {
 
@@ -21,7 +22,7 @@ object TurtlematicCommonHooks {
         TurtleUpgradeSerializers.doSomething()
         ModPlatform.registerCreativeTab(
             ResourceLocation(TurtlematicCore.MOD_ID, "tab"),
-            TurtlematicCore.configureCreativeTab(PeripheraliumPlatform.createTabBuilder()).build(),
+            TurtlematicCore.configureCreativeTab(PlatformToolkit.get().createTabBuilder()).build(),
         )
     }
 
@@ -32,9 +33,9 @@ object TurtlematicCommonHooks {
 
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
         ModPlatform.holder.turtleSerializers.forEach {
-            val upgrade = PeripheraliumPlatform.getTurtleUpgrade(XplatRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toString())
+            val upgrade = ComputerPlatformToolkit.get().getTurtleUpgrade(ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toString())
             if (upgrade != null) {
-                PeripheraliumPlatform.createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade)).forEach(output::accept)
+                ComputerPlatformToolkit.get().createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade)).forEach(output::accept)
             }
         }
     }

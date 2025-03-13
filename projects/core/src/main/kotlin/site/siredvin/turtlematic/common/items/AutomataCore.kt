@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.util.Pair
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
@@ -18,7 +17,9 @@ import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUME
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
 import site.siredvin.turtlematic.data.ModTooltip
 
-class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, { TurtlematicConfig.enableAutomataCore }), ISoulFeedableItem {
+class AutomataCore :
+    BaseAutomataCore(AutomataCoreTier.TIER1, { TurtlematicConfig.enableAutomataCore }),
+    ISoulFeedableItem {
 
     override fun appendHoverText(
         itemStack: ItemStack,
@@ -48,16 +49,16 @@ class AutomataCore : BaseAutomataCore(AutomataCoreTier.TIER1, { TurtlematicConfi
             } else {
                 val anyKey = consumedData.allKeys.stream().findAny()
                 if (!anyKey.isPresent) {
-                    return Pair.onlyRight("This item are corrupted by dark gods. I cannot be used for anything")
+                    return Pair(null, "This item are corrupted by dark gods. I cannot be used for anything")
                 }
                 SoulHarvestRecipeRegistry.searchRecipe(this, anyKey.get())
             }
             if (correctedRecipe == null || !correctedRecipe.isSuitable(entity, consumedData)) {
-                return Pair.onlyRight("This item cannot hold soul of this entity")
+                return Pair(null, "This item cannot hold soul of this entity")
             }
             return correctedRecipe.consumeEntity(stack, entity)
         }
-        return Pair.onlyRight("This item cannot hold soul of this entity")
+        return Pair(null, "This item cannot hold soul of this entity")
     }
 
     override fun getEntityRepresentation(stack: ItemStack, recipe: SoulHarvestRecipe): List<RecipeEntityRepresentation> {

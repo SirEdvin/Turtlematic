@@ -8,7 +8,5 @@ data class RecipeEntityRepresentation(val consumedCount: Int, val requiredCount:
     val leftCount: Int
         get() = requiredCount - consumedCount
 
-    fun toComponent(): Component {
-        return ModTooltip.CONSUMED_ENTITIES_RECORD.format(consumedCount, requiredCount, name)
-    }
+    fun toComponent(): Component = ModTooltip.CONSUMED_ENTITIES_RECORD.format(consumedCount, requiredCount, name)
 }

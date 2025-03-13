@@ -1,8 +1,8 @@
 package site.siredvin.turtlematic.common.setup
 
 import net.minecraft.world.item.Item
-import site.siredvin.peripheralium.common.items.DescriptiveItem
-import site.siredvin.peripheralium.common.items.PeripheralItem
+import site.siredvin.broccolium.modules.base.item.DescriptiveItem
+import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.AutomataCore
@@ -115,11 +115,11 @@ object Items {
 
     val FILLED_SOUL_VIAL = ModPlatform.registerItem("filled_soul_vial") { DescriptiveItem(Item.Properties()) }
 
-    val SOUL_SCRAPPER = ModPlatform.registerItem("soul_scrapper") { PeripheralItem(Item.Properties(), { true }) }
+    val SOUL_SCRAPPER = ModPlatform.registerItem("soul_scrapper") { HiddenDescriptiveItemItem(Item.Properties(), { true }) }
 
     // miscellaneous
     val TURTLE_CHATTER = ModPlatform.registerItem("turtle_chatter") {
-        PeripheralItem(
+        HiddenDescriptiveItemItem(
             Item.Properties(),
             TurtlematicConfig::enableTurtleChatter,
             alwaysShow = true,
@@ -128,7 +128,7 @@ object Items {
     }
 
     val MIMIC_GADGET = ModPlatform.registerItem("mimic_gadget") {
-        PeripheralItem(
+        HiddenDescriptiveItemItem(
             Item.Properties(),
             TurtlematicConfig::enableMimicGadget,
             alwaysShow = true,
@@ -137,7 +137,7 @@ object Items {
     }
 
     val CREATIVE_CHEST = ModPlatform.registerItem("creative_chest") {
-        PeripheralItem(
+        HiddenDescriptiveItemItem(
             Item.Properties(),
             TurtlematicConfig::enableCreativeChest,
             alwaysShow = true,
@@ -145,7 +145,7 @@ object Items {
         )
     }
     val CHUNK_VIAL = ModPlatform.registerItem("chunk_vial") {
-        PeripheralItem(
+        HiddenDescriptiveItemItem(
             Item.Properties(),
             TurtlematicConfig::enableChunkVial,
             alwaysShow = true,

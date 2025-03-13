@@ -12,22 +12,24 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
-import site.siredvin.peripheralium.util.*
-import site.siredvin.peripheralium.util.representation.LuaRepresentation
-import site.siredvin.peripheralium.util.world.ScanUtils
+import site.siredvin.broccolium.modules.base.util.ValueContainer
+import site.siredvin.broccolium.modules.base.util.XPUtil
+import site.siredvin.broccolium.modules.base.util.world.ScanUtils
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.tags.BlockTags
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
+import site.siredvin.tweakium.modules.peripheral.util.assertBetween
+import site.siredvin.tweakium.modules.peripheral.util.isCorrectSlot
 import kotlin.math.max
 
-open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
+open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
     companion object : PeripheralConfiguration {
         override val type = "enchantingAutomata"
 
@@ -73,12 +75,12 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             val level = peripheralOwner.level!!
             ScanUtils.traverseBlocks(level, peripheralOwner.pos, 2, { blockState, blockPos ->
                 if (blockState.`is`(BlockTags.ENCHANTMENT_POWER_PROVIDER)) {
-                    enchantmentPower.value = enchantmentPower.value + 1
+                    enchantmentPower.value += 1
                 } else if (blockState.`is`(ComputerCraftTags.Blocks.TURTLE)) {
-                    val itemStorage = ItemStorageExtractor.extractStorage(level, blockPos, level.getBlockEntity(blockPos))
+                    val itemStorage = AgnosticItemStorageLookup.extractStorage(level, blockPos, level.getBlockEntity(blockPos))
                     itemStorage?.getItems()?.forEach {
                         if (it.`is`(Items.ENCHANTED_BOOK)) {
-                            enchantmentPower.value = enchantmentPower.value + 1
+                            enchantmentPower.value += 1
                         }
                     }
                 }
@@ -87,9 +89,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         }
 
     @LuaFunction(mainThread = true, value = ["getEnchantmentPower"])
-    fun getEnchantmentPowerLua(): Int {
-        return enchantmentPower
-    }
+    fun getEnchantmentPowerLua(): Int = enchantmentPower
 
     @LuaFunction(mainThread = true)
     fun refreshEnchantments() {
@@ -104,7 +104,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         if (!targetItem.isEnchantable) return MethodResult.of(null, "Item is not enchantable")
         if (targetItem.isEnchanted) return MethodResult.of(null, "Item already enchanted!")
         val possibleEnchantments = mutableListOf<Map<String, Any>>()
-        val experienceAbility = peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
+        val experienceAbility = peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)
             ?: return MethodResult.of(null, "Internal error ...?")
         intArrayOf(0, 1, 2).forEach {
             val cost = EnchantmentHelper.getEnchantmentCost(RandomSource.create(enchantmentSeed + it), it, enchantmentPower, targetItem)
@@ -130,7 +130,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
         assertBetween(luaSlot, 1, 3, "selected")
         val slot = luaSlot - 1
         return withOperation(SingleOperation.ENCHANTMENT) {
-            val experienceAbility = peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
+            val experienceAbility = peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)
                 ?: return@withOperation MethodResult.of(null, "Internal error ...?")
             addRotationCycle()
             val selectedSlot: Int = peripheralOwner.turtle.selectedSlot

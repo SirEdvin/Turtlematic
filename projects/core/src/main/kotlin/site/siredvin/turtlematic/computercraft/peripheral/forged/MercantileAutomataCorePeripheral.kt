@@ -7,10 +7,6 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.trading.Merchant
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.ScanningAbility
-import site.siredvin.peripheralium.util.representation.merchantData
-import site.siredvin.peripheralium.util.representation.villagerData
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
@@ -19,6 +15,10 @@ import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataRestockPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataTradePlugin
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.ability.ScanningBoon
+import site.siredvin.tweakium.modules.peripheral.representation.merchantData
+import site.siredvin.tweakium.modules.peripheral.representation.villagerData
 import java.util.function.Predicate
 
 class MercantileAutomataCorePeripheral(
@@ -38,9 +38,9 @@ class MercantileAutomataCorePeripheral(
                 entityEnriches = listOf(merchantData, villagerData),
             ),
         )
-        peripheralOwner.attachAbility(
-            PeripheralOwnerAbility.SCANNING,
-            ScanningAbility(
+        peripheralOwner.attachBoon(
+            PeripheralOwnerBoonKey.SCANNING,
+            ScanningBoon(
                 peripheralOwner,
                 tier.interactionRadius,
             ).attachItemScan(

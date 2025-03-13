@@ -1,6 +1,6 @@
 package site.siredvin.turtlematic.data
 
-import site.siredvin.peripheralium.data.blocks.GeneratorSink
+import site.siredvin.broccolium.modules.data.api.GeneratorSink
 import site.siredvin.turtlematic.TurtlematicCore
 
 object ModDataProviders {

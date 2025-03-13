@@ -5,10 +5,10 @@ import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import site.siredvin.peripheralium.data.blocks.createFlatItem
-import site.siredvin.peripheralium.data.blocks.turtleUpgrades
+import site.siredvin.broccolium.modules.data.model.createFlatItem
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.setup.Items
+import site.siredvin.tweakium.modules.data.turtleUpgrades
 
 object ModItemModelProvider {
 

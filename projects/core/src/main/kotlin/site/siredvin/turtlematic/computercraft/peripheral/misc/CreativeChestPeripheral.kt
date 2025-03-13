@@ -7,16 +7,15 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.TagParser
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
-import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 import java.util.Optional
 
-class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
+class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
 
     companion object : PeripheralConfiguration {
         override val type = "creative_chest"
@@ -27,7 +26,7 @@ class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
 
     @LuaFunction(mainThread = true)
     fun generate(item: String, amount: Int, nbtData: Optional<String>): MethodResult {
-        val targetItem = XplatRegistries.ITEMS.get(ResourceLocation(item))
+        val targetItem = PlatformRegistries.ITEMS.get(ResourceLocation(item))
         if (targetItem == Items.AIR) {
             return MethodResult.of(null, "Item with this ID not found")
         }

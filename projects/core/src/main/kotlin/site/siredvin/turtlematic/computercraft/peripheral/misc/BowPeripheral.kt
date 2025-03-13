@@ -14,11 +14,7 @@ import net.minecraft.world.item.ArrowItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
-import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
-import site.siredvin.peripheralium.storages.item.ItemStorageUtils
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.entities.ShootedItemProjectile
@@ -26,19 +22,22 @@ import site.siredvin.turtlematic.computercraft.operations.PowerOperation
 import site.siredvin.turtlematic.computercraft.operations.PowerOperationContext
 import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.turtlematic.util.TurtleDispenseBehavior
+import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 import java.util.*
 
-class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
-    OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
+class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPeripheral<TurtlePeripheralOwner>(type, TurtlePeripheralOwner(turtle, side)) {
 
     companion object : PeripheralConfiguration {
         override val type = "bow"
     }
 
     init {
-        peripheralOwner.attachOperations(reduceRate = 1.0, TurtlematicConfig)
+        peripheralOwner.attachOperations(reduceRate = 1.0, cooldownThreshold = TurtlematicConfig.cooldownTresholdLevel)
         peripheralOwner.attachFuel()
-        peripheralOwner.getAbility(PeripheralOwnerAbility.OPERATION)?.registerOperation(PowerOperation.SHOOT)
+        peripheralOwner.getBoon(PeripheralOwnerBoonKey.OPERATION)?.registerOperation(PowerOperation.SHOOT)
     }
 
     internal class RandomItemDispenseBehavior(private val suppressExtraLogic: Boolean, owner: IPeripheralOwner) : TurtleDispenseBehavior(owner) {
@@ -89,9 +88,7 @@ class BowPeripheral(turtle: ITurtleAccess, side: TurtleSide) :
     }
 
     @LuaFunction(mainThread = true)
-    fun getAngle(): Double {
-        return DataStorageObjects.Angle[peripheralOwner]
-    }
+    fun getAngle(): Double = DataStorageObjects.Angle[peripheralOwner]
 
     @LuaFunction(mainThread = true)
     fun shoot(power: Double, limit: Optional<Int>, suppressExtraLogic: Optional<Boolean>): MethodResult {

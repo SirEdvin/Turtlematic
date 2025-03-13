@@ -8,11 +8,11 @@ import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.FormattedText
 import net.minecraft.util.FormattedCharSequence
 import net.minecraft.world.phys.Vec3
 import site.siredvin.turtlematic.util.DataStorageObjects
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 
 object ChattingTurtleRenderTrick : TurtleRenderTrick {
     // This strange constants are mostly for nice rendering limitations
@@ -24,7 +24,7 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
         turtle: TurtleBlockEntity,
         access: ITurtleAccess,
         side: TurtleSide,
-        upgradeData: CompoundTag,
+        upgradeData: IDataStorage,
         partialTicks: Float,
         transform: PoseStack,
         buffers: MultiBufferSource,

@@ -5,7 +5,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.saveddata.SavedData
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.turtlematic.TurtlematicCore
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import java.time.Instant
@@ -18,12 +18,10 @@ class ChunkManager : SavedData() {
         private const val DATA_NAME = TurtlematicCore.MOD_ID + "_ForcedChunks"
         private const val FORCED_CHUNKS_TAG = "forcedChunks"
 
-        private fun readChunkRecord(tag: CompoundTag): LoadChunkRecord {
-            return LoadChunkRecord(
-                tag.getString(DIMENSION_NAME_TAG),
-                chunkPosFromNBT(tag.getCompound(POS_TAG)),
-            )
-        }
+        private fun readChunkRecord(tag: CompoundTag): LoadChunkRecord = LoadChunkRecord(
+            tag.getString(DIMENSION_NAME_TAG),
+            chunkPosFromNBT(tag.getCompound(POS_TAG)),
+        )
 
         fun load(data: CompoundTag): ChunkManager {
             val manager = ChunkManager()
@@ -35,9 +33,7 @@ class ChunkManager : SavedData() {
             return manager
         }
 
-        fun get(level: ServerLevel): ChunkManager {
-            return level.dataStorage.computeIfAbsent(ChunkManager::load, { ChunkManager() }, DATA_NAME)
-        }
+        fun get(level: ServerLevel): ChunkManager = level.dataStorage.computeIfAbsent(ChunkManager::load, { ChunkManager() }, DATA_NAME)
     }
 
     private var tickCounter = 0L
@@ -55,7 +51,7 @@ class ChunkManager : SavedData() {
         TurtlematicCore.logger.debug("Chunk added to force loaded {}", pos)
         forcedChunks[owner] = LoadChunkRecord(level.dimension().location().toString(), pos)
         setDirty()
-        return PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, true)
+        return PlatformToolkit.get().setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, true)
     }
 
     @Synchronized
@@ -71,7 +67,7 @@ class ChunkManager : SavedData() {
     fun removeChunk(owner: UUID, pos: ChunkPos, level: ServerLevel): Boolean {
         if (mainThread != null && Thread.currentThread() == mainThread) {
             TurtlematicCore.logger.debug("Chunk removed from to force loaded {}", pos)
-            return PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, false)
+            return PlatformToolkit.get().setChunkForceLoad(level, TurtlematicCore.MOD_ID, owner, pos, false)
         }
         TurtlematicCore.logger.debug("Market chunk to remove {}", pos)
         val forcedChunk = forcedChunks[owner] ?: return false
@@ -113,7 +109,7 @@ class ChunkManager : SavedData() {
                 val dimensionName: String = level.dimension().location().toString()
                 forcedChunks.forEach {
                     if (it.value.dimensionName == dimensionName) {
-                        PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, it.key, it.value.pos, true)
+                        PlatformToolkit.get().setChunkForceLoad(level, TurtlematicCore.MOD_ID, it.key, it.value.pos, true)
                     }
                 }
             }
@@ -128,7 +124,7 @@ class ChunkManager : SavedData() {
                 val dimensionName: String = level.dimension().location().toString()
                 forcedChunks.entries.forEach {
                     if (it.value.dimensionName == dimensionName) {
-                        PeripheraliumPlatform.setChunkForceLoad(level, TurtlematicCore.MOD_ID, it.key, it.value.pos, false)
+                        PlatformToolkit.get().setChunkForceLoad(level, TurtlematicCore.MOD_ID, it.key, it.value.pos, false)
                     }
                 }
             }

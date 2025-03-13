@@ -1,13 +1,12 @@
 package site.siredvin.turtlematic.common.configuration
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.config.IConfigHandler
-import site.siredvin.peripheralium.api.config.IOperationAbilityConfig
 import site.siredvin.turtlematic.api.AutomataCoreTier
+import site.siredvin.turtlematic.api.IForgeConfigHandler
 import site.siredvin.turtlematic.computercraft.operations.*
 
-object TurtlematicConfig : IOperationAbilityConfig {
-    override val cooldownTresholdLevel: Int
+object TurtlematicConfig {
+    val cooldownTresholdLevel: Int
         get() = ConfigHolder.commonConfig.cooldownTresholdLevel.get()
     val xpToFuelRate: Int
         get() = ConfigHolder.commonConfig.xpToFuelRate.get()
@@ -168,12 +167,12 @@ object TurtlematicConfig : IOperationAbilityConfig {
                 .defineInRange("mimicGadgetRMLLimit", 8, 0, 128)
             builder.pop()
             builder.push("operations")
-            register(SingleOperation.values(), builder)
-            register(SphereOperation.values(), builder)
-            register(SimpleFreeOperation.values(), builder)
-            register(CountOperation.values(), builder)
-            register(UnconditionalOperation.values(), builder)
-            register(PowerOperation.values(), builder)
+            register(SingleOperation.entries.toTypedArray(), builder)
+            register(SphereOperation.entries.toTypedArray(), builder)
+            register(SimpleFreeOperation.entries.toTypedArray(), builder)
+            register(CountOperation.entries.toTypedArray(), builder)
+            register(UnconditionalOperation.entries.toTypedArray(), builder)
+            register(PowerOperation.entries.toTypedArray(), builder)
             builder.pop()
             builder.push("automataCores")
             enableAutomataCore = builder.define("enableWeakAutomataCore", true)
@@ -201,11 +200,11 @@ object TurtlematicConfig : IOperationAbilityConfig {
             enchantingWipeChance = builder.defineInRange("enchantmentWipeChance", 0.05, 0.1, 1.0)
 
             // automata core tiers registration
-            register(AutomataCoreTier.values(), builder)
+            register(AutomataCoreTier.entries.toTypedArray(), builder)
             builder.pop()
         }
 
-        private fun register(data: Array<out IConfigHandler>, builder: ForgeConfigSpec.Builder) {
+        private fun register(data: Array<out IForgeConfigHandler>, builder: ForgeConfigSpec.Builder) {
             for (handler in data) {
                 handler.addToConfig(builder)
             }

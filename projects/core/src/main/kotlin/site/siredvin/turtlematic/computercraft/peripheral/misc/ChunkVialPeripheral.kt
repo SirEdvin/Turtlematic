@@ -3,15 +3,14 @@ package site.siredvin.turtlematic.computercraft.peripheral.misc
 import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
-import site.siredvin.peripheralium.computercraft.peripheral.OwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.util.ChunkManager
+import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 import java.util.*
 
-class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
-    OwnedPeripheral<TurtlePeripheralOwner>(type, peripheralOwner) {
+class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeripheral<TurtlePeripheralOwner>(type, peripheralOwner) {
     companion object : PeripheralConfiguration {
         override val type = "chunk_vial"
         private const val UUID_TAG = "uuid"
@@ -24,9 +23,8 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) :
     private val uuid: UUID
         get() {
             val storage = peripheralOwner.dataStorage
-            if (!storage.contains(UUID_TAG)) {
+            if (!storage.has(UUID_TAG)) {
                 storage.putUUID(UUID_TAG, UUID.randomUUID())
-                peripheralOwner.markDataStorageDirty()
             }
             return storage.getUUID(UUID_TAG)
         }

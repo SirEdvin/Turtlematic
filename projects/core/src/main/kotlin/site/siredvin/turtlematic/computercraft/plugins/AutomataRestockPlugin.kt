@@ -7,10 +7,10 @@ import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
-import site.siredvin.peripheralium.api.datatypes.VerticalDirection
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.forged.ExperienceAutomataCorePeripheral
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
 import java.util.*
 import java.util.function.Predicate
 

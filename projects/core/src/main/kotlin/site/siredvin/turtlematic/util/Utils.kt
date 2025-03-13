@@ -10,6 +10,4 @@ fun toNBT(pos: ChunkPos): CompoundTag {
     return data
 }
 
-fun chunkPosFromNBT(nbt: CompoundTag): ChunkPos {
-    return ChunkPos(nbt.getInt("x"), nbt.getInt("z"))
-}
+fun chunkPosFromNBT(nbt: CompoundTag): ChunkPos = ChunkPos(nbt.getInt("x"), nbt.getInt("z"))

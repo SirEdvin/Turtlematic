@@ -6,14 +6,14 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.api.datatypes.InteractionMode
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.turtlematic.util.getInteractionMode
 import site.siredvin.turtlematic.util.optPose
 import site.siredvin.turtlematic.util.optVerticalDirection
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 import java.util.function.Predicate
 
 class AutomataInteractionPlugin(
@@ -39,23 +39,21 @@ class AutomataInteractionPlugin(
             }
             it.swing(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity)
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
-        if (!result.left) {
-            return MethodResult.of(null, result.right)
+        if (!result.first) {
+            return MethodResult.of(null, result.second)
         }
         return MethodResult.of(true)
     }
 
-    fun swingImpl(arguments: IArguments): MethodResult {
-        return automataCore.withOperation(SingleOperation.SWING) {
-            val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-            val selectedTool: ItemStack = owner.toolInMainHand
-            val previousDamageValue = selectedTool.damageValue
-            val result = swingImplInner(arguments)
-            if (automataCore.tier.needRestoreDurability() && selectedTool.isDamageableItem && selectedTool.damageValue != previousDamageValue) {
-                selectedTool.damageValue = previousDamageValue
-            }
-            result
+    fun swingImpl(arguments: IArguments): MethodResult = automataCore.withOperation(SingleOperation.SWING) {
+        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
+        val selectedTool: ItemStack = owner.toolInMainHand
+        val previousDamageValue = selectedTool.damageValue
+        val result = swingImplInner(arguments)
+        if (automataCore.tier.needRestoreDurability() && selectedTool.isDamageableItem && selectedTool.damageValue != previousDamageValue) {
+            selectedTool.damageValue = previousDamageValue
         }
+        result
     }
 
     fun useImplInner(arguments: IArguments): MethodResult {
@@ -76,28 +74,22 @@ class AutomataInteractionPlugin(
         return MethodResult.of(true, result.toString())
     }
 
-    fun useImpl(arguments: IArguments): MethodResult {
-        return automataCore.withOperation(SingleOperation.USE) {
-            val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
-            val selectedTool: ItemStack = owner.toolInMainHand
-            val previousDamageValue = selectedTool.damageValue
-            val result = useImplInner(arguments)
-            if (automataCore.tier.needRestoreDurability() && selectedTool.isDamageableItem && selectedTool.damageValue != previousDamageValue) {
-                selectedTool.damageValue = previousDamageValue
-            }
-            result
+    fun useImpl(arguments: IArguments): MethodResult = automataCore.withOperation(SingleOperation.USE) {
+        val owner: TurtlePeripheralOwner = automataCore.peripheralOwner
+        val selectedTool: ItemStack = owner.toolInMainHand
+        val previousDamageValue = selectedTool.damageValue
+        val result = useImplInner(arguments)
+        if (automataCore.tier.needRestoreDurability() && selectedTool.isDamageableItem && selectedTool.damageValue != previousDamageValue) {
+            selectedTool.damageValue = previousDamageValue
         }
+        result
     }
 
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
-    fun swing(arguments: IArguments): MethodResult {
-        return swingImpl(arguments)
-    }
+    fun swing(arguments: IArguments): MethodResult = swingImpl(arguments)
 
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
-    fun use(arguments: IArguments): MethodResult {
-        return useImpl(arguments)
-    }
+    fun use(arguments: IArguments): MethodResult = useImpl(arguments)
 }

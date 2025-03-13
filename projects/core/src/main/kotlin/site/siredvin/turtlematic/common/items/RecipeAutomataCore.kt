@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.common.items.PeripheralItem
+import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
@@ -19,10 +19,10 @@ class RecipeAutomataCore(
     coreTier: IAutomataCoreTier,
     p: Properties,
     enableSup: Supplier<Boolean>,
-    vararg tooltipHook: Function<PeripheralItem, List<Component>>,
+    vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>,
     coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null,
 ) : BaseAutomataCore(coreTier, p, enableSup, *tooltipHook, coreHook = coreHook) {
-    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<PeripheralItem, List<Component>>, coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null) : this(
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>, coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null) : this(
         coreTier,
         Properties().stacksTo(1),
         enableSup,

@@ -1,25 +1,23 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.turtlematic.api.IForgeConfigHandler
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 
 enum class UnconditionalOperation(
     private val defaultCooldown: Int,
     private val defaultCost: Int,
-) : IPeripheralOperation<Any?> {
+) : IPeripheralOperation<Any?>,
+    IForgeConfigHandler {
     XP_TRANSFER(1000, 1),
     ;
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
     private var cost: ForgeConfigSpec.IntValue? = null
 
-    override fun getCooldown(context: Any?): Int {
-        return cooldown!!.get()
-    }
+    override fun getCooldown(context: Any?): Int = cooldown!!.get()
 
-    override fun getCost(context: Any?): Int {
-        return cost!!.get()
-    }
+    override fun getCost(context: Any?): Int = cost!!.get()
 
     override fun computerDescription(): Map<String, Any> {
         val data: MutableMap<String, Any> = HashMap()

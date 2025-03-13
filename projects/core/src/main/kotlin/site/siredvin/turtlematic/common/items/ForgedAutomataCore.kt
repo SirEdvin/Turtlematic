@@ -3,14 +3,15 @@ package site.siredvin.turtlematic.common.items
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.common.items.DescriptiveItem
-import site.siredvin.peripheralium.util.Pair
+import site.siredvin.broccolium.modules.base.item.DescriptiveItem
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 
-class ForgedAutomataCore : DescriptiveItem(Properties().stacksTo(1).fireResistant()), ISoulFeedableItem {
+class ForgedAutomataCore :
+    DescriptiveItem(Properties().stacksTo(1).fireResistant()),
+    ISoulFeedableItem {
 
     override fun consumeEntitySoul(
         stack: ItemStack,
@@ -21,7 +22,7 @@ class ForgedAutomataCore : DescriptiveItem(Properties().stacksTo(1).fireResistan
         if (recipe != null) {
             return recipe.consumeEntity(stack, entity)
         }
-        return Pair.onlyRight("This item cannot hold soul of this entity")
+        return Pair(null, "This item cannot hold soul of this entity")
     }
 
     override fun getEntityRepresentation(stack: ItemStack, recipe: SoulHarvestRecipe): List<RecipeEntityRepresentation> {

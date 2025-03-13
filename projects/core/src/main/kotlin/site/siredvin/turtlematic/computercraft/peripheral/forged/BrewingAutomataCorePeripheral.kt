@@ -21,12 +21,6 @@ import net.minecraft.world.item.alchemy.PotionBrewing
 import net.minecraft.world.item.alchemy.PotionUtils
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.api.datatypes.InteractionMode
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.ScanningAbility
-import site.siredvin.peripheralium.util.representation.effectsData
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
@@ -36,10 +30,15 @@ import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.*
 import site.siredvin.turtlematic.util.TurtleDispenseBehavior
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.ability.ScanningBoon
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
+import site.siredvin.tweakium.modules.peripheral.representation.effectsData
 import java.util.function.Predicate
 
-class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) :
-    ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
+class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
     companion object : PeripheralConfiguration {
         override val type = "brewingAutomata"
@@ -55,9 +54,9 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
                 suitableEntity = suitableEntity,
             ),
         )
-        peripheralOwner.attachAbility(
-            PeripheralOwnerAbility.SCANNING,
-            ScanningAbility(
+        peripheralOwner.attachBoon(
+            PeripheralOwnerBoonKey.SCANNING,
+            ScanningBoon(
                 peripheralOwner,
                 tier.interactionRadius,
             ).attachItemScan(
@@ -75,7 +74,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
             stack.shrink(1)
             return Util.make(
                 ThrownPotion(level, targetPosition.x(), targetPosition.y(), targetPosition.z()),
-            ) { p_218413_1_ -> p_218413_1_.item = stack }
+            ) { thrownPotion -> thrownPotion.item = stack }
         }
     }
 
@@ -114,7 +113,7 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
                 if (PotionBrewing.hasMix(slotStack, component)) {
                     turtleInventory.setItem(slot, PotionBrewing.mix(component, slotStack))
                     usedForBrewing = true
-                    peripheralOwner.getAbility(PeripheralOwnerAbility.EXPERIENCE)
+                    peripheralOwner.getBoon(PeripheralOwnerBoonKey.EXPERIENCE)
                         ?.adjustStoredXP(TurtlematicConfig.brewingXPReward)
                 }
             }

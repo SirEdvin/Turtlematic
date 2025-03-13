@@ -1,7 +1,6 @@
 package site.siredvin.turtlematic.common.setup
 
 import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
-import site.siredvin.peripheralium.computercraft.turtle.PeripheralTurtleUpgrade
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.*
 import site.siredvin.turtlematic.computercraft.peripheral.forged.*
@@ -11,6 +10,7 @@ import site.siredvin.turtlematic.util.toCreative
 import site.siredvin.turtlematic.util.toNetherite
 import site.siredvin.turtlematic.util.toStarbound
 import site.siredvin.turtlematic.xplat.ModPlatform
+import site.siredvin.tweakium.modules.turtle.PeripheralTurtleUpgrade
 
 object TurtleUpgradeSerializers {
 

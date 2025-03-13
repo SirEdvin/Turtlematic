@@ -1,7 +1,8 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.turtlematic.api.IForgeConfigHandler
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 import java.util.*
 import java.util.function.Function
 
@@ -12,7 +13,8 @@ enum class SingleOperation(
     private val defaultCost: Int,
     private val distanceCostPolicy: DistancePolicy,
     private val countCostPolicy: CountPolicy,
-) : IPeripheralOperation<SingleOperationContext> {
+) : IPeripheralOperation<SingleOperationContext>,
+    IForgeConfigHandler {
     SWING(1000, 1),
     TRANSFORM_BLOCK(500, 1),
     USE(1000, 1),
@@ -39,18 +41,14 @@ enum class SingleOperation(
         SQRT(Function { d: Int -> kotlin.math.sqrt(d.toDouble()).toInt() }),
         ;
 
-        fun getFactor(distance: Int): Int {
-            return factorFunction.apply(distance)
-        }
+        fun getFactor(distance: Int): Int = factorFunction.apply(distance)
     }
 
     enum class CountPolicy(private val factorFunction: Function<Int, Int>) {
         MULTIPLY(Function { c: Int -> c }),
         ;
 
-        fun getFactor(count: Int): Int {
-            return factorFunction.apply(count)
-        }
+        fun getFactor(count: Int): Int = factorFunction.apply(count)
     }
 
     private var cooldown: ForgeConfigSpec.IntValue? = null
@@ -66,15 +64,11 @@ enum class SingleOperation(
     ) {
     }
 
-    override fun getCooldown(context: SingleOperationContext): Int {
-        return cooldown!!.get() * countCooldownPolicy.getFactor(context.count) * distanceCooldownPolicy.getFactor(
-            context.distance,
-        )
-    }
+    override fun getCooldown(context: SingleOperationContext): Int = cooldown!!.get() * countCooldownPolicy.getFactor(context.count) * distanceCooldownPolicy.getFactor(
+        context.distance,
+    )
 
-    override fun getCost(context: SingleOperationContext): Int {
-        return cost!!.get() * countCostPolicy.getFactor(context.count) * distanceCostPolicy.getFactor(context.distance)
-    }
+    override fun getCost(context: SingleOperationContext): Int = cost!!.get() * countCostPolicy.getFactor(context.count) * distanceCostPolicy.getFactor(context.distance)
 
     override fun computerDescription(): Map<String, Any> {
         val data: MutableMap<String, Any> = HashMap()

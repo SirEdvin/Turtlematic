@@ -1,12 +1,18 @@
 [versions]
+# Base libraries
+kotlin = "2.0.0"
+kotlin-coroutines = "1.6.4"
+kotlin-atomicfu = "0.20.2"
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
-loom = "1.2.+"
-mixinGradle = "0.8.+"
+loom = "1.4.+"
+mixinGradle = "0.7.+"
 forgegradle = "6.+"
 # Core mod dependencies
-cc-tweaked = "1.112.0"
-peripheralium = "0.7.0"
+cc-tweaked = "1.113.0"
+broccolium = "1.0.0-rc.6"
+tweakium = "1.0.0-rc.6"
+peripheralium = "1.0.0-rc.6"
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.92.0+1.20.1"
@@ -37,6 +43,8 @@ cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20.1-common", version.ref
 cc-tweaked-common-api = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
 cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "cc-tweaked"}
 common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt-fabric"}
+broccolium-core = {module = "site.siredvin:broccolium-common-1.20.1", version.ref = "broccolium"}
+tweakium-core = {module = "site.siredvin:tweakium-common-1.20.1", version.ref = "tweakium"}
 peripheralium-core = {module = "site.siredvin:peripheralium-common-1.20.1", version.ref = "peripheralium"}
 mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
 
@@ -47,12 +55,16 @@ fabric-kotlin = {module = "net.fabricmc:fabric-language-kotlin", version.ref = "
 fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt-fabric"}
 cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric-api", version.ref = "cc-tweaked"}
 cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric", version.ref = "cc-tweaked"}
+broccolium-fabric = {module = "site.siredvin:broccolium-fabric-1.20.1", version.ref = "broccolium"}
+tweakium-fabric = {module = "site.siredvin:tweakium-fabric-1.20.1", version.ref = "tweakium"}
 peripheralium-fabric = {module = "site.siredvin:peripheralium-fabric-1.20.1", version.ref = "peripheralium"}
 modmenu = {module = "com.terraformersmc:modmenu", version.ref="modmenu"}
 
 # Forge mod dependencies
 cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="cc-tweaked"}
 forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
+broccolium-forge = {module = "site.siredvin:broccolium-forge-1.20.1", version.ref = "broccolium"}
+tweakium-forge = {module = "site.siredvin:tweakium-forge-1.20.1", version.ref = "tweakium"}
 peripheralium-forge = {module = "site.siredvin:peripheralium-forge-1.20.1", version.ref = "peripheralium"}
 
 # Dev mod dependencies
@@ -77,13 +89,15 @@ loom = {id = "fabric-loom", version.ref = "loom"}
 mixinGradle = { id = "org.spongepowered.mixin", version.ref = "mixinGradle" }
 
 [bundles]
-cccommon = ["cc-tweaked-common", "cc-tweaked-common-api", "cc-tweaked-core", "peripheralium-core"]
+cccommon = ["cc-tweaked-common", "cc-tweaked-common-api", "cc-tweaked-core", "peripheralium-core", "tweakium-core", "broccolium-core"]
 apicommon = ["common-config"]
-ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core", "peripheralium-fabric", "modmenu"]
+fabric-cc = ["cc-tweaked-fabric", "cc-tweaked-core", "modmenu"]
+fabric-include = ["broccolium-fabric", "tweakium-fabric", "peripheralium-fabric"]
 fabric-core = ["fabric-loader"]
 fabric = ["fabric-api", "fabric-kotlin", "fabric-config"]
 forge-raw = ["forge-kotlin"]
-forge-base = ["cc-tweaked-forge", "peripheralium-forge"]
+forge-cc = ["cc-tweaked-forge"]
+forge-include = ["broccolium-forge", "tweakium-forge", "peripheralium-forge"]
 
 # Minecraft
 externalMods-forge-runtime = [

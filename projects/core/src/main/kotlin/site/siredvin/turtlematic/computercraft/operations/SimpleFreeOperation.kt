@@ -1,9 +1,12 @@
 package site.siredvin.turtlematic.computercraft.operations
 
 import net.minecraftforge.common.ForgeConfigSpec
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOperation
+import site.siredvin.turtlematic.api.IForgeConfigHandler
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 
-enum class SimpleFreeOperation(private val defaultCooldown: Int) : IPeripheralOperation<Any> {
+enum class SimpleFreeOperation(private val defaultCooldown: Int) :
+    IPeripheralOperation<Any>,
+    IForgeConfigHandler {
     CHAT_MESSAGE(100),
     ;
 
@@ -17,13 +20,9 @@ enum class SimpleFreeOperation(private val defaultCooldown: Int) : IPeripheralOp
         )
     }
 
-    override fun getCooldown(context: Any): Int {
-        return cooldown!!.get()
-    }
+    override fun getCooldown(context: Any): Int = cooldown!!.get()
 
-    override fun getCost(context: Any): Int {
-        return 0
-    }
+    override fun getCost(context: Any): Int = 0
 
     override fun computerDescription(): Map<String, Any> {
         val data: MutableMap<String, Any> = HashMap()
