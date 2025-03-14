@@ -1,8 +1,7 @@
 package site.siredvin.turtlematic.client
 
 import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.Tesselator
-import com.mojang.blaze3d.vertex.VertexFormat
+import com.mojang.math.Axis
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
@@ -10,6 +9,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.network.chat.FormattedText
+import net.minecraft.util.CommonColors
 import net.minecraft.util.FormattedCharSequence
 import net.minecraft.world.phys.Vec3
 import site.siredvin.turtlematic.util.DataStorageObjects
@@ -20,7 +20,7 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
     private const val MAX_WIDTH = 160
     private const val MAX_LINES = 6
     private const val TEXT_SCALING = 0.025f
-    private const val BASE_HEIGHT = 1.6f
+    private const val BASE_HEIGHT = 1.2f
     override fun render(
         turtle: TurtleBlockEntity,
         access: ITurtleAccess,
@@ -48,7 +48,9 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
         val translation: Vec3 = turtle.getRenderOffset(partialTicks)
         transform.translate(translation.x, translation.y + height, translation.z)
         transform.translate(0.5f, 0f, 0.5f)
-        transform.mulPose(Minecraft.getInstance().entityRenderDispatcher.cameraOrientation())
+        val dispatcher = Minecraft.getInstance().gameRenderer.mainCamera
+        transform.mulPose(Axis.YP.rotationDegrees(-dispatcher.yRot)); // Rotate to match yaw
+        transform.mulPose(Axis.XP.rotationDegrees(dispatcher.xRot));  // Rotate to match pitch
 
         transform.scale(-TEXT_SCALING, -TEXT_SCALING, TEXT_SCALING)
 
@@ -58,20 +60,32 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
             if (i == 0) {
                 firstLineOffset = -font.width(textLine) / 2.0f
             }
-            val bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().begin(VertexFormat.Mode.DEBUG_LINES, VertexFormat.))
+            val matrix = transform.last().pose()
+            val opacity: Int = (Minecraft.getInstance().options.getBackgroundOpacity(0.25f) * 255).toInt() shl 24
             font.drawInBatch(
                 textLine,
                 firstLineOffset,
                 (font.lineHeight * (i + 1)).toFloat(),
-                0xffffff,
+                0x20ffffff,
                 false,
-                transform.last().pose(),
-                bufferSource,
+                matrix,
+                buffers,
+                Font.DisplayMode.SEE_THROUGH,
+                opacity,
+                lightmapCoord
+            )
+            font.drawInBatch(
+                textLine,
+                firstLineOffset,
+                (font.lineHeight * (i + 1)).toFloat(),
+                CommonColors.WHITE,
+                false,
+                matrix,
+                buffers,
                 Font.DisplayMode.NORMAL,
                 0,
-                15728880,
+                lightmapCoord
             )
-            bufferSource.endBatch()
         }
         transform.popPose()
         return RenderTrickOpcode.NOOP

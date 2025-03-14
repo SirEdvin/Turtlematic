@@ -1,7 +1,9 @@
 package site.siredvin.turtlematic.computercraft.turtle
 
 import dan200.computercraft.api.turtle.ITurtleAccess
+import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
+import dan200.computercraft.api.upgrades.UpgradeType
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -17,9 +19,9 @@ abstract class ClockwiseTurtleUpgrade<T : IOwnedPeripheral<*>> : StatefulPeriphe
     constructor(id: ResourceLocation, item: ItemStack) : super(id, item)
 
     companion object {
-        fun <T : IOwnedPeripheral<*>> dynamic(id: ResourceLocation, item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>): ClockwiseTurtleUpgrade<T> = Dynamic(id, item, constructor)
+        fun <T : IOwnedPeripheral<*>> dynamic(id: ResourceLocation, item: BaseAutomataCore, upgradeType: UpgradeType<out ITurtleUpgrade>, constructor: AutomataPeripheralBuildFunction<T>): ClockwiseTurtleUpgrade<T> = Dynamic(id, item, constructor, upgradeType)
 
-        fun <T : IOwnedPeripheral<*>> ticker(id: ResourceLocation, item: BaseAutomataCore, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): ClockwiseTurtleUpgrade<T> = Ticker(id, item, constructor, ticker)
+        fun <T : IOwnedPeripheral<*>> ticker(id: ResourceLocation, item: BaseAutomataCore, upgradeType: UpgradeType<out ITurtleUpgrade>, constructor: AutomataPeripheralBuildFunction<T>, ticker: AutomataTickerFunction): ClockwiseTurtleUpgrade<T> = Ticker(id, item, constructor, upgradeType, ticker)
     }
 
     protected var tickCounterStorage = 0L
@@ -34,16 +36,19 @@ abstract class ClockwiseTurtleUpgrade<T : IOwnedPeripheral<*>> : StatefulPeriphe
         id: ResourceLocation,
         protected val item: BaseAutomataCore,
         private val constructor: AutomataPeripheralBuildFunction<T>,
+        private val upgradeType: UpgradeType<out ITurtleUpgrade>,
     ) : ClockwiseTurtleUpgrade<T>(id, item.defaultInstance) {
         override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T = constructor.build(turtle, side, item.coreTier)
+        override fun getType(): UpgradeType<out ITurtleUpgrade> = upgradeType
     }
 
     private class Ticker<T : IOwnedPeripheral<*>>(
         id: ResourceLocation,
         item: BaseAutomataCore,
         constructor: AutomataPeripheralBuildFunction<T>,
+        upgradeType: UpgradeType<out ITurtleUpgrade>,
         private val ticker: AutomataTickerFunction,
-    ) : Dynamic<T>(id, item, constructor) {
+    ) : Dynamic<T>(id, item, constructor, upgradeType) {
         override fun update(turtle: ITurtleAccess, side: TurtleSide) {
             super.update(turtle, side)
             if (!turtle.level.isClientSide) {

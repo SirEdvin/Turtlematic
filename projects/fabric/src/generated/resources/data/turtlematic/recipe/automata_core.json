@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "/": {
       "item": "minecraft:stick"
     },
     "D": {
-      "tag": "c:diamonds"
+      "tag": "c:gems/diamond"
     },
     "I": {
-      "tag": "c:iron_ingots"
+      "tag": "c:ingots/iron"
     },
     "S": {
       "item": "turtlematic:filled_soul_vial"
@@ -20,6 +21,8 @@
     "/I/"
   ],
   "result": {
-    "item": "turtlematic:automata_core"
-  }
+    "count": 1,
+    "id": "turtlematic:automata_core"
+  },
+  "show_notification": false
 }

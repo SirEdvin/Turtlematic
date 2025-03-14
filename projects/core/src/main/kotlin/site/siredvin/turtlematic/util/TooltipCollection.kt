@@ -1,9 +1,11 @@
 package site.siredvin.turtlematic.util
 
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.world.item.Item.TooltipContext
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.turtlematic.api.AutomataCoreTraits
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
@@ -12,7 +14,6 @@ import site.siredvin.turtlematic.data.ModTooltip
 import site.siredvin.tweakium.modules.peripheral.ability.ExperienceBoon
 import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
-import site.siredvin.tweakium.modules.turtle.StatefulTurtleUpgrade
 import java.util.function.BiFunction
 import java.util.function.Function
 
@@ -106,16 +107,16 @@ val protectiveTooltip = Function<HiddenDescriptiveItemItem, List<Component>> { i
     return@Function tooltipList
 }
 
-val capturedTooltip = BiFunction<ItemStack, Level?, List<Component>> { it, level ->
+val capturedTooltip = BiFunction<ItemStack, TooltipContext, List<Component>> { it, level ->
     if (it.item !is BaseAutomataCore) return@BiFunction emptyList()
-    val dataTag = it.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
+    val dataTag = it.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: return@BiFunction emptyList()
     val dataStorage = CompoundTagDataStorage(dataTag) {}
     val capturedType = AutomataCapturePlugin.getStoredType(dataStorage) ?: return@BiFunction emptyList()
     return@BiFunction when (capturedType) {
         InteractionMode.BLOCK -> listOf(ModTooltip.CAPTURED_BLOCK.format(AutomataCapturePlugin.extractBlock(dataStorage)!!.first.block.name.string))
         InteractionMode.ENTITY -> {
             if (level != null) {
-                listOf(ModTooltip.CAPTURED_ENTITY.format(AutomataCapturePlugin.extractEntity(dataStorage, level)!!.name.string))
+                listOf(ModTooltip.CAPTURED_ENTITY.format(AutomataCapturePlugin.extractEntity(dataStorage, PlatformToolkit.get().minecraftServer?.overworld()!!)!!.name.string))
             } else {
                 emptyList()
             }
@@ -124,9 +125,9 @@ val capturedTooltip = BiFunction<ItemStack, Level?, List<Component>> { it, level
     }
 }
 
-val xpTooltip = BiFunction<ItemStack, Level?, List<Component>> { stack, _ ->
+val xpTooltip = BiFunction<ItemStack, TooltipContext, List<Component>> { stack, _ ->
     if (stack.item !is BaseAutomataCore) return@BiFunction emptyList()
-    val dataStorage = stack.getTagElement(StatefulTurtleUpgrade.STORED_DATA_TAG) ?: return@BiFunction emptyList()
+    val dataStorage = stack.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: return@BiFunction emptyList()
     val storedXP = ExperienceBoon.getStoredXP(CompoundTagDataStorage(dataStorage) {})
     if (storedXP < 1) return@BiFunction emptyList()
     return@BiFunction listOf(ModTooltip.AMOUNT_OF_XP.format(storedXP))

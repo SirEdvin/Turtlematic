@@ -10,7 +10,5 @@ object TurtleRenderTrickRegistry {
         registry[serializer] = trick
     }
 
-    fun getTrick(upgrade: ITurtleUpgrade): TurtleRenderTrick? {
-        return registry[upgrade.type]
-    }
+    fun getTrick(upgrade: ITurtleUpgrade): TurtleRenderTrick? = registry[upgrade.type]
 }

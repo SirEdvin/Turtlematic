@@ -1,11 +1,11 @@
 package site.siredvin.turtlematic.common.items
 
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
@@ -14,7 +14,6 @@ import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipe
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry
 import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT
-import site.siredvin.turtlematic.common.recipe.SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND
 import site.siredvin.turtlematic.data.ModTooltip
 
 class AutomataCore :
@@ -23,11 +22,11 @@ class AutomataCore :
 
     override fun appendHoverText(
         itemStack: ItemStack,
-        level: Level?,
+        context: TooltipContext,
         list: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        super.appendHoverText(itemStack, level, list, tooltipFlag)
+        super.appendHoverText(itemStack, context, list, tooltipFlag)
         val record = getActiveRecipe(itemStack)
         if (record != null) {
             list.add(ModTooltip.CONSUMED_ENTITIES.text)
@@ -42,8 +41,7 @@ class AutomataCore :
     ): Pair<ItemStack?, String?> {
         val recipe = SoulHarvestRecipeRegistry.searchRecipe(this, entity)
         if (recipe != null) {
-            val tag = stack.orCreateTag
-            val consumedData = tag.getCompound(CONSUMER_ENTITY_COMPOUND)
+            val consumedData = stack.get(DataComponents.CUSTOM_DATA)!!.copyTag()
             val correctedRecipe: SoulHarvestRecipe? = if (consumedData.isEmpty) {
                 SoulHarvestRecipeRegistry.searchRecipe(this, entity)
             } else {
@@ -62,7 +60,7 @@ class AutomataCore :
     }
 
     override fun getEntityRepresentation(stack: ItemStack, recipe: SoulHarvestRecipe): List<RecipeEntityRepresentation> {
-        val consumedData = stack.tag!!.getCompound(CONSUMER_ENTITY_COMPOUND)
+        val consumedData = stack.get(DataComponents.CUSTOM_DATA)!!.copyTag()
         return recipe.ingredients.map {
             val entityData = consumedData.getCompound(it.name)
             return@map RecipeEntityRepresentation(

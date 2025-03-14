@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "/": {
       "item": "minecraft:stick"
@@ -14,6 +15,8 @@
     "/  "
   ],
   "result": {
-    "item": "turtlematic:soul_scrapper"
-  }
+    "count": 1,
+    "id": "turtlematic:soul_scrapper"
+  },
+  "show_notification": false
 }

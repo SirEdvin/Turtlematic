@@ -7,17 +7,14 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.SmeltingRecipe
-import net.minecraft.world.item.crafting.SmithingRecipe
 import net.minecraft.world.item.crafting.SmithingRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
@@ -25,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.item.ContainerUtils
-import site.siredvin.broccolium.modules.storage.item.FakeItemContainer
 import site.siredvin.broccolium.modules.storage.item.LimitedInventory
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
@@ -170,7 +166,6 @@ class SmithingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, ti
                 level.recipeManager.getRecipeFor(RecipeType.SMITHING, recipeInput, level)
             if (!optRecipe.isPresent) return@withOperation MethodResult.of(null, "Cannot find smithing recipe")
             val recipe = optRecipe.get()
-            // TODO: validate mutation correctly (?)
             val result: ItemStack = recipe.value.assemble(recipeInput, RegistryAccess.EMPTY)
             limitedInventory.reduceCount(0)
             limitedInventory.reduceCount(1)

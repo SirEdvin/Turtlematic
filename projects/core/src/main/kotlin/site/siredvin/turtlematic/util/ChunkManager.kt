@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.saveddata.SavedData
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
@@ -24,7 +25,7 @@ class ChunkManager : SavedData() {
             chunkPosFromNBT(tag.getCompound(POS_TAG)),
         )
 
-        fun load(data: CompoundTag): ChunkManager {
+        fun load(data: CompoundTag, registries: HolderLookup.Provider): ChunkManager {
             val manager = ChunkManager()
             val forcedData = data.getCompound(FORCED_CHUNKS_TAG)
             for (key in forcedData.allKeys) {
@@ -34,7 +35,7 @@ class ChunkManager : SavedData() {
             return manager
         }
 
-        fun get(level: ServerLevel): ChunkManager = level.dataStorage.computeIfAbsent(ChunkManager::load, { ChunkManager() }, DATA_NAME)
+        fun get(level: ServerLevel): ChunkManager = level.dataStorage.computeIfAbsent(Factory({ ChunkManager() }, ChunkManager::load, DataFixTypes.LEVEL), DATA_NAME)
     }
 
     private var tickCounter = 0L

@@ -97,13 +97,9 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             return max(enchantmentPower.value * 2, MAX_ENCHANTMENT_LEVEL)
         }
 
-    private fun getComponentType(stack: ItemStack): DataComponentType<ItemEnchantments> {
-        return if (stack.`is`(Items.ENCHANTED_BOOK)) DataComponents.STORED_ENCHANTMENTS else DataComponents.ENCHANTMENTS
-    }
+    private fun getComponentType(stack: ItemStack): DataComponentType<ItemEnchantments> = if (stack.`is`(Items.ENCHANTED_BOOK)) DataComponents.STORED_ENCHANTMENTS else DataComponents.ENCHANTMENTS
 
-    private fun extractEnchantments(stack: ItemStack): ItemEnchantments {
-        return stack.getOrDefault(getComponentType(stack), ItemEnchantments.EMPTY)
-    }
+    private fun extractEnchantments(stack: ItemStack): ItemEnchantments = stack.getOrDefault(getComponentType(stack), ItemEnchantments.EMPTY)
 
     private fun buildEnchantments(): Stream<Holder<Enchantment>> {
         val enchantmentRegistry = PlatformToolkit.get().registries!!.lookupOrThrow(Registries.ENCHANTMENT)

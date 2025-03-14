@@ -9,7 +9,6 @@ import site.siredvin.turtlematic.common.setup.Items
 object SoulHarvestRecipeRegistry {
     val CONSUMED_ENTITY_COUNT = "consumed_entity_count"
     val CONSUMED_ENTITY_NAME = "consumed_entity_name"
-    val CONSUMER_ENTITY_COMPOUND = "consumed_entity_compound"
 
     private val RECIPE_REGISTRY: MutableMap<Item, MutableList<SoulHarvestRecipe>> = hashMapOf()
     private val REVERSE_RECIPE_REGISTRY: MutableMap<Item, Pair<SoulHarvestRecipe, Item>> = hashMapOf()

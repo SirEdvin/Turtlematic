@@ -1,10 +1,10 @@
 package site.siredvin.turtlematic
 
-import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry
+import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.minecraftforge.fml.config.ModConfig
+import net.neoforged.fml.config.ModConfig
 import site.siredvin.broccolium.FabricBroccolium
 import site.siredvin.turtlematic.common.configuration.ConfigHolder
 import site.siredvin.turtlematic.fabric.FabricModInnerPlatform
@@ -25,7 +25,7 @@ object FabricTurtlematic : ModInitializer {
         TurtlematicCommonHooks.commonSetup()
         // Load all integrations
         // Pretty important to setup configuration after integration loading!
-        ForgeConfigRegistry.INSTANCE.register(TurtlematicCore.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.commonConfigSpec)
+        NeoForgeConfigRegistry.INSTANCE.register(TurtlematicCore.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.commonConfigSpec)
         registerHooks()
     }
 

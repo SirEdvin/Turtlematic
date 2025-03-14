@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.computercraft.peripheral.misc
 
-import com.mojang.serialization.JsonOps
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
@@ -39,7 +38,6 @@ class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPe
         if (nbtData.isPresent) {
             val dataPatch = DataComponentPatch.CODEC.decode(NbtOps.INSTANCE, TagParser.parseTag(nbtData.get()))
             if (dataPatch.isSuccess) {
-
                 dataPatch.orThrow.first.entrySet().filter { it.value.isPresent }.forEach {
                     @Suppress("UNCHECKED_CAST")
                     itemStack.set(it.key as DataComponentType<Any>, it.value.get())

@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
@@ -20,9 +19,9 @@ class RecipeAutomataCore(
     p: Properties,
     enableSup: Supplier<Boolean>,
     vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>,
-    coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null,
+    coreHook: BiFunction<ItemStack, TooltipContext, List<Component>>? = null,
 ) : BaseAutomataCore(coreTier, p, enableSup, *tooltipHook, coreHook = coreHook) {
-    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>, coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null) : this(
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>, coreHook: BiFunction<ItemStack, TooltipContext, List<Component>>? = null) : this(
         coreTier,
         Properties().stacksTo(1),
         enableSup,
@@ -32,11 +31,11 @@ class RecipeAutomataCore(
 
     override fun appendHoverText(
         itemStack: ItemStack,
-        level: Level?,
+        context: TooltipContext,
         list: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        super.appendHoverText(itemStack, level, list, tooltipFlag)
+        super.appendHoverText(itemStack, context, list, tooltipFlag)
         if (InputConstants.isKeyDown(Minecraft.getInstance().window.window, InputConstants.KEY_LCONTROL)) {
             val recipe = SoulHarvestRecipeRegistry.get(this)
             if (recipe == null) {

@@ -1,16 +1,20 @@
 package site.siredvin.turtlematic.computercraft.turtle
 
 import dan200.computercraft.api.turtle.ITurtleAccess
+import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
+import dan200.computercraft.api.upgrades.UpgradeType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
+import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
 import site.siredvin.turtlematic.computercraft.peripheral.misc.ChunkVialPeripheral
 import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 import site.siredvin.tweakium.modules.turtle.PeripheralTurtleUpgrade
 
 class ChunkVialTurtle(id: ResourceLocation, itemStack: ItemStack) : PeripheralTurtleUpgrade<ChunkVialPeripheral>(id, itemStack) {
     override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): ChunkVialPeripheral = ChunkVialPeripheral(TurtlePeripheralOwner(turtle, side))
+    override fun getType(): UpgradeType<out ITurtleUpgrade> = TurtleUpgradeSerializers.CHUNK_VIAL.get()
 
     override fun update(turtle: ITurtleAccess, side: TurtleSide) {
         super.update(turtle, side)

@@ -3,7 +3,6 @@ package site.siredvin.turtlematic.common.items.base
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.util.commonTooltips
@@ -19,7 +18,7 @@ open class BaseAutomataCore(
     vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>,
     private val coreHook: BiFunction<ItemStack, TooltipContext, List<Component>>? = null,
 ) : HiddenDescriptiveItemItem(p, enableSup, alwaysShow = false, isDisabled, commonTooltips, *tooltipHook) {
-    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>, coreHook: BiFunction<ItemStack, Level?, List<Component>>? = null) : this(
+    constructor(coreTier: IAutomataCoreTier, enableSup: Supplier<Boolean>, vararg tooltipHook: Function<HiddenDescriptiveItemItem, List<Component>>, coreHook: BiFunction<ItemStack, TooltipContext, List<Component>>? = null) : this(
         coreTier,
         Properties().stacksTo(1),
         enableSup,
@@ -31,7 +30,7 @@ open class BaseAutomataCore(
         itemStack: ItemStack,
         context: TooltipContext,
         list: MutableList<Component>,
-        tooltipFlag: TooltipFlag
+        tooltipFlag: TooltipFlag,
     ) {
         if (coreHook != null) {
             list.addAll(coreHook.apply(itemStack, context))

@@ -15,25 +15,26 @@ import site.siredvin.turtlematic.client.TurtleRenderTrick;
 import site.siredvin.turtlematic.client.TurtleRenderTrickRegistry;
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore;
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage;
-import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage;
+import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil;
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class MixinToolkit {
 
     public static @Nullable PairMonad<TurtleRenderTrick, IDataStorage> searchRenderTrickWithData(@Nonnull ITurtleUpgrade upgrade, @Nonnull ITurtleAccess access, @Nonnull TurtleSide side) {
         var coreTrick = TurtleRenderTrickRegistry.INSTANCE.getTrick(upgrade);
         if (coreTrick != null) {
-            return new PairMonad<>(coreTrick, new CompoundTagDataStorage(access.getUpgradeNBTData(side), () -> null));
+            return new PairMonad<>(coreTrick, DataStorageUtil.INSTANCE.getDataStorage(access, side));
         }
         if (upgrade instanceof TurtleUpgradeHolder upgradeHolder) {
             for (var internalUpgrade: upgradeHolder.getInternalUpgrades(access, side)) {
                 var internalTrick = TurtleRenderTrickRegistry.INSTANCE.getTrick(internalUpgrade.upgrade());
                 if (internalTrick != null)
-                    return new PairMonad<>(internalTrick, new CompoundTagDataStorage(internalUpgrade.data(), () -> null));
+                    return new PairMonad<>(internalTrick, DataStorageUtil.INSTANCE.getDataStorage(access, side));
             }
         }
         return null;
@@ -67,9 +68,9 @@ public class MixinToolkit {
         if (cancelTurtleRender) info.cancel();
     }
 
-    public static void isFuelNeeded(Map<TurtleSide, ITurtleUpgrade> upgrades, CallbackInfoReturnable<Boolean> cir) {
+    public static void isFuelNeeded(CallbackInfoReturnable<Boolean> cir, ITurtleUpgrade... upgrades) {
         if (cir.getReturnValue()) {
-            boolean isFuelConsumptionDisabled = upgrades.values().stream().anyMatch(it -> {
+            boolean isFuelConsumptionDisabled = Arrays.stream(upgrades).filter(Objects::nonNull).anyMatch(it -> {
                 Item item = it.getCraftingItem().getItem();
                 if (item instanceof BaseAutomataCore core) {
                     return core.getCoreTier().getTraits().contains(AutomataCoreTraits.INSTANCE.getFUEL_CONSUMPTION_DISABLED());

@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-13T20:17:10.202232884	Turtlematic/Tags for minecraft:entity_type
-916474b74424282b20dc9400f53d3baa4e34951c data/turtlematic/tags/entity_types/animal.json
-6d4ebb69c36ed8a9e9dde2ffbdd7afc561fe5b45 data/turtlematic/tags/entity_types/ai_control_blocklist.json
-6d4ebb69c36ed8a9e9dde2ffbdd7afc561fe5b45 data/turtlematic/tags/entity_types/capture_blocklist.json
+// 1.21.1	2025-03-14T17:46:56.450177628	Turtlematic/Tags for minecraft:entity_type
+669025814936e708d42d9d0a5b88c11e62cf12ef data/turtlematic/tags/entity_type/ai_control_blocklist.json
+669025814936e708d42d9d0a5b88c11e62cf12ef data/turtlematic/tags/entity_type/capture_blocklist.json
+f7cc9e720867f2fea58d5b0840bdce7a253ca3fe data/turtlematic/tags/entity_type/animal.json

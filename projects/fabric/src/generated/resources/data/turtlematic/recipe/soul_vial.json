@@ -1,11 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "E": {
-      "tag": "c:emeralds"
+      "tag": "c:gems/emerald"
     },
     "R": {
-      "tag": "c:redstone_dusts"
+      "tag": "c:dusts/redstone"
     },
     "S": {
       "item": "minecraft:soul_lantern"
@@ -17,6 +18,8 @@
     "R R"
   ],
   "result": {
-    "item": "turtlematic:soul_vial"
-  }
+    "count": 1,
+    "id": "turtlematic:soul_vial"
+  },
+  "show_notification": false
 }

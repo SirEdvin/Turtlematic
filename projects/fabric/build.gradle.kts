@@ -64,6 +64,7 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
         exclude("mezz.jei")
     }
+    include(libs.bundles.fabric.include)
 
     modRuntimeOnly(libs.bundles.externalMods.fabric.runtime) {
         exclude("net.fabricmc.fabric-api")

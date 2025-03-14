@@ -2,7 +2,7 @@ package site.siredvin.turtlematic
 
 import dan200.computercraft.api.client.turtle.TurtleUpgradeModeller
 import dan200.computercraft.api.turtle.ITurtleUpgrade
-import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
+import dan200.computercraft.api.upgrades.UpgradeType
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.resources.ResourceLocation
@@ -33,7 +33,7 @@ object TurtlematicCoreClient {
         "turtle/creative_chest_left",
         "turtle/creative_chest_right",
     )
-    val EXTRA_TURTLE_MODEL_PROVIDERS: MutableList<Supplier<Pair<TurtleUpgradeSerialiser<ITurtleUpgrade>, TurtleUpgradeModeller<ITurtleUpgrade>>>> = mutableListOf()
+    val EXTRA_TURTLE_MODEL_PROVIDERS: MutableList<Supplier<Pair<UpgradeType<ITurtleUpgrade>, TurtleUpgradeModeller<ITurtleUpgrade>>>> = mutableListOf()
 
     @Suppress("UNCHECKED_CAST")
     val EXTRA_ENTITY_RENDERERS: Array<Supplier<EntityType<Entity>>> = arrayOf(
@@ -49,45 +49,45 @@ object TurtlematicCoreClient {
     }
 
     fun registerExtraModels(register: Consumer<ResourceLocation>) {
-        EXTRA_MODELS.forEach { register.accept(ResourceLocation(TurtlematicCore.MOD_ID, it)) }
+        EXTRA_MODELS.forEach { register.accept(ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, it)) }
     }
 
-    fun <T : ITurtleUpgrade> asClockwise(serializer: Supplier<TurtleUpgradeSerialiser<T>>) {
+    fun <T : ITurtleUpgrade> asClockwise(serializer: Supplier<UpgradeType<T>>) {
         EXTRA_TURTLE_MODEL_PROVIDERS.add {
             @Suppress("UNCHECKED_CAST")
-            Pair(serializer.get() as TurtleUpgradeSerialiser<ITurtleUpgrade>, ClockwiseTurtleModeller())
+            Pair(serializer.get() as UpgradeType<ITurtleUpgrade>, ClockwiseTurtleModeller())
         }
     }
 
-    fun onModelRegister(consumer: BiConsumer<TurtleUpgradeSerialiser<*>, TurtleUpgradeModeller<ITurtleUpgrade>>) {
+    fun onModelRegister(consumer: BiConsumer<UpgradeType<*>, TurtleUpgradeModeller<ITurtleUpgrade>>) {
         consumer.accept(
             TurtleUpgradeSerializers.TURTLE_CHATTER.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.upgradeID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.upgradeID.path}_right"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.upgradeID.path}_left"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${TurtleChatterPeripheral.upgradeID.path}_right"),
             ),
         )
 
         consumer.accept(
             TurtleUpgradeSerializers.MIMIC.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.upgradeID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.upgradeID.path}_right"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.upgradeID.path}_left"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${MimicPeripheral.upgradeID.path}_right"),
             ),
         )
 
         consumer.accept(
             TurtleUpgradeSerializers.CREATIVE_CHEST.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.upgradeID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.upgradeID.path}_right"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.upgradeID.path}_left"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${CreativeChestPeripheral.upgradeID.path}_right"),
             ),
         )
         consumer.accept(
             TurtleUpgradeSerializers.CHUNK_VIAL.get(),
             TurtleUpgradeModeller.sided(
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.upgradeID.path}_left"),
-                ResourceLocation(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.upgradeID.path}_right"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.upgradeID.path}_left"),
+                ResourceLocation.fromNamespaceAndPath(TurtlematicCore.MOD_ID, "turtle/${ChunkVialPeripheral.upgradeID.path}_right"),
             ),
         )
 

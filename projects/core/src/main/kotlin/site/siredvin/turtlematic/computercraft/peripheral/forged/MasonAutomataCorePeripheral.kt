@@ -8,7 +8,6 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.Container
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -28,8 +27,6 @@ import net.minecraft.world.phys.BlockHitResult
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.item.ContainerUtils
-import site.siredvin.broccolium.modules.storage.item.FakeItemContainer
-import site.siredvin.broccolium.modules.storage.item.LimitedInventory
 import site.siredvin.turtlematic.api.IAutomataCoreTier
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
@@ -45,7 +42,7 @@ import java.util.function.Predicate
 
 class MasonAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tier: IAutomataCoreTier) : ExperienceAutomataCorePeripheral(type, turtle, side, tier) {
 
-    interface MasonRecipeHandler<V: Recipe<Z>, Z: RecipeInput> {
+    interface MasonRecipeHandler<V : Recipe<Z>, Z : RecipeInput> {
         fun getAlternatives(level: Level, fakeContainer: Z): List<ItemStack>
         fun getRecipe(level: Level, fakeContainer: Z, targetItem: Item): V?
         fun produce(level: Level, fakeContainer: Z, targetItem: Item, recipe: V, limit: Int): ItemStack

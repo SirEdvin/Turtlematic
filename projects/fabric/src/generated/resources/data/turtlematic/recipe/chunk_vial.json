@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "D": {
-      "tag": "c:diamonds"
+      "tag": "c:gems/diamond"
     },
     "E": {
-      "tag": "c:emeralds"
+      "tag": "c:gems/emerald"
     },
     "G": {
-      "tag": "c:gold_ingots"
+      "tag": "c:ingots/gold"
     },
     "S": {
       "item": "turtlematic:filled_soul_vial"
@@ -20,6 +21,8 @@
     "GEG"
   ],
   "result": {
-    "item": "turtlematic:chunk_vial"
-  }
+    "count": 1,
+    "id": "turtlematic:chunk_vial"
+  },
+  "show_notification": false
 }

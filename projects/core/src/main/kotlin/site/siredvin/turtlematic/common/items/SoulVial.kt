@@ -26,7 +26,7 @@ class SoulVial : DescriptiveItem(Properties().stacksTo(1).fireResistant()) {
         itemStack: ItemStack,
         context: TooltipContext,
         list: MutableList<Component>,
-        tooltipFlag: TooltipFlag
+        tooltipFlag: TooltipFlag,
     ) {
         super.appendHoverText(itemStack, context, list, tooltipFlag)
         val data = itemStack.get(DataComponents.CUSTOM_MODEL_DATA)

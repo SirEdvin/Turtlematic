@@ -1,11 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "I": {
-      "tag": "c:iron_ingots"
+      "tag": "c:dusts/redstone"
     },
     "R": {
-      "tag": "c:redstone_dusts"
+      "item": "peripheralium:peripheralium_dust"
     },
     "S": {
       "item": "computercraft:speaker"
@@ -17,6 +18,8 @@
     "RIR"
   ],
   "result": {
-    "item": "turtlematic:turtle_chatter"
-  }
+    "count": 1,
+    "id": "turtlematic:mimic_gadget"
+  },
+  "show_notification": false
 }
