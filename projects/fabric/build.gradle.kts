@@ -23,6 +23,8 @@ fabricShaking {
         mapOf(
             "computercraft" to "cc-tweaked",
             "peripheralium" to "peripheralium",
+            "broccolium" to "broccolium",
+            "tweakium" to "tweakium"
         ),
     )
     shake()
@@ -86,7 +88,6 @@ modPublishing {
         listOf(
             "cc-tweaked",
             "fabric-language-kotlin",
-            "peripheralium",
         ),
     )
     requiredDependenciesCurseforge.add("forge-config-api-port-fabric")
