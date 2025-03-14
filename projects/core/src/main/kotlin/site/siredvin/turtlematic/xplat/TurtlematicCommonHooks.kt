@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.xplat
 
-import dan200.computercraft.api.upgrades.UpgradeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.CreativeModeTab
@@ -11,8 +10,6 @@ import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
 import site.siredvin.turtlematic.util.ChunkManager
-import site.siredvin.tweakium.modules.platform.ComputerPlatformRegistries
-import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 
 object TurtlematicCommonHooks {
 

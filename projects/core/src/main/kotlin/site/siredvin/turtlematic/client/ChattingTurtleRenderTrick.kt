@@ -50,7 +50,7 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
         transform.translate(0.5f, 0f, 0.5f)
         val dispatcher = Minecraft.getInstance().gameRenderer.mainCamera
         transform.mulPose(Axis.YP.rotationDegrees(-dispatcher.yRot)); // Rotate to match yaw
-        transform.mulPose(Axis.XP.rotationDegrees(dispatcher.xRot));  // Rotate to match pitch
+        transform.mulPose(Axis.XP.rotationDegrees(dispatcher.xRot)); // Rotate to match pitch
 
         transform.scale(-TEXT_SCALING, -TEXT_SCALING, TEXT_SCALING)
 
@@ -72,7 +72,7 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
                 buffers,
                 Font.DisplayMode.SEE_THROUGH,
                 opacity,
-                lightmapCoord
+                lightmapCoord,
             )
             font.drawInBatch(
                 textLine,
@@ -84,7 +84,7 @@ object ChattingTurtleRenderTrick : TurtleRenderTrick {
                 buffers,
                 Font.DisplayMode.NORMAL,
                 0,
-                lightmapCoord
+                lightmapCoord,
             )
         }
         transform.popPose()

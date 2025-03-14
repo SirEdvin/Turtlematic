@@ -24,7 +24,7 @@ fabricShaking {
             "computercraft" to "cc-tweaked",
             "peripheralium" to "peripheralium",
             "broccolium" to "broccolium",
-            "tweakium" to "tweakium"
+            "tweakium" to "tweakium",
         ),
     )
     shake()
