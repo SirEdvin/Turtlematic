@@ -9,7 +9,7 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.common.items.base.BaseAutomataCore
 import site.siredvin.turtlematic.computercraft.plugins.AutomataCapturePlugin
 import site.siredvin.turtlematic.data.ModTooltip
-import site.siredvin.tweakium.modules.peripheral.ability.ExperienceBoon
+import site.siredvin.tweakium.modules.peripheral.boon.ExperienceBoon
 import site.siredvin.tweakium.modules.peripheral.api.InteractionMode
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
 import site.siredvin.tweakium.modules.turtle.StatefulTurtleUpgrade

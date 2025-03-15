@@ -7,8 +7,8 @@ import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.UnconditionalOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.turtlematic.computercraft.plugins.AutomataItemSuckPlugin
-import site.siredvin.tweakium.modules.peripheral.ability.ExperienceBoon
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.boon.ExperienceBoon
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 
 abstract class ExperienceAutomataCorePeripheral(
     type: String,

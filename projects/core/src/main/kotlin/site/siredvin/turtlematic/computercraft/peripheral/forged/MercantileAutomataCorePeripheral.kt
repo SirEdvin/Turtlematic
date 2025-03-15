@@ -15,8 +15,8 @@ import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataRestockPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataTradePlugin
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
-import site.siredvin.tweakium.modules.peripheral.ability.ScanningBoon
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.boon.ScanningBoon
 import site.siredvin.tweakium.modules.peripheral.representation.merchantData
 import site.siredvin.tweakium.modules.peripheral.representation.villagerData
 import java.util.function.Predicate
