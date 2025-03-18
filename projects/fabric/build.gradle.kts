@@ -23,6 +23,8 @@ fabricShaking {
         mapOf(
             "computercraft" to "cc-tweaked",
             "peripheralium" to "peripheralium",
+            "tweakium" to "tweakium",
+            "broccolium" to "broccolium",
         ),
     )
     shake()
@@ -64,6 +66,8 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
         exclude("mezz.jei")
     }
+
+    include(libs.bundles.fabric.include)
 
     modRuntimeOnly(libs.bundles.externalMods.fabric.runtime) {
         exclude("net.fabricmc.fabric-api")
