@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.2] - 2025-09-23
+
+### Fixed
+
+- `capture` is working now
+- Cannot longer capture fluids
+- Adding some important blocks to capture blocklist
+
 ## [1.4.1] - 2025-03-19
 
 ### Fixed
