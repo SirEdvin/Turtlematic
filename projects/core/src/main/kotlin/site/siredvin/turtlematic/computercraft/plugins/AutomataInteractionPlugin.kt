@@ -5,6 +5,7 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.Pose
 import net.minecraft.world.item.ItemStack
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
@@ -36,6 +37,8 @@ class AutomataInteractionPlugin(
         val result = owner.withPlayer({
             if (overwrittenPose != null) {
                 it.fakePlayer.pose = overwrittenPose
+            } else {
+                it.fakePlayer.pose = Pose.STANDING
             }
             it.swing(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity)
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
@@ -65,13 +68,14 @@ class AutomataInteractionPlugin(
         }
         automataCore.addRotationCycle()
         val owner = automataCore.peripheralOwner
-        val result = owner.withPlayer({
+        return owner.withPlayer({
             if (overwrittenPose != null) {
                 it.fakePlayer.pose = overwrittenPose
+            } else {
+                it.fakePlayer.pose = Pose.STANDING
             }
-            it.use(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity)
+            MethodResult.of(true, it.use(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity))
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
-        return MethodResult.of(true, result.toString())
     }
 
     fun useImpl(arguments: IArguments): MethodResult = automataCore.withOperation(SingleOperation.USE) {
