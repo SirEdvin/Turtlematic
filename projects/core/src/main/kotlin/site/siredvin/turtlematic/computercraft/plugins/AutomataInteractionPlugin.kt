@@ -74,7 +74,7 @@ class AutomataInteractionPlugin(
             } else {
                 it.fakePlayer.pose = Pose.STANDING
             }
-            MethodResult.of(true, it.use(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity))
+            MethodResult.of(true, it.use(skipEntity = mode.skipEntry, skipBlock = mode.skipBlock, entityFilter = suitableEntity).toString())
         }, overwrittenDirection = overwrittenDirection?.minecraftDirection)
     }
 
