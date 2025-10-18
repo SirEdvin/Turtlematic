@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.5] - 2025-10-19
+
+### Added
+
+- Husbandry points! Now your husbandry turtles collects point while harvesting crops. This points can be used to simulate trees grow and get logs via `simulateGrow`
+
+### Removed
+
+- Some debug output
+
 ## [1.4.4] - 2025-09-29
 
 ### Changed

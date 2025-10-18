@@ -79,10 +79,10 @@ dependencies {
     implementation(libs.bundles.forge.raw)
     libs.bundles.forge.cc.get().map { implementation(fg.deobf(it)) }
     libs.bundles.forge.include.get().map { implementation(fg.deobf(it)) }
-    libs.bundles.forge.jjar.get().map {
-        jarJar(it) {
-        }
+    jarJar(libs.bundles.forge.jjar) {
+        isTransitive = false
     }
+
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
     libs.bundles.externalMods.forge.integrations.full.get().map { compileOnly(fg.deobf(it)) }
