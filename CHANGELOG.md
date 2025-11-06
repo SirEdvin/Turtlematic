@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Ability to scan, look and interact to forged automatas
+- Ability to inspect blocks for NBT data with new turtle upgrade
 
 ## [1.4.5] - 2025-10-19
 

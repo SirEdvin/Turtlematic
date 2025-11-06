@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-13T20:17:36.357382253	vanilla/Block State Definitions
+// 1.20.1	2025-11-07T01:40:54.9708532	vanilla/Block State Definitions
 07e6c3817f6b099b1c4d5f7e233e444fd033ef5d assets/turtlematic/models/item/automata_core.json
 7802b552e7c7dde5fadc36748b75d7a800db36ba assets/turtlematic/models/item/brewing_automata_core.json
 170ae3a2ca7eae54074f52548f177d884df0d010 assets/turtlematic/models/item/chunk_vial.json
@@ -17,6 +17,7 @@ c2580532b94fda91ffb3b93e493400a1160b70ba assets/turtlematic/models/item/enchanti
 f21324ea6bd3b2d1893f40b8fe23312a2e534bb5 assets/turtlematic/models/item/filled_soul_vial.json
 128b5aa5ba88d5d300d0dfc1a5b71fef9a32e668 assets/turtlematic/models/item/forged_automata_core.json
 db93b1f15ddfaab56811b4cdc4a61b684413154e assets/turtlematic/models/item/husbandry_automata_core.json
+7b1993ca62f15e27d7cdc75128fdc44b71203d33 assets/turtlematic/models/item/inspection_monocle.json
 1f25a7a21f850402437487360f0c2c6d31c8d0ba assets/turtlematic/models/item/mason_automata_core.json
 25f94f13b7e6938aaf9101e88c2912350480c38b assets/turtlematic/models/item/mercantile_automata_core.json
 588b8e6c85f8b563511434c0415f6a95118cd871 assets/turtlematic/models/item/mimic_gadget.json

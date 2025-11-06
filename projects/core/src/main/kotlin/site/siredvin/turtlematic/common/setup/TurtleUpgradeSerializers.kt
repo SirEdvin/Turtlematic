@@ -40,6 +40,13 @@ object TurtleUpgradeSerializers {
         TurtleUpgradeSerialiser.simpleWithCustomItem(::ChunkVialTurtle),
     )
 
+    val INSPECTION_MONOCLE = ModPlatform.registerTurtleUpgrade(
+        InspectionMonoclePeripheral.upgradeID,
+        TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->
+            PeripheralTurtleUpgrade.dynamic(stack.item, ::InspectionMonoclePeripheral) { upgradeID }
+        }
+    )
+
     val SOUL_SCRAPPER = ModPlatform.registerTurtleUpgrade(
         SoulScrapperPeripheral.upgradeID,
         TurtleUpgradeSerialiser.simpleWithCustomItem { upgradeID, stack ->

@@ -1,7 +1,8 @@
-// 1.20.1	2023-07-18T11:49:47.487742031	vanilla/Recipes
+// 1.20.1	2025-11-07T01:40:54.973959	vanilla/Recipes
 c2ec7cde98ede9a366366f74b89edee511e7ea3f data/turtlematic/recipes/automata_core.json
 77a250c6acc8b60874a634f13afdaed7c1317edc data/turtlematic/recipes/chunk_vial.json
 eaf718456a5c231f20321ce3f43618667276ae62 data/turtlematic/recipes/forged_automata_core.json
+09664c9111ab9e629965fce61fd3f80e41500c57 data/turtlematic/recipes/inspection_monocle.json
 30b7df2dfe5117d4be89cdd030da76085007c378 data/turtlematic/recipes/mimic_gadget.json
 670901074f7bbdce7a3a52362d410ab93adc5ba8 data/turtlematic/recipes/netherite_end_automata_core.json
 c8ab75b5c877bafcea81948a98217d86bf631b82 data/turtlematic/recipes/netherite_husbandry_automata_core.json

@@ -33,6 +33,7 @@ class ModTurtleUpgradeDataProvider(output: PackOutput) : LibTurtleUpgradeDataPro
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.BOW, net.minecraft.world.item.Items.BOW))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.PISTON, net.minecraft.world.item.Items.PISTON))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.STICKY_PISTON, net.minecraft.world.item.Items.STICKY_PISTON))
+        addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.INSPECTION_MONOCLE, Items.INSPECTION_MONOCLE))
 
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.AUTOMATA_CORE, Items.AUTOMATA_CORE))
         addUpgrade.accept(simpleWithCustomItem(TurtleUpgradeSerializers.ENORMOUS_AUTOMATA, Items.ENORMOUS_AUTOMATA_CORE))

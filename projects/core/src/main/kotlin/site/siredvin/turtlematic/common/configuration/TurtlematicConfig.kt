@@ -51,6 +51,9 @@ object TurtlematicConfig {
     val mimicGadgetRMLLimit: Int
         get() = ConfigHolder.commonConfig.mimicGadgetRMLLimit.get()
 
+    val enableInspectionMonocle: Boolean
+        get() = ConfigHolder.commonConfig.enableInspectionMonocle.get()
+
     // automata core toggles
     val enableAutomataCore: Boolean
         get() = ConfigHolder.commonConfig.enableAutomataCore.get()
@@ -120,6 +123,7 @@ object TurtlematicConfig {
         val bowTurtlePowerLimit: ForgeConfigSpec.DoubleValue
         val enableMimicGadget: ForgeConfigSpec.BooleanValue
         val mimicGadgetRMLLimit: ForgeConfigSpec.IntValue
+        val enableInspectionMonocle: ForgeConfigSpec.BooleanValue
 
         // Automata Core
         val enableAutomataCore: ForgeConfigSpec.BooleanValue
@@ -165,6 +169,8 @@ object TurtlematicConfig {
             enableMimicGadget = builder.define("enableMimicGadget", true)
             mimicGadgetRMLLimit = builder.comment("Defines limit of RML instructions")
                 .defineInRange("mimicGadgetRMLLimit", 8, 0, 128)
+            enableInspectionMonocle = builder.comment("Enables inspection monocle")
+                .define("enableInspectionMonocle", true)
             builder.pop()
             builder.push("operations")
             register(SingleOperation.entries.toTypedArray(), builder)
