@@ -13,8 +13,10 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
 import site.siredvin.broccolium.modules.base.ext.toBlockPos
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
+import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
 import site.siredvin.turtlematic.common.setup.EntityTypes
 
 class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
@@ -40,7 +42,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
     override fun onHitBlock(hit: BlockHitResult) {
         if (!level().isClientSide) {
             val targetableStorage =
-                AgnosticItemStorageLookup.extractItemSink(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
+                AgnosticItemSinkLookup.extractFromBlock(level(), hit.blockPos, level().getBlockEntity(hit.blockPos), hit.direction.opposite)
             if (targetableStorage != null) {
                 this.kill()
                 ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level())
@@ -56,7 +58,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
 
     override fun onHitEntity(hit: EntityHitResult) {
         if (!level().isClientSide) {
-            val targetableStorage = AgnosticItemStorageLookup.extractItemSink(level(), hit.entity)
+            val targetableStorage = AgnosticItemSinkLookup.extractFromEntity(level(), hit.entity, null)
             if (targetableStorage != null) {
                 this.kill()
                 ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level())
