@@ -34,6 +34,8 @@ object DataStorageObjects {
 
         operator fun get(access: IPocketAccess): T? = get(DataStorageUtil.getDataStorage(access))
 
+        operator fun get(tag: CompoundTag): T? = get(DataStorageUtil.getDataStorage(tag))
+
         operator fun get(owner: IPeripheralOwner): T? = get(owner.dataStorage)
 
         operator fun set(storage: IDataStorage, value: T?) {
@@ -233,6 +235,23 @@ object DataStorageObjects {
 
         override fun write(data: IDataStorage, value: String): Boolean {
             data.putString(nbtTag, value)
+            return true
+        }
+    }
+
+    object TurtleColor : AbstractDataObject<Int>() {
+        override val nbtTag: String
+            get() = "turtleColor"
+
+        override fun read(data: IDataStorage): Int? {
+            if (data.has(nbtTag)) {
+                return data.getInt(nbtTag)
+            }
+            return null
+        }
+
+        override fun write(data: IDataStorage, value: Int): Boolean {
+            data.putInt(nbtTag, value)
             return true
         }
     }

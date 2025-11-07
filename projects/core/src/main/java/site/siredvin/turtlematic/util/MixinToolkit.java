@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import dan200.computercraft.api.turtle.TurtleSide;
+import dan200.computercraft.api.upgrades.UpgradeData;
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.Item;
@@ -20,7 +21,11 @@ import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class MixinToolkit {
 
@@ -37,6 +42,41 @@ public class MixinToolkit {
             }
         }
         return null;
+    }
+
+    public static <T> T traverseUpgrades(ITurtleAccess access, Function<UpgradeData<ITurtleUpgrade>, T> consumer) {
+        var leftUpgrade = access.getUpgradeWithData(TurtleSide.LEFT);
+        var rightUpgrade = access.getUpgradeWithData(TurtleSide.RIGHT);
+        if (leftUpgrade != null) {
+            var result = consumer.apply(leftUpgrade);
+            if (result != null)
+                return result;
+            if (leftUpgrade.upgrade() instanceof TurtleUpgradeHolder upgradeHolder) {
+                for (var subUpgrade: upgradeHolder.getInternalUpgrades(access, TurtleSide.LEFT)) {
+                    var subResult = consumer.apply(subUpgrade);
+                    if (subResult != null)
+                        return subResult;
+                }
+            }
+        }
+        if (rightUpgrade != null) {
+            var result = consumer.apply(rightUpgrade);
+            if (result != null)
+                return result;
+            if (rightUpgrade.upgrade() instanceof TurtleUpgradeHolder upgradeHolder) {
+                for (var subUpgrade: upgradeHolder.getInternalUpgrades(access, TurtleSide.RIGHT)) {
+                    var subResult = consumer.apply(subUpgrade);
+                    if (subResult != null)
+                        return subResult;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static Integer getColor(@Nonnull ITurtleAccess access) {
+        Function<UpgradeData<ITurtleUpgrade>, Integer> func = (upgrade) -> DataStorageObjects.TurtleColor.INSTANCE.get(upgrade.data());
+        return traverseUpgrades(access, func);
     }
 
     public static void render(
@@ -67,10 +107,19 @@ public class MixinToolkit {
         if (cancelTurtleRender) info.cancel();
     }
 
-    public static void isFuelNeeded(Map<TurtleSide, ITurtleUpgrade> upgrades, CallbackInfoReturnable<Boolean> cir) {
+    public static void isFuelNeeded(ITurtleAccess access, Map<TurtleSide, ITurtleUpgrade> upgrades, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            boolean isFuelConsumptionDisabled = upgrades.values().stream().anyMatch(it -> {
-                Item item = it.getCraftingItem().getItem();
+            boolean isFuelConsumptionDisabled = upgrades.entrySet().stream().anyMatch(it -> {
+                if (it.getValue() instanceof TurtleUpgradeHolder) {
+                    for (var internalUpgrade: ((TurtleUpgradeHolder) it.getValue()).getInternalUpgrades(access, it.getKey())) {
+                        Item item = internalUpgrade.getUpgradeItem().getItem();
+                        if (item instanceof BaseAutomataCore core) {
+                            if (core.getCoreTier().getTraits().contains(AutomataCoreTraits.INSTANCE.getFUEL_CONSUMPTION_DISABLED()))
+                                return true;
+                        }
+                    }
+                }
+                Item item = it.getValue().getCraftingItem().getItem();
                 if (item instanceof BaseAutomataCore core) {
                     return core.getCoreTier().getTraits().contains(AutomataCoreTraits.INSTANCE.getFUEL_CONSUMPTION_DISABLED());
                 }

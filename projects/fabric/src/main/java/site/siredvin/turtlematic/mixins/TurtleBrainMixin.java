@@ -22,6 +22,13 @@ public class TurtleBrainMixin {
 
     @Inject(at = @At("RETURN"), method = "isFuelNeeded()Z", cancellable = true, remap = false)
     public void isFuelNeeded(CallbackInfoReturnable<Boolean> cir) {
-        MixinToolkit.isFuelNeeded(upgrades, cir);
+        MixinToolkit.isFuelNeeded((TurtleBrain) (Object) this, upgrades, cir);
+    }
+
+    @Inject(at = @At("RETURN"), method = "getColour", cancellable = true, remap = false)
+    public void getColour(CallbackInfoReturnable<Integer> cir) {
+        var color = MixinToolkit.getColor((TurtleBrain) (Object) this);
+        if (color != null)
+            cir.setReturnValue(color);
     }
 }
