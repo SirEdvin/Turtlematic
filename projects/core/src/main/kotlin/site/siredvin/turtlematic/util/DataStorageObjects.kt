@@ -10,98 +10,12 @@ import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.turtlematic.tags.BlockTags
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.util.AbstractDataObject
+import site.siredvin.tweakium.modules.peripheral.util.AbstractNotNullDataObject
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import kotlin.math.max
 
 object DataStorageObjects {
-
-    abstract class AbstractDataObject<T> {
-        abstract val nbtTag: String
-
-        abstract fun read(data: IDataStorage): T?
-        abstract fun write(data: IDataStorage, value: T): Boolean
-
-        operator fun get(storage: IDataStorage): T? {
-            if (!storage.has(nbtTag)) return null
-            val value = read(storage)
-            if (value == null) {
-                storage.remove(nbtTag)
-                return null
-            }
-            return value
-        }
-        operator fun get(access: ITurtleAccess, side: TurtleSide): T? = get(DataStorageUtil.getDataStorage(access, side))
-
-        operator fun get(access: IPocketAccess): T? = get(DataStorageUtil.getDataStorage(access))
-
-        operator fun get(tag: CompoundTag): T? = get(DataStorageUtil.getDataStorage(tag))
-
-        operator fun get(owner: IPeripheralOwner): T? = get(owner.dataStorage)
-
-        operator fun set(storage: IDataStorage, value: T?) {
-            if (value == null) {
-                storage.remove(nbtTag)
-            } else {
-                val writeResult = write(storage, value)
-                if (!writeResult) {
-                    storage.remove(nbtTag)
-                }
-            }
-        }
-        operator fun set(owner: IPeripheralOwner, blockState: T?) {
-            set(owner.dataStorage, blockState)
-        }
-
-        operator fun set(access: IPocketAccess, blockState: T?) {
-            set(DataStorageUtil.getDataStorage(access), blockState)
-        }
-
-        operator fun set(access: ITurtleAccess, side: TurtleSide, blockState: T?) {
-            set(DataStorageUtil.getDataStorage(access, side), blockState)
-        }
-    }
-
-    abstract class AbstractNotNullDataObject<T> {
-        abstract val nbtTag: String
-
-        abstract val default: T
-
-        abstract fun read(data: IDataStorage): T
-        abstract fun write(data: IDataStorage, value: T): Boolean
-
-        operator fun get(storage: IDataStorage): T {
-            if (!storage.has(nbtTag)) return default
-            val value = read(storage)
-            if (value == null) {
-                storage.remove(nbtTag)
-                return default
-            }
-            return value
-        }
-        operator fun get(access: ITurtleAccess, side: TurtleSide): T = get(DataStorageUtil.getDataStorage(access, side))
-
-        operator fun get(access: IPocketAccess): T = get(DataStorageUtil.getDataStorage(access))
-
-        operator fun get(owner: IPeripheralOwner): T = get(owner.dataStorage)
-
-        operator fun set(storage: IDataStorage, value: T) {
-            val writeResult = write(storage, value)
-            if (!writeResult) {
-                storage.remove(nbtTag)
-            }
-        }
-        operator fun set(owner: IPeripheralOwner, blockState: T) {
-            set(owner.dataStorage, blockState)
-        }
-
-        operator fun set(access: IPocketAccess, blockState: T) {
-            set(DataStorageUtil.getDataStorage(access), blockState)
-        }
-
-        operator fun set(access: ITurtleAccess, side: TurtleSide, blockState: T) {
-            set(DataStorageUtil.getDataStorage(access, side), blockState)
-        }
-    }
 
     /**
      * This class is for persistent data sharing between peripherals and another part of systems

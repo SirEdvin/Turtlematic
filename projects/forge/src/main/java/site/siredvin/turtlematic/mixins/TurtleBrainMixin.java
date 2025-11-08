@@ -1,5 +1,6 @@
 package site.siredvin.turtlematic.mixins;
 
+import dan200.computercraft.api.turtle.ITurtleAccess;
 import dan200.computercraft.api.turtle.ITurtleUpgrade;
 import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.shared.turtle.core.TurtleBrain;
@@ -22,6 +23,6 @@ public class TurtleBrainMixin {
 
     @Inject(at = @At("RETURN"), method = "isFuelNeeded()Z", cancellable = true, remap = false)
     public void isFuelNeeded(CallbackInfoReturnable<Boolean> cir) {
-        MixinToolkit.isFuelNeeded(upgrades, cir);
+        MixinToolkit.isFuelNeeded(((ITurtleAccess) this), upgrades, cir);
     }
 }

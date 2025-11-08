@@ -19,8 +19,6 @@ import site.siredvin.tweakium.modules.peripheral.api.IDataStorage;
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage;
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -29,7 +27,7 @@ import java.util.stream.Stream;
 
 public class MixinToolkit {
 
-    public static @Nullable PairMonad<TurtleRenderTrick, IDataStorage> searchRenderTrickWithData(@Nonnull ITurtleUpgrade upgrade, @Nonnull ITurtleAccess access, @Nonnull TurtleSide side) {
+    public static PairMonad<TurtleRenderTrick, IDataStorage> searchRenderTrickWithData(ITurtleUpgrade upgrade, ITurtleAccess access, TurtleSide side) {
         var coreTrick = TurtleRenderTrickRegistry.INSTANCE.getTrick(upgrade);
         if (coreTrick != null) {
             return new PairMonad<>(coreTrick, new CompoundTagDataStorage(access.getUpgradeNBTData(side), () -> null));
@@ -74,14 +72,14 @@ public class MixinToolkit {
         return null;
     }
 
-    public static Integer getColor(@Nonnull ITurtleAccess access) {
+    public static Integer getColor(ITurtleAccess access) {
         Function<UpgradeData<ITurtleUpgrade>, Integer> func = (upgrade) -> DataStorageObjects.TurtleColor.INSTANCE.get(upgrade.data());
         return traverseUpgrades(access, func);
     }
 
     public static void render(
-            @Nonnull TurtleBlockEntity turtle, float partialTicks, @Nonnull PoseStack transform,
-            @Nonnull MultiBufferSource buffers, int lightmapCoord, int overlayLight, CallbackInfo info) {
+            TurtleBlockEntity turtle, float partialTicks, PoseStack transform,
+            MultiBufferSource buffers, int lightmapCoord, int overlayLight, CallbackInfo info) {
         var leftUpgrade = turtle.getUpgrade(TurtleSide.LEFT);
         var rightUpgrade = turtle.getUpgrade(TurtleSide.RIGHT);
         var access = turtle.getAccess();
