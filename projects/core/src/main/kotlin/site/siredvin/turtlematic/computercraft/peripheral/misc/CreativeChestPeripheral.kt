@@ -35,7 +35,7 @@ class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPe
         if (nbtData.isPresent) {
             itemStack.tag = TagParser.parseTag(nbtData.get())
         }
-        ContainerUtils.storeItem(peripheralOwner.turtle.inventory, itemStack)
+        ContainerUtils.storeItem(peripheralOwner.turtle.inventory, itemStack, simulate = false)
         return MethodResult.of(true)
     }
 }

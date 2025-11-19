@@ -14,9 +14,7 @@ import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
 import site.siredvin.broccolium.modules.base.ext.toBlockPos
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
-import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
 import site.siredvin.turtlematic.common.setup.EntityTypes
 
 class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :

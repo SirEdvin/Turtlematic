@@ -19,11 +19,8 @@ import site.siredvin.tweakium.modules.peripheral.api.IDataStorage;
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage;
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 public class MixinToolkit {
 

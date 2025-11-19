@@ -78,7 +78,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                     enchantmentPower.value += 1
                 } else if (blockState.`is`(ComputerCraftTags.Blocks.TURTLE)) {
                     val itemStorage = AgnosticItemStorageLookup.extractFromBlock(level, blockPos, level.getBlockEntity(blockPos), null)
-                    itemStorage?.getItems()?.forEach {
+                    itemStorage?.getContent()?.forEach {
                         if (it.`is`(Items.ENCHANTED_BOOK)) {
                             enchantmentPower.value += 1
                         }

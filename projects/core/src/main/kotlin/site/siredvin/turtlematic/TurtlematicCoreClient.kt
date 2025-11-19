@@ -117,7 +117,7 @@ object TurtlematicCoreClient {
         )
         consumer.accept(
             TurtleUpgradeSerializers.INSPECTION_MONOCLE.get(),
-            MonocleTurtleModeller()
+            MonocleTurtleModeller(),
         )
         EXTRA_TURTLE_MODEL_PROVIDERS.forEach {
             val pair = it.get()

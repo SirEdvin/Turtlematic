@@ -30,8 +30,9 @@ class InspectionMonoclePeripheral(turtle: ITurtleAccess, side: TurtleSide) : Own
         if (entity != null) {
             val tag = entity.saveWithoutMetadata()
             val luaTag = NBTUtil.toLua(tag)
-            if (luaTag != null)
+            if (luaTag != null) {
                 base["nbt"] = luaTag
+            }
         }
         return MethodResult.of(base)
     }

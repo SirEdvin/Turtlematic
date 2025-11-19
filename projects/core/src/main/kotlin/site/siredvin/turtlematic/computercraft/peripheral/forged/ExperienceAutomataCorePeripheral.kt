@@ -31,9 +31,17 @@ abstract class ExperienceAutomataCorePeripheral(
         peripheralOwner.attachBoon(PeripheralOwnerBoonKey.EXPERIENCE, ExperienceBoon(peripheralOwner, tier.interactionRadius, TurtlematicConfig.xpToFuelRate, UnconditionalOperation.XP_TRANSFER))
         addPlugin(AutomataItemSuckPlugin(this))
         addPlugin(AutomataLookPlugin(this))
-        addPlugin(AutomataInteractionPlugin(this, { it !is Player }, allowedMods = setOf(
-            InteractionMode.BLOCK, InteractionMode.ENTITY, InteractionMode.ANY
-        )))
+        addPlugin(
+            AutomataInteractionPlugin(
+                this,
+                { it !is Player },
+                allowedMods = setOf(
+                    InteractionMode.BLOCK,
+                    InteractionMode.ENTITY,
+                    InteractionMode.ANY,
+                ),
+            ),
+        )
         peripheralOwner.attachBoon(
             PeripheralOwnerBoonKey.SCANNING,
             ScanningBoon(

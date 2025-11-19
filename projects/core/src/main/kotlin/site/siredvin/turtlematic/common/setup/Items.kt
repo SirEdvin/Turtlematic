@@ -158,7 +158,7 @@ object Items {
             Item.Properties(),
             TurtlematicConfig::enableInspectionMonocle,
             alwaysShow = true,
-            isDisabled
+            isDisabled,
         )
     }
 

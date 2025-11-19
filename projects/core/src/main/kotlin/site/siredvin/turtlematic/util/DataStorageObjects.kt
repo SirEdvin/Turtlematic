@@ -1,6 +1,5 @@
 package site.siredvin.turtlematic.util
 
-import dan200.computercraft.api.pocket.IPocketAccess
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.CompoundTag
@@ -12,7 +11,6 @@ import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
 import site.siredvin.tweakium.modules.peripheral.util.AbstractDataObject
 import site.siredvin.tweakium.modules.peripheral.util.AbstractNotNullDataObject
-import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import kotlin.math.max
 
 object DataStorageObjects {
