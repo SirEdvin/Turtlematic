@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.4.6] - 2025-11-0
+## [1.4.7] - 2025-11-19
+
+### Changed
+
+- Internal library versions
+
+### Fixed
+
+- Sticky piston resolving on pull
+
+## [1.4.6] - 2025-11-09
 
 ### Added
 
