@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Texture jitter glitch fix. (Thanks to @MAGGen-hub)
+- chunk vials now work correctly in all dimensions (Thanks to @vanutp)
+- interpret chunkVialTimeLimit in milliseconds, as per config comment (Thanks to @vanutp)
+- Double scanning boon registration for mercantile automata
+
 ## [1.4.7] - 2025-11-19
 
 ### Changed

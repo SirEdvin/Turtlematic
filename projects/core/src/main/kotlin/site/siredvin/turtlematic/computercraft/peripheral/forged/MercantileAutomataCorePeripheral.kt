@@ -38,20 +38,6 @@ class MercantileAutomataCorePeripheral(
                 entityEnriches = listOf(merchantData, villagerData),
             ),
         )
-        peripheralOwner.attachBoon(
-            PeripheralOwnerBoonKey.SCANNING,
-            ScanningBoon(
-                peripheralOwner,
-                tier.interactionRadius,
-            ).attachItemScan(
-                SphereOperation.SCAN_ITEMS,
-            ).attachLivingEntityScan(
-                SphereOperation.SCAN_ENTITIES,
-                { suitableEntity.test(it) },
-                { it1, it2 -> merchantData.accept(it1, it2) },
-                { it1, it2 -> villagerData.accept(it1, it2) },
-            ),
-        )
         addPlugin(AutomataTradePlugin(this, suitableEntity))
         if (tier.traits.contains(AutomataCoreTraits.SKILLED)) {
             addPlugin(
@@ -67,6 +53,23 @@ class MercantileAutomataCorePeripheral(
                 }, suitableEntity),
             )
         }
+    }
+
+    override fun attachScanningBoon() {
+        peripheralOwner.attachBoon(
+            PeripheralOwnerBoonKey.SCANNING,
+            ScanningBoon(
+                peripheralOwner,
+                tier.interactionRadius,
+            ).attachItemScan(
+                SphereOperation.SCAN_ITEMS,
+            ).attachLivingEntityScan(
+                SphereOperation.SCAN_ENTITIES,
+                { suitableEntity.test(it) },
+                { it1, it2 -> merchantData.accept(it1, it2) },
+                { it1, it2 -> villagerData.accept(it1, it2) },
+            ),
+        )
     }
 
     companion object : PeripheralConfiguration {

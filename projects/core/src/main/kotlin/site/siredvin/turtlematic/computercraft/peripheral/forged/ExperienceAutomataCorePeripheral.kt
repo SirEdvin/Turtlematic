@@ -42,6 +42,10 @@ abstract class ExperienceAutomataCorePeripheral(
                 ),
             ),
         )
+        attachScanningBoon()
+    }
+
+    open fun attachScanningBoon() {
         peripheralOwner.attachBoon(
             PeripheralOwnerBoonKey.SCANNING,
             ScanningBoon(
