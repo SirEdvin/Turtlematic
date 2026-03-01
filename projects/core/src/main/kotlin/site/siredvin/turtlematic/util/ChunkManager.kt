@@ -168,20 +168,20 @@ class ChunkManager : SavedData() {
     internal data class LoadChunkRecord(
         val dimensionName: String,
         val pos: ChunkPos,
-        var lastTouch: Long = Instant.now().epochSecond,
+        var lastTouch: Long = Instant.now().toEpochMilli(),
     ) {
         val valid: Boolean
             get() {
-                val currentEpoch: Long = Instant.now().epochSecond
+                val currentEpoch: Long = Instant.now().toEpochMilli()
                 return lastTouch + TurtlematicConfig.chunkLoadedTimeLimit >= currentEpoch
             }
 
         fun touch() {
-            lastTouch = Instant.now().epochSecond
+            lastTouch = Instant.now().toEpochMilli()
         }
 
         fun invalidate() {
-            lastTouch = Instant.now().epochSecond - TurtlematicConfig.chunkLoadedTimeLimit / 2
+            lastTouch = Instant.now().toEpochMilli() - TurtlematicConfig.chunkLoadedTimeLimit / 2
         }
 
         fun serialize(): CompoundTag {
