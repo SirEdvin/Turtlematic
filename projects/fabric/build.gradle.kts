@@ -91,7 +91,7 @@ modPublishing {
             "fabric-language-kotlin",
         ),
     )
-    requiredDependenciesCurseforge.add("forge-config-api-port-fabric")
+    requiredDependenciesCurseforge.add("forge-config-api-port")
     requiredDependenciesModrinth.add("forge-config-api-port")
     shake()
 }
