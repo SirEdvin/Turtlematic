@@ -82,7 +82,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
                 }
                 val items: List<ItemEntity> = items
                 if (items.isEmpty()) {
-                    MethodResult.of(null, "Nothing to take")
+                    return@IPeripheralFunction MethodResult.of(null, "Nothing to take")
                 }
                 var requiredQuantity = requiredQuantityArg
                 for (entity in items) {
