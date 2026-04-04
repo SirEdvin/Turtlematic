@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.9] - 2026-04-04
+
+### Changed
+
+- Scanning API now uses block center (thanks to @GravityCY)
+- Suck API not uses block center (thanks to @GravityCY)
+
+### Fixed
+
+- Suck API now correctly return information (thanks to @GravityCY)
+
 ## [1.4.8] - 2026-03-01
 
 ### Fixed

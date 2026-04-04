@@ -22,6 +22,11 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
     override val operations: List<IPeripheralOperation<*>>
         get() = listOf(SingleOperation.SUCK)
 
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        super.collectConfiguration(data)
+        data["suckAPIVersion"] = listOf(1, 1)
+    }
+
     protected fun getBox(pos: BlockPos): AABB {
         val interactionRadius = automataCore.interactionRadius
         return ScanUtils.getBox(pos, interactionRadius.toDouble())
