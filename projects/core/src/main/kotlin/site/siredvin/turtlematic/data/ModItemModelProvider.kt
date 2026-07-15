@@ -40,6 +40,7 @@ object ModItemModelProvider {
         generators.generateFlatItem(Items.CREATIVE_CHEST.get(), ModelTemplates.FLAT_ITEM)
         generators.generateFlatItem(Items.CHUNK_VIAL.get(), ModelTemplates.FLAT_ITEM)
         generators.generateFlatItem(Items.MIMIC_GADGET.get(), ModelTemplates.FLAT_ITEM)
+        generators.generateFlatItem(Items.INSPECTION_MONOCLE.get(), ModelTemplates.FLAT_ITEM)
 
         turtleUpgrades(generators, Items.CHUNK_VIAL.get())
         turtleUpgrades(generators, Items.CREATIVE_CHEST.get())

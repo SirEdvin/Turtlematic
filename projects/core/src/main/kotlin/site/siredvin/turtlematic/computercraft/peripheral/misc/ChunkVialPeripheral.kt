@@ -34,7 +34,7 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeriphe
 
     fun updateChunkState() {
         val level = peripheralOwner.level as ServerLevel
-        val manager = ChunkManager.get(level)
+        val manager = ChunkManager.get(level.server.overworld())
         if (loadedChunk == null || loadedChunk!! != chunkPos) {
             setLoadedChunk(chunkPos, manager, level)
         } else {
@@ -56,7 +56,7 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeriphe
     override fun detach(computer: IComputerAccess) {
         super.detach(computer)
         val level = peripheralOwner.level as ServerLevel
-        val manager = ChunkManager.get(level)
+        val manager = ChunkManager.get(level.server.overworld())
         setLoadedChunk(null, manager, level)
     }
 }

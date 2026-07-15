@@ -33,8 +33,15 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.turtlematic]]
-modId="peripheralium"
+modId="tweakium"
 mandatory=true
-versionRange="[${peripheraliumVersion},)"
+versionRange="[${tweakiumVersion},)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.turtlematic]]
+modId="broccolium"
+mandatory=true
+versionRange="[${broccoliumVersion},)"
 ordering="NONE"
 side="BOTH"

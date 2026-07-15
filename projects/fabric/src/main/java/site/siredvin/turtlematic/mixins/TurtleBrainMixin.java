@@ -1,7 +1,6 @@
 package site.siredvin.turtlematic.mixins;
 
 import dan200.computercraft.api.turtle.ITurtleAccess;
-import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.shared.turtle.core.TurtleBrain;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,6 +14,13 @@ public class TurtleBrainMixin {
     @Inject(at = @At("RETURN"), method = "isFuelNeeded()Z", cancellable = true, remap = false)
     public void isFuelNeeded(CallbackInfoReturnable<Boolean> cir) {
         var access = ((ITurtleAccess) this);
-        MixinToolkit.isFuelNeeded(cir, access.getUpgrade(TurtleSide.LEFT), access.getUpgrade(TurtleSide.RIGHT));
+        MixinToolkit.isFuelNeeded(access, cir);
+    }
+
+    @Inject(at = @At("RETURN"), method = "getColour", cancellable = true, remap = false)
+    public void getColour(CallbackInfoReturnable<Integer> cir) {
+        var color = MixinToolkit.getColor((ITurtleAccess) this);
+        if (color != null)
+            cir.setReturnValue(color);
     }
 }

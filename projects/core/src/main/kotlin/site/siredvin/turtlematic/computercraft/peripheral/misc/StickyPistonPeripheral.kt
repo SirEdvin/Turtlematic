@@ -62,7 +62,7 @@ class StickyPistonPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPer
         val directionArgument = arguments.optString(0)
         val direction = if (directionArgument.isEmpty) peripheralOwner.facing else VerticalDirection.luaValueOf(directionArgument.get()).minecraftDirection
         val level = peripheralOwner.level!!
-        val resolver = PistonStructureResolver(level, peripheralOwner.pos.relative(direction), direction, false)
+        val resolver = PistonStructureResolver(level, peripheralOwner.pos, direction, false)
         return if (!resolver.resolve()) {
             MethodResult.of(null, "Cannot resolve piston structure")
         } else {

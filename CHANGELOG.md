@@ -6,6 +6,86 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.9] - 2026-04-04
+
+### Changed
+
+- Scanning API now uses block center (thanks to @GravityCY)
+- Suck API not uses block center (thanks to @GravityCY)
+
+### Fixed
+
+- Suck API now correctly return information (thanks to @GravityCY)
+
+## [1.4.8] - 2026-03-01
+
+### Fixed
+
+- Texture jitter glitch fix. (Thanks to @MAGGen-hub)
+- chunk vials now work correctly in all dimensions (Thanks to @vanutp)
+- interpret chunkVialTimeLimit in milliseconds, as per config comment (Thanks to @vanutp)
+- Double scanning boon registration for mercantile automata
+
+## [1.4.7] - 2025-11-19
+
+### Changed
+
+- Internal library versions
+
+### Fixed
+
+- Sticky piston resolving on pull
+
+## [1.4.6] - 2025-11-09
+
+### Added
+
+- Ability to scan, look and interact to forged automatas
+- Ability to inspect blocks for NBT data with new turtle upgrade
+- Ability to change turtle color with turtle chatter
+
+## [1.4.5] - 2025-10-19
+
+### Added
+
+- Husbandry points! Now your husbandry turtles collects point while harvesting crops. This points can be used to simulate trees grow and get logs via `simulateGrow`
+
+### Removed
+
+- Some debug output
+
+## [1.4.4] - 2025-09-29
+
+### Changed
+
+- Library update for compatibility
+
+## [1.4.3] - 2025-09-27
+
+### Changed
+
+- Way how fake player is caching, maybe it will fix something, maybe not. Let's see
+
+## [1.4.2] - 2025-09-23
+
+### Fixed
+
+- `capture` is working now
+- Cannot longer capture fluids
+- Adding some important blocks to capture blocklist
+
+## [1.4.1] - 2025-03-19
+
+### Fixed
+
+- Dependencies for release and jarjar for forge
+
+## [1.4.0] - 2025-03-18
+
+### Changed
+
+- Underlying framework library, no more peripheralium dependency
+
 ## [1.3.1] - 2024-08-20
 
 ### Fixed

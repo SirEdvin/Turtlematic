@@ -153,5 +153,14 @@ object Items {
         )
     }
 
+    val INSPECTION_MONOCLE = ModPlatform.registerItem("inspection_monocle") {
+        HiddenDescriptiveItemItem(
+            Item.Properties(),
+            TurtlematicConfig::enableInspectionMonocle,
+            alwaysShow = true,
+            isDisabled,
+        )
+    }
+
     fun doSomething() {}
 }

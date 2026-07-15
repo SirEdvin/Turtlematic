@@ -28,10 +28,10 @@ import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.CountOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
 import site.siredvin.tweakium.modules.peripheral.api.TransformInteractionMode
 import site.siredvin.tweakium.modules.peripheral.api.VerticalDirection
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import java.util.*
 import kotlin.math.min
 

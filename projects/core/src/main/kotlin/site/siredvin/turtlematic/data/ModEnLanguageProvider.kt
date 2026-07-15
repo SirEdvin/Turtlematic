@@ -53,6 +53,7 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         add(Items.MIMIC_GADGET.get(), "Mimic gadget", "§7Allows turtle to mimic nearly any block in the game")
         add(Items.CREATIVE_CHEST.get(), "Creative chest", "§7Creative item, that allows turtle to generate items")
         add(Items.CHUNK_VIAL.get(), "Chunk vial", "§7With this vial, turtle will always load its chunk")
+        add(Items.INSPECTION_MONOCLE.get(), "Inspection monocle", "§7Silly device that can help turtle see world more detailed")
 
         add(ModText.CREATIVE_TAB, "Turtlematic")
         add(ModText.CORE_FEED_BY_PLAYER, "You just can't force yourself to feed a soul to this core")
@@ -132,5 +133,6 @@ class ModEnLanguageProvider(output: PackOutput) : ModLanguageProvider(output, "e
         addTurtle(ChunkVialPeripheral.upgradeID, "Loading")
         addTurtle(BowPeripheral.upgradeID, "Shooting")
         addTurtle(MimicPeripheral.upgradeID, "Mimic")
+        addTurtle(InspectionMonoclePeripheral.upgradeID, "Inspecting")
     }
 }

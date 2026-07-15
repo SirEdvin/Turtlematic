@@ -23,8 +23,8 @@ import site.siredvin.turtlematic.computercraft.operations.PowerOperationContext
 import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.turtlematic.util.TurtleDispenseBehavior
 import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 import java.util.*
 
