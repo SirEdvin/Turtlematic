@@ -4,6 +4,12 @@ plugins {
     id("site.siredvin.release") version "0.8.18"
 }
 
+tasks.register("gameTest") {
+    group = "verification"
+    description = "Runs Turtlematic GameTests on Forge and Fabric."
+    dependsOn(":forge:runGameTestServer", ":fabric:runTurtlematicGameTest")
+}
+
 subprojectShaking {
     withKotlin.set(true)
     kotlinVersion.set("2.0.0")

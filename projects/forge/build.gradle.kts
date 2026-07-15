@@ -1,3 +1,5 @@
+import org.gradle.api.artifacts.ExternalModuleDependency
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("site.siredvin.publishing")
@@ -8,6 +10,8 @@ plugins {
 val modVersion: String by extra
 val minecraftVersion: String by extra
 val modBaseName: String by extra
+val gameTestXmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.xml")
+val gameTestHtmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.html")
 
 baseShaking {
     projectPart.set("forge")
@@ -29,6 +33,15 @@ forgeShaking {
         ),
     )
     shake()
+}
+
+val testMod = sourceSets.create("testMod") {
+    compileClasspath += sourceSets.main.get().compileClasspath
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":core").sourceSets["testMod"].output
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += project(":core").sourceSets["testMod"].output
 }
 
 repositories {
@@ -88,6 +101,52 @@ dependencies {
     libs.bundles.externalMods.forge.integrations.full.get().map { compileOnly(fg.deobf(it)) }
     libs.bundles.externalMods.forge.integrations.active.get().map { runtimeOnly(fg.deobf(it)) }
     libs.bundles.externalMods.forge.integrations.activedep.get().map { runtimeOnly(fg.deobf(it)) }
+
+    listOf(
+        "site.siredvin:testiarium-forge-1.20.1:0.1.1",
+        "site.siredvin:testiarium-forge-1.20.1:0.1.1:test-mod@jar",
+    ).forEach { notation ->
+        add(
+            testMod.implementationConfigurationName,
+            fg.deobf((project.dependencies.create(notation) as ExternalModuleDependency).apply { isTransitive = false }),
+        )
+    }
+}
+
+minecraft {
+    runs {
+        create("gameTestServer") {
+            workingDirectory(file("run/turtlematic-gametest"))
+            property("forge.enabledGameTestNamespaces", "turtlematic_testmod")
+            property("testiarium.tags", "turtlematic")
+            property("testiarium.structures", project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)
+            jvmArgs("-ea")
+            args("--nogui")
+            mods {
+                create("turtlematic") {
+                    source(sourceSets.main.get())
+                }
+                create("turtlematic_testmod") {
+                    source(testMod)
+                    source(project(":core").sourceSets["testMod"])
+                }
+            }
+        }
+    }
+}
+
+tasks.withType<JavaExec>().matching { it.name == "runGameTestServer" }.configureEach {
+    doFirst {
+        delete(gameTestXmlReport, gameTestHtmlReport)
+    }
+    doLast {
+        listOf(gameTestXmlReport.get().asFile, gameTestHtmlReport.get().asFile).forEach { report ->
+            check(report.isFile && report.length() > 0) {
+                "GameTest server did not produce report ${report.absolutePath}"
+            }
+        }
+    }
 }
 
 publishingShaking {

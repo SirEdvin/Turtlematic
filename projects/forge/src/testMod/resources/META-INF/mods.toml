@@ -1,0 +1,23 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MPL-2.0"
+
+[[mods]]
+modId="turtlematic_testmod"
+version="1.0"
+displayName="Turtlematic Testmod"
+description="Turtlematic server GameTests."
+
+[[dependencies.turtlematic_testmod]]
+modId="turtlematic"
+mandatory=true
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.turtlematic_testmod]]
+modId="testiarium"
+mandatory=true
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"

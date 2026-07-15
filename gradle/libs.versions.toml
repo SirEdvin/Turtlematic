@@ -28,6 +28,8 @@ forge = "47.2.0"
 forge-kotlin = "4.11.0"
 parchment = "2023.07.16"
 parchmentMc = "1.20.1"
+# Testing
+testiarium = "0.1.1"
 # Extra mod dependencies
 cloth-config = "11.0.99"
 architectury = "9.0.8"
@@ -72,6 +74,11 @@ peripheralium-forge = {module = "site.siredvin:peripheralium-forge-1.20.1", vers
 broccolium-jjar-forge = {module = "site.siredvin:broccolium-forge-1.20.1", version.ref = "broccolium-jjar"}
 tweakium-jjar-forge = {module = "site.siredvin:tweakium-forge-1.20.1", version.ref = "tweakium-jjar"}
 peripheralium-jjar-forge = {module = "site.siredvin:peripheralium-forge-1.20.1", version.ref = "peripheralium-jjar"}
+
+# Testing
+testiarium-core = { module = "site.siredvin:testiarium-core-1.20.1", version.ref = "testiarium" }
+testiarium-forge = { module = "site.siredvin:testiarium-forge-1.20.1", version.ref = "testiarium" }
+testiarium-fabric = { module = "site.siredvin:testiarium-fabric-1.20.1", version.ref = "testiarium" }
 
 # Dev mod dependencies
 jei-fabric = { module = "mezz.jei:jei-1.20.1-fabric", version.ref = "jei" }
