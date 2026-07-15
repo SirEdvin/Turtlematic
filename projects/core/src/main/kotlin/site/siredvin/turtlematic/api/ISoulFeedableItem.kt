@@ -14,8 +14,11 @@ interface ISoulFeedableItem : ItemLike {
     fun getActiveRecipe(stack: ItemStack): SoulHarvestRecipe? {
         val tag: CompoundTag? = stack.get(DataComponents.CUSTOM_DATA)?.copyTag()
         if (tag != null && !tag.isEmpty) {
-            val recipeName = tag.allKeys.firstOrNull() ?: return null
-            return SoulHarvestRecipeRegistry.searchRecipe(this.asItem(), recipeName)
+            val consumedData = tag.getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
+            if (!consumedData.isEmpty) {
+                val recipeName = consumedData.allKeys.firstOrNull() ?: return null
+                return SoulHarvestRecipeRegistry.searchRecipe(this.asItem(), recipeName)
+            }
         }
         return null
     }

@@ -41,7 +41,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
     override fun onHitBlock(hit: BlockHitResult) {
         if (!level().isClientSide) {
             val targetableStorage =
-                AgnosticItemStorageLookup.extractItemSink(level(), hit.blockPos, level().getBlockEntity(hit.blockPos))
+                AgnosticItemStorageLookup.extractFromBlock(level(), hit.blockPos, level().getBlockEntity(hit.blockPos), hit.direction.opposite)
             if (targetableStorage != null) {
                 this.kill()
                 ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.blockPos, level())
@@ -57,7 +57,7 @@ class ShootedItemProjectile(level: Level, x: Double, y: Double, z: Double) :
 
     override fun onHitEntity(hit: EntityHitResult) {
         if (!level().isClientSide) {
-            val targetableStorage = AgnosticItemStorageLookup.extractItemSink(level(), hit.entity)
+            val targetableStorage = AgnosticItemStorageLookup.extractFromEntity(level(), hit.entity, null)
             if (targetableStorage != null) {
                 this.kill()
                 ItemStorageUtils.toInventoryOrToWorld(stack, targetableStorage, hit.location.toBlockPos(), level())

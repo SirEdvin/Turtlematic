@@ -1,12 +1,18 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("site.siredvin.root") version "0.8.18"
-    id("site.siredvin.release") version "0.8.18"
+    java
+    alias(libs.plugins.loom) apply false
+    id("site.siredvin.root") version "0.9.0"
+    id("site.siredvin.release") version "0.9.0"
+}
+
+tasks.register("gameTest") {
+    group = "verification"
+    description = "Runs Turtlematic GameTests on NeoForge and Fabric."
+    dependsOn(":forge:runGameTestServer", ":fabric:runTurtlematicGameTest")
 }
 
 subprojectShaking {
     withKotlin.set(true)
-    kotlinVersion.set("2.0.0")
     javaVersion.set(JavaVersion.VERSION_21)
 }
 
@@ -17,7 +23,7 @@ subprojects {
 }
 
 githubShaking {
-    modBranch.set("1.20")
+    modBranch.set("1.21")
     useForgeJarJar.set(true)
     shake()
 }

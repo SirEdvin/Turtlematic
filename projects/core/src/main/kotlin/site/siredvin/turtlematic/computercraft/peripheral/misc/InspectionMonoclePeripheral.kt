@@ -6,6 +6,7 @@ import dan200.computercraft.api.lua.MethodResult
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.shared.util.NBTUtil
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
@@ -28,7 +29,7 @@ class InspectionMonoclePeripheral(turtle: ITurtleAccess, side: TurtleSide) : Own
         val base = LuaRepresentation.forBlockV2(peripheralOwner.level!!, blockPos)
         val entity = peripheralOwner.level!!.getBlockEntity(blockPos)
         if (entity != null) {
-            val tag = entity.saveWithoutMetadata()
+            val tag = entity.saveWithoutMetadata(PlatformToolkit.get().registries!!)
             val luaTag = NBTUtil.toLua(tag)
             if (luaTag != null) {
                 base["nbt"] = luaTag

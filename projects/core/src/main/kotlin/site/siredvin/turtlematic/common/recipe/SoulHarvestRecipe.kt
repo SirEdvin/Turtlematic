@@ -55,7 +55,8 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
         val targetIngredient = targetIngredient(entity)
             ?: return Pair(null, "Cannot find ingredient that match this entity")
         entity.remove(Entity.RemovalReason.KILLED)
-        val consumedData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()
+        val customData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()
+        val consumedData = customData.getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
         val entityCompound = consumedData.getCompound(targetIngredient.name)
         entityCompound.putInt(
             SoulHarvestRecipeRegistry.CONSUMED_ENTITY_COUNT,
@@ -65,7 +66,8 @@ data class SoulHarvestRecipe(val ingredients: List<SoulHarvestIngredient>, val r
         )
         entityCompound.putString(SoulHarvestRecipeRegistry.CONSUMED_ENTITY_NAME, entity.name.string)
         consumedData.put(targetIngredient.name, entityCompound)
-        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(consumedData))
+        customData.put(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND, consumedData)
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(customData))
         if (isFinished(consumedData)) {
             return Pair(resultSoul.defaultInstance, null)
         }

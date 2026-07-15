@@ -80,7 +80,6 @@ class AutomataCapturePlugin(
     protected fun saveSomething(data: CompoundTag, type: InteractionMode) {
         automataCore.peripheralOwner.dataStorage.putCompound(STORED_OBJECT_NBT_KEY, data)
         automataCore.peripheralOwner.dataStorage.putString(STORED_OBJECT_TYPE_NBT_KEY, type.toString())
-        print("5")
     }
 
     protected val storedData: CompoundTag

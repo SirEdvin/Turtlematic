@@ -7,6 +7,8 @@ import dan200.computercraft.api.turtle.TurtleSide;
 import dan200.computercraft.api.upgrades.UpgradeData;
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -19,8 +21,6 @@ import site.siredvin.tweakium.modules.peripheral.api.IDataStorage;
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil;
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class MixinToolkit {
@@ -33,8 +33,11 @@ public class MixinToolkit {
         if (upgrade instanceof TurtleUpgradeHolder upgradeHolder) {
             for (var internalUpgrade: upgradeHolder.getInternalUpgrades(access, side)) {
                 var internalTrick = TurtleRenderTrickRegistry.INSTANCE.getTrick(internalUpgrade.upgrade());
-                if (internalTrick != null)
-                    return new PairMonad<>(internalTrick, DataStorageUtil.INSTANCE.getDataStorage(access, side));
+                if (internalTrick != null) {
+                    var customData = internalUpgrade.data().get(DataComponents.CUSTOM_DATA);
+                    var tag = customData == null || customData.isEmpty() ? new CompoundTag() : customData.get().copyTag();
+                    return new PairMonad<>(internalTrick, DataStorageUtil.INSTANCE.getDataStorage(tag));
+                }
             }
         }
         return null;
@@ -71,7 +74,12 @@ public class MixinToolkit {
     }
 
     public static Integer getColor(ITurtleAccess access) {
-        Function<UpgradeData<ITurtleUpgrade>, Integer> func = (upgrade) -> DataStorageObjects.TurtleColor.INSTANCE.get(upgrade.data());
+        Function<UpgradeData<ITurtleUpgrade>, Integer> func = (upgrade) -> {
+            var customData = upgrade.data().get(DataComponents.CUSTOM_DATA);
+            return customData == null || customData.isEmpty()
+                    ? null
+                    : DataStorageObjects.TurtleColor.INSTANCE.get(customData.get().copyTag());
+        };
         return traverseUpgrades(access, func);
     }
 

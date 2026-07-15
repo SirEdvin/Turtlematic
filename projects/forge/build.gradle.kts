@@ -1,13 +1,17 @@
+import site.siredvin.peripheralium.gradle.mavenDependencies
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("site.siredvin.publishing")
     id("site.siredvin.mod-publishing")
-    id("site.siredvin.forge")
+    id("site.siredvin.neoforge")
 }
 
 val modVersion: String by extra
 val minecraftVersion: String by extra
 val modBaseName: String by extra
+val gameTestXmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.xml")
+val gameTestHtmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.html")
 
 baseShaking {
     projectPart.set("forge")
@@ -15,11 +19,9 @@ baseShaking {
     shake()
 }
 
-forgeShaking {
+neoforgeShaking {
     commonProjectName.set("core")
     useAT.set(true)
-    useMixins.set(true)
-    useJarJar.set(true)
     extraVersionMappings.set(
         mapOf(
             "computercraft" to "cc-tweaked",
@@ -31,8 +33,23 @@ forgeShaking {
     shake()
 }
 
+val testMod = sourceSets.create("testMod") {
+    compileClasspath += sourceSets.main.get().compileClasspath
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":core").sourceSets["testMod"].output
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += project(":core").sourceSets["testMod"].output
+}
+
 repositories {
-    mavenLocal()
+    maven {
+        name = "Kotlin for Forge"
+        url = uri("https://thedarkcolour.github.io/KotlinForForge/")
+        content {
+            includeGroup("thedarkcolour")
+        }
+    }
     // location of the maven that hosts JEI files since January 2023
     maven {
         name = "Jared's maven"
@@ -76,19 +93,82 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
-    libs.bundles.forge.cc.get().map { implementation(fg.deobf(it)) }
-    libs.bundles.forge.include.get().map { implementation(fg.deobf(it)) }
+    implementation(libs.bundles.forge.cc)
+    implementation(libs.bundles.forge.include)
+    jarJar(libs.bundles.forge.jjar) {
+        isTransitive = false
+    }
 
-    libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
+    runtimeOnly(libs.bundles.externalMods.forge.runtime)
 
-    libs.bundles.externalMods.forge.integrations.full.get().map { compileOnly(fg.deobf(it)) }
-    libs.bundles.externalMods.forge.integrations.active.get().map { runtimeOnly(fg.deobf(it)) }
-    libs.bundles.externalMods.forge.integrations.activedep.get().map { runtimeOnly(fg.deobf(it)) }
+    compileOnly(libs.bundles.externalMods.forge.integrations.full)
+    runtimeOnly(libs.bundles.externalMods.forge.integrations.active)
+    runtimeOnly(libs.bundles.externalMods.forge.integrations.activedep)
+
+    listOf(
+        "site.siredvin:testiarium-forge-1.21.1:0.1.1",
+        "site.siredvin:testiarium-forge-1.21.1:0.1.1:test-mod@jar",
+    ).forEach { notation ->
+        add(testMod.implementationConfigurationName, notation) {
+            isTransitive = false
+        }
+    }
+}
+
+neoForge {
+    val turtlematic = mods.named("turtlematic")
+    val turtlematicTestMod by mods.registering {
+        sourceSet(testMod)
+        sourceSet(project(":core").sourceSets["testMod"])
+    }
+    runs {
+        configureEach {
+            if (name != "gameTestServer") {
+                loadedMods.set(listOf(turtlematic.get()))
+            }
+        }
+        register("gameTestServer") {
+            type = "gameTestServer"
+            sourceSet = testMod
+            gameDirectory = file("run/turtlematic-gametest")
+            systemProperty("testiarium.tags", "turtlematic")
+            systemProperty("testiarium.structures", project.project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            systemProperty("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)
+            jvmArgument("-ea")
+            programArgument("--nogui")
+            loadedMods.add(turtlematic.get())
+            loadedMods.add(turtlematicTestMod.get())
+        }
+    }
+}
+
+tasks.named<JavaExec>("runGameTestServer") {
+    doFirst {
+        delete(gameTestXmlReport, gameTestHtmlReport)
+    }
+    doLast {
+        listOf(gameTestXmlReport.get().asFile, gameTestHtmlReport.get().asFile).forEach { report ->
+            check(report.isFile && report.length() > 0) {
+                "GameTest server did not produce report ${report.absolutePath}"
+            }
+        }
+    }
 }
 
 publishingShaking {
     shake()
+    project.publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                mavenDependencies {
+                    exclude(dependencies.create("site.siredvin:"))
+                    exclude(libs.jei.forge.get())
+                }
+            }
+        }
+    }
 }
 
 modPublishing {

@@ -69,7 +69,7 @@ class ModRecipeProvider(output: PackOutput, registries: CompletableFuture<Holder
             .pattern("GEG")
             .save(consumer)
 
-        TweakedShapedRecipeBuilder.shaped(Items.INSPECTION_MONOCLE.get())
+        TweakedShapedRecipeBuilder(Items.INSPECTION_MONOCLE.get())
             .define('C', net.minecraft.world.item.Items.CHAIN)
             .define('G', Blocks.GLASS)
             .pattern(" C ")

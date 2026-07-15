@@ -1,14 +1,13 @@
 package site.siredvin.turtlematic
 
-import net.minecraftforge.event.TickEvent
-import net.minecraftforge.event.TickEvent.ServerTickEvent
-import net.minecraftforge.event.server.ServerStartedEvent
-import net.minecraftforge.event.server.ServerStoppingEvent
-import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.common.Mod
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.event.server.ServerStartedEvent
+import net.neoforged.neoforge.event.server.ServerStoppingEvent
+import net.neoforged.neoforge.event.tick.ServerTickEvent
 import site.siredvin.turtlematic.xplat.TurtlematicCommonHooks
 
-@Mod.EventBusSubscriber(modid = TurtlematicCore.MOD_ID)
+@EventBusSubscriber(modid = TurtlematicCore.MOD_ID)
 object ForgeTurtlematicServer {
     @SubscribeEvent
     fun onServerStarted(event: ServerStartedEvent) {
@@ -23,10 +22,7 @@ object ForgeTurtlematicServer {
     }
 
     @SubscribeEvent
-    fun onServerTickEnd(event: ServerTickEvent) {
-//        TurtlematicCore.LOGGER.info("Server ticking!")
-        if (event.phase == TickEvent.Phase.END) {
-            TurtlematicCommonHooks.onEndOfServerTick(event.server)
-        }
+    fun onServerTickEnd(event: ServerTickEvent.Post) {
+        TurtlematicCommonHooks.onEndOfServerTick(event.server)
     }
 }

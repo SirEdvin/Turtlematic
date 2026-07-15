@@ -4,6 +4,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.CustomData
 import site.siredvin.broccolium.modules.base.item.DescriptiveItem
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
@@ -27,7 +28,8 @@ class ForgedAutomataCore :
     }
 
     override fun getEntityRepresentation(stack: ItemStack, recipe: SoulHarvestRecipe): List<RecipeEntityRepresentation> {
-        val consumedData = stack.get(DataComponents.CUSTOM_DATA)!!.copyTag()
+        val consumedData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()
+            .getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
         return recipe.ingredients.map {
             val entityData = consumedData.getCompound(it.name)
             return@map RecipeEntityRepresentation(
