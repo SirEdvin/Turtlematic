@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "turtlematic:item/netherite_gear",
-    "layer1": "turtlematic:item/fire/obsidian"
+    "layer0": "turtlematic:item/automata/obsidian_nether"
   }
 }

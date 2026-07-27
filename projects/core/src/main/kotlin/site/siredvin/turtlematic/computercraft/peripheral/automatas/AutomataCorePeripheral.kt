@@ -9,8 +9,8 @@ import site.siredvin.turtlematic.computercraft.operations.SphereOperation
 import site.siredvin.turtlematic.computercraft.plugins.AutomataInteractionPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataItemSuckPlugin
 import site.siredvin.turtlematic.computercraft.plugins.AutomataLookPlugin
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
-import site.siredvin.tweakium.modules.peripheral.ability.ScanningBoon
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.boon.ScanningBoon
 
 class AutomataCorePeripheral(
     turtle: ITurtleAccess,

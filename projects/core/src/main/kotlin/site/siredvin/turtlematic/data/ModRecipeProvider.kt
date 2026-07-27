@@ -5,6 +5,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.block.Blocks
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapedRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedSmithingTransformRecipeBuilder
 import site.siredvin.turtlematic.common.setup.Items
@@ -66,6 +67,14 @@ class ModRecipeProvider(output: PackOutput, registries: CompletableFuture<Holder
             .pattern("GDG")
             .pattern("GSG")
             .pattern("GEG")
+            .save(consumer)
+
+        TweakedShapedRecipeBuilder(Items.INSPECTION_MONOCLE.get())
+            .define('C', net.minecraft.world.item.Items.CHAIN)
+            .define('G', Blocks.GLASS)
+            .pattern(" C ")
+            .pattern("CGC")
+            .pattern(" C ")
             .save(consumer)
     }
 

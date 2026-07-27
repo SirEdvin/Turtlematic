@@ -29,8 +29,8 @@ import site.siredvin.turtlematic.api.PeripheralConfiguration
 import site.siredvin.turtlematic.common.configuration.TurtlematicConfig
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.tags.BlockTags
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import site.siredvin.tweakium.modules.peripheral.util.assertBetween
 import site.siredvin.tweakium.modules.peripheral.util.isCorrectSlot
@@ -86,8 +86,8 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
                 if (blockState.`is`(BlockTags.ENCHANTMENT_POWER_PROVIDER)) {
                     enchantmentPower.value += 1
                 } else if (blockState.`is`(ComputerCraftTags.Blocks.TURTLE)) {
-                    val itemStorage = AgnosticItemStorageLookup.extractStorage(level, blockPos, level.getBlockEntity(blockPos))
-                    itemStorage?.getItems()?.forEach {
+                    val itemStorage = AgnosticItemStorageLookup.extractFromBlock(level, blockPos, level.getBlockEntity(blockPos), null)
+                    itemStorage?.getContent()?.forEach {
                         if (it.`is`(Items.ENCHANTED_BOOK)) {
                             enchantmentPower.value += 1
                         }

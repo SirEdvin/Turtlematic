@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "turtlematic:item/starbound_gear",
-    "layer1": "turtlematic:item/big_fire/light_blue"
+    "layer0": "turtlematic:item/automata/light_blue_starbound"
   }
 }

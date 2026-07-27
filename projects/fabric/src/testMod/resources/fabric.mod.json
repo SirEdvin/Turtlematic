@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "turtlematic_testmod",
+  "version": "1.0",
+  "name": "Turtlematic Testmod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.turtlematic.testmod.FabricTurtlematicTestMod"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "turtlematic": "*",
+    "testiarium": "*"
+  }
+}

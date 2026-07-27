@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:nether_stars"
+  },
+  "base": {
+    "item": "turtlematic:enchanting_automata_core"
+  },
+  "result": {
+    "count": 1,
+    "id": "turtlematic:starbound_enchanting_automata_core"
+  },
+  "template": {
+    "item": "peripheralium:peripheralium_upgrade_template"
+  }
+}

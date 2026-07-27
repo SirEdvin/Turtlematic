@@ -10,15 +10,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import site.siredvin.turtlematic.util.MixinToolkit;
 
-import javax.annotation.Nonnull;
-
 @Mixin(TurtleBlockEntityRenderer.class)
 public class TurtleBlockEntityRendererMixin{
 
     @Inject(at = @At("HEAD"), method="render(Ldan200/computercraft/shared/turtle/blocks/TurtleBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V", cancellable = true, remap = false)
     public void render(
-            @Nonnull TurtleBlockEntity turtle, float partialTicks, @Nonnull PoseStack transform,
-            @Nonnull MultiBufferSource buffers, int lightmapCoord, int overlayLight, CallbackInfo info) {
+            TurtleBlockEntity turtle, float partialTicks, PoseStack transform,
+            MultiBufferSource buffers, int lightmapCoord, int overlayLight, CallbackInfo info) {
         MixinToolkit.render(turtle, partialTicks, transform, buffers, lightmapCoord, overlayLight, info);
     }
 }

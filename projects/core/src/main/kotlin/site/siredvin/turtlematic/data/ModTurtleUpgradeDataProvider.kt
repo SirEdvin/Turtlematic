@@ -57,6 +57,7 @@ object ModTurtleUpgradeDataProvider {
         registerUpgrade(upgrades, TurtleUpgradeSerializers.BOW, net.minecraft.world.item.Items.BOW)
         registerUpgrade(upgrades, TurtleUpgradeSerializers.PISTON, net.minecraft.world.item.Items.PISTON)
         registerUpgrade(upgrades, TurtleUpgradeSerializers.STICKY_PISTON, net.minecraft.world.item.Items.STICKY_PISTON)
+        registerUpgrade(upgrades, TurtleUpgradeSerializers.INSPECTION_MONOCLE, Items.INSPECTION_MONOCLE)
 
         registerUpgrade(upgrades, TurtleUpgradeSerializers.AUTOMATA_CORE, Items.AUTOMATA_CORE)
         registerUpgrade(upgrades, TurtleUpgradeSerializers.ENORMOUS_AUTOMATA, Items.ENORMOUS_AUTOMATA_CORE)

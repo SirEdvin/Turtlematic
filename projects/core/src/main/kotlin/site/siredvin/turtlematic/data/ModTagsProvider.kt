@@ -29,6 +29,12 @@ object ModTagsProvider {
     fun blockTags(consumer: TagConsumer<Block>) {
         DEFAULT_ENCHANTMENT_POWER_PROVIDERS.forEach { consumer.tag(BlockTags.ENCHANTMENT_POWER_PROVIDER).add(it) }
         HUSBANDRY_EXTRA_CROPS.forEach { consumer.tag(BlockTags.HUSBANDRY_EXTRA_CROPS).add(it) }
+        consumer.tag(BlockTags.CAPTURE_BLOCKLIST).add(
+            Blocks.NETHER_PORTAL,
+            Blocks.END_PORTAL,
+            Blocks.END_PORTAL_FRAME,
+            Blocks.BEDROCK,
+        )
     }
 
     @JvmStatic

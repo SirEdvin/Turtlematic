@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.CustomData
 import site.siredvin.turtlematic.api.AutomataCoreTier
 import site.siredvin.turtlematic.api.ISoulFeedableItem
 import site.siredvin.turtlematic.api.RecipeEntityRepresentation
@@ -41,7 +42,8 @@ class AutomataCore :
     ): Pair<ItemStack?, String?> {
         val recipe = SoulHarvestRecipeRegistry.searchRecipe(this, entity)
         if (recipe != null) {
-            val consumedData = stack.get(DataComponents.CUSTOM_DATA)!!.copyTag()
+            val consumedData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()
+                .getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
             val correctedRecipe: SoulHarvestRecipe? = if (consumedData.isEmpty) {
                 SoulHarvestRecipeRegistry.searchRecipe(this, entity)
             } else {
@@ -60,7 +62,8 @@ class AutomataCore :
     }
 
     override fun getEntityRepresentation(stack: ItemStack, recipe: SoulHarvestRecipe): List<RecipeEntityRepresentation> {
-        val consumedData = stack.get(DataComponents.CUSTOM_DATA)!!.copyTag()
+        val consumedData = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag()
+            .getCompound(SoulHarvestRecipeRegistry.CONSUMER_ENTITY_COMPOUND)
         return recipe.ingredients.map {
             val entityData = consumedData.getCompound(it.name)
             return@map RecipeEntityRepresentation(

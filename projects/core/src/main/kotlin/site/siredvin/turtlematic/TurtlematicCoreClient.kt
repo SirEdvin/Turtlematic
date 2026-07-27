@@ -115,6 +115,10 @@ object TurtlematicCoreClient {
             TurtleUpgradeSerializers.STICKY_PISTON.get(),
             FacingBlockTurtleModeller(),
         )
+        consumer.accept(
+            TurtleUpgradeSerializers.INSPECTION_MONOCLE.get(),
+            MonocleTurtleModeller(),
+        )
         EXTRA_TURTLE_MODEL_PROVIDERS.forEach {
             val pair = it.get()
             consumer.accept(pair.first, pair.second)

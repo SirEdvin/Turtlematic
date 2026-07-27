@@ -1,3 +1,5 @@
+import site.siredvin.peripheralium.gradle.mavenDependencies
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("site.siredvin.fabric")
@@ -30,8 +32,70 @@ fabricShaking {
     shake()
 }
 
+val testMod = sourceSets.create("testMod") {
+    compileClasspath += sourceSets.main.get().compileClasspath
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":core").sourceSets["testMod"].output
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += project(":core").sourceSets["testMod"].output
+}
+
+net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, testMod)
+
+val testiariumMainArtifacts = configurations.detachedConfiguration(
+    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1"),
+    project.dependencies.create("site.siredvin:testiarium-fabric-1.21.1:0.1.1"),
+).apply {
+    isTransitive = false
+}
+
+val testiariumTestModArtifacts = configurations.detachedConfiguration(
+    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1:test-mod@jar"),
+    project.dependencies.create("site.siredvin:testiarium-fabric-1.21.1:0.1.1:test-mod@jar"),
+).apply {
+    isTransitive = false
+}
+
+val gameTestXmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.xml")
+val gameTestHtmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.html")
+
+loom {
+    mods {
+        register("turtlematic-testmod") {
+            sourceSet(testMod)
+        }
+    }
+    runs {
+        create("turtlematicGameTest") {
+            server()
+            source(testMod)
+            property("fabric-api.gametest", "true")
+            property("fabric.debug.loadLate", "testiarium_testmod")
+            property("testiarium.tags", "turtlematic")
+            property("testiarium.structures", project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)
+            vmArg("-ea")
+            programArg("--nogui")
+            runDir("run/turtlematic-gametest")
+        }
+    }
+}
+
+tasks.named<JavaExec>("runTurtlematicGameTest") {
+    doFirst {
+        delete(gameTestXmlReport, gameTestHtmlReport)
+    }
+    doLast {
+        listOf(gameTestXmlReport.get().asFile, gameTestHtmlReport.get().asFile).forEach { report ->
+            check(report.isFile && report.length() > 0) {
+                "GameTest server did not produce report ${report.absolutePath}"
+            }
+        }
+    }
+}
+
 repositories {
-    mavenLocal()
     // location of the maven that hosts JEI files since January 2023
     maven {
         name = "Jared's maven"
@@ -50,21 +114,20 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.bundles.kotlin)
+
     modApi(libs.bundles.externalMods.fabric.integrations.api) {
         exclude("net.fabricmc.fabric-api")
     }
 
     modImplementation(libs.bundles.fabric.core)
-    modImplementation(libs.bundles.fabric)
     modImplementation(libs.bundles.fabric.cc) {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")
         exclude("mezz.jei")
     }
     modImplementation(libs.bundles.fabric.include) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
-        exclude("mezz.jei")
+        isTransitive = false
     }
     include(libs.bundles.fabric.include)
 
@@ -76,10 +139,24 @@ dependencies {
     libs.bundles.externalMods.fabric.integrations.full.get().map { modCompileOnly(it) }
     libs.bundles.externalMods.fabric.integrations.active.get().map { modRuntimeOnly(it) }
     libs.bundles.externalMods.fabric.integrations.activedep.get().map { modRuntimeOnly(it) }
+
+    add("modTestModImplementation", libs.bundles.kotlin)
+    add("modTestModImplementation", libs.bundles.fabric.core)
+    add("modTestModImplementation", files(testiariumMainArtifacts))
+    add("modTestModImplementation", files(testiariumTestModArtifacts))
 }
 
 publishingShaking {
     shake()
+    project.publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                mavenDependencies {
+                    exclude(project.dependencies.create("site.siredvin:"))
+                }
+            }
+        }
+    }
 }
 
 modPublishing {
@@ -90,7 +167,7 @@ modPublishing {
             "fabric-language-kotlin",
         ),
     )
-    requiredDependenciesCurseforge.add("forge-config-api-port-fabric")
+    requiredDependenciesCurseforge.add("forge-config-api-port")
     requiredDependenciesModrinth.add("forge-config-api-port")
     shake()
 }

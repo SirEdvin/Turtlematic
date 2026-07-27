@@ -3,7 +3,7 @@ package site.siredvin.turtlematic.forge
 import dan200.computercraft.shared.ModRegistry
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraftforge.common.Tags
+import net.neoforged.neoforge.common.Tags
 import site.siredvin.turtlematic.xplat.ModRecipeIngredients
 
 object ForgeModRecipeIngredients : ModRecipeIngredients {

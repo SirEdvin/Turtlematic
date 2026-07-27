@@ -39,12 +39,12 @@
     "turtlematic.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.13.3",
+    "fabricloader": ">=0.16.14",
     "fabric": "*",
-    "fabric-language-kotlin": ">=1.7.2+kotlin.1.6.20",
-    "minecraft": ">=1.21 <1.22",
-    "java": ">=17",
-    "forgeconfigapiport": ">=3.1",
+    "fabric-language-kotlin": ">=1.11.0+kotlin.2.0.0",
+    "minecraft": ">=1.21.1 <1.21.2",
+    "java": ">=21 <22",
+    "forgeconfigapiport": ">=21.1.6",
     "computercraft": ">=${computercraftVersion}",
     "broccolium": ">=${broccoliumVersion}",
     "tweakium": ">=${tweakiumVersion}",

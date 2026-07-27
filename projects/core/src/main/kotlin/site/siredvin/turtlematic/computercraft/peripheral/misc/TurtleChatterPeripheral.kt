@@ -30,4 +30,17 @@ class TurtleChatterPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPe
     fun clearMessage() {
         DataStorageObjects.TurtleChat[peripheralOwner] = null
     }
+
+    @LuaFunction(mainThread = true)
+    fun getColor(): Int? = DataStorageObjects.TurtleColor[peripheralOwner]
+
+    @LuaFunction(mainThread = true)
+    fun setColor(color: Int) {
+        DataStorageObjects.TurtleColor[peripheralOwner] = color
+    }
+
+    @LuaFunction(mainThread = true)
+    fun clearColor() {
+        DataStorageObjects.TurtleColor[peripheralOwner] = null
+    }
 }

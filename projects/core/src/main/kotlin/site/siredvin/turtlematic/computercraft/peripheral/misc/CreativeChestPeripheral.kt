@@ -44,7 +44,7 @@ class CreativeChestPeripheral(turtle: ITurtleAccess, side: TurtleSide) : OwnedPe
                 }
             }
         }
-        ContainerUtils.storeItem(peripheralOwner.turtle.inventory, itemStack)
+        ContainerUtils.storeItem(peripheralOwner.turtle.inventory, itemStack, simulate = false)
         return MethodResult.of(true)
     }
 }

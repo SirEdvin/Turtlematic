@@ -94,16 +94,16 @@ class AutomataCapturePlugin(
     }
 
     protected fun captureEntity(hit: EntityHitResult): MethodResult {
+        val entity = hit.entity
+        if (entity is Player || !entity.isAlive) {
+            return MethodResult.of(null, "Unsuitable entity")
+        }
+        if (entity.type.`is`(EntityTags.CAPTURE_BLOCKLIST)) {
+            return MethodResult.of(null, "Entity in blacklist")
+        }
         return automataCore.withOperation(
             SingleOperation.CAPTURE,
             IPeripheralFunction {
-                val entity = hit.entity
-                if (entity is Player || !entity.isAlive) {
-                    return@IPeripheralFunction MethodResult.of(null, "Unsuitable entity")
-                }
-                if (entity.type.`is`(EntityTags.CAPTURE_BLOCKLIST)) {
-                    return@IPeripheralFunction MethodResult.of(null, "Entity in blacklist")
-                }
                 val nbt = CompoundTag()
                 nbt.putString("entity", EntityType.getKey(entity.type).toString())
                 entity.saveWithoutId(nbt)
@@ -121,18 +121,21 @@ class AutomataCapturePlugin(
     }
 
     protected fun captureBlock(hit: BlockHitResult): MethodResult {
+        val owner = automataCore.peripheralOwner
+        val level = owner.level!!
+        val state = level.getBlockState(hit.blockPos)
+        if (owner.withPlayer({ PlatformToolkit.get().isBlockProtected(hit.blockPos, state, it.fakePlayer) })) {
+            return MethodResult.of(null, "Block is protected")
+        }
+        if (state.`is`(BlockTags.CAPTURE_BLOCKLIST)) {
+            return MethodResult.of(null, "Block is in blacklist")
+        }
+        if (!state.fluidState.isEmpty) {
+            return MethodResult.of(null, "Cannot capture fluids")
+        }
         return automataCore.withOperation(
             SingleOperation.CAPTURE,
             {
-                val owner = automataCore.peripheralOwner
-                val level = owner.level!!
-                val state = level.getBlockState(hit.blockPos)
-                if (owner.withPlayer({ PlatformToolkit.get().isBlockProtected(hit.blockPos, state, it.fakePlayer) })) {
-                    return@withOperation MethodResult.of(null, "Block is protected")
-                }
-                if (state.`is`(BlockTags.CAPTURE_BLOCKLIST)) {
-                    return@withOperation MethodResult.of(null, "Block is in blacklist")
-                }
                 val serializedData = CompoundTag()
                 serializedData.put("state", NbtUtils.writeBlockState(state))
                 val entity = level.getBlockEntity(hit.blockPos)

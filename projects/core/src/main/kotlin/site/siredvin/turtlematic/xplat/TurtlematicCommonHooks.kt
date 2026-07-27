@@ -1,5 +1,6 @@
 package site.siredvin.turtlematic.xplat
 
+import dan200.computercraft.api.upgrades.UpgradeData
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.CreativeModeTab
@@ -10,6 +11,7 @@ import site.siredvin.turtlematic.common.setup.EntityTypes
 import site.siredvin.turtlematic.common.setup.Items
 import site.siredvin.turtlematic.common.setup.TurtleUpgradeSerializers
 import site.siredvin.turtlematic.util.ChunkManager
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 
 object TurtlematicCommonHooks {
 
@@ -29,16 +31,13 @@ object TurtlematicCommonHooks {
     }
 
     fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
-//        ModPlatform.holder.turtleUpgrades.forEach {
-//            val key = ComputerPlatformRegistries.TURTLE_UPGRADES.getResourceKey(ComputerPlatformRegistries.TURTLE_UPGRADES.get(it.id))
-//            if (key.isPresent) {
-//                val upgrade = ComputerPlatformRegistries.TURTLE_UPGRADES.get(key.get())
-//                if (upgrade.isPresent) {
-//                    ComputerPlatformToolkit.get().createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade.get()))
-//                        .forEach(output::accept)
-//                }
-//            }
-//        }
+        ModPlatform.holder.turtleUpgrades.forEach {
+            val upgrade = ComputerPlatformToolkit.get().getTurtleUpgrade(it.id.toString())
+            if (upgrade.isPresent) {
+                ComputerPlatformToolkit.get().createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade.get()))
+                    .forEach(output::accept)
+            }
+        }
     }
 
     fun onServerStarted(server: MinecraftServer) {

@@ -12,10 +12,10 @@ import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.operations.SingleOperationContext
 import site.siredvin.turtlematic.util.DataStorageObjects
 import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralCheck
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralFunction
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 
 abstract class BaseAutomataCorePeripheral(

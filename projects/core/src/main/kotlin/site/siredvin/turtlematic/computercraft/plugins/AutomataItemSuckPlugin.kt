@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.phys.AABB
+import site.siredvin.broccolium.modules.base.util.world.ScanUtils
 import site.siredvin.turtlematic.computercraft.operations.SingleOperation
 import site.siredvin.turtlematic.computercraft.peripheral.automatas.BaseAutomataCorePeripheral
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralFunction
@@ -21,19 +22,14 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
     override val operations: List<IPeripheralOperation<*>>
         get() = listOf(SingleOperation.SUCK)
 
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        super.collectConfiguration(data)
+        data["suckAPIVersion"] = listOf(1, 1)
+    }
+
     protected fun getBox(pos: BlockPos): AABB {
-        val x: Int = pos.x
-        val y: Int = pos.y
-        val z: Int = pos.z
         val interactionRadius = automataCore.interactionRadius
-        return AABB(
-            (x - interactionRadius).toDouble(),
-            (y - interactionRadius).toDouble(),
-            (z - interactionRadius).toDouble(),
-            (x + interactionRadius).toDouble(),
-            (y + interactionRadius).toDouble(),
-            (z + interactionRadius).toDouble(),
-        )
+        return ScanUtils.getBox(pos, interactionRadius.toDouble())
     }
 
     protected val items: List<ItemEntity>
@@ -82,7 +78,7 @@ class AutomataItemSuckPlugin(automataCore: BaseAutomataCorePeripheral) : Automat
                 }
                 val items: List<ItemEntity> = items
                 if (items.isEmpty()) {
-                    MethodResult.of(null, "Nothing to take")
+                    return@IPeripheralFunction MethodResult.of(null, "Nothing to take")
                 }
                 var requiredQuantity = requiredQuantityArg
                 for (entity in items) {
