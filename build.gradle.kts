@@ -19,7 +19,9 @@ subprojectShaking {
 val setupSubproject = subprojectShaking::setupSubproject
 
 subprojects {
-    setupSubproject(this)
+    if (name != "typed-peripheral-turtlematic") {
+        setupSubproject(this)
+    }
 }
 
 githubShaking {

@@ -46,6 +46,7 @@ rootProject.name = "Turtlematic $minecraftVersion"
 include(":core")
 include(":forge")
 include(":fabric")
+include(":typed-peripheral-turtlematic")
 
 
 for (project in rootProject.children) {
