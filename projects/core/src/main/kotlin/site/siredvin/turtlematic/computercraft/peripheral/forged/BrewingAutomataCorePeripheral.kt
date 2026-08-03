@@ -54,6 +54,9 @@ class BrewingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleSide, tie
                 suitableEntity = suitableEntity,
             ),
         )
+    }
+
+    override fun attachScanningBoon() {
         peripheralOwner.attachBoon(
             PeripheralOwnerBoonKey.SCANNING,
             ScanningBoon(
