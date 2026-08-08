@@ -1,7 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("site.siredvin.root") version "0.8.18"
-    id("site.siredvin.release") version "0.8.18"
+    id("site.siredvin.root") version "0.9.2"
+    id("site.siredvin.release") version "0.9.2"
 }
 
 tasks.register("gameTest") {
