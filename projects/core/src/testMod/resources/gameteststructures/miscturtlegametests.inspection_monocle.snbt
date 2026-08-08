@@ -1,0 +1,11 @@
+{
+    DataVersion: 3465,
+    size: [5, 4, 5],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 6, Fuel: 1000, Items: [], Label: "miscturtlegametests.inspection_monocle", LeftUpgrade: "turtlematic:inspection_monocle", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}},
+        {pos: [2, 2, 2], state: "minecraft:chest{facing:north,type:single,waterlogged:false}", nbt: {Lock: "inspect-test", id: "minecraft:chest"}}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}", "minecraft:chest{facing:north,type:single,waterlogged:false}"]
+}

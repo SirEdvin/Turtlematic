@@ -1,0 +1,11 @@
+{
+    DataVersion: 3465,
+    size: [5, 4, 5],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 3], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 7, Fuel: 1000, Items: [{Count: 1b, Slot: 0b, id: "turtlematic:automata_core"}, {Count: 1b, Slot: 1b, id: "minecraft:dirt"}], Label: "miscturtlegametests.soul_scrapper", LeftUpgrade: "turtlematic:soul_scrapper", On: 1b, Slot: 1, id: "computercraft:turtle_normal"}}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}"]
+}

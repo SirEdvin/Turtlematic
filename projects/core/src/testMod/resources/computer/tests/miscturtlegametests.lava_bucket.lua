@@ -1,0 +1,5 @@
+local bucket = assert(peripheral.find("lava_bucket"), "Lava bucket upgrade is missing")
+assert(turtle.getItemCount(1) == 8, "Expected selected slot contents")
+bucket.void()
+assert(turtle.getItemCount(1) == 0, "Expected selected slot to be voided")
+assert(turtle.getItemCount(2) == 4, "Lava bucket voided another slot")

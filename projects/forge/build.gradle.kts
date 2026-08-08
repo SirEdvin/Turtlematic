@@ -105,6 +105,7 @@ dependencies {
     listOf(
         "site.siredvin:testiarium-forge-1.20.1:0.1.1",
         "site.siredvin:testiarium-forge-1.20.1:0.1.1:test-mod@jar",
+        "site.siredvin:testiarium-forge-1.20.1:0.1.1:cct-test-mod@jar",
     ).forEach { notation ->
         add(
             testMod.implementationConfigurationName,
@@ -120,6 +121,7 @@ minecraft {
             property("forge.enabledGameTestNamespaces", "turtlematic_testmod")
             property("testiarium.tags", "turtlematic")
             property("testiarium.structures", project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.cct-fixtures", project(":core").file("src/testMod/resources/computer").absolutePath)
             property("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)
             jvmArgs("-ea")
             args("--nogui")

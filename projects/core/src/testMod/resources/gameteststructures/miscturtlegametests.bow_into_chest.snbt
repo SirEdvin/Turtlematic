@@ -1,0 +1,14 @@
+{
+    DataVersion: 3465,
+    size: [5, 3, 7],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 3], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 4], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 5], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 10, Fuel: 1000, Items: [{Count: 3b, Slot: 0b, id: "minecraft:cobblestone"}], Label: "miscturtlegametests.bow_into_chest", LeftUpgrade: "turtlematic:bow", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}},
+        {pos: [2, 1, 5], state: "minecraft:chest{facing:north,type:single,waterlogged:false}", nbt: {id: "minecraft:chest"}}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}", "minecraft:chest{facing:north,type:single,waterlogged:false}"]
+}
