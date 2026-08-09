@@ -32,6 +32,12 @@ val testiariumTestModArtifact = configurations.detachedConfiguration(
     isTransitive = false
 }
 
+val testiariumCctTestModArtifact = configurations.detachedConfiguration(
+    dependencies.create("site.siredvin:testiarium-core-1.20.1:0.1.1:cct-test-mod@jar"),
+).apply {
+    isTransitive = false
+}
+
 repositories {
     mavenLocal()
 }
@@ -41,6 +47,7 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
     add(testMod.implementationConfigurationName, libs.testiarium.core)
+    add(testMod.implementationConfigurationName, files(testiariumCctTestModArtifact))
 }
 
 tasks.named<ProcessResources>(testMod.processResourcesTaskName) {

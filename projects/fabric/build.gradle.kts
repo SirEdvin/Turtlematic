@@ -51,6 +51,7 @@ val testiariumMainArtifacts = configurations.detachedConfiguration(
 val testiariumTestModArtifacts = configurations.detachedConfiguration(
     project.dependencies.create("site.siredvin:testiarium-core-1.20.1:0.1.1:test-mod@jar"),
     project.dependencies.create("site.siredvin:testiarium-fabric-1.20.1:0.1.1:test-mod@jar"),
+    project.dependencies.create("site.siredvin:testiarium-core-1.20.1:0.1.1:cct-test-mod@jar"),
 ).apply {
     isTransitive = false
 }
@@ -72,6 +73,7 @@ loom {
             property("fabric.debug.loadLate", "testiarium_testmod")
             property("testiarium.tags", "turtlematic")
             property("testiarium.structures", project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.cct-fixtures", project(":core").file("src/testMod/resources/computer").absolutePath)
             property("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)
             vmArg("-ea")
             programArg("--nogui")

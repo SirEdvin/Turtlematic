@@ -1,0 +1,13 @@
+{
+    DataVersion: 3465,
+    size: [5, 3, 6],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 3], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 4], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 12, Fuel: 1000, Items: [], Label: "miscturtlegametests.sticky_piston", LeftUpgrade: "turtlematic:sticky_piston", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}},
+        {pos: [2, 1, 3], state: "minecraft:stone"}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}", "minecraft:stone"]
+}
