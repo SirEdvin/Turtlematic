@@ -8,6 +8,8 @@ import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.CropBlock
 import site.siredvin.testiarium.api.TestGroup
 
 @TestGroup("turtlematic")
@@ -31,6 +33,8 @@ class BaseAutomataGameTests {
 
     @GameTest(template = "baseautomatagametests.husbandry", batch = "automata-husbandry", timeoutTicks = LUA_TIMEOUT)
     fun husbandry(helper: GameTestHelper) {
+        val turtle = helper.getTurtle("baseautomatagametests.husbandry")
+        helper.level.setBlockAndUpdate(turtle.blockPos.relative(turtle.direction), Blocks.WHEAT.defaultBlockState().setValue(CropBlock.AGE, CropBlock.MAX_AGE))
         helper.spawn("baseautomatagametests.husbandry", EntityType.COW, BlockPos(0, 1, 0))
         helper.thenTurtleLua("baseautomatagametests.husbandry").thenSucceed()
     }

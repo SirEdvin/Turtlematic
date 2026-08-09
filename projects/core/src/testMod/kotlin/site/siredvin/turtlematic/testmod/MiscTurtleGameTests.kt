@@ -64,9 +64,10 @@ class MiscTurtleGameTests {
     fun chunkVialDetached(helper: GameTestHelper) {
         val uuid = helper.getTurtle("miscturtlegametests.chunk_vial_detached").saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
         helper.thenTurtleLua("miscturtlegametests.chunk_vial_detached")
-            .thenExecuteAfter(20) {}
-            .thenExecuteFailFast {
-                check(!helper.hasForcedChunkRecord(uuid)) { "Detached chunk vial has not released force record $uuid" }
+            .thenWaitUntil {
+                if (helper.hasForcedChunkRecord(uuid)) {
+                    throw GameTestAssertException("Detached chunk vial has not released force record $uuid")
+                }
             }.thenSucceed()
     }
 
