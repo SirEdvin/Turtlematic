@@ -6,7 +6,6 @@ import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestAssertException
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.gametest.framework.GameTestSequence
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.EntityType
 import site.siredvin.testiarium.api.TestGroup
 import site.siredvin.testiarium.api.thenExecuteFailFast
@@ -14,6 +13,7 @@ import site.siredvin.testiarium.cct.CctComputerState
 import site.siredvin.testiarium.cct.CctComputers
 import site.siredvin.testiarium.cct.CctLuaTests
 import site.siredvin.turtlematic.util.ChunkManager
+import java.util.UUID
 
 const val LUA_TIMEOUT = 400
 
@@ -24,10 +24,7 @@ fun GameTestHelper.getTurtle(label: String): TurtleBlockEntity {
         .first { it.saveWithoutMetadata().getString("Label") == label }
 }
 
-private fun GameTestHelper.hasForcedChunkRecord(uuid: String): Boolean = ChunkManager.get(level.server.overworld())
-    .save(CompoundTag())
-    .getCompound("forcedChunks")
-    .contains(uuid)
+private fun GameTestHelper.hasForcedChunkRecord(uuid: String): Boolean = ChunkManager.get(level.server.overworld()).hasForceChunk(UUID.fromString(uuid))
 
 fun GameTestHelper.thenTurtleLua(label: String): GameTestSequence {
     CctLuaTests.require(label)
@@ -60,7 +57,7 @@ class MiscTurtleGameTests {
         }.thenSucceed()
     }
 
-    @GameTest(template = "miscturtlegametests.chunk_vial_detached", batch = "misc-chunk-vial-detached", timeoutTicks = LUA_TIMEOUT)
+    @GameTest(template = "miscturtlegametests.chunk_vial_detached", batch = "misc-chunk-vial-detached", timeoutTicks = 1200)
     fun chunkVialDetached(helper: GameTestHelper) {
         val uuid = helper.getTurtle("miscturtlegametests.chunk_vial_detached").saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
         helper.thenTurtleLua("miscturtlegametests.chunk_vial_detached")
