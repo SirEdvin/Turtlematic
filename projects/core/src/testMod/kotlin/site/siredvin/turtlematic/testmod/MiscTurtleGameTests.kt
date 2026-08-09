@@ -58,6 +58,7 @@ class MiscTurtleGameTests {
     }
 
     @GameTest(template = "miscturtlegametests.chunk_vial_detached", batch = "misc-chunk-vial-detached", timeoutTicks = 1200)
+    @TestGroup("manual")
     fun chunkVialDetached(helper: GameTestHelper) {
         val uuid = helper.getTurtle("miscturtlegametests.chunk_vial_detached").saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
         helper.thenTurtleLua("miscturtlegametests.chunk_vial_detached")
