@@ -4,7 +4,7 @@
     data: [
         {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
         {pos: [2, 0, 3], state: "minecraft:polished_andesite"},
-        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 22, Fuel: 10000, Items: [{Count: 4b, Slot: 0b, id: "minecraft:emerald"}], Label: "forgedautomatagametests.mercantile", LeftUpgrade: "turtlematic:starbound_mercantile_automata", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}}
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 22, Fuel: 10000, Items: [{Count: 4b, Slot: 0b, id: "minecraft:emerald"}], Label: "forgedautomatagametests.mercantile", LeftUpgrade: "turtlematic:starbound_mercantile_automata", On: 0b, Slot: 0, id: "computercraft:turtle_normal"}}
     ],
     entities: [],
     palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}"]

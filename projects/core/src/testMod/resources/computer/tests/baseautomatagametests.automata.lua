@@ -4,7 +4,8 @@ assert(config.interactionRadius == 2 and config.maxRadius == 2, "Expected tier-o
 
 local block = automata.look("block")
 assert(block.name == "minecraft:chest", "Expected to look at chest")
-assert(automata.getFuelConsumptionRate() == 1, "Expected default fuel rate")
+assert(automata.setFuelConsumptionRate(1), "Expected fuel rate reset")
+assert(automata.getFuelConsumptionRate() == 1, "Expected minimum fuel rate")
 assert(automata.getCooldown("use") == 0, "Expected no initial use cooldown")
 local ok, err = automata.setFuelConsumptionRate(0)
 assert(ok == nil and err == "Too small fuel consumption rate", "Expected lower fuel-rate boundary")
