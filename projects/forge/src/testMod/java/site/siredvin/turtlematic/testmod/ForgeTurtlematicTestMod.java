@@ -18,6 +18,7 @@ public final class ForgeTurtlematicTestMod {
         Testiarium.register(TurtlematicGameTests.class);
         Testiarium.register(MiscTurtleGameTests.class);
         Testiarium.register(BaseAutomataGameTests.class);
+        Testiarium.register(ForgedAutomataGameTests.class);
         ForgeTestiarium.registerTests();
     }
 }

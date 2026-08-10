@@ -11,8 +11,8 @@ object TurtlematicComputerFixtures {
     fun importFiles(server: MinecraftServer) {
         CctFixtureCommands.importFiles(server)
         val source = server.getWorldPath(LevelResource.ROOT).resolve("computercraft/computer/1")
-        // ponytail: Test fixtures use fixed computer IDs 1..17.
-        (2..17).forEach { id ->
+        // ponytail: Test fixtures use fixed computer IDs 1..23.
+        (2..23).forEach { id ->
             Files.walk(source).use { paths ->
                 paths.forEach { path ->
                     val target = source.resolveSibling(id.toString()).resolve(path.relativeTo(source).toString())

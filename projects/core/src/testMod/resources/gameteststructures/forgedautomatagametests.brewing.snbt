@@ -1,0 +1,10 @@
+{
+    DataVersion: 3465,
+    size: [5, 4, 5],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 18, Fuel: 1000000, Items: [{Count: 2b, Slot: 0b, id: "minecraft:nether_wart"}, {Count: 1b, Slot: 1b, id: "minecraft:potion", tag: {Potion: "minecraft:water"}}, {Count: 1b, Slot: 4b, id: "minecraft:splash_potion", tag: {Potion: "minecraft:healing"}}], Label: "forgedautomatagametests.brewing", LeftUpgrade: "turtlematic:brewing_automata", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}"]
+}
