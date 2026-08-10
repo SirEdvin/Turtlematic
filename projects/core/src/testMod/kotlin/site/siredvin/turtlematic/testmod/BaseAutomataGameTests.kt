@@ -26,7 +26,9 @@ class BaseAutomataGameTests {
 
     @GameTest(template = "baseautomatagametests.automata", batch = "automata", timeoutTicks = LUA_TIMEOUT)
     fun automata(helper: GameTestHelper) {
-        val pos = helper.getTurtle("baseautomatagametests.automata").blockPos
+        val turtle = helper.getTurtle("baseautomatagametests.automata")
+        val pos = turtle.blockPos
+        helper.level.setBlockAndUpdate(pos.relative(turtle.direction), Blocks.CHEST.defaultBlockState())
         helper.level.addFreshEntity(ItemEntity(helper.level, pos.x + 1.5, pos.y.toDouble(), pos.z + 0.5, ItemStack(Items.APPLE, 3)))
         helper.thenTurtleLua("baseautomatagametests.automata").thenSucceed()
     }

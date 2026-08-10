@@ -17,6 +17,7 @@ object FabricTurtlematicTestMod : ModInitializer {
         Testiarium.register(MiscTurtleGameTests::class.java)
         Testiarium.register(BaseAutomataGameTests::class.java)
         Testiarium.register(ForgedAutomataGameTests::class.java)
+        Testiarium.register(TurtlematicClientGameTests::class.java)
         FabricTestiarium.registerTests()
     }
 }

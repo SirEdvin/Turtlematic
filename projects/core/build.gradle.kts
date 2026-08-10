@@ -47,6 +47,7 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
     add(testMod.implementationConfigurationName, libs.testiarium.core)
+    add(testMod.implementationConfigurationName, files(testiariumTestModArtifact))
     add(testMod.implementationConfigurationName, files(testiariumCctTestModArtifact))
 }
 
