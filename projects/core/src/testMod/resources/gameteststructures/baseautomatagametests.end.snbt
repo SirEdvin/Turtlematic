@@ -4,7 +4,7 @@
     data: [
         {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
         {pos: [2, 0, 3], state: "minecraft:polished_andesite"},
-        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 15, Fuel: 10000, Items: [], Label: "baseautomatagametests.end", LeftUpgrade: "turtlematic:end_automata", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 15, Fuel: 10000, Items: [], Label: "baseautomatagametests.end", LeftUpgrade: "turtlematic:end_automata", On: 0b, Slot: 0, id: "computercraft:turtle_normal"}},
         {pos: [2, 1, 3], state: "minecraft:chest{facing:north,type:single,waterlogged:false}", nbt: {id: "minecraft:chest"}}
     ],
     entities: [],

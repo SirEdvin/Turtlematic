@@ -1,8 +1,16 @@
 local automata = assert(peripheral.find("endAutomata"), "End automata is missing")
 
+local ok, err = automata.release()
+assert(ok == nil and err == "Nothing is stored", "Expected empty release error")
+ok, err = automata.capture("block", "up")
+assert(ok == nil and err == "nothing found", "Expected empty capture error")
 assert(automata.capture("block"), "Expected to capture chest")
 assert(automata.getCaptured().name == "minecraft:chest", "Expected captured chest data")
 
+ok, err = automata.warpToPoint("missing")
+assert(ok == nil and err == "Cannot find point to warp to", "Expected missing warp point error")
+ok, err = automata.deletePoint("missing")
+assert(ok == nil and err == "Cannot find point to delete", "Expected missing delete error")
 assert(automata.savePoint("home"), "Expected to save warp point")
 assert(#automata.points() == 1, "Expected one warp point")
 assert(turtle.forward(), "Expected turtle to move")

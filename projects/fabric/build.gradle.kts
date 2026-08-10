@@ -58,6 +58,8 @@ val testiariumTestModArtifacts = configurations.detachedConfiguration(
 
 val gameTestXmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.xml")
 val gameTestHtmlReport = layout.buildDirectory.file("test-results/turtlematic-gametest.html")
+val clientGameTestXmlReport = layout.buildDirectory.file("test-results/turtlematic-client-gametest.xml")
+val clientGameTestHtmlReport = layout.buildDirectory.file("test-results/turtlematic-client-gametest.html")
 
 loom {
     mods {
@@ -79,6 +81,20 @@ loom {
             programArg("--nogui")
             runDir("run/turtlematic-gametest")
         }
+        create("turtlematicClientGameTest") {
+            client()
+            source(testMod)
+            property("fabric-api.gametest", "true")
+            property("fabric.debug.loadLate", "testiarium_testmod")
+            property("testiarium.client", "true")
+            property("testiarium.tags", "turtlematic-client")
+            property("testiarium.structures", project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.cct-fixtures", project(":core").file("src/testMod/resources/computer").absolutePath)
+            property("testiarium.gametest-report", clientGameTestXmlReport.get().asFile.absolutePath)
+            property("testiarium.screenshots", layout.buildDirectory.dir("screenshots/turtlematic-client").get().asFile.absolutePath)
+            vmArg("-ea")
+            runDir("run/turtlematic-client-gametest")
+        }
     }
 }
 
@@ -90,6 +106,19 @@ tasks.named<JavaExec>("runTurtlematicGameTest") {
         listOf(gameTestXmlReport.get().asFile, gameTestHtmlReport.get().asFile).forEach { report ->
             check(report.isFile && report.length() > 0) {
                 "GameTest server did not produce report ${report.absolutePath}"
+            }
+        }
+    }
+}
+
+tasks.named<JavaExec>("runTurtlematicClientGameTest") {
+    doFirst {
+        delete(clientGameTestXmlReport, clientGameTestHtmlReport)
+    }
+    doLast {
+        listOf(clientGameTestXmlReport.get().asFile, clientGameTestHtmlReport.get().asFile).forEach { report ->
+            check(report.isFile && report.length() > 0) {
+                "Client GameTest did not produce report ${report.absolutePath}"
             }
         }
     }

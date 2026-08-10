@@ -6,8 +6,11 @@ plugins {
 
 tasks.register("gameTest") {
     group = "verification"
-    description = "Runs Turtlematic GameTests on Forge and Fabric."
-    dependsOn(":forge:runGameTestServer", ":fabric:runTurtlematicGameTest")
+    description = "Runs Turtlematic server GameTests on Forge and Fabric."
+    dependsOn(
+        ":forge:runGameTestServer",
+        ":fabric:runTurtlematicGameTest",
+    )
 }
 
 subprojectShaking {

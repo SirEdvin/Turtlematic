@@ -3,7 +3,7 @@
     size: [5, 3, 5],
     data: [
         {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
-        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 8, Fuel: 1000, Items: [{Count: 8b, Slot: 0b, id: "minecraft:cobblestone"}, {Count: 4b, Slot: 1b, id: "minecraft:dirt"}], Label: "miscturtlegametests.lava_bucket", LeftUpgrade: "turtlematic:lava_bucket", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}}
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 8, Fuel: 1000, Items: [{Count: 8b, Slot: 0b, id: "minecraft:cobblestone"}, {Count: 4b, Slot: 1b, id: "minecraft:dirt"}], Label: "miscturtlegametests.lava_bucket", LeftUpgrade: "turtlematic:lava_bucket", On: 0b, Slot: 0, id: "computercraft:turtle_normal"}}
     ],
     entities: [],
     palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}"]

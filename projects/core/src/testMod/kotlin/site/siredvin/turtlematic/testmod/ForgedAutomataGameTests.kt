@@ -38,7 +38,7 @@ class ForgedAutomataGameTests {
         val villager = EntityType.VILLAGER.create(helper.level) as Villager
         villager.moveTo(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5)
         villager.isNoAi = true
-        villager.offers.add(MerchantOffer(ItemStack(Items.EMERALD, 2), ItemStack(Items.BREAD, 3), 10, 1, 0f))
+        villager.offers.add(MerchantOffer(ItemStack(Items.EMERALD, 2), ItemStack(Items.BREAD, 3), 10, 1, 0f).apply { setToOutOfStock() })
         helper.level.addFreshEntity(villager)
         helper.thenTurtleLua("forgedautomatagametests.mercantile").thenSucceed()
     }

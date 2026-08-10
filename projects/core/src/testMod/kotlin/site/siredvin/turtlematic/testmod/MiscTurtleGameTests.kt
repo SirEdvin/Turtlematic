@@ -88,8 +88,26 @@ class MiscTurtleGameTests {
 
     @GameTest(template = "miscturtlegametests.bow", batch = "misc-bow", timeoutTicks = LUA_TIMEOUT)
     fun bow(helper: GameTestHelper) = helper.thenTurtleLua("miscturtlegametests.bow").thenExecuteFailFast {
-        val arrows = helper.getEntities(EntityType.ARROW, BlockPos.ZERO, 64.0)
-        check(arrows.any { it.deltaMovement.z > 0 }) { "Expected a southbound arrow, got ${arrows.map { it.deltaMovement }}" }
+        val arrows = helper.getEntities(EntityType.ARROW, BlockPos.ZERO, 16.0)
+        check(arrows.any { it.color == -1 }) { "Expected an ordinary arrow" }
+        check(arrows.any { it.deltaMovement.z > 0 }) { "Expected a southbound arrow" }
+    }.thenSucceed()
+
+    @GameTest(template = "miscturtlegametests.bow_spectral", batch = "misc-bow-spectral", timeoutTicks = LUA_TIMEOUT)
+    fun bowSpectral(helper: GameTestHelper) = helper.thenTurtleLua("miscturtlegametests.bow_spectral").thenExecuteFailFast {
+        check(helper.getEntities(EntityType.SPECTRAL_ARROW, BlockPos.ZERO, 16.0).isNotEmpty()) { "Expected a spectral arrow" }
+    }.thenSucceed()
+
+    @GameTest(template = "miscturtlegametests.bow_tipped", batch = "misc-bow-tipped", timeoutTicks = LUA_TIMEOUT)
+    fun bowTipped(helper: GameTestHelper) = helper.thenTurtleLua("miscturtlegametests.bow_tipped").thenExecuteFailFast {
+        check(helper.getEntities(EntityType.ARROW, BlockPos.ZERO, 16.0).any { it.color != -1 }) { "Expected a tipped arrow" }
+    }.thenSucceed()
+
+    @GameTest(template = "miscturtlegametests.bow_suppressed", batch = "misc-bow-suppressed", timeoutTicks = LUA_TIMEOUT)
+    fun bowSuppressed(helper: GameTestHelper) = helper.thenTurtleLua("miscturtlegametests.bow_suppressed").thenExecuteFailFast {
+        check(helper.getEntities(site.siredvin.turtlematic.common.setup.EntityTypes.SHOOTED_ITEM_TYPE.get(), BlockPos.ZERO, 16.0).isNotEmpty()) {
+            "Expected an arrow item projectile"
+        }
     }.thenSucceed()
 
     @GameTest(template = "miscturtlegametests.bow_into_chest", batch = "misc-bow-into-chest", timeoutTicks = LUA_TIMEOUT)
