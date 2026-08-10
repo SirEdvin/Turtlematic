@@ -57,6 +57,8 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeriphe
         super.detach(computer)
         val level = peripheralOwner.level as ServerLevel
         val manager = ChunkManager.get(level.server.overworld())
-        setLoadedChunk(null, manager, level)
+        val owner = uuid
+        loadedChunk = null
+        level.server.execute { manager.removeForceChunk(level, owner) }
     }
 }

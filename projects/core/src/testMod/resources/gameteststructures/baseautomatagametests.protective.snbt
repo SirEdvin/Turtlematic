@@ -1,0 +1,12 @@
+{
+    DataVersion: 3465,
+    size: [5, 5, 5],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 3], state: "minecraft:polished_andesite"},
+        {pos: [2, 0, 4], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 16, Fuel: 10000, Items: [{Count: 1b, Slot: 0b, id: "minecraft:diamond_sword"}], Label: "baseautomatagametests.protective", LeftUpgrade: "turtlematic:protective_automata", On: 1b, Slot: 0, id: "computercraft:turtle_normal"}}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}"]
+}

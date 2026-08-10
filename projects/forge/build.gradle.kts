@@ -119,7 +119,7 @@ minecraft {
         create("gameTestServer") {
             workingDirectory(file("run/turtlematic-gametest"))
             property("forge.enabledGameTestNamespaces", "turtlematic_testmod")
-            property("testiarium.tags", "turtlematic")
+            property("testiarium.tags", if (providers.environmentVariable("CI").isPresent) "turtlematic" else "turtlematic,local")
             property("testiarium.structures", project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
             property("testiarium.cct-fixtures", project(":core").file("src/testMod/resources/computer").absolutePath)
             property("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)

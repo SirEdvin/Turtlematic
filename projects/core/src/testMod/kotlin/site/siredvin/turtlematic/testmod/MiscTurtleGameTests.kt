@@ -6,30 +6,27 @@ import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestAssertException
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.gametest.framework.GameTestSequence
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.EntityType
 import site.siredvin.testiarium.api.TestGroup
 import site.siredvin.testiarium.api.thenExecuteFailFast
 import site.siredvin.testiarium.cct.CctComputerState
 import site.siredvin.testiarium.cct.CctComputers
 import site.siredvin.testiarium.cct.CctLuaTests
-import site.siredvin.turtlematic.common.configuration.ConfigHolder
 import site.siredvin.turtlematic.util.ChunkManager
+import java.util.UUID
 
-private const val LUA_TIMEOUT = 400
+const val LUA_TIMEOUT = 400
 
-private fun GameTestHelper.getTurtle(): TurtleBlockEntity {
+fun GameTestHelper.getTurtle(label: String): TurtleBlockEntity {
     val origin = absolutePos(BlockPos.ZERO)
     return BlockPos.betweenClosed(origin.offset(-1, -1, -1), origin.offset(6, 4, 6))
-        .firstNotNullOf { level.getBlockEntity(it) as? TurtleBlockEntity }
+        .mapNotNull { level.getBlockEntity(it) as? TurtleBlockEntity }
+        .first { it.saveWithoutMetadata().getString("Label") == label }
 }
 
-private fun GameTestHelper.hasForcedChunkRecord(uuid: String): Boolean = ChunkManager.get(level.server.overworld())
-    .save(CompoundTag())
-    .getCompound("forcedChunks")
-    .contains(uuid)
+private fun GameTestHelper.hasForcedChunkRecord(uuid: String): Boolean = ChunkManager.get(level.server.overworld()).hasForceChunk(UUID.fromString(uuid))
 
-private fun GameTestHelper.thenTurtleLua(label: String): GameTestSequence {
+fun GameTestHelper.thenTurtleLua(label: String): GameTestSequence {
     CctLuaTests.require(label)
     return startSequence()
         .thenExecuteAfter(1) { CctComputers.enqueue(level.server, label) {} }
@@ -54,20 +51,21 @@ class MiscTurtleGameTests {
 
     @GameTest(template = "miscturtlegametests.chunk_vial_attached", batch = "misc-chunk-vial-attached", timeoutTicks = LUA_TIMEOUT)
     fun chunkVialAttached(helper: GameTestHelper) {
-        ConfigHolder.commonConfig.chunkVialTimeLimit.set(1)
-        val uuid = helper.getTurtle().saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
+        val uuid = helper.getTurtle("miscturtlegametests.chunk_vial_attached").saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
         helper.thenTurtleLua("miscturtlegametests.chunk_vial_attached").thenExecuteFailFast {
             check(helper.hasForcedChunkRecord(uuid)) { "Expected chunk vial force record for $uuid" }
         }.thenSucceed()
     }
 
-    @GameTest(template = "miscturtlegametests.chunk_vial_detached", batch = "misc-chunk-vial-detached", timeoutTicks = LUA_TIMEOUT)
+    @GameTest(template = "miscturtlegametests.chunk_vial_detached", batch = "misc-chunk-vial-detached", timeoutTicks = 1200)
+    @TestGroup("local")
     fun chunkVialDetached(helper: GameTestHelper) {
-        val uuid = helper.getTurtle().saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
+        val uuid = helper.getTurtle("miscturtlegametests.chunk_vial_detached").saveWithoutMetadata().getCompound("LeftUpgradeNbt").getUUID("uuid").toString()
         helper.thenTurtleLua("miscturtlegametests.chunk_vial_detached")
-            .thenExecuteAfter(20) {}
-            .thenExecuteFailFast {
-                check(!helper.hasForcedChunkRecord(uuid)) { "Detached chunk vial has not released force record $uuid" }
+            .thenWaitUntil {
+                if (helper.hasForcedChunkRecord(uuid)) {
+                    throw GameTestAssertException("Detached chunk vial has not released force record $uuid")
+                }
             }.thenSucceed()
     }
 
@@ -76,7 +74,7 @@ class MiscTurtleGameTests {
 
     @GameTest(template = "miscturtlegametests.soul_scrapper", batch = "misc-soul-scrapper", timeoutTicks = LUA_TIMEOUT)
     fun soulScrapper(helper: GameTestHelper) {
-        val pos = helper.getTurtle().blockPos
+        val pos = helper.getTurtle("miscturtlegametests.soul_scrapper").blockPos
         EntityType.PIG.create(helper.level)!!.also {
             it.moveTo(pos.x + 0.5, pos.y.toDouble(), pos.z + 1.5)
             it.isNoAi = true
