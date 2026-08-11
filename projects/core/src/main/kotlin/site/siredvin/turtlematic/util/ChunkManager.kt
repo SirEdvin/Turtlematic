@@ -61,6 +61,9 @@ class ChunkManager : SavedData() {
         forcedChunks[owner]?.touch()
     }
 
+    @Synchronized
+    fun hasForceChunk(owner: UUID): Boolean = forcedChunks.containsKey(owner)
+
     /**
      * So, we need this thread check, because peripheral can be detached also in computer thread
      * and removing chunk from loading in computer thread lead to expected crash

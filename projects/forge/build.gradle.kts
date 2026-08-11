@@ -110,6 +110,7 @@ dependencies {
     listOf(
         "site.siredvin:testiarium-forge-1.21.1:0.1.1",
         "site.siredvin:testiarium-forge-1.21.1:0.1.1:test-mod@jar",
+        "site.siredvin:testiarium-forge-1.21.1:0.1.1:cct-test-mod@jar",
     ).forEach { notation ->
         add(testMod.implementationConfigurationName, notation) {
             isTransitive = false
@@ -135,6 +136,7 @@ neoForge {
             gameDirectory = file("run/turtlematic-gametest")
             systemProperty("testiarium.tags", "turtlematic")
             systemProperty("testiarium.structures", project.project(":core").layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            systemProperty("testiarium.cct-fixtures", project.project(":core").file("src/testMod/resources/computer").absolutePath)
             systemProperty("testiarium.gametest-report", gameTestXmlReport.get().asFile.absolutePath)
             jvmArgument("-ea")
             programArgument("--nogui")

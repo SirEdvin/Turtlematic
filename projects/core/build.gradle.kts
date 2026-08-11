@@ -26,23 +26,23 @@ val testMod = sourceSets.create("testMod") {
     runtimeClasspath += sourceSets.main.get().output
 }
 
-val testiariumTestModArtifact = configurations.detachedConfiguration(
+val testiariumTestModArtifacts = configurations.detachedConfiguration(
     dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1:test-mod@jar"),
+    dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1:cct-test-mod@jar"),
 ).apply {
     isTransitive = false
 }
-
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.cccommon)
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
     add(testMod.implementationConfigurationName, libs.testiarium.core)
-    add(testMod.implementationConfigurationName, "site.siredvin:testiarium-core-1.21.1:0.1.1:test-mod@jar")
+    add(testMod.implementationConfigurationName, files(testiariumTestModArtifacts))
 }
 
 tasks.named<ProcessResources>(testMod.processResourcesTaskName) {
-    from(provider { zipTree(testiariumTestModArtifact.singleFile) }) {
+    from(provider { zipTree(testiariumTestModArtifacts.files.single { !it.name.contains("cct-test-mod") }) }) {
         include("gameteststructures/empty.snbt")
     }
 }

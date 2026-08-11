@@ -57,6 +57,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
             )
         }
         data.put(name, NBTUtil.toNBT(automataCore.peripheralOwner.pos))
+        automataCore.peripheralOwner.dataStorage.putCompound(POINT_DATA_MARK, data)
         return MethodResult.of(true)
     }
 
@@ -66,6 +67,7 @@ class AutomataWarpingPlugin(automataCore: BaseAutomataCorePeripheral) : Automata
         val data: CompoundTag = pointData
         if (!data.contains(name)) return MethodResult.of(null, "Cannot find point to delete")
         data.remove(name)
+        automataCore.peripheralOwner.dataStorage.putCompound(POINT_DATA_MARK, data)
         return MethodResult.of(true)
     }
 

@@ -1,0 +1,12 @@
+{
+    DataVersion: 3465,
+    size: [5, 5, 5],
+    data: [
+        {pos: [2, 0, 2], state: "minecraft:polished_andesite"},
+        {pos: [2, 1, 2], state: "computercraft:turtle_normal{facing:south,waterlogged:false}", nbt: {ComputerId: 21, Fuel: 10000, Items: [{Count: 3b, Slot: 0b, id: "minecraft:stone"}], Label: "forgedautomatagametests.mason", LeftUpgrade: "turtlematic:mason_automata", On: 0b, RightUpgrade: "turtlematic:mason_automata", Slot: 0, id: "computercraft:turtle_normal"}},
+        {pos: [2, 2, 2], state: "minecraft:stone"},
+        {pos: [2, 1, 3], state: "minecraft:oak_stairs{facing:north,half:bottom,shape:straight,waterlogged:false}"}
+    ],
+    entities: [],
+    palette: ["minecraft:polished_andesite", "computercraft:turtle_normal{facing:south,waterlogged:false}", "minecraft:stone", "minecraft:oak_stairs{facing:north,half:bottom,shape:straight,waterlogged:false}"]
+}
