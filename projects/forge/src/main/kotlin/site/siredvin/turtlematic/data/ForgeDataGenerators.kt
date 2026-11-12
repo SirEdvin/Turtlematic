@@ -6,7 +6,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 import site.siredvin.broccolium.modules.data.ForgeGeneratorSink
 import site.siredvin.turtlematic.TurtlematicCore
 
-@EventBusSubscriber(modid = TurtlematicCore.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = TurtlematicCore.MOD_ID)
 object ForgeDataGenerators {
     @SubscribeEvent
     fun genData(event: GatherDataEvent) {

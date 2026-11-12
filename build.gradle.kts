@@ -1,8 +1,8 @@
 plugins {
     java
     alias(libs.plugins.loom) apply false
-    id("site.siredvin.root") version "0.9.2"
-    id("site.siredvin.release") version "0.9.2"
+    id("site.siredvin.root") version "0.9.4"
+    id("site.siredvin.release") version "0.9.4"
 }
 
 tasks.register("gameTest") {

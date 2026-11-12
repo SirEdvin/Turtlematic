@@ -138,7 +138,7 @@ open class EnchantingAutomataCorePeripheral(turtle: ITurtleAccess, side: TurtleS
             val enchantments = EnchantmentHelper.selectEnchantment(RandomSource.create(enchantmentSeed + it), targetItem, cost, buildEnchantments())
             if (enchantments.isNotEmpty()) {
                 val enchantment = enchantments.first()
-                val baseInformation = LuaRepresentation.forEnchantment(enchantment.enchantment.value(), enchantment.level)
+                val baseInformation = LuaRepresentation.forEnchantment(enchantment.enchantment, enchantment.level)
                 val requiredCost = XPUtil.levelsToXP(cost)
                 baseInformation["requiredXP"] = requiredCost
                 baseInformation["cost"] = XPUtil.levelReductionToXp(

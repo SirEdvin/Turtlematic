@@ -11,6 +11,8 @@ import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.component.DataComponentPatch
 import site.siredvin.turtlematic.util.DataStorageObjects
 
+// CC 1.121.0 deprecates craftingItem; this modeller still renders the upgrade's base item.
+@Suppress("DEPRECATION")
 class ClockwiseTurtleModeller<T : ITurtleUpgrade> : TurtleUpgradeModeller<T> {
     override fun getModel(upgrade: T, turtle: ITurtleAccess?, side: TurtleSide, data: DataComponentPatch): TransformedModel {
         val stack = PoseStack()

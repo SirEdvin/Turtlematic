@@ -13,7 +13,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers
 import net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional
 
-@EventBusSubscriber(modid = TurtlematicCore.MOD_ID, value = [Dist.CLIENT], bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = TurtlematicCore.MOD_ID, value = [Dist.CLIENT])
 object ForgeTurtlematicClient {
 
     @SubscribeEvent

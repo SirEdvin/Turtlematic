@@ -5,15 +5,15 @@ kotlin-coroutines = "1.6.4"
 kotlin-atomicfu = "0.20.2"
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
-loom = "1.12.+"
+loom = "1.18.4"
 # Core mod dependencies
-cc-tweaked = "1.116.1"
-broccolium = "1.4.6"
-tweakium = "1.4.6"
-peripheralium = "1.4.6"
-broccolium-jjar = "[1.4.6, 1.5.0)"
-tweakium-jjar = "[1.4.6, 1.5.0)"
-peripheralium-jjar = "[1.4.6, 1.5.0)"
+cc-tweaked = "1.121.0"
+broccolium = "2.1.0"
+tweakium = "2.1.0"
+peripheralium = "2.1.0"
+broccolium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
+tweakium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
+peripheralium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.116.3+1.21.1"
@@ -22,12 +22,12 @@ fabric-kotlin = "1.11.0+kotlin.2.0.0"
 forgeconfigapirt = "21.1.6"
 modmenu = "11.0.1"
 # NeoForge dependencies
-neoforge = "21.1.9"
-forge-kotlin = "5.7.0"
+neoforge = "21.1.265"
+forge-kotlin = "5.9.0"
 parchment = "2024.11.17"
 parchmentMc = "1.21.1"
 # Testing
-testiarium = "0.1.1"
+testiarium = "2.1.0"
 # Dev mod dependenceis
 jei = "19.27.0.340"
 rei = "16.0.799"

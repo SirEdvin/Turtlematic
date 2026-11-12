@@ -44,16 +44,16 @@ val testMod = sourceSets.create("testMod") {
 net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, testMod)
 
 val testiariumMainArtifacts = configurations.detachedConfiguration(
-    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1"),
-    project.dependencies.create("site.siredvin:testiarium-fabric-1.21.1:0.1.1"),
+    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:2.1.0"),
+    project.dependencies.create("site.siredvin:testiarium-fabric-1.21.1:2.1.0"),
 ).apply {
     isTransitive = false
 }
 
 val testiariumTestModArtifacts = configurations.detachedConfiguration(
-    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1:test-mod@jar"),
-    project.dependencies.create("site.siredvin:testiarium-fabric-1.21.1:0.1.1:test-mod@jar"),
-    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:0.1.1:cct-test-mod@jar"),
+    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:2.1.0:test-mod@jar"),
+    project.dependencies.create("site.siredvin:testiarium-fabric-1.21.1:2.1.0:test-mod@jar"),
+    project.dependencies.create("site.siredvin:testiarium-core-1.21.1:2.1.0:cct-test-mod@jar"),
 ).apply {
     isTransitive = false
 }

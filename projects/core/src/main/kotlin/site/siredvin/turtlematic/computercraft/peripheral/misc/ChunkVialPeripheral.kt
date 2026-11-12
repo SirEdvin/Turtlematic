@@ -17,6 +17,9 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeriphe
     }
 
     private var loadedChunk: ChunkPos? = null
+
+    // CC:Tweaked 1.121 drops the upgrade data before detaching the peripheral, so detach needs this copy.
+    private var cachedUuid: UUID? = null
     override val isEnabled: Boolean
         get() = TurtlematicConfig.enableChunkVial
 
@@ -26,7 +29,7 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeriphe
             if (!storage.has(UUID_TAG)) {
                 storage.putUUID(UUID_TAG, UUID.randomUUID())
             }
-            return storage.getUUID(UUID_TAG)
+            return storage.getUUID(UUID_TAG).also { cachedUuid = it }
         }
 
     private val chunkPos: ChunkPos
@@ -57,7 +60,7 @@ class ChunkVialPeripheral(peripheralOwner: TurtlePeripheralOwner) : OwnedPeriphe
         super.detach(computer)
         val level = peripheralOwner.level as ServerLevel
         val manager = ChunkManager.get(level.server.overworld())
-        val owner = uuid
+        val owner = cachedUuid ?: return
         loadedChunk = null
         level.server.execute { manager.removeForceChunk(level, owner) }
     }

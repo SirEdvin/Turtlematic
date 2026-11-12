@@ -10,6 +10,8 @@ import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.component.DataComponentPatch
 
+// CC 1.121.0 deprecates craftingItem; this modeller still renders the upgrade's base item.
+@Suppress("DEPRECATION")
 class MonocleTurtleModeller<T : ITurtleUpgrade> : TurtleUpgradeModeller<T> {
 
     override fun getModel(upgrade: T, turtle: ITurtleAccess?, side: TurtleSide, data: DataComponentPatch): TransformedModel {
