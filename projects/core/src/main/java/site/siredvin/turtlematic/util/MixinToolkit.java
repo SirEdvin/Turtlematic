@@ -19,7 +19,7 @@ import site.siredvin.tweakium.modules.peripheral.api.IDataStorage;
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage;
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeHolder;
 
-import java.util.Map;
+import java.util.Arrays;
 import java.util.function.Function;
 
 public class MixinToolkit {
@@ -102,11 +102,13 @@ public class MixinToolkit {
         if (cancelTurtleRender) info.cancel();
     }
 
-    public static void isFuelNeeded(ITurtleAccess access, Map<TurtleSide, ITurtleUpgrade> upgrades, CallbackInfoReturnable<Boolean> cir) {
+    public static void isFuelNeeded(ITurtleAccess access, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
-            boolean isFuelConsumptionDisabled = upgrades.entrySet().stream().anyMatch(it -> {
-                if (it.getValue() instanceof TurtleUpgradeHolder) {
-                    for (var internalUpgrade: ((TurtleUpgradeHolder) it.getValue()).getInternalUpgrades(access, it.getKey())) {
+            boolean isFuelConsumptionDisabled = Arrays.stream(TurtleSide.values()).anyMatch(side -> {
+                var upgrade = access.getUpgrade(side);
+                if (upgrade == null) return false;
+                if (upgrade instanceof TurtleUpgradeHolder holder) {
+                    for (var internalUpgrade: holder.getInternalUpgrades(access, side)) {
                         Item item = internalUpgrade.getUpgradeItem().getItem();
                         if (item instanceof BaseAutomataCore core) {
                             if (core.getCoreTier().getTraits().contains(AutomataCoreTraits.INSTANCE.getFUEL_CONSUMPTION_DISABLED()))
@@ -114,7 +116,7 @@ public class MixinToolkit {
                         }
                     }
                 }
-                Item item = it.getValue().getCraftingItem().getItem();
+                Item item = upgrade.getCraftingItem().getItem();
                 if (item instanceof BaseAutomataCore core) {
                     return core.getCoreTier().getTraits().contains(AutomataCoreTraits.INSTANCE.getFUEL_CONSUMPTION_DISABLED());
                 }

@@ -1,7 +1,9 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("site.siredvin.root") version "0.9.2"
-    id("site.siredvin.release") version "0.9.2"
+    alias(libs.plugins.loom) apply false
+    id("net.neoforged.moddev.legacyforge") version "2.0.142" apply false
+    id("site.siredvin.root") version "0.9.4"
+    id("site.siredvin.release") version "0.9.4"
 }
 
 tasks.register("gameTest") {
