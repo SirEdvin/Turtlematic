@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-11-12
+
+### Changed
+
+- Requires CC:Tweaked 1.121.0 or newer, which rewrote the turtle and pocket upgrade API
+- Requires Broccolium, Tweakium and Peripheralium 2.1.0 or newer
+- SirEdvin libraries are now resolved from Repsy (https://repo.repsy.io/siredvin/default) only
+- Forge 1.20.1 builds now use ModDevGradle instead of ForgeGradle
+
+### Fixed
+
+- Fuel-free automata cores read turtle upgrades through CC:Tweaked's public API, so they keep working with CC:Tweaked 1.121.0
+
 ## [1.4.10] - 2026-08-08
 
 ### Fixed
