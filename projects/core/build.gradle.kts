@@ -27,13 +27,13 @@ val testMod = sourceSets.create("testMod") {
 }
 
 val testiariumTestModArtifact = configurations.detachedConfiguration(
-    dependencies.create("site.siredvin:testiarium-core-1.20.1:0.1.1:test-mod@jar"),
+    dependencies.create("site.siredvin:testiarium-core-1.20.1:2.1.0:test-mod@jar"),
 ).apply {
     isTransitive = false
 }
 
 val testiariumCctTestModArtifact = configurations.detachedConfiguration(
-    dependencies.create("site.siredvin:testiarium-core-1.20.1:0.1.1:cct-test-mod@jar"),
+    dependencies.create("site.siredvin:testiarium-core-1.20.1:2.1.0:cct-test-mod@jar"),
 ).apply {
     isTransitive = false
 }

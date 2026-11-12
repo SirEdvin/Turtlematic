@@ -5,17 +5,15 @@ kotlin-coroutines = "1.6.4"
 kotlin-atomicfu = "0.20.2"
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
-loom = "1.4.+"
-mixinGradle = "0.7.+"
-forgegradle = "6.+"
+loom = "1.18.4"
 # Core mod dependencies
-cc-tweaked = "1.116.1"
-broccolium = "1.4.5"
-tweakium = "1.4.5"
-peripheralium = "1.4.5"
-broccolium-jjar = "[1.4.5, 1.5.0)"
-tweakium-jjar = "[1.4.5, 1.5.0)"
-peripheralium-jjar = "[1.4.5, 1.5.0)"
+cc-tweaked = "1.121.0"
+broccolium = "2.1.0"
+tweakium = "2.1.0"
+peripheralium = "2.1.0"
+broccolium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
+tweakium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
+peripheralium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
 mixin = "0.8.5"
 # Fabric dependencies
 fabric-api = "0.92.0+1.20.1"
@@ -29,7 +27,7 @@ forge-kotlin = "4.11.0"
 parchment = "2023.07.16"
 parchmentMc = "1.20.1"
 # Testing
-testiarium = "0.1.1"
+testiarium = "2.1.0"
 # Extra mod dependencies
 cloth-config = "11.0.99"
 architectury = "9.0.8"
@@ -99,7 +97,6 @@ framework-forge = {module="curse.maven:framework-forge-549225", version.ref="fra
 [plugins]
 vanillaGradle = { id = "org.spongepowered.gradle.vanilla", version.ref = "sponge"}
 loom = {id = "fabric-loom", version.ref = "loom"}
-mixinGradle = { id = "org.spongepowered.mixin", version.ref = "mixinGradle" }
 
 [bundles]
 cccommon = ["cc-tweaked-common", "cc-tweaked-common-api", "cc-tweaked-core", "peripheralium-core", "tweakium-core", "broccolium-core"]
