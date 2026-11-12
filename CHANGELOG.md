@@ -14,10 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Requires Broccolium, Tweakium and Peripheralium 2.1.0 or newer
 - SirEdvin libraries are now resolved from Repsy (https://repo.repsy.io/siredvin/default) only
 - Forge 1.20.1 builds now use ModDevGradle instead of ForgeGradle
+- Minecraft 1.21.1 requires NeoForge 21.1.265 or newer (CC:Tweaked 1.121.0 needs it)
 
 ### Fixed
 
 - Fuel-free automata cores read turtle upgrades through CC:Tweaked's public API, so they keep working with CC:Tweaked 1.121.0
+- Chunk vial releases its loaded chunk when it is unequipped
 
 ## [1.4.10] - 2026-08-08
 
