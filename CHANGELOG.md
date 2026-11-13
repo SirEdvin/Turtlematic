@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-11-13
+
+### Fixed
+
+- NeoForge 1.21.1: Turtlematic's mixins are now loaded. The NeoForge jar never registered `turtlematic.mixins.json` (1.4.10 and 1.5.0 were both affected), so creative automata cores did not disable fuel, turtle chatter colours were ignored, and the chatter speech bubble and mimic gadget disguise were not rendered. Fabric and Minecraft 1.20.1 were not affected.
+
 ## [1.5.0] - 2026-11-12
 
 ### Changed
