@@ -14,6 +14,9 @@ description='''
 CC:T addon, that makes turtles great again!
 '''
 
+[[mixins]]
+config="turtlematic.mixins.json"
+
 [[dependencies.turtlematic]]
 modId="neoforge"
 type="required"
