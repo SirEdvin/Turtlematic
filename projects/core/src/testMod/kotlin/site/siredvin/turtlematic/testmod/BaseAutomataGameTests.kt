@@ -1,6 +1,9 @@
 package site.siredvin.turtlematic.testmod
 
 import dan200.computercraft.api.turtle.TurtleSide
+import dan200.computercraft.impl.TurtleUpgrades
+import dan200.computercraft.shared.ModRegistry
+import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
@@ -16,6 +19,8 @@ import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CropBlock
 import site.siredvin.testiarium.api.TestGroup
+import site.siredvin.testiarium.api.immediate
+import site.siredvin.turtlematic.common.setup.Items as TurtlematicItems
 
 @TestGroup("turtlematic")
 class BaseAutomataGameTests {
@@ -55,6 +60,19 @@ class BaseAutomataGameTests {
 
     @GameTest(template = "baseautomatagametests.end", batch = "automata-end", timeoutTicks = LUA_TIMEOUT)
     fun end(helper: GameTestHelper) = helper.thenTurtleLua("baseautomatagametests.end").thenSucceed()
+
+    @GameTest(template = "empty")
+    fun creativeCoreDisablesFuel(helper: GameTestHelper) = helper.immediate {
+        val pos = BlockPos(1, 1, 1)
+        helper.setBlock(pos, ModRegistry.Blocks.TURTLE_NORMAL.get())
+        val access = (helper.getBlockEntity(pos) as TurtleBlockEntity).access
+        val core = TurtleUpgrades.instance().get(helper.level.registryAccess(), TurtlematicItems.END_AUTOMATA_CORE.get().defaultInstance)
+        access.setUpgrade(TurtleSide.LEFT, checkNotNull(core) { "Expected an end core turtle upgrade" })
+        check(access.isFuelNeeded) { "Expected a turtle with a regular core to need fuel" }
+        val creativeCore = TurtleUpgrades.instance().get(helper.level.registryAccess(), TurtlematicItems.CREATIVE_END_AUTOMATA_CORE.get().defaultInstance)
+        access.setUpgrade(TurtleSide.LEFT, checkNotNull(creativeCore) { "Expected a creative core turtle upgrade" })
+        check(!access.isFuelNeeded) { "Expected a creative core to disable fuel" }
+    }
 
     @GameTest(template = "baseautomatagametests.protective", batch = "automata-protective", timeoutTicks = LUA_TIMEOUT)
     fun protective(helper: GameTestHelper) {
