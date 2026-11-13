@@ -38,6 +38,8 @@ class BaseAutomataGameTests {
         helper.thenTurtleLua("baseautomatagametests.automata").thenSucceed()
     }
 
+    // CC 1.121.0 deprecates setUpgradeData, but it still recomputes the stored upgrade item with the data.
+    @Suppress("DEPRECATION")
     @GameTest(template = "baseautomatagametests.husbandry", batch = "automata-husbandry", timeoutTicks = LUA_TIMEOUT)
     fun husbandry(helper: GameTestHelper) {
         val turtle = helper.getTurtle("baseautomatagametests.husbandry")

@@ -14,6 +14,7 @@ import site.siredvin.testiarium.cct.CctComputerState
 import site.siredvin.testiarium.cct.CctComputers
 import site.siredvin.testiarium.cct.CctLuaTests
 import site.siredvin.turtlematic.util.ChunkManager
+import java.util.UUID
 
 const val LUA_TIMEOUT = 4000
 
@@ -68,11 +69,12 @@ class MiscTurtleGameTests {
     @GameTest(template = "miscturtlegametests.chunk_vial_detached", batch = "misc-chunk-vial-detached", timeoutTicks = LUA_TIMEOUT)
     @TestGroup("local")
     fun chunkVialDetached(helper: GameTestHelper) {
-        val initialRecords = helper.forcedChunkRecordCount()
+        // The fixture's chunk vial carries this owner UUID (LeftUpgradeNbt uuid [1, 2, 3, 5]).
+        val owner = UUID.fromString("00000001-0000-0002-0000-000300000005")
         helper.thenTurtleLua("miscturtlegametests.chunk_vial_detached")
             .thenWaitUntil {
-                if (helper.forcedChunkRecordCount() >= initialRecords) {
-                    throw GameTestAssertException("Detached chunk vial has not released its force record")
+                if (ChunkManager.get(helper.level.server.overworld()).hasForceChunk(owner)) {
+                    throw GameTestAssertException("Detached chunk vial has not released force record $owner")
                 }
             }.thenSucceed()
     }

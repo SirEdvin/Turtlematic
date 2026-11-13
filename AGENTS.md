@@ -6,10 +6,11 @@ Turtlematic is a Minecraft 1.21.1 mod that adds turtle upgrades, peripherals, an
 
 ## Tech Stack
 
-- Runtime: Minecraft 1.21.1 / Java 21
+- Runtime: Minecraft 1.21.1 / Java 21 (Gradle itself must run on Java 25, which Loom 1.18 requires)
 - Languages: Kotlin 2.0 and Java
-- Loaders: Fabric Loader 0.16 and NeoForge 21.1
-- Computer mod: CC:Tweaked 1.116
+- Loaders: Fabric Loader 0.16 (Loom 1.18) and NeoForge 21.1.265+
+- Computer mod: CC:Tweaked 1.121
+- Libraries: Broccolium, Tweakium, Peripheralium and Testiarium 2.1, from Repsy only
 - Testing: Testiarium GameTests
 - Build system: Gradle Wrapper
 
