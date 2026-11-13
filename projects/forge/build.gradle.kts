@@ -1,3 +1,4 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import net.neoforged.moddevgradle.legacyforge.dsl.ObfuscationExtension
 import org.gradle.api.artifacts.ExternalModuleDependency
 
@@ -218,4 +219,11 @@ modPublishing {
         ),
     )
     shake()
+}
+
+// Buildenv infers the loader from the ForgeGradle plugin, which this project no longer applies.
+modrinth { loaders.add("forge") }
+
+tasks.named<TaskPublishCurseForge>("publishCurseForge") {
+    uploadArtifacts.forEach { it.addModLoader("Forge") }
 }
