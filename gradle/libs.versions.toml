@@ -16,7 +16,7 @@ tweakium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
 peripheralium-jjar = { require = "[2.1.0, 2.2.0)", prefer = "2.1.0" }
 mixin = "0.8.5"
 # Fabric dependencies
-fabric-api = "0.116.3+1.21.1"
+fabric-api = "0.116.14+1.21.1"
 fabric-loader = "0.16.14"
 fabric-kotlin = "1.11.0+kotlin.2.0.0"
 forgeconfigapirt = "21.1.6"
