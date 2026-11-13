@@ -10,7 +10,9 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
@@ -24,14 +26,12 @@ import site.siredvin.turtlematic.common.setup.Items as TurtlematicItems
 
 @TestGroup("turtlematic")
 class BaseAutomataGameTests {
-    private fun GameTestHelper.spawn(label: String, type: EntityType<*>, offset: BlockPos) {
-        type.create(level)!!.also {
-            val pos = getTurtle(label).blockPos.offset(offset)
-            it.moveTo(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5)
-            it.isNoGravity = true
-            (it as? Mob)?.isNoAi = true
-            level.addFreshEntity(it)
-        }
+    private fun <T : Entity> GameTestHelper.spawn(label: String, type: EntityType<T>, offset: BlockPos): T = type.create(level)!!.also {
+        val pos = getTurtle(label).blockPos.offset(offset)
+        it.moveTo(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5)
+        it.isNoGravity = true
+        (it as? Mob)?.isNoAi = true
+        level.addFreshEntity(it)
     }
 
     @GameTest(template = "baseautomatagametests.automata", batch = "automata", timeoutTicks = LUA_TIMEOUT)
@@ -76,7 +76,9 @@ class BaseAutomataGameTests {
 
     @GameTest(template = "baseautomatagametests.protective", batch = "automata-protective", timeoutTicks = LUA_TIMEOUT)
     fun protective(helper: GameTestHelper) {
+        // GameTest worlds sit at noon under skylight-passing barriers, so the zombie burns for as many ticks as the Lua takes; a non-damageable helmet prevents ignition.
         helper.spawn("baseautomatagametests.protective", EntityType.ZOMBIE, BlockPos(0, 1, 0))
+            .setItemSlot(EquipmentSlot.HEAD, ItemStack(Items.CARVED_PUMPKIN))
         helper.spawn("baseautomatagametests.protective", EntityType.COW, BlockPos(1, 0, 0))
         helper.thenTurtleLua("baseautomatagametests.protective").thenSucceed()
     }
