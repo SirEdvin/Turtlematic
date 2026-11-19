@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.2] - 2026-11-19
+
+### Fixed
+
+- Minecraft 1.21.1: the creative tab no longer reads server registries when it is built. On a client connected to a dedicated server this failed with a `ComputerPlatformRegistries` initializer error, which also broke REI, EMI and the creative tabs of other mods. Tab contents are unchanged.
+
 ## [1.5.1] - 2026-11-13
 
 ### Fixed
