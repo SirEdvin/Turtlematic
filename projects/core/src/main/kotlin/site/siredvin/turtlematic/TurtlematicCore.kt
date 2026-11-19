@@ -20,9 +20,9 @@ object TurtlematicCore {
 
     fun configureCreativeTab(builder: CreativeModeTab.Builder): CreativeModeTab.Builder = builder.icon { Items.AUTOMATA_CORE.get().defaultInstance }
         .title(ModText.CREATIVE_TAB.text)
-        .displayItems { _, output ->
+        .displayItems { params, output ->
             ModPlatform.holder.items.forEach { output.accept(it.get()) }
-            TurtlematicCommonHooks.registerTurtlesInCreativeTab(output)
+            TurtlematicCommonHooks.registerTurtlesInCreativeTab(params.holders(), output)
         }
 
     fun configure(platform: InnerComputerBasePlatform, ingredients: ModRecipeIngredients) {

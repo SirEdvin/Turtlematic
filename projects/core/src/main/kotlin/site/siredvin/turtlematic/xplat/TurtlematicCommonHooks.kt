@@ -1,6 +1,9 @@
 package site.siredvin.turtlematic.xplat
 
+import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.upgrades.UpgradeData
+import net.minecraft.core.HolderLookup
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.item.CreativeModeTab
@@ -30,9 +33,11 @@ object TurtlematicCommonHooks {
         SoulHarvestRecipeRegistry.injectForgedAutomataCoreRecipes()
     }
 
-    fun registerTurtlesInCreativeTab(output: CreativeModeTab.Output) {
+    // Must use the tab's own holders: the toolkit's key-only lookup reads server registries, which a remote client lacks.
+    fun registerTurtlesInCreativeTab(holders: HolderLookup.Provider, output: CreativeModeTab.Output) {
+        val registry = holders.lookupOrThrow(ITurtleUpgrade.REGISTRY)
         ModPlatform.holder.turtleUpgrades.forEach {
-            val upgrade = ComputerPlatformToolkit.get().getTurtleUpgrade(it.id.toString())
+            val upgrade = registry.get(ResourceKey.create(ITurtleUpgrade.REGISTRY, it.id))
             if (upgrade.isPresent) {
                 ComputerPlatformToolkit.get().createTurtlesWithUpgrade(UpgradeData.ofDefault(upgrade.get()))
                     .forEach(output::accept)
